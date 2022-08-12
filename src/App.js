@@ -1,50 +1,25 @@
 import React, { useState } from "react";
+import { Button, Tabs, Steps } from "react-daisyui";
+
 function App() {
-  const [amount, setAmount] = useState(0);
-  const [active, setActive] = useState(true);
-
-  const onChange = (event) => {
-    console.log(event);
-
-    setAmount(event.target.value);
-  };
-  const reset = () => {
-    setAmount(0);
-  };
-  const changeActive = () => {
-    reset();
-    setActive((prevState) => {
-      return !prevState;
-    });
-  };
-
   return (
-    <div>
-      <div>Time Converter</div>
-      <div>
-        Minutes{" "}
-        <input
-          placeholder="Minutes"
-          value={active ? amount : amount * 60}
-          type="number"
-          onChange={onChange}
-          disabled={!active}
-        />
-        <div>
-          Hours{" "}
-          <input
-            type="number"
-            placeholder="Hours"
-            value={active ? Math.floor(amount / 60) : amount}
-            disabled={active}
-            onChange={onChange}
-          />
-        </div>
-        <button onClick={reset}>reset</button>
-        <button onClick={changeActive}>active toggle</button>
-      </div>
-      <hr />
-    </div>
+    <>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <Button variant="outline" color="success">
+        Primary
+      </Button>
+      {/* <Steps>
+        <Steps.Step color="primary">Register</Steps.Step>
+        <Steps.Step color="primary">Choose plan</Steps.Step>
+        <Steps.Step>Purchase</Steps.Step>
+        <Steps.Step>Receive Product</Steps.Step>
+      </Steps>
+      <Tabs>
+        <Tabs.Tab value={0}>Tab 1</Tabs.Tab>
+        <Tabs.Tab value={1}>Tab 2</Tabs.Tab>
+        <Tabs.Tab value={2}>Tab 3</Tabs.Tab>
+      </Tabs> */}
+    </>
   );
 }
 

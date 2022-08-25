@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useRecoilState } from "recoil";
+import { authenticatedState } from "../recoil/auth";
 
 const Header = () => {
-  const [logined, setLogined] = useState(false);
+  const [logined, setLogined] = useRecoilState(authenticatedState);
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   return (
@@ -95,7 +97,14 @@ const Header = () => {
       </div>
       <div className="navbar-end">
         {logined ? (
-          <div>로그인 됨</div>
+          <div
+            onClick={() => {
+              setLogined(false);
+            }}
+            className="btn"
+          >
+            logout
+          </div>
         ) : (
           <div className="flex">
             <input
@@ -119,12 +128,16 @@ const Header = () => {
             <div
               className="btn"
               onClick={async () => {
-                const data = await axios({
-                  url: "http://localhost:4000/login",
-                  method: "POST",
-                  data: { user_id: userId, password },
-                });
-                console.log(data);
+                try {
+                  const data = await axios({
+                    url: "http://localhost:4000/login",
+                    method: "POST",
+                    data: { user_id: userId, password },
+                  });
+                  setLogined(data.data.authenticated);
+                } catch (e) {
+                  alert(e.response.data.msg);
+                }
               }}
             >
               Login

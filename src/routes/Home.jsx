@@ -20,3 +20,9 @@ export default Home;
 
 //https://goddaehee.tistory.com/274 Branch 기초생성 및 이동
 //https://goddaehee.tistory.com/275?category=381481 Branch 병합
+
+//branch - master, test 두종류.
+//master에서 작업 후 git add, commit ,push.
+//git switch test해서 test branch로 이동 후 git pull origin master
+//test branch에서 작업 후 git add, commit, git push origin test
+//git switch master해서 master로 이동, git pull origin test.

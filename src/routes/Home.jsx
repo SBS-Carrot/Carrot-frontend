@@ -8,8 +8,8 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <div>Home</div>
-      <div>{logined ? "로그인됨" : "로그인안됨"}</div>
+      <div>Home 입니다</div>
+      <div className="border-8">테일윈드 적용</div>
     </div>
   );
 };

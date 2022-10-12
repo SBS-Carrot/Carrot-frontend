@@ -14,6 +14,7 @@ const Home = () => {
       <span> test branch bug fix했습니다</span>
       <span> master branch 에서 작업 추가했습니다.</span>
       <span> test branch 에서 작업 추가했습니다.</span>
+      <span>당근마켓 프로젝트</span>
     </div>
   );
 };

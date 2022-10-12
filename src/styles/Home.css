@@ -1,0 +1,28 @@
+.imgBox-1 {
+  width: 500px;
+  height: 500px;
+}
+.townShopBox {
+  font-size: 2.5rem;
+  font-weight: bold;
+  width: 350px;
+}
+.empty-Box {
+  max-width: 150px;
+}
+.section-Box {
+  width: 1200px;
+  height: 800px;
+
+  margin: 0 auto;
+}
+.section-Box1 {
+  width: 1200px;
+  height: 1100px;
+  margin: 0 auto;
+}
+.searchWordBox {
+  width: 1200px;
+  height: 200px;
+  margin: 0 auto;
+}

@@ -12,6 +12,8 @@ const Home = () => {
       <div className="border-8">테일윈드 적용</div>
       <span> master branch 추가했습니다</span>
       <span> test branch bug fix했습니다</span>
+      <span> master branch 에서 작업 추가했습니다.</span>
+      <span> test branch 에서 작업 추가했습니다.</span>
     </div>
   );
 };

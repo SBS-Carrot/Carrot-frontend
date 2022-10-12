@@ -242,9 +242,10 @@ const trust = () => {
             style={{
               width: "1000px",
               margin: "0 auto",
+              paddingLeft: "5rem",
             }}
           >
-            <div>
+            <div style={{}}>
               <h1
                 style={{
                   fontSize: "2rem",

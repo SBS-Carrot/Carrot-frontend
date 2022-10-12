@@ -27,21 +27,22 @@ const Home = () => {
           <div>
             <span>동네 주민이 남긴 진짜 후기를 함께 확인해보세요!</span>
           </div>
-          <div className="mt-5">
-            <button
+          <div className="mt-5 findTownBox">
+            <a
+              href="#"
               style={{
                 padding: "10px 20px",
-                backgroundColor: "#B7CACA",
+                borderRadius: "10px",
                 fontWeight: "bolder",
                 fontSize: "1.2rem",
               }}
             >
               당근마켓 동네가게 찾기
-            </button>
+            </a>
           </div>
         </div>
       </div>
-      {/* ul li로 나중에 변경할것 */}
+      {/* ul li로 나중에 변경할것, a태그로 해당게시물 이동 */}
       <div className="section-Box1 bg-gray-100">
         <div
           style={{
@@ -157,16 +158,34 @@ const Home = () => {
         >
           <a href="#">중고거래 인기검색어</a>
         </div>
-        <ul className="flex flex-raw gap-10 align-center justify-center mt-8">
-          <li>자전거</li>
-          <li>포켓몬빵</li>
-          <li>캠핑</li>
-          <li>아이폰</li>
-          <li>당근알바</li>
-          <li>의자</li>
-          <li>냉장고</li>
-          <li>텐트</li>
-          <li>노트북</li>
+        <ul className="flex flex-raw gap-10 align-center justify-center mt-8 hotissueBox">
+          <li>
+            <a href="#">자전거</a>
+          </li>
+          <li>
+            <a href="#">포켓몬빵</a>
+          </li>
+          <li>
+            <a href="#">캠핑</a>
+          </li>
+          <li>
+            <a href="#">아이폰</a>
+          </li>
+          <li>
+            <a href="#">당근알바</a>
+          </li>
+          <li>
+            <a href="#">의자</a>
+          </li>
+          <li>
+            <a href="#">냉장고</a>
+          </li>
+          <li>
+            <a href="#">텐트</a>
+          </li>
+          <li>
+            <a href="#">노트북</a>
+          </li>
         </ul>
       </div>
     </div>

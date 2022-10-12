@@ -7,6 +7,12 @@
   font-weight: bold;
   width: 350px;
 }
+.findTownBox > a {
+  background-color: #b7caca;
+}
+.findTownBox > a:hover {
+  background-color: #93adad;
+}
 .empty-Box {
   max-width: 150px;
 }
@@ -25,4 +31,7 @@
   width: 1200px;
   height: 200px;
   margin: 0 auto;
+}
+.hotissueBox > li:hover {
+  text-decoration: underline;
 }

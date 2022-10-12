@@ -21,7 +21,7 @@ const Home = () => {
             <div
               className="font-bold"
               style={{
-                fontSize: "3rem",
+                fontSize: "2.5rem",
               }}
             >
               <div
@@ -106,6 +106,68 @@ const Home = () => {
                 <a href="">믿을 수 있는 중고거래</a>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      <section className="background2 flex ">
+        <div
+          className="flex"
+          style={{
+            width: "1000px",
+            margin: "0 auto",
+          }}
+        >
+          <div className="flex justify-center flex-col pr-20" style={{}}>
+            <div
+              className="font-bold"
+              style={{
+                fontSize: "2.3rem",
+              }}
+            >
+              <div>이웃과 함께하는</div>
+              <div>동네생활</div>
+            </div>
+
+            <h1 className="py-5">
+              우리 동네의 다양한 이야기를 이웃과 함께 나누어요.
+            </h1>
+            <ul
+              className="flex mt-20"
+              style={{
+                fontSize: "0.75rem",
+                width: "350px",
+              }}
+            >
+              <li>
+                <div className="font-bold mb-2 mt-3">우리동네질문</div>
+                <span
+                  className="mr-12 "
+                  style={{
+                    border: "1px red solid",
+                  }}
+                >
+                  궁금한 게 있을 땐 이웃에게 물어보세요.
+                </span>
+              </li>
+              <li>
+                <div className="font-bold mb-2 mt-3">우리분실센터</div>
+                <span className="mr-8">
+                  무언가를 잃어버렸을 때, 함께 찾을 수 있어요.
+                </span>
+              </li>
+              <li>
+                <div className="font-bold mb-2 mt-3">동네모임</div>
+                <span className="text-xs">
+                  관심사가 비슷한 이웃과 온오프라인으로 만나요.
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div className="thirdimg">
+            <img
+              src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-2-91a2286453bdf82dea16a7f0ee4ceb9dd325eae0e5a2a9967ba72c344bf8f2fc.webp"
+              alt=""
+            />
           </div>
         </div>
       </section>

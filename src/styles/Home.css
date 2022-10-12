@@ -1,14 +1,24 @@
 .background1 {
   background-color: lightyellow;
   width: 100%;
-  height: 700px;
+  height: 650px;
 }
 .firstimg {
-  width: 800px;
+  margin-top: 150px;
+  width: 700px;
   height: 700px;
 }
 
 .secondimg {
   width: 700px;
+  height: 700px;
+}
+
+.thirdimg {
+  width: 500px;
+}
+
+.background2 {
+  background-color: #e8f6ef;
   height: 700px;
 }

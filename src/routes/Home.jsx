@@ -14,7 +14,6 @@ const Home = () => {
           className="flex"
           style={{
             width: "1000px",
-
             margin: "0 auto",
           }}
         >
@@ -54,6 +53,62 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <section className="flex items-center">
+        <div
+          className="flex"
+          style={{
+            width: "1000px",
+            margin: "0 auto",
+          }}
+        >
+          <div className="secondimg">
+            <img
+              src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-1-cc678e9a217b96f5cb459f7f0684f5ba67706f9889801618b8cf879fbc2c0ea7.webp"
+              alt=""
+            />
+          </div>
+          <div className="flex justify-center flex-col">
+            <div
+              className="font-bold"
+              style={{
+                width: "400px",
+                fontSize: "2.5rem",
+              }}
+            >
+              <div>우리 동네</div>
+              <div>중고 직거래 마켓</div>
+            </div>
+            <div
+              className="my-9"
+              style={{
+                width: "420px",
+              }}
+            >
+              동네 주민들과 가깝고 따뜻한 거래를 지금 경험해보세요.
+            </div>
+            <div className="font-bold flex justify-center">
+              <div
+                className="mr-8 bg-gray-200"
+                style={{
+                  padding: "10px 20px",
+                  borderRadius: "10px",
+                }}
+              >
+                <a href="">인기매물 보기</a>
+              </div>
+              <div
+                className="mr-8 bg-gray-200"
+                style={{
+                  padding: "10px 20px",
+                  borderRadius: "10px",
+                }}
+              >
+                <a href="">믿을 수 있는 중고거래</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import Header from "../layouts/Header";
 import { useRecoilValue } from "recoil";
 import { authenticatedState } from "../recoil/auth";
 import "../styles/Home.css";
+import { AiFillHome, AiFillFileText, AiFillMessage } from "react-icons/ai";
 
 const Home = () => {
   const logined = useRecoilValue(authenticatedState);
@@ -109,15 +110,20 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="background2 flex ">
+      <section className="background2 flex  ">
         <div
-          className="flex"
+          className="flex "
           style={{
             width: "1000px",
             margin: "0 auto",
           }}
         >
-          <div className="flex justify-center flex-col pr-20" style={{}}>
+          <div
+            className="flex justify-center flex-col pr-10"
+            style={{
+              width: "450px",
+            }}
+          >
             <div
               className="font-bold"
               style={{
@@ -132,42 +138,61 @@ const Home = () => {
               우리 동네의 다양한 이야기를 이웃과 함께 나누어요.
             </h1>
             <ul
-              className="flex mt-20"
+              className="flex mt-11 gap-8"
               style={{
                 fontSize: "0.75rem",
-                width: "350px",
+                width: "480px",
               }}
             >
               <li>
-                <div className="font-bold mb-2 mt-3">우리동네질문</div>
-                <span
-                  className="mr-12 "
+                <div
                   style={{
-                    border: "1px red solid",
+                    fontSize: "2rem",
                   }}
                 >
-                  궁금한 게 있을 땐 이웃에게 물어보세요.
-                </span>
+                  <AiFillHome />
+                </div>
+                <div className="font-bold mb-2 mt-3">우리동네질문</div>
+                <span>궁금한 게 있을 땐 이웃에게 물어보세요.</span>
               </li>
               <li>
+                <div
+                  style={{
+                    fontSize: "2rem",
+                  }}
+                >
+                  <AiFillFileText />
+                </div>
                 <div className="font-bold mb-2 mt-3">우리분실센터</div>
-                <span className="mr-8">
-                  무언가를 잃어버렸을 때, 함께 찾을 수 있어요.
-                </span>
+                <span>무언가를 잃어버렸을 때, 함께 찾을 수 있어요.</span>
               </li>
               <li>
+                <div
+                  style={{
+                    fontSize: "2rem",
+                  }}
+                >
+                  <AiFillMessage />
+                </div>
                 <div className="font-bold mb-2 mt-3">동네모임</div>
-                <span className="text-xs">
-                  관심사가 비슷한 이웃과 온오프라인으로 만나요.
-                </span>
+                <span>관심사가 비슷한 이웃과 온오프라인으로 만나요.</span>
               </li>
             </ul>
           </div>
-          <div className="thirdimg">
-            <img
-              src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-2-91a2286453bdf82dea16a7f0ee4ceb9dd325eae0e5a2a9967ba72c344bf8f2fc.webp"
-              alt=""
-            />
+          <div className="thirdimg relative">
+            <div
+              style={{
+                width: "100%",
+                position: "absolute",
+                top: "10%",
+                left: "10%",
+              }}
+            >
+              <img
+                src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-2-91a2286453bdf82dea16a7f0ee4ceb9dd325eae0e5a2a9967ba72c344bf8f2fc.webp"
+                alt=""
+              />
+            </div>
           </div>
         </div>
       </section>

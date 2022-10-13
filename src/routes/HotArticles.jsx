@@ -22,14 +22,15 @@ const HotArticles = () => {
         </h1>
         <div
           style={{
-            transform: "translateX(170%)",
+            transform: "translateX(180%)",
             marginTop: "3rem",
             display: "inline-block",
+            width: "350px",
           }}
         >
           <div className="dropdown dropdown-hover">
             <label tabIndex={0} className="btn m-1">
-              동네를 선택하세요
+              대전광역시
             </label>
             <ul
               tabIndex={0}

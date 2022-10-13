@@ -245,139 +245,143 @@ const trust = () => {
               paddingLeft: "5rem",
             }}
           >
-            <div style={{}}>
-              <h1
-                style={{
-                  fontSize: "2rem",
-                  fontWeight: "bolder",
-                  paddingTop: "5rem",
-                  paddingBottom: "5rem",
-                }}
-              >
-                지금 이 순간에도 당신을 위해 노력하고 있어요!
-              </h1>
-              <div
-                style={{
-                  display: "inline-block",
-                  width: "49%",
-                }}
-              >
-                <img src="https://i.postimg.cc/BnY7bt05/4.png" alt="" />
-                <h1
-                  style={{
-                    fontSize: "1.3rem",
-                    fontWeight: "bolder",
-                    paddingTop: "3rem",
-                    paddingBottom: "1rem",
-                  }}
-                >
-                  사기꾼은 실시간으로 제재해요
-                </h1>
+            <h1
+              style={{
+                fontSize: "2rem",
+                fontWeight: "bolder",
+                paddingTop: "5rem",
+                paddingBottom: "5rem",
+                position: "relative",
+              }}
+            >
+              지금 이 순간에도 당신을 위해 노력하고 있어요!
+            </h1>
+            <div className="grid grid-cols-2">
+              <div>
                 <div
                   style={{
-                    width: "300px",
+                    marginTop: "-23px",
                   }}
                 >
-                  <span>
-                    당근마켓은 사용자 보호를 위해 다양한 사기 사례를 분석하고
-                    있어요. 사기 등의 행위가 발견되는 즉시 해당 사용자의 서비스
-                    이용을 제한해요. 사기를 저지른 사용자가 탈퇴하거나
-                    재가입해도 서비스를 이용할 수 없으니 안심하세요.
-                  </span>
+                  <img src="https://i.postimg.cc/BnY7bt05/4.png" alt="" />
+                  <h1
+                    style={{
+                      fontSize: "1.3rem",
+                      fontWeight: "bolder",
+                      paddingTop: "1rem",
+                      paddingBottom: "1rem",
+                    }}
+                  >
+                    사기꾼은 실시간으로 제재해요
+                  </h1>
+                  <div
+                    style={{
+                      width: "300px",
+                    }}
+                  >
+                    <span>
+                      당근마켓은 사용자 보호를 위해 다양한 사기 사례를 분석하고
+                      있어요. 사기 등의 행위가 발견되는 즉시 해당 사용자의
+                      서비스 이용을 제한해요. 사기를 저지른 사용자가 탈퇴하거나
+                      재가입해도 서비스를 이용할 수 없으니 안심하세요.
+                    </span>
+                  </div>
                 </div>
               </div>
-              <div
-                style={{
-                  display: "inline-block",
-                  width: "49%",
-                }}
-              >
-                <img src="https://i.postimg.cc/xTk35gDm/5.png" alt="" />
-                <h1
-                  style={{
-                    fontSize: "1.3rem",
-                    fontWeight: "bolder",
-                    paddingTop: "3rem",
-                    paddingBottom: "1rem",
-                  }}
-                >
-                  채팅 메시지로 미리 알려줘요
-                </h1>
+              <div>
                 <div
                   style={{
-                    width: "300px",
+                    position: "relative",
                   }}
                 >
-                  <span>
-                    당근마켓 채팅을 이용하면 다양한 안내 및 경고 메시지들을 받을
-                    수 있어요. 상대방의 사기 이력이나 유사한 사기 사례를
-                    주의하라고 알려주기도 하고, 사기가 진행되지 않도록 대화 도중
-                    채팅을 막기도 해요. 지금 이 순간에도 사기 사례를 분석하여
-                    고도화하고 있어요.
-                  </span>
+                  <img src="https://i.postimg.cc/xTk35gDm/5.png" alt="" />
+                  <h1
+                    style={{
+                      fontSize: "1.3rem",
+                      fontWeight: "bolder",
+                      paddingTop: "1.2rem",
+                      paddingBottom: "1.2rem",
+                    }}
+                  >
+                    채팅 메시지로 미리 알려줘요
+                  </h1>
+                  <div
+                    style={{
+                      width: "300px",
+                    }}
+                  >
+                    <span>
+                      당근마켓 채팅을 이용하면 다양한 안내 및 경고 메시지들을
+                      받을 수 있어요. 상대방의 사기 이력이나 유사한 사기 사례를
+                      주의하라고 알려주기도 하고, 사기가 진행되지 않도록 대화
+                      도중 채팅을 막기도 해요. 지금 이 순간에도 사기 사례를
+                      분석하여 고도화하고 있어요.
+                    </span>
+                  </div>
                 </div>
               </div>
-              <div
-                style={{
-                  display: "inline-block",
-                  width: "49%",
-                  paddingTop: "5rem",
-                }}
-              >
-                <img src="https://i.postimg.cc/pXhztTd5/2.png" alt="" />
-                <h1
-                  style={{
-                    fontSize: "1.3rem",
-                    fontWeight: "bolder",
-                    paddingTop: "3rem",
-                    paddingBottom: "1rem",
-                  }}
-                >
-                  게시글을 분석해요
-                </h1>
+              <div>
                 <div
                   style={{
-                    width: "300px",
+                    paddingTop: "5rem",
                   }}
                 >
-                  <span>
-                    머신러닝 기술을 이용해 게시글을 분석해요. 판매금지품목이나
-                    전문판매업자의 판매 게시글, 허위 게시글, 광고 게시글, 중복
-                    게시글 등은 노출되지 않아요. 신뢰할 수 있는 우리 동네 마켓을
-                    만들기 위해 노력하고 있어요.
-                  </span>
+                  <img src="https://i.postimg.cc/pXhztTd5/2.png" alt="" />
+                  <h1
+                    style={{
+                      fontSize: "1.3rem",
+                      fontWeight: "bolder",
+                      paddingTop: "1.2rem",
+                      paddingBottom: "1rem",
+                    }}
+                  >
+                    게시글을 분석해요
+                  </h1>
+                  <div
+                    style={{
+                      width: "300px",
+                    }}
+                  >
+                    <span>
+                      머신러닝 기술을 이용해 게시글을 분석해요. 판매금지품목이나
+                      전문판매업자의 판매 게시글, 허위 게시글, 광고 게시글, 중복
+                      게시글 등은 노출되지 않아요. 신뢰할 수 있는 우리 동네
+                      마켓을 만들기 위해 노력하고 있어요.
+                    </span>
+                  </div>
                 </div>
               </div>
-              <div
-                style={{
-                  display: "inline-block",
-                  width: "49%",
-                  paddingTop: "5rem",
-                }}
-              >
-                <img src="https://i.postimg.cc/XXSJWn29/3.png" alt="" />
-                <h1
-                  style={{
-                    fontSize: "1.3rem",
-                    fontWeight: "bolder",
-                    paddingTop: "3rem",
-                    paddingBottom: "1rem",
-                  }}
-                >
-                  수사기관과 함께 해요
-                </h1>
+              <div>
                 <div
                   style={{
-                    width: "300px",
+                    paddingTop: "5rem",
+                    marginTop: "-23px",
                   }}
                 >
-                  <span>
-                    거래 사기 이력이 있는 사용자는 서비스를 사용할 수 없어요.
-                    사기 등 거래 관련 문제는 빠르게 해결될 수 있도록 당근마켓
-                    팀도 함께 노력해요. 신고를 권장하고, 수사기관의 요청에 적극
-                    협조하고 있어요. 서울지방경찰청과 사기예방캠페인도 함께
-                    진행했어요.
-                  </span>
+                  <img src="https://i.postimg.cc/XXSJWn29/3.png" alt="" />
+                  <h1
+                    style={{
+                      fontSize: "1.3rem",
+                      fontWeight: "bolder",
+
+                      paddingBottom: "1rem",
+                    }}
+                  >
+                    수사기관과 함께 해요
+                  </h1>
+                  <div
+                    style={{
+                      width: "300px",
+                    }}
+                  >
+                    <span>
+                      거래 사기 이력이 있는 사용자는 서비스를 사용할 수 없어요.
+                      사기 등 거래 관련 문제는 빠르게 해결될 수 있도록 당근마켓
+                      팀도 함께 노력해요. 신고를 권장하고, 수사기관의 요청에
+                      적극 협조하고 있어요. 서울지방경찰청과 사기예방캠페인도
+                      함께 진행했어요.
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

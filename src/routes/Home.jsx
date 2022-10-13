@@ -56,10 +56,16 @@ const Home = () => {
           <h1>중고거래 인기매물</h1>
         </div>
         <div>
-          <ul className="grid grid-cols-4">
+          <ul
+            className="grid grid-cols-4"
+            style={{
+              maxWidth: "1000px",
+              margin: "0 auto",
+            }}
+          >
             <li
               style={{
-                border: "1px red solid",
+                paddingBottom: "30px",
               }}
             >
               <a href="#">
@@ -94,13 +100,27 @@ const Home = () => {
                   >
                     <span>롯데 자이언츠 이대호 은퇴경기 티켓 팔아요</span>
                   </div>
-                  <div>
+                  <div
+                    style={{
+                      fontWeight: "bolder",
+                      padding: "5px 0",
+                    }}
+                  >
                     <span>33,000원</span>
                   </div>
-                  <div>
+                  <div
+                    style={{
+                      fontSize: "0.8rem",
+                    }}
+                  >
                     <span>부산 진구 부전동</span>
                   </div>
-                  <div>
+                  <div
+                    style={{
+                      fontSize: "0.8rem",
+                      color: "gray",
+                    }}
+                  >
                     <span>관심 5</span>
                     <span> º </span>
                     <span>채팅 42</span>

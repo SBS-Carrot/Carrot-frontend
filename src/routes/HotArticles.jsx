@@ -27,31 +27,44 @@ const HotArticles = () => {
             display: "inline-block",
           }}
         >
-          <select className="select select-info  mr-4 ">
-            <option disabled selected>
-              대전광역시
-            </option>
-          </select>
-          <select className="select select-info  mr-1 ">
-            <option disabled selected>
+          <div className="dropdown dropdown-hover">
+            <label tabIndex={0} className="btn m-1">
               동네를 선택하세요
-            </option>
-            <option>
-              <a href="#">대덕구</a>
-            </option>
-            <option>
-              <a href="#">동구</a>
-            </option>
-            <option>
-              <a href="#">서구</a>
-            </option>
-            <option>
-              <a href="#">유성구</a>
-            </option>
-            <option>
-              <a href="#">중구</a>
-            </option>
-          </select>
+            </label>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <a href="#">대전광역시</a>
+              </li>
+            </ul>
+          </div>
+          <div className="dropdown dropdown-hover">
+            <label tabIndex={0} className="btn m-1">
+              동네를 선택하세요
+            </label>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <a href="http://localhost:3000/region/대덕구">대덕구</a>
+              </li>
+              <li>
+                <a href="http://localhost:3000/region/동구">동구</a>
+              </li>
+              <li>
+                <a href="http://localhost:3000/region/서구">서구</a>
+              </li>
+              <li>
+                <a href="http://localhost:3000/region/유성구">유성구</a>
+              </li>
+              <li>
+                <a href="http://localhost:3000/region/중구">중구</a>
+              </li>
+            </ul>
+          </div>
         </div>
         <ul className="grid grid-cols-4">
           <li>

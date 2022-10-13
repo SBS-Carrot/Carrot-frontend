@@ -56,82 +56,388 @@ const Home = () => {
           <h1>중고거래 인기매물</h1>
         </div>
         <div>
-          <div
-            style={{
-              width: "200px",
-              height: "200px",
-              borderRadius: "15px",
-              outline: "gray 1px solid",
-            }}
-          >
-            <img
-              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-              alt=""
+          <ul className="grid grid-cols-4">
+            <li
               style={{
-                borderRadius: "15px",
+                border: "1px red solid",
               }}
-            />
-          </div>
-          <div
-            style={{
-              width: "200px",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-              overflowX: "hidden",
-            }}
-          >
-            <span>롯데 자이언츠 이대호 은퇴경기 티켓 팔아요</span>
-          </div>
-          <div>
-            <span>33,000원</span>
-          </div>
-          <div>
-            <span>부산 진구 부전동</span>
-          </div>
-          <div>
-            <span>관심 5</span>
-            <span> º </span>
-            <span>채팅 42</span>
-          </div>
-        </div>
-        <div>
-          <div
-            style={{
-              width: "200px",
-              height: "200px",
-              borderRadius: "15px",
-              outline: "gray 1px solid",
-            }}
-          >
-            <img
-              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-              alt=""
-              style={{
-                borderRadius: "15px",
-              }}
-            />
-          </div>
-          <div
-            style={{
-              width: "200px",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-              overflowX: "hidden",
-            }}
-          >
-            <span>롯데 자이언츠 이대호 은퇴경기 티켓 팔아요</span>
-          </div>
-          <div>
-            <span>33,000원</span>
-          </div>
-          <div>
-            <span>부산 진구 부전동</span>
-          </div>
-          <div>
-            <span>관심 5</span>
-            <span> º </span>
-            <span>채팅 42</span>
-          </div>
+            >
+              <a href="#">
+                <div
+                  style={{
+                    marginLeft: "5px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      borderRadius: "15px",
+                      outline: "gray 1px solid",
+                    }}
+                  >
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
+                      alt=""
+                      style={{
+                        borderRadius: "15px",
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      width: "200px",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      overflowX: "hidden",
+                    }}
+                  >
+                    <span>롯데 자이언츠 이대호 은퇴경기 티켓 팔아요</span>
+                  </div>
+                  <div>
+                    <span>33,000원</span>
+                  </div>
+                  <div>
+                    <span>부산 진구 부전동</span>
+                  </div>
+                  <div>
+                    <span>관심 5</span>
+                    <span> º </span>
+                    <span>채팅 42</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div
+                  style={{
+                    marginLeft: "5px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      borderRadius: "15px",
+                      outline: "gray 1px solid",
+                    }}
+                  >
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
+                      alt=""
+                      style={{
+                        borderRadius: "15px",
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      width: "200px",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      overflowX: "hidden",
+                    }}
+                  >
+                    <span>롯데 자이언츠 이대호 은퇴경기 티켓 팔아요</span>
+                  </div>
+                  <div>
+                    <span>33,000원</span>
+                  </div>
+                  <div>
+                    <span>부산 진구 부전동</span>
+                  </div>
+                  <div>
+                    <span>관심 5</span>
+                    <span> º </span>
+                    <span>채팅 42</span>
+                  </div>
+                </div>
+              </a>
+            </li>{" "}
+            <li>
+              <a href="#">
+                <div
+                  style={{
+                    marginLeft: "5px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      borderRadius: "15px",
+                      outline: "gray 1px solid",
+                    }}
+                  >
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
+                      alt=""
+                      style={{
+                        borderRadius: "15px",
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      width: "200px",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      overflowX: "hidden",
+                    }}
+                  >
+                    <span>롯데 자이언츠 이대호 은퇴경기 티켓 팔아요</span>
+                  </div>
+                  <div>
+                    <span>33,000원</span>
+                  </div>
+                  <div>
+                    <span>부산 진구 부전동</span>
+                  </div>
+                  <div>
+                    <span>관심 5</span>
+                    <span> º </span>
+                    <span>채팅 42</span>
+                  </div>
+                </div>
+              </a>
+            </li>{" "}
+            <li>
+              <a href="#">
+                <div
+                  style={{
+                    marginLeft: "5px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      borderRadius: "15px",
+                      outline: "gray 1px solid",
+                    }}
+                  >
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
+                      alt=""
+                      style={{
+                        borderRadius: "15px",
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      width: "200px",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      overflowX: "hidden",
+                    }}
+                  >
+                    <span>롯데 자이언츠 이대호 은퇴경기 티켓 팔아요</span>
+                  </div>
+                  <div>
+                    <span>33,000원</span>
+                  </div>
+                  <div>
+                    <span>부산 진구 부전동</span>
+                  </div>
+                  <div>
+                    <span>관심 5</span>
+                    <span> º </span>
+                    <span>채팅 42</span>
+                  </div>
+                </div>
+              </a>
+            </li>{" "}
+            <li>
+              <a href="#">
+                <div
+                  style={{
+                    marginLeft: "5px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      borderRadius: "15px",
+                      outline: "gray 1px solid",
+                    }}
+                  >
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
+                      alt=""
+                      style={{
+                        borderRadius: "15px",
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      width: "200px",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      overflowX: "hidden",
+                    }}
+                  >
+                    <span>롯데 자이언츠 이대호 은퇴경기 티켓 팔아요</span>
+                  </div>
+                  <div>
+                    <span>33,000원</span>
+                  </div>
+                  <div>
+                    <span>부산 진구 부전동</span>
+                  </div>
+                  <div>
+                    <span>관심 5</span>
+                    <span> º </span>
+                    <span>채팅 42</span>
+                  </div>
+                </div>
+              </a>
+            </li>{" "}
+            <li>
+              <a href="#">
+                <div
+                  style={{
+                    marginLeft: "5px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      borderRadius: "15px",
+                      outline: "gray 1px solid",
+                    }}
+                  >
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
+                      alt=""
+                      style={{
+                        borderRadius: "15px",
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      width: "200px",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      overflowX: "hidden",
+                    }}
+                  >
+                    <span>롯데 자이언츠 이대호 은퇴경기 티켓 팔아요</span>
+                  </div>
+                  <div>
+                    <span>33,000원</span>
+                  </div>
+                  <div>
+                    <span>부산 진구 부전동</span>
+                  </div>
+                  <div>
+                    <span>관심 5</span>
+                    <span> º </span>
+                    <span>채팅 42</span>
+                  </div>
+                </div>
+              </a>
+            </li>{" "}
+            <li>
+              <a href="#">
+                <div
+                  style={{
+                    marginLeft: "5px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      borderRadius: "15px",
+                      outline: "gray 1px solid",
+                    }}
+                  >
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
+                      alt=""
+                      style={{
+                        borderRadius: "15px",
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      width: "200px",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      overflowX: "hidden",
+                    }}
+                  >
+                    <span>롯데 자이언츠 이대호 은퇴경기 티켓 팔아요</span>
+                  </div>
+                  <div>
+                    <span>33,000원</span>
+                  </div>
+                  <div>
+                    <span>부산 진구 부전동</span>
+                  </div>
+                  <div>
+                    <span>관심 5</span>
+                    <span> º </span>
+                    <span>채팅 42</span>
+                  </div>
+                </div>
+              </a>
+            </li>{" "}
+            <li>
+              <a href="#">
+                <div
+                  style={{
+                    marginLeft: "5px",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      borderRadius: "15px",
+                      outline: "gray 1px solid",
+                    }}
+                  >
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
+                      alt=""
+                      style={{
+                        borderRadius: "15px",
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      width: "200px",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      overflowX: "hidden",
+                    }}
+                  >
+                    <span>롯데 자이언츠 이대호 은퇴경기 티켓 팔아요</span>
+                  </div>
+                  <div>
+                    <span>33,000원</span>
+                  </div>
+                  <div>
+                    <span>부산 진구 부전동</span>
+                  </div>
+                  <div>
+                    <span>관심 5</span>
+                    <span> º </span>
+                    <span>채팅 42</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
         </div>
         <div
           style={{

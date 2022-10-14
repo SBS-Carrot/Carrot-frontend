@@ -4,6 +4,7 @@ import Trust from "./routes/Trust";
 import Jobs from "./routes/Jobs";
 import HotArticles from "./routes/HotArticles";
 import Region from "./routes/Region";
+import Realty from "./routes/Realty"
 import RegionTwo from "./routes/RegionTwo";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 

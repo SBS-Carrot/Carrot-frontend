@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../layouts/Header";
+import Footer from "../layouts/Footer";
 import { useRecoilValue } from "recoil";
 import { authenticatedState } from "../recoil/auth";
 import "../styles/Home.css";
@@ -196,6 +197,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

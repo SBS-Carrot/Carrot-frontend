@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../layouts/Header";
 import "../styles/Jobs.css";
+import Footer from "../layouts/Footer";
 const Jobs = () => {
   return (
     <div>
@@ -591,6 +592,7 @@ const Jobs = () => {
           </li>
         </ul>
       </div>
+      <Footer />
     </div>
   );
 };

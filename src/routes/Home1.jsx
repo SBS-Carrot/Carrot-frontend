@@ -3,10 +3,10 @@ import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import { useRecoilValue } from "recoil";
 import { authenticatedState } from "../recoil/auth";
-import "../styles/Home.css";
+import "../styles/Home1.css";
 import { AiFillHome, AiFillFileText, AiFillMessage } from "react-icons/ai";
 
-const Home = () => {
+const Home1 = () => {
   const logined = useRecoilValue(authenticatedState);
   return (
     <div>
@@ -202,7 +202,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Home1;
 
 //https://goddaehee.tistory.com/274 Branch 기초생성 및 이동
 //https://goddaehee.tistory.com/275?category=381481 Branch 병합

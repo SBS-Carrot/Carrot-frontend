@@ -12,7 +12,7 @@ const trust = () => {
         <div
           style={{
             width: "100%",
-            height: "620px",
+            height: "605px",
             backgroundColor: "#f7f5f4",
           }}
         >

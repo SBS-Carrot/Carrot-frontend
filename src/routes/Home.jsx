@@ -42,7 +42,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* ul li로 나중에 변경할것, a태그로 해당게시물 이동 */}
+
       <div className="section-Box1 bg-gray-100">
         <div
           style={{
@@ -469,7 +469,7 @@ const Home = () => {
             marginTop: "20px",
           }}
         >
-          <a href="#">인기매물 더 보기</a>
+          <a href="http://localhost:3000/hot_articles">인기매물 더 보기</a>
         </div>
       </div>
 

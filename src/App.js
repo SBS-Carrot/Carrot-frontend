@@ -17,6 +17,7 @@ function App() {
         <Route path="/hot_articles" element={<HotArticles />} />
         <Route path="/region/:address" element={<Region />} />
         <Route path="/region/:address/:addressTwo" element={<RegionTwo />} />
+       <Route path="/realty" element={<Realty />} />
       </Routes>
     </Router>
   );

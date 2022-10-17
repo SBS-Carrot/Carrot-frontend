@@ -43,7 +43,7 @@ const Login = () => {
       <hr />
       <div className="bg-gray-200 flex justify-center ">
         <div
-          className="bg-white flex items-center flex-col py-40"
+          className="bg-white flex items-center flex-col py-56"
           style={{
             width: "1000px",
             margin: "0 auto",
@@ -133,7 +133,6 @@ const Login = () => {
           style={{
             width: "100%",
             height: "100%",
-
             maxWidth: "1200px",
           }}
         >

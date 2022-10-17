@@ -15,7 +15,6 @@ const Join = () => {
             paddingTop: "5rem",
             margin: "0 auto",
             width: "100%",
-
             textAlign: "center",
             position: "relative",
           }}

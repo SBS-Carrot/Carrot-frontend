@@ -4,8 +4,9 @@ import Trust from "./routes/Trust";
 import Jobs from "./routes/Jobs";
 import HotArticles from "./routes/HotArticles";
 import Region from "./routes/Region";
-import Realty from "./routes/Realty"
+import Realty from "./routes/Realty";
 import RegionTwo from "./routes/RegionTwo";
+import Join from "./routes/Join";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
         <Route path="/hot_articles" element={<HotArticles />} />
         <Route path="/region/:address" element={<Region />} />
         <Route path="/region/:address/:addressTwo" element={<RegionTwo />} />
-       <Route path="/realty" element={<Realty />} />
+        <Route path="/realty" element={<Realty />} />
+        <Route path="/join" element={<Join />} />
       </Routes>
     </Router>
   );

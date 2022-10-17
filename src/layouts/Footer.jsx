@@ -9,6 +9,7 @@ const Footer = () => {
     <div
       style={{
         height: "500px",
+        marginTop: "20px",
       }}
     >
       <hr />

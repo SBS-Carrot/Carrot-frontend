@@ -1,11 +1,15 @@
 import React from "react";
-import Header from "../layouts/Header";
+import JobsHeader from "../layouts/JobsHeader";
 import "../styles/Jobs.css";
 import Footer from "../layouts/Footer";
+import { useNavigate, useParams } from "react-router-dom";
 const Jobs = () => {
+  const navigate = useNavigate();
+  const { Router } = useParams();
+
   return (
     <div>
-      <Header />
+      <JobsHeader />
       <div
         style={{
           backgroundColor: "orange",

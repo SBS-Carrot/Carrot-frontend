@@ -149,7 +149,7 @@ const Login = () => {
               개인정보 취급방침
             </a>
             <a href="#" className="link-hover">
-              위치기반서비스 이용약관
+              위치기반 서비스 이용약관
             </a>
           </div>
           <div className="flex items-center">© Daangn Market Inc.</div>

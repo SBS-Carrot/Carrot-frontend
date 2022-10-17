@@ -5,7 +5,7 @@ import { authenticatedState } from "../recoil/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-const Header = () => {
+const JobsHeader = () => {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   return (
     <div
@@ -57,14 +57,14 @@ const Header = () => {
               당근마켓
             </a>
           </div>
+          <div>
+            <a href="http://localhost:3000/">중고거래</a>
+          </div>
           <div
             style={{
               color: "#ffa445",
             }}
           >
-            <a href="http://localhost:3000/">중고거래</a>
-          </div>
-          <div>
             <a href="http://localhost:3000/jobs">알바</a>
           </div>
           <div>
@@ -112,4 +112,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default JobsHeader;

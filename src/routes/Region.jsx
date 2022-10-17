@@ -3,6 +3,7 @@ import { Routes, useParams } from "react-router-dom";
 import Header from "../layouts/Header";
 import { Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Footer from "../layouts/Footer";
 const Region = () => {
   const navigate = useNavigate();
   const { address } = useParams();
@@ -734,6 +735,7 @@ const Region = () => {
             </li>
           </ul>
         </div>
+        <Footer />
       </div>
     );
   } else if (address == "동구") {
@@ -1574,6 +1576,7 @@ const Region = () => {
             </li>
           </ul>
         </div>
+        <Footer />
       </div>
     );
   } else if (address == "서구") {
@@ -2363,6 +2366,7 @@ const Region = () => {
             </li>
           </ul>
         </div>
+        <Footer />
       </div>
     );
   } else if (address == "유성구") {
@@ -3242,6 +3246,7 @@ const Region = () => {
             </li>
           </ul>
         </div>
+        <Footer />
       </div>
     );
   } else if (address == "중구") {
@@ -3996,6 +4001,7 @@ const Region = () => {
             </li>
           </ul>
         </div>
+        <Footer />
       </div>
     );
   } else {
@@ -4051,6 +4057,7 @@ const Region = () => {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

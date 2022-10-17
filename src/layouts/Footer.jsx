@@ -3,13 +3,13 @@ import { GrApple } from "react-icons/gr";
 import { FaGooglePlay } from "react-icons/fa";
 import { AiOutlineInstagram } from "react-icons/ai";
 import { BsYoutube, BsFacebook, BsTwitter } from "react-icons/bs";
-import { GrLanguage } from "react-icons/gr";
 
 const Footer = () => {
   return (
     <div
       style={{
         height: "500px",
+        marginTop: "20px",
       }}
     >
       <hr />

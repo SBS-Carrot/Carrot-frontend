@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../layouts/Header";
-
+import Footer from "../layouts/Footer";
 const HotArticles = () => {
   return (
     <div>
@@ -643,6 +643,7 @@ const HotArticles = () => {
           </a>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

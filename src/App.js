@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Home from "./routes/Home";
 import Trust from "./routes/Trust";
 import Jobs from "./routes/Jobs";
+import Realty from "./routes/Realty";
 import HotArticles from "./routes/HotArticles";
 import Region from "./routes/Region";
 import RegionTwo from "./routes/RegionTwo";
@@ -17,7 +18,7 @@ function App() {
         <Route path="/hot_articles" element={<HotArticles />} />
         <Route path="/region/:address" element={<Region />} />
         <Route path="/region/:address/:addressTwo" element={<RegionTwo />} />
-       <Route path="/realty" element={<Realty />} />
+        <Route path="/realty" element={<Realty />} />
       </Routes>
     </Router>
   );

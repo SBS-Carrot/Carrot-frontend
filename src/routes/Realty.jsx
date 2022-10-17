@@ -1,13 +1,16 @@
 import React from "react";
-import Header from "../layouts/Header";
+import RealtyHeader from "../layouts/RealtyHeader";
 import Footer from "../layouts/Footer";
 import "../styles/Realty.css";
 import { AiOutlineRight } from "react-icons/ai";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Realty = () => {
+  const navigate = useNavigate();
+  const { Router } = useParams();
   return (
     <div>
-      <Header />
+      <RealtyHeader />
       <section>
         <div
           style={{

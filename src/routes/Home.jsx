@@ -89,22 +89,38 @@ const Home = () => {
             </div>
             <div className="font-bold flex justify-center">
               <div
-                className="mr-8 bg-gray-200"
                 style={{
-                  padding: "10px 20px",
                   borderRadius: "10px",
                 }}
               >
-                <a href="">인기매물 보기</a>
+                <a
+                  href="http://localhost:3000/hot_articles"
+                  style={{
+                    padding: "10px 20px",
+
+                    borderRadius: "10px",
+                  }}
+                  className="mr-8 bg-gray-200"
+                >
+                  인기매물 보기
+                </a>
               </div>
               <div
-                className="mr-8 bg-gray-200"
                 style={{
-                  padding: "10px 20px",
                   borderRadius: "10px",
                 }}
               >
-                <a href="">믿을 수 있는 중고거래</a>
+                <a
+                  href="http://localhost:3000/trust"
+                  style={{
+                    padding: "10px 20px",
+
+                    borderRadius: "10px",
+                  }}
+                  className="mr-8 bg-gray-200"
+                >
+                  믿을 수 있는 중고거래
+                </a>
               </div>
             </div>
           </div>

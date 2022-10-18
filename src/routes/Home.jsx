@@ -272,7 +272,7 @@ const Home = () => {
                 paddingBottom: "30px",
               }}
             >
-              <a href="#">
+              <a href="http://localhost:3000/articles/1">
                 <div
                   style={{
                     marginLeft: "5px",
@@ -287,9 +287,13 @@ const Home = () => {
                     }}
                   >
                     <img
-                      src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
+                      className="object-fill"
+                      src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/83cbd5362a585918a9b4a7354984ecbfb20208da27522d9b39579099b2cfe1f9.webp?q=95&s=1440x1440&t=inside"
                       alt=""
                       style={{
+                        width: "100%",
+                        height: "100%",
+                        display: "block",
                         borderRadius: "15px",
                       }}
                     />
@@ -333,7 +337,7 @@ const Home = () => {
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="http://localhost:3000/articles/2">
                 <div
                   style={{
                     marginLeft: "5px",
@@ -380,7 +384,7 @@ const Home = () => {
               </a>
             </li>{" "}
             <li>
-              <a href="#">
+              <a href="http://localhost:3000/articles/3">
                 <div
                   style={{
                     marginLeft: "5px",

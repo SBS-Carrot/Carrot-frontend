@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import { authenticatedState } from "../recoil/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import "../styles/Header.css";
 
 const Header = () => {
   const [logined, setLogined] = useRecoilState(authenticatedState);
@@ -47,7 +48,7 @@ const Header = () => {
               fontSize: "1.4rem",
             }}
           >
-            <a href="http://localhost:3000/">
+            <a href="http://localhost:3000/" className="fontt">
               <FontAwesomeIcon
                 icon={faCarrot}
                 style={{

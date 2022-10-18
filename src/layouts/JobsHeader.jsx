@@ -47,7 +47,7 @@ const JobsHeader = () => {
               fontSize: "1.4rem",
             }}
           >
-            <a href="http://localhost:3000/">
+            <a href="http://localhost:3000/" className="fontt">
               <FontAwesomeIcon
                 icon={faCarrot}
                 style={{

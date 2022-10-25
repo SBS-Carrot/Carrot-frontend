@@ -95,7 +95,7 @@ const Test = () => {
         },
       });
       console.log(data2);
-      window.alert("사진추가");
+      window.alert("사진추가d");
     } catch (e) {
       console.log(e);
     }

@@ -69,25 +69,23 @@ const Join = () => {
     phoneValue
   ) => {
     try {
-      const data = await axios.get(`http://localhost:8082/create`);
+      const data = await axios.post(`http://localhost:8083/create`, {
+        userid: idValue,
+        password: passwordValue,
+        password2: password1Value,
+        username: nameValue,
+        birth: birthValue,
+        email: emailValue,
+        nickname: nicknameValue,
+        address: addressValue,
+        phone: phoneValue,
+      });
+      window.alert("회원가입 완료");
     } catch (e) {
-      // try {
-      //   const data = await axios.post(`http://localhost:8082/create`, {
-      //     userid: idValue,
-      //     password: passwordValue,
-      //     password2: password1Value,
-      //     username: nameValue,
-      //     birth: birthValue,
-      //     email: emailValue,
-      //     nickname: nicknameValue,
-      //     address: addressValue,
-      //     phone: phoneValue,
-      //   });
-      //   window.alert("회원가입 완료");
-      // }
       console.log(e);
     }
   };
+
   return (
     <div>
       <Header />

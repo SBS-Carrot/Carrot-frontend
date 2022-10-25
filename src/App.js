@@ -8,7 +8,11 @@ import Region from "./routes/Region";
 import Login from "./routes/Login";
 import RegionTwo from "./routes/RegionTwo";
 import Join from "./routes/Join";
+
 import Articles from "./routes/Articles";
+
+import Test from "./routes/Test";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -24,7 +28,10 @@ function App() {
         <Route path="/realty" element={<Realty />} />
         <Route path="/join" element={<Join />} />
         <Route path="/login" element={<Login />} />
+
         <Route path="/articles/:num" element={<Articles />} />
+
+        <Route path="/test" element={<Test />} />
       </Routes>
     </Router>
   );

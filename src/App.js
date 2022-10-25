@@ -28,9 +28,7 @@ function App() {
         <Route path="/realty" element={<Realty />} />
         <Route path="/join" element={<Join />} />
         <Route path="/login" element={<Login />} />
-
         <Route path="/articles/:num" element={<Articles />} />
-
         <Route path="/test" element={<Test />} />
       </Routes>
     </Router>

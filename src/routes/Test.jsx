@@ -107,10 +107,10 @@ const Test = () => {
     <div>
       <Header />
       <div
-        className="pt-4"
+        className="pt-5"
         style={{
           textAlign: "center",
-          fontSize: "1.2rem",
+          fontSize: "1.4rem",
           fontWeight: "bolder",
         }}
       >
@@ -127,15 +127,14 @@ const Test = () => {
         style={{
           width: "850px",
           margin: "0 auto",
-          height: "700px",
+          height: "800px",
           position: "relative",
-          marginTop: "1rem",
-          border: "1px red solid",
+          marginTop: "1.4rem",
         }}
       >
         <div
           style={{
-            display: "inline-block",
+            width: "750px",
           }}
         >
           <div>
@@ -226,16 +225,15 @@ const Test = () => {
           <div
             className="flex "
             style={{
-              border: "1px red solid",
-              maxWidth: "600px",
+              maxWidth: "100%",
             }}
           >
             <div
-              className="p-5 rounded-lg"
+              className=" rounded-lg"
               style={{
                 border: "1px #d5d5d5 solid",
-                width: "90px",
-                height: "90px",
+                width: "100px",
+                height: "100px",
                 color: "#8f8f8f",
               }}
             >
@@ -250,14 +248,15 @@ const Test = () => {
                 />
                 <MdAddAPhoto
                   style={{
-                    fontSize: "2.5rem",
+                    fontSize: "3rem",
                     cursor: "pointer",
+                    margin: "1.5rem",
                   }}
                 />
               </label>
             </div>
 
-            <ul className="grid grid-cols-5 gap-5 pl-4">
+            <ul className="grid grid-cols-5 gap-4 pl-4">
               {showImages.map((image, id) => (
                 <div
                   key={id}
@@ -268,7 +267,6 @@ const Test = () => {
                     flexDirection: "row",
                     position: "relative",
                     marginBottom: "20px",
-                    border: "1px red solid",
                   }}
                 >
                   <img
@@ -320,10 +318,12 @@ const Test = () => {
                 padding: "15px",
                 fontWeight: "bolder",
                 color: "white",
+                fontSize: "1.1rem",
                 backgroundColor: "#FFB26B",
                 position: "absolute",
-                bottom: "5%",
+                bottom: "7%",
                 left: "50%",
+                width: "750px",
                 transform: "translateX(-50%)",
               }}
             >

@@ -127,7 +127,7 @@ const Articles = () => {
             >
               다혼 자전거 판매합니다.
             </div>
-            <div className="flex">
+            <div className="flex gap-2">
               <div
                 className="text-sm"
                 style={{

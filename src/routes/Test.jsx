@@ -1,11 +1,9 @@
 import { useState } from "react";
 import Header from "../layouts/Header";
 import axios from "axios";
-<<<<<<< Updated upstream
-
-=======
 import { useEffect } from "react";
->>>>>>> Stashed changes
+import { MdAddAPhoto } from "react-icons/md";
+
 const Test = () => {
   const [category, setCategoryValue] = useState("");
   const [priceValue, setPriceValue] = useState("");
@@ -28,7 +26,6 @@ const Test = () => {
   };
   //사진 여러개 https://cotak.tistory.com/124
 
-<<<<<<< Updated upstream
   const onCompleteChange = () => {
     setCompleteToggle(!completeToggle);
   };
@@ -48,6 +45,7 @@ const Test = () => {
     }
 
     setShowImages(imageUrlLists);
+    console.log(imageUrlLists);
   };
 
   // X버튼 클릭 시 이미지 삭제
@@ -55,15 +53,6 @@ const Test = () => {
     setShowImages(showImages.filter((_, index) => index !== id));
   };
 
-=======
-  useEffect(() => {
-    const getData = async () => {
-      const data = await axios({ method: "GET", url: "http://localhost:8083" });
-      console.log(data);
-    };
-    getData();
-  });
->>>>>>> Stashed changes
   const onSubmit = async (subjectValue, contentValue, category, priceValue) => {
     try {
       const data = await axios({
@@ -118,150 +107,168 @@ const Test = () => {
     <div>
       <Header />
       <div
+        className="pt-4"
+        style={{
+          textAlign: "center",
+          fontSize: "1.2rem",
+          fontWeight: "bolder",
+        }}
+      >
+        <span
+          style={{
+            color: "#ffa445",
+          }}
+        >
+          중고거래 글쓰기
+        </span>
+      </div>
+      <div
+        className="flex justify-center "
         style={{
           width: "850px",
           margin: "0 auto",
           height: "700px",
-          border: "1px black solid",
-          borderRadius: "10px",
           position: "relative",
-          marginTop: "3rem",
+          marginTop: "1rem",
+          border: "1px red solid",
         }}
       >
-        <div>
-          <div
-            style={{
-              textAlign: "center",
-              fontSize: "1.2rem",
-              fontWeight: "bolder",
-            }}
-          >
-            <span
-              style={{
-                color: "#ffa445",
-              }}
-            >
-              중고거래 글쓰기
-            </span>
-          </div>
+        <div
+          style={{
+            display: "inline-block",
+          }}
+        >
           <div>
-            <div
-              style={{
-                display: "inline-block",
-                paddingRight: "10px",
-                paddingLeft: "10px",
-              }}
-            >
-              제목
+            <div>제목</div>
+            <div>
+              <input
+                type="text"
+                placeholder="게시글 제목"
+                value={subjectValue}
+                onChange={onSubjectChange}
+                style={{
+                  border: "1px  #d5d5d5 solid",
+                  height: "40px",
+                  width: "600px",
+                }}
+              />
             </div>
-            <input
-              type="text"
-              placeholder="게시글 제목"
-              value={subjectValue}
-              onChange={onSubjectChange}
-              style={{
-                border: "1px black solid",
-                borderRadius: "10px",
-                width: "300px",
-              }}
-            />
           </div>
-          <div
-            style={{
-              paddingLeft: "10px",
-            }}
-          >
-            내용
-          </div>
-          <div
-            style={{
-              paddingLeft: "10px",
-            }}
-          >
-            <input
-              type="text"
-              placeholder="게시글 내용을 작성해주세요. (가품 및 판매금지 물품은 게시가 제한될 수 있어요)"
-              value={contentValue}
-              onChange={onContentChange}
-              style={{
-                border: "1px black solid",
-                borderRadius: "10px",
-                width: "80%",
-                height: "120px",
-                paddingLeft: "10px",
-              }}
-            />
-          </div>
-          <div
-            style={{
-              paddingLeft: "10px",
-              paddingTop: "10px",
-            }}
-          >
-            <input
-              type="text"
-              placeholder="가격"
-              value={priceValue}
-              onChange={onPriceChange}
-              style={{
-                border: "1px black solid",
-                borderRadius: "10px",
-              }}
-            />
-          </div>
-          <div
-            style={{
-              paddingLeft: "10px",
-              paddingTop: "10px",
-            }}
-          >
-            <input
-              type="text"
-              placeholder="카테고리 선택"
+          <div className="pt-4">
+            <select
               value={category}
               onChange={onCategoryChange}
               style={{
-                border: "1px black solid",
-                borderRadius: "10px",
-                marginBottom: "20px",
+                border: "1px #d5d5d5 solid",
+                width: "35%",
+              }}
+            >
+              <option value="01">카테고리 선택</option>
+              <option value="01">디지털기기</option>
+              <option value="02">생활가전</option>
+              <option value="03">가구/인테리어</option>
+              <option value="04">생활/주방</option>
+              <option value="05">유아동</option>
+              <option value="06">유아도서</option>
+              <option value="07">여성의류</option>
+              <option value="08">여성잡화</option>
+              <option value="09">남성패션/잡화</option>
+              <option value="10">뷰티/미용</option>
+              <option value="11">스포츠/레저</option>
+              <option value="12">취미/게임/음반</option>
+              <option value="13">도서</option>
+              <option value="14">티켓/교환권</option>
+              <option value="15">가공식품</option>
+              <option value="16">반려동물용품</option>
+              <option value="17">식물</option>
+              <option value="18">기타 중고물품</option>
+              <option value="19">삽니다</option>
+            </select>
+          </div>
+          <div className="pt-4">
+            <input
+              type="text"
+              placeholder="\ 가격"
+              value={priceValue}
+              onChange={onPriceChange}
+              style={{
+                border: "1px  #d5d5d5 solid",
+                width: "35%",
               }}
             />
           </div>
-          <div
-          // className={classes.addPicture}
-          >
-            <label
-              htmlFor="input-file"
-              // className={classes.addButton}
-              onChange={handleAddImages}
-            >
+          <div>
+            <div className="pt-4">내용</div>
+            <div>
               <input
-                type="file"
-                id="input-file"
-                multiple
-                // className={classes.addButton}
-              />
-
-              <span
+                type="text"
+                placeholder="게시글 내용을 작성해주세요. (가품 및 판매금지 물품은 게시가 제한될 수 있어요)"
+                value={contentValue}
+                onChange={onContentChange}
                 style={{
-                  color: "#ffa445",
-                  fontWeight: "bolder",
+                  border: "1px #d5d5d5 solid",
+                  width: "100%",
+                  height: "120px",
+                  paddingLeft: "5px",
                 }}
-              >
-                사진은 최대 10장까지 추가할 수 있습니다.
-              </span>
-            </label>
+              />
+            </div>
+          </div>
+          <div
+            className="pt-4"
+            style={{
+              color: "#ffa445",
+              fontWeight: "bolder",
+            }}
+          >
+            사진은 최대 10장까지 추가할 수 있습니다.
+          </div>
+          <div
+            className="flex "
+            style={{
+              border: "1px red solid",
+              maxWidth: "600px",
+            }}
+          >
+            <div
+              className="p-5 rounded-lg"
+              style={{
+                border: "1px #d5d5d5 solid",
+                width: "90px",
+                height: "90px",
+                color: "#8f8f8f",
+              }}
+            >
+              <label htmlFor="input-file" onChange={handleAddImages}>
+                <input
+                  type="file"
+                  id="input-file"
+                  multiple
+                  style={{
+                    display: "none",
+                  }}
+                />
+                <MdAddAPhoto
+                  style={{
+                    fontSize: "2.5rem",
+                    cursor: "pointer",
+                  }}
+                />
+              </label>
+            </div>
+
             <ul className="grid grid-cols-5 gap-5 pl-4">
               {showImages.map((image, id) => (
                 <div
                   key={id}
                   style={{
-                    width: "130px",
+                    width: "110px",
                     height: "100px",
                     display: "flex",
                     flexDirection: "row",
                     position: "relative",
                     marginBottom: "20px",
+                    border: "1px red solid",
                   }}
                 >
                   <img
@@ -289,6 +296,7 @@ const Test = () => {
               ))}
             </ul>
           </div>
+
           <div>
             <button
               onClick={() => {
@@ -311,7 +319,8 @@ const Test = () => {
                 borderRadius: "10px",
                 padding: "15px",
                 fontWeight: "bolder",
-                color: "#ffa445",
+                color: "white",
+                backgroundColor: "#FFB26B",
                 position: "absolute",
                 bottom: "5%",
                 left: "50%",

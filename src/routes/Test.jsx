@@ -9,7 +9,15 @@ const Test = () => {
   const [subjectValue, setSubjectValue] = useState("");
   const [completeToggle, setCompleteToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
+  const [content, setContent] = useState("");
+  const [uploadedImg, setUploadedImg] = useState({
+    fileName: "",
+    fillPath: "",
+  });
   const [id, setId] = useState("");
+  const onChange = (e) => {
+    setContent(e.target.files[0]);
+  };
   const onPriceChange = (e) => {
     setPriceValue(e.target.value);
   };
@@ -43,6 +51,7 @@ const Test = () => {
     }
 
     setShowImages(imageUrlLists);
+    console.log(imageUrlLists);
   };
 
   // X버튼 클릭 시 이미지 삭제
@@ -50,45 +59,73 @@ const Test = () => {
     setShowImages(showImages.filter((_, index) => index !== id));
   };
 
-  const onSubmit = async (subjectValue, contentValue, category, priceValue) => {
-    try {
-      const data = await axios({
-        url: `http://localhost:8083/createProduct`,
-        method: "POST",
-        data: {
-          productCategory: category,
-          productPrice: priceValue,
-          productSubject: subjectValue,
-          productContent: contentValue,
-        },
-      });
-      setId(data.data.productId);
-    } catch (e) {
-      console.log(e);
+  // const onSubmit = async (subjectValue, contentValue, category, priceValue) => {
+  //   try {
+  //     const data = await axios({
+  //       url: `http://localhost:8083/createProduct`,
+  //       method: "POST",
+  //       data: {
+  //         productCategory: category,
+  //         productPrice: priceValue,
+  //         productSubject: subjectValue,
+  //         productContent: contentValue,
+  //       },
+  //     });
+  //     setId(data.data.productId);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    if (content == null || content == "") {
+      return;
     }
+    const formData = new FormData();
+    formData.append("img", content);
+
+    // formData.append("text", textValue);
+    //append : 개체 FormData내부의 기존 키에 새 값을 FormData추가
+    //참고사이트 : https://developer.mozilla.org/en-US/docs/Web/API/FormData/append
+
+    axios({
+      url: `http://localhost:8083/createProduct`,
+      method: "POST",
+      data: formData,
+    })
+      //textValue
+      .then((res) => {
+        const { fileName } = res.data;
+        setUploadedImg({ fileName });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
+
   const onSubmits = async (
-    subjectValue,
-    contentValue,
-    category,
-    priceValue,
+    // subjectValue,
+    // contentValue,
+    // category,
+    // priceValue,
     showImages
   ) => {
     try {
-      const data = await axios({
-        url: `http://localhost:8083/createProduct`,
-        method: "POST",
-        data: {
-          productCategory: category,
-          productPrice: priceValue,
-          productSubject: subjectValue,
-          productContent: contentValue,
-        },
-      });
-      setId(data.data.productId);
+      // const data = await axios({
+      //   url: `http://localhost:8083/createProduct`,
+      //   method: "POST",
+      //   data: {
+      //     productCategory: category,
+      //     productPrice: priceValue,
+      //     productSubject: subjectValue,
+      //     productContent: contentValue,
+      //   },
+      // });
+      // setId(data.data.productId);
 
       const data2 = await axios({
-        url: `http://localhost:8083/createProductImages/${data.data.productId}`,
+        url: `http://localhost:8083/createProductImages/1`,
         method: "POST",
         data: {
           path: showImages,
@@ -213,7 +250,7 @@ const Test = () => {
               }}
             />
           </div>
-          <div
+          {/* <div
           // className={classes.addPicture}
           >
             <label
@@ -274,7 +311,35 @@ const Test = () => {
                 </div>
               ))}
             </ul>
+          </div> */}
+          <div className="formbox ">
+            <form
+              onSubmit={onSubmit}
+              style={{
+                display: "inline-block",
+              }}
+            >
+              <div id="uploadDiv">
+                <input
+                  id="fileAdd"
+                  type="file"
+                  onChange={onChange}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                />
+              </div>
+              <div className="flex justify-center mt-5 mb-5">
+                <input
+                  type="submit"
+                  multiple="multiple"
+                  value="업로드하기"
+                  className="btn"
+                />
+              </div>
+            </form>
           </div>
+          {/*  */}
           <div>
             <button
               onClick={() => {

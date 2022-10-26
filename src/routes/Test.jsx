@@ -114,6 +114,7 @@ const Test = () => {
           fontWeight: "bolder",
         }}
       >
+<<<<<<< Updated upstream
         <span
           style={{
             color: "#ffa445",
@@ -138,6 +139,29 @@ const Test = () => {
             display: "inline-block",
           }}
         >
+=======
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSubmit(subjectValue, contentValue, category, priceValue);
+          }}
+        >
+          <div
+            style={{
+              textAlign: "center",
+              fontSize: "1.2rem",
+              fontWeight: "bolder",
+            }}
+          >
+            <span
+              style={{
+                color: "#ffa445",
+              }}
+            >
+              중고거래 글쓰기
+            </span>
+          </div>
+>>>>>>> Stashed changes
           <div>
             <div>제목</div>
             <div>
@@ -154,8 +178,62 @@ const Test = () => {
               />
             </div>
           </div>
+<<<<<<< Updated upstream
           <div className="pt-4">
             <select
+=======
+          <div
+            style={{
+              paddingLeft: "10px",
+            }}
+          >
+            내용
+          </div>
+          <div
+            style={{
+              paddingLeft: "10px",
+            }}
+          >
+            <input
+              type="text"
+              placeholder="게시글 내용을 작성해주세요. (가품 및 판매금지 물품은 게시가 제한될 수 있어요)"
+              value={contentValue}
+              onChange={onContentChange}
+              style={{
+                border: "1px black solid",
+                borderRadius: "10px",
+                width: "80%",
+                height: "120px",
+                paddingLeft: "10px",
+              }}
+            />
+          </div>
+          <div
+            style={{
+              paddingLeft: "10px",
+              paddingTop: "10px",
+            }}
+          >
+            <input
+              placeholder="가격"
+              value={priceValue}
+              onChange={onPriceChange}
+              style={{
+                border: "1px black solid",
+                borderRadius: "10px",
+              }}
+            />
+          </div>
+          <div
+            style={{
+              paddingLeft: "10px",
+              paddingTop: "10px",
+            }}
+          >
+            <input
+              type="text"
+              placeholder="카테고리 선택"
+>>>>>>> Stashed changes
               value={category}
               onChange={onCategoryChange}
               style={{
@@ -197,6 +275,7 @@ const Test = () => {
               }}
             />
           </div>
+<<<<<<< Updated upstream
           <div>
             <div className="pt-4">내용</div>
             <div>
@@ -216,11 +295,16 @@ const Test = () => {
           </div>
           <div
             className="pt-4"
+=======
+          <div>사진 업로드하기 (추후 추가)</div>
+          <button
+>>>>>>> Stashed changes
             style={{
               color: "#ffa445",
               fontWeight: "bolder",
             }}
           >
+<<<<<<< Updated upstream
             사진은 최대 10장까지 추가할 수 있습니다.
           </div>
           <div
@@ -375,6 +459,11 @@ const Test = () => {
             </div>
           )}
         </div>
+=======
+            판매게시글 작성완료
+          </button>
+        </form>
+>>>>>>> Stashed changes
       </div>
     </div>
   );

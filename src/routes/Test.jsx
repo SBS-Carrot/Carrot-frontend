@@ -1,7 +1,11 @@
 import { useState } from "react";
 import Header from "../layouts/Header";
 import axios from "axios";
+<<<<<<< Updated upstream
 
+=======
+import { useEffect } from "react";
+>>>>>>> Stashed changes
 const Test = () => {
   const [category, setCategoryValue] = useState("");
   const [priceValue, setPriceValue] = useState("");
@@ -24,6 +28,7 @@ const Test = () => {
   };
   //사진 여러개 https://cotak.tistory.com/124
 
+<<<<<<< Updated upstream
   const onCompleteChange = () => {
     setCompleteToggle(!completeToggle);
   };
@@ -50,6 +55,15 @@ const Test = () => {
     setShowImages(showImages.filter((_, index) => index !== id));
   };
 
+=======
+  useEffect(() => {
+    const getData = async () => {
+      const data = await axios({ method: "GET", url: "http://localhost:8083" });
+      console.log(data);
+    };
+    getData();
+  });
+>>>>>>> Stashed changes
   const onSubmit = async (subjectValue, contentValue, category, priceValue) => {
     try {
       const data = await axios({

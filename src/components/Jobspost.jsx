@@ -8,6 +8,8 @@ import {
   BsCalendarEvent,
 } from "react-icons/bs";
 import { AiOutlineDollar, AiOutlineClockCircle } from "react-icons/ai";
+import { FiHeart } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
 
 const Jobspost = () => {
@@ -44,33 +46,43 @@ const Jobspost = () => {
           </button>
           <a href="#">
             <img
-              className="rounded-lg"
-              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/83cbd5362a585918a9b4a7354984ecbfb20208da27522d9b39579099b2cfe1f9.webp?q=95&s=1440x1440&t=inside"
+              className="rounded-lg "
+              style={{
+                width: "800px",
+                height: "500px",
+              }}
+              src="https://dnvefa72aowie.cloudfront.net/jobs/article/36458049/1649751854029/job-post-3286665810.jpeg?q=95&s=1440x1440&t=inside"
               alt=""
             />
           </a>
         </div>
         <section className="mt-6 flex justify-end gap-3">
           <div
-            className="avatar flex justify-center items-center"
+            className="flex"
             style={{
-              width: "3.5rem",
+              width: "700px",
             }}
           >
-            <div className="w-12 rounded-full">
-              <img src="https://placeimg.com/192/192/people" />
+            <div
+              className="avatar items-center"
+              style={{
+                width: "3.5rem",
+              }}
+            >
+              <div className="w-12 rounded-full">
+                <img src="https://placeimg.com/192/192/people" />
+              </div>
+            </div>
+            <div
+              className="flex justify-center flex-col"
+              style={{
+                width: "500px",
+              }}
+            >
+              <div className="font-bold ">nickname</div>
+              <div className="text-sm">대전광역시 서구 둔산동</div>
             </div>
           </div>
-          <div
-            className="flex justify-center flex-col"
-            style={{
-              width: "500px",
-            }}
-          >
-            <div className="font-bold ">nickname</div>
-            <div className="text-sm">대전광역시 서구 둔산동</div>
-          </div>
-
           <div
             style={{
               width: "200px",
@@ -163,7 +175,7 @@ const Jobspost = () => {
           <ul
             className="flex flex-col gap-6 mb-14"
             style={{
-              fontSize: "1.5rem",
+              fontSize: "1.3rem",
             }}
           >
             <li className="flex gap-4">
@@ -186,7 +198,7 @@ const Jobspost = () => {
         </section>
         <section>
           <div
-            className="font-bold pb-2"
+            className="font-bold pb-1"
             style={{
               fontSize: "1.2rem",
             }}
@@ -196,22 +208,96 @@ const Jobspost = () => {
           <div
             style={{
               width: "700px",
-              height: "400px",
+              height: "350px",
               border: "1px gray solid",
             }}
           ></div>
         </section>
         <br />
+        <div
+          className=""
+          style={{
+            width: "400px",
+            border: "1px red solid",
+          }}
+        >
+          <div
+            className="font-bold mb-2"
+            style={{
+              fontSize: "1rem",
+              display: "inline-block",
+            }}
+          >
+            지원자 0{/* {img.imgLike} */}
+          </div>
+          <div
+            className="font-bold mb-2"
+            style={{
+              fontSize: "1rem",
+              display: "inline-block",
+            }}
+          >
+            관심 0{/* {img.imgLike} */}
+          </div>
+          <div
+            className="font-bold mb-2"
+            style={{
+              fontSize: "1rem",
+              display: "inline-block",
+            }}
+          >
+            조회수 0{/* {img.imgLike} */}
+          </div>
+        </div>
         <div>
           <div
-            className="font-bold"
+            className="font-bold mt-2"
             style={{
               fontSize: "1.2rem",
             }}
           >
             주소
           </div>
+          <div
+            style={{
+              width: "700px",
+              height: "200px",
+              border: "1px gray solid",
+            }}
+          ></div>
         </div>
+        <section
+          style={{
+            border: "1px red solid",
+          }}
+        >
+          {" "}
+          <div
+            className="pt-1"
+            style={{
+              marginLeft: "-60%",
+            }}
+          >
+            <button
+              style={{
+                fontSize: "1.6rem",
+              }}
+              // onClick={() => {
+              //   onLike(img.id, userinfo.userid, img.imgSrc);
+              // }}
+            >
+              {/* {like ? (
+                <FaHeart
+                  style={{
+                    color: "pink",
+                  }}
+                />
+              ) : ( */}
+              <FiHeart />
+              {/* )} */}
+            </button>
+          </div>
+        </section>
         <section>
           <div>
             <div

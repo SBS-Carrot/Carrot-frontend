@@ -162,26 +162,26 @@ const Test = () => {
                 width: "35%",
               }}
             >
-              <option value="01">카테고리 선택</option>
-              <option value="01">디지털기기</option>
-              <option value="02">생활가전</option>
-              <option value="03">가구/인테리어</option>
-              <option value="04">생활/주방</option>
-              <option value="05">유아동</option>
-              <option value="06">유아도서</option>
-              <option value="07">여성의류</option>
-              <option value="08">여성잡화</option>
-              <option value="09">남성패션/잡화</option>
-              <option value="10">뷰티/미용</option>
-              <option value="11">스포츠/레저</option>
-              <option value="12">취미/게임/음반</option>
-              <option value="13">도서</option>
-              <option value="14">티켓/교환권</option>
-              <option value="15">가공식품</option>
-              <option value="16">반려동물용품</option>
-              <option value="17">식물</option>
-              <option value="18">기타 중고물품</option>
-              <option value="19">삽니다</option>
+              <option value="카테고리 선택">카테고리 선택</option>
+              <option value="디지털기기">디지털기기</option>
+              <option value="생활가전">생활가전</option>
+              <option value="인테리어">가구/인테리어</option>
+              <option value="생활/주방">생활/주방</option>
+              <option value="유아동">유아동</option>
+              <option value="유아도서">유아도서</option>
+              <option value="여성의류">여성의류</option>
+              <option value="여성잡화">여성잡화</option>
+              <option value="남성패션/잡화">남성패션/잡화</option>
+              <option value="뷰티/미용">뷰티/미용</option>
+              <option value="스포츠/레저">스포츠/레저</option>
+              <option value="취미/게임/음반">취미/게임/음반</option>
+              <option value="도서">도서</option>
+              <option value="티켓/교환권">티켓/교환권</option>
+              <option value="가공식품">가공식품</option>
+              <option value="반려동물용품">반려동물용품</option>
+              <option value="식물">식물</option>
+              <option value="기타 중고물품">기타 중고물품</option>
+              <option value="삽니다">삽니다</option>
             </select>
           </div>
           <div className="pt-4">

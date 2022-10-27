@@ -9,6 +9,7 @@ import Login from "./routes/Login";
 import RegionTwo from "./routes/RegionTwo";
 import Join from "./routes/Join";
 import Jobspost from "./components/Jobspost";
+import JobsWrite from "./components/JobsWrite";
 import Articles from "./routes/Articles";
 import Test from "./routes/Test";
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/articles/:num" element={<Articles />} />
         <Route path="/test" element={<Test />} />
         <Route path="/jobpost" element={<Jobspost />} />
+        <Route path="/jobsWrite" element={<JobsWrite />} />
       </Routes>
     </Router>
   );

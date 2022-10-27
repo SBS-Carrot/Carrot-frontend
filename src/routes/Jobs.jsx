@@ -57,16 +57,36 @@ const Jobs = () => {
           margin: "0 auto",
         }}
       >
-        <h1
-          style={{
-            fontSize: "2rem",
-            fontWeight: "bolder",
-            paddingTop: "5rem",
-            paddingLeft: "5rem",
-          }}
-        >
-          인기 당근알바
-        </h1>
+        <div className="flex gap-24">
+          <h1
+            style={{
+              fontSize: "2rem",
+              fontWeight: "bolder",
+              paddingTop: "5rem",
+              paddingLeft: "5rem",
+            }}
+          >
+            인기 당근알바
+          </h1>
+          <a
+            href="#"
+            className="flex items-end justify-end "
+            style={{
+              width: "60%",
+            }}
+          >
+            <span
+              className="rounded-md p-2"
+              style={{
+                backgroundColor: "#fc9d39",
+                color: "white",
+              }}
+            >
+              {" "}
+              알바 구하기
+            </span>
+          </a>
+        </div>
         <ul
           style={{
             paddingTop: "3rem",
@@ -75,6 +95,7 @@ const Jobs = () => {
           className="grid grid-cols-2 jobBox"
         >
           <li>
+            {/* 조회수 1 증가하는 기능 */}
             <a href="#">
               <div
                 style={{

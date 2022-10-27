@@ -18,7 +18,7 @@ const Jobspost = () => {
       <Header />
       <div
         style={{
-          width: "800px",
+          width: "780px",
           margin: "0 auto",
         }}
       >
@@ -173,7 +173,7 @@ const Jobspost = () => {
           </div>
 
           <ul
-            className="flex flex-col gap-6 mb-14"
+            className="flex flex-col gap-6 mb-11"
             style={{
               fontSize: "1.3rem",
             }}
@@ -207,51 +207,27 @@ const Jobspost = () => {
           </div>
           <div
             style={{
-              width: "700px",
               height: "350px",
               border: "1px gray solid",
             }}
           ></div>
         </section>
-        <br />
         <div
-          className=""
+          className="flex gap-4 align-center font-bold mt-2 pb-11"
           style={{
-            width: "400px",
-            border: "1px red solid",
+            fontSize: "1rem",
+            height: "30px",
           }}
         >
-          <div
-            className="font-bold mb-2"
-            style={{
-              fontSize: "1rem",
-              display: "inline-block",
-            }}
-          >
-            지원자 0{/* {img.imgLike} */}
-          </div>
-          <div
-            className="font-bold mb-2"
-            style={{
-              fontSize: "1rem",
-              display: "inline-block",
-            }}
-          >
-            관심 0{/* {img.imgLike} */}
-          </div>
-          <div
-            className="font-bold mb-2"
-            style={{
-              fontSize: "1rem",
-              display: "inline-block",
-            }}
-          >
-            조회수 0{/* {img.imgLike} */}
-          </div>
+          <div>지원자 0{/* {img.imgLike} */}</div>
+          <div>관심 0{/* {img.imgLike} */}</div>
+          <div>조회수 0{/* {img.imgLike} */}</div>
         </div>
+
+        {/* map */}
         <div>
           <div
-            className="font-bold mt-2"
+            className="font-bold pt-2"
             style={{
               fontSize: "1.2rem",
             }}
@@ -260,27 +236,16 @@ const Jobspost = () => {
           </div>
           <div
             style={{
-              width: "700px",
               height: "200px",
               border: "1px gray solid",
             }}
           ></div>
         </div>
-        <section
-          style={{
-            border: "1px red solid",
-          }}
-        >
-          {" "}
-          <div
-            className="pt-1"
-            style={{
-              marginLeft: "-60%",
-            }}
-          >
+        <section>
+          <div className="py-2 flex gap-5 justify-end" style={{}}>
             <button
               style={{
-                fontSize: "1.6rem",
+                fontSize: "1.5rem",
               }}
               // onClick={() => {
               //   onLike(img.id, userinfo.userid, img.imgSrc);
@@ -296,6 +261,18 @@ const Jobspost = () => {
               <FiHeart />
               {/* )} */}
             </button>
+
+            <a
+              href="#"
+              className="rounded p-2 font-bold flex justify-center"
+              style={{
+                width: "300px",
+                color: "white",
+                backgroundColor: "#fc9d39",
+              }}
+            >
+              지원하기
+            </a>
           </div>
         </section>
         <section>

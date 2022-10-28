@@ -1,7 +1,10 @@
+// 아마존 s3 bucket 만들기 관련게시물가면 유용한것 더 많음
+// https://velog.io/@jinseoit/AWS-S3-bucket
+// S3에 이미지 업로드 구현하기 (백엔드)
+// https://velog.io/@modsiw/Spring-Spring-Boot-gradle-S3-React.js-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%97%85%EB%A1%9C%EB%93%9C-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-1-%EB%B0%B1%EC%97%94%EB%93%9C-%EA%B5%AC%ED%98%84
 import { useState } from "react";
 import Header from "../layouts/Header";
 import axios from "axios";
-
 const Test = () => {
   const [category, setCategoryValue] = useState("");
   const [priceValue, setPriceValue] = useState("");
@@ -59,76 +62,49 @@ const Test = () => {
     setShowImages(showImages.filter((_, index) => index !== id));
   };
 
-  // const onSubmit = async (subjectValue, contentValue, category, priceValue) => {
-  //   try {
-  //     const data = await axios({
-  //       url: `http://localhost:8083/createProduct`,
-  //       method: "POST",
-  //       data: {
-  //         productCategory: category,
-  //         productPrice: priceValue,
-  //         productSubject: subjectValue,
-  //         productContent: contentValue,
-  //       },
-  //     });
-  //     setId(data.data.productId);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    if (content == null || content == "") {
-      return;
-    }
-    const formData = new FormData();
-    formData.append("img", content);
-
-    // formData.append("text", textValue);
-    //append : 개체 FormData내부의 기존 키에 새 값을 FormData추가
-    //참고사이트 : https://developer.mozilla.org/en-US/docs/Web/API/FormData/append
-
-    axios({
-      url: `http://localhost:8083/createProduct`,
-      method: "POST",
-      data: formData,
-    })
-      //textValue
-      .then((res) => {
-        const { fileName } = res.data;
-        setUploadedImg({ fileName });
-      })
-      .catch((err) => {
-        console.error(err);
+  const onSubmit = async (subjectValue, contentValue, category, priceValue) => {
+    try {
+      const data = await axios({
+        url: `http://localhost:8083/createProduct`,
+        method: "POST",
+        data: {
+          productCategory: category,
+          productPrice: priceValue,
+          productSubject: subjectValue,
+          productContent: contentValue,
+        },
       });
+      setId(data.data.productId);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const onSubmits = async (
-    // subjectValue,
-    // contentValue,
-    // category,
-    // priceValue,
+    subjectValue,
+    contentValue,
+    category,
+    priceValue,
     showImages
   ) => {
     try {
-      // const data = await axios({
-      //   url: `http://localhost:8083/createProduct`,
-      //   method: "POST",
-      //   data: {
-      //     productCategory: category,
-      //     productPrice: priceValue,
-      //     productSubject: subjectValue,
-      //     productContent: contentValue,
-      //   },
-      // });
-      // setId(data.data.productId);
-
-      const data2 = await axios({
-        url: `http://localhost:8083/createProductImages/1`,
+      const data = await axios({
+        url: `http://localhost:8083/createProductImages`,
         method: "POST",
         data: {
-          path: showImages,
+          productCategory: category,
+          productPrice: priceValue,
+          productSubject: subjectValue,
+          productContent: contentValue,
+        },
+      });
+      setId(data.data.productId);
+
+      const data2 = await axios({
+        url: `http://localhost:8083/createProductImages/${id}`,
+        method: "POST",
+        data: {
+          file: showImages,
         },
       });
       console.log(data2);
@@ -250,7 +226,7 @@ const Test = () => {
               }}
             />
           </div>
-          {/* <div
+          <div
           // className={classes.addPicture}
           >
             <label
@@ -311,8 +287,8 @@ const Test = () => {
                 </div>
               ))}
             </ul>
-          </div> */}
-          <div className="formbox ">
+          </div>
+          {/* <div className="formbox ">
             <form
               onSubmit={onSubmit}
               style={{
@@ -338,7 +314,7 @@ const Test = () => {
                 />
               </div>
             </form>
-          </div>
+          </div> */}
           {/*  */}
           <div>
             <button

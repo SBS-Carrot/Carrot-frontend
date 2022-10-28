@@ -69,7 +69,7 @@ const Jobs = () => {
             인기 당근알바
           </h1>
           <a
-            href="#"
+            href={`/jobsWrite`}
             className="flex items-end justify-end "
             style={{
               width: "60%",

@@ -3,12 +3,15 @@ import { useState } from "react";
 import Header from "../layouts/Header";
 import axios from "axios";
 import { MdAddAPhoto } from "react-icons/md";
+import { buildTimeValue } from "@testing-library/user-event/dist/utils";
 
 const JobsWrite = () => {
   const [category, setCategoryValue] = useState("");
   const [priceValue, setPriceValue] = useState("");
   const [contentValue, setContentValue] = useState("");
   const [subjectValue, setSubjectValue] = useState("");
+  const [placeValue, setPlaceValue] = useState("");
+  const [timeValue, setTimeValue] = useState("");
   const [completeToggle, setCompleteToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
   const [id, setId] = useState("");
@@ -23,6 +26,12 @@ const JobsWrite = () => {
   };
   const onCategoryChange = (e) => {
     setCategoryValue(e.target.value);
+  };
+  const onPlaceChange = (e) => {
+    setPlaceValue(e.target.value);
+  };
+  const onTimeChange = (e) => {
+    setTimeValue(e.target.value);
   };
   //사진 여러개 https://cotak.tistory.com/124
 
@@ -53,16 +62,25 @@ const JobsWrite = () => {
     setShowImages(showImages.filter((_, index) => index !== id));
   };
 
-  const onSubmit = async (subjectValue, contentValue, category, priceValue) => {
+  const onSubmit = async (
+    subjectValue,
+    contentValue,
+    category,
+    priceValue,
+    placeValue,
+    timeValue
+  ) => {
     try {
       const data = await axios({
         url: `http://localhost:8083/createProduct`,
         method: "POST",
         data: {
-          productCategory: category,
-          productPrice: priceValue,
-          productSubject: subjectValue,
-          productContent: contentValue,
+          jobSubject: subjectValue,
+          jobCategory: category,
+          jobPrice: priceValue,
+          jobPlace: placeValue,
+          jobTime: timeValue,
+          jobContent: contentValue,
         },
       });
       setId(data.data.productId);
@@ -75,20 +93,24 @@ const JobsWrite = () => {
     contentValue,
     category,
     priceValue,
+    placeValue,
+    timeValue,
     showImages
   ) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/createProduct`,
+        url: `http://localhost:8083/createJobs`,
         method: "POST",
         data: {
-          productCategory: category,
-          productPrice: priceValue,
-          productSubject: subjectValue,
-          productContent: contentValue,
+          jobSubject: subjectValue,
+          jobCategory: category,
+          jobPrice: priceValue,
+          jobPlace: placeValue,
+          jobTime: timeValue,
+          jobContent: contentValue,
         },
       });
-      setId(data.data.productId);
+      setId(data.data.subjectId);
 
       const data2 = await axios({
         url: `http://localhost:8083/createProductImages/${data.data.productId}`,
@@ -157,8 +179,6 @@ const JobsWrite = () => {
           <div>임금</div>
           <div className="pt-1 flex gap-3">
             <select
-              value={category}
-              onChange={onCategoryChange}
               style={{
                 border: "1px #d5d5d5 solid",
                 width: "35%",
@@ -176,6 +196,8 @@ const JobsWrite = () => {
               }}
             >
               <input
+                value={priceValue}
+                onChange={onPriceChange}
                 type="number"
                 placeholder="9,160"
                 style={{ width: "120px" }}
@@ -184,9 +206,9 @@ const JobsWrite = () => {
             </div>
           </div>
 
-          <section>
+          <div>
             <div className="pt-2">일하는 요일</div>
-            <ul className="flex my-2 gap-2">
+            <div className="flex my-2 gap-2">
               <button
                 className="flex  rounded-full"
                 style={{
@@ -320,12 +342,14 @@ const JobsWrite = () => {
                   일
                 </div>
               </button>
-            </ul>
-          </section>
-          <section>
+            </div>
+          </div>
+          <div>
             {" "}
             <div className="pt-1">일하는 시간</div>
             <select
+              value={timeValue}
+              onChange={onTimeChange}
               style={{
                 border: "1px #d5d5d5 solid",
                 width: "100px",
@@ -343,12 +367,14 @@ const JobsWrite = () => {
             >
               <option value="18:00">18:00</option>
             </select>
-          </section>
-          <section className="pt-2">
+          </div>
+          <div className="pt-2">
             <div className="font-bold">일할 장소에 대해 알려주세요</div>
             <div className="pt-1">
               <div> 상호명</div>
               <input
+                value={category}
+                onChange={onCategoryChange}
                 type="text"
                 placeholder="예) 당근가게"
                 style={{
@@ -360,6 +386,8 @@ const JobsWrite = () => {
             <div className="pt-1">
               <div> 주소</div>
               <input
+                value={placeValue}
+                onChange={onPlaceChange}
                 type="text"
                 placeholder="어디에서 일하나요?"
                 style={{
@@ -368,7 +396,7 @@ const JobsWrite = () => {
                 }}
               />
             </div>
-          </section>
+          </div>
           <div>
             <div className="pt-3">내용</div>
             <div>
@@ -518,7 +546,7 @@ const JobsWrite = () => {
               }}
             >
               <a
-                href={`/articles/${id}`}
+                href={`/jobspost/${id}`}
                 style={{
                   textAlign: "center",
                   width: "100%",

@@ -44,7 +44,7 @@ const Header = () => {
         >
           <div
             style={{
-              color: "#ffa445",
+              color: "#fc9d39",
               fontSize: "1.4rem",
             }}
           >

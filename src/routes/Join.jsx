@@ -394,7 +394,7 @@ const Join = () => {
           >
             <button
               style={{
-                backgroundColor: "#ffa445",
+                backgroundColor: "#fc9d39",
                 padding: "15px 20px",
                 borderRadius: "10px",
               }}

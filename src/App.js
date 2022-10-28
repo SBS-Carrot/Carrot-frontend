@@ -8,9 +8,9 @@ import Region from "./routes/Region";
 import Login from "./routes/Login";
 import RegionTwo from "./routes/RegionTwo";
 import Join from "./routes/Join";
-
+import Jobspost from "./components/Jobspost";
+import JobsWrite from "./components/JobsWrite";
 import Articles from "./routes/Articles";
-
 import Test from "./routes/Test";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -30,6 +30,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/articles/:num" element={<Articles />} />
         <Route path="/test" element={<Test />} />
+        <Route path="/jobspost" element={<Jobspost />} />
+        <Route path="/jobsWrite" element={<JobsWrite />} />
       </Routes>
     </Router>
   );

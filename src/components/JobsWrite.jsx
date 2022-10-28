@@ -1,30 +1,20 @@
-// 아마존 s3 bucket 만들기 관련게시물가면 유용한것 더 많음
-// https://velog.io/@jinseoit/AWS-S3-bucket
-// S3에 이미지 업로드 구현하기 (백엔드)
-// https://velog.io/@modsiw/Spring-Spring-Boot-gradle-S3-React.js-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%97%85%EB%A1%9C%EB%93%9C-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-1-%EB%B0%B1%EC%97%94%EB%93%9C-%EA%B5%AC%ED%98%84
+import React from "react";
 import { useState } from "react";
 import Header from "../layouts/Header";
 import axios from "axios";
-
-import { useEffect } from "react";
 import { MdAddAPhoto } from "react-icons/md";
+import { buildTimeValue } from "@testing-library/user-event/dist/utils";
 
-const Test = () => {
+const JobsWrite = () => {
   const [category, setCategoryValue] = useState("");
   const [priceValue, setPriceValue] = useState("");
   const [contentValue, setContentValue] = useState("");
   const [subjectValue, setSubjectValue] = useState("");
+  const [placeValue, setPlaceValue] = useState("");
+  const [timeValue, setTimeValue] = useState("");
   const [completeToggle, setCompleteToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
-  const [content, setContent] = useState("");
-  const [uploadedImg, setUploadedImg] = useState({
-    fileName: "",
-    fillPath: "",
-  });
   const [id, setId] = useState("");
-  const onChange = (e) => {
-    setContent(e.target.files[0]);
-  };
   const onPriceChange = (e) => {
     setPriceValue(e.target.value);
   };
@@ -36,6 +26,12 @@ const Test = () => {
   };
   const onCategoryChange = (e) => {
     setCategoryValue(e.target.value);
+  };
+  const onPlaceChange = (e) => {
+    setPlaceValue(e.target.value);
+  };
+  const onTimeChange = (e) => {
+    setTimeValue(e.target.value);
   };
   //사진 여러개 https://cotak.tistory.com/124
 
@@ -66,16 +62,25 @@ const Test = () => {
     setShowImages(showImages.filter((_, index) => index !== id));
   };
 
-  const onSubmit = async (subjectValue, contentValue, category, priceValue) => {
+  const onSubmit = async (
+    subjectValue,
+    contentValue,
+    category,
+    priceValue,
+    placeValue,
+    timeValue
+  ) => {
     try {
       const data = await axios({
         url: `http://localhost:8083/createProduct`,
         method: "POST",
         data: {
-          productCategory: category,
-          productPrice: priceValue,
-          productSubject: subjectValue,
-          productContent: contentValue,
+          jobSubject: subjectValue,
+          jobCategory: category,
+          jobPrice: priceValue,
+          jobPlace: placeValue,
+          jobTime: timeValue,
+          jobContent: contentValue,
         },
       });
       setId(data.data.productId);
@@ -83,32 +88,35 @@ const Test = () => {
       console.log(e);
     }
   };
-
   const onSubmits = async (
     subjectValue,
     contentValue,
     category,
     priceValue,
+    placeValue,
+    timeValue,
     showImages
   ) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/createProductImages`,
+        url: `http://localhost:8083/createJobs`,
         method: "POST",
         data: {
-          productCategory: category,
-          productPrice: priceValue,
-          productSubject: subjectValue,
-          productContent: contentValue,
+          jobSubject: subjectValue,
+          jobCategory: category,
+          jobPrice: priceValue,
+          jobPlace: placeValue,
+          jobTime: timeValue,
+          jobContent: contentValue,
         },
       });
-      setId(data.data.productId);
+      setId(data.data.subjectId);
 
       const data2 = await axios({
-        url: `http://localhost:8083/createProductImages/${id}`,
+        url: `http://localhost:8083/createProductImages/${data.data.productId}`,
         method: "POST",
         data: {
-          file: showImages,
+          path: showImages,
         },
       });
       console.log(data2);
@@ -117,6 +125,7 @@ const Test = () => {
       console.log(e);
     }
   };
+
   return (
     <div>
       <Header />
@@ -133,7 +142,7 @@ const Test = () => {
             color: "#ffa445",
           }}
         >
-          중고거래 글쓰기
+          알바공고 쓰기
         </span>
       </div>
       <div
@@ -141,7 +150,7 @@ const Test = () => {
         style={{
           width: "850px",
           margin: "0 auto",
-          height: "800px",
+          height: "1000px",
           position: "relative",
           marginTop: "1.4rem",
         }}
@@ -152,11 +161,11 @@ const Test = () => {
           }}
         >
           <div>
-            <div>제목</div>
-            <div>
+            <div className="pb-1">제목</div>
+            <div className="pb-2">
               <input
                 type="text"
-                placeholder="게시글 제목"
+                placeholder="구인 내용 요약"
                 value={subjectValue}
                 onChange={onSubjectChange}
                 style={{
@@ -167,55 +176,233 @@ const Test = () => {
               />
             </div>
           </div>
-          <div className="pt-4">
+          <div>임금</div>
+          <div className="pt-1 flex gap-3">
             <select
-              value={category}
-              onChange={onCategoryChange}
               style={{
                 border: "1px #d5d5d5 solid",
                 width: "35%",
               }}
             >
-              <option value="카테고리 선택">카테고리 선택</option>
-              <option value="디지털기기">디지털기기</option>
-              <option value="생활가전">생활가전</option>
-              <option value="인테리어">가구/인테리어</option>
-              <option value="생활/주방">생활/주방</option>
-              <option value="유아동">유아동</option>
-              <option value="유아도서">유아도서</option>
-              <option value="여성의류">여성의류</option>
-              <option value="여성잡화">여성잡화</option>
-              <option value="남성패션/잡화">남성패션/잡화</option>
-              <option value="뷰티/미용">뷰티/미용</option>
-              <option value="스포츠/레저">스포츠/레저</option>
-              <option value="취미/게임/음반">취미/게임/음반</option>
-              <option value="도서">도서</option>
-              <option value="티켓/교환권">티켓/교환권</option>
-              <option value="가공식품">가공식품</option>
-              <option value="반려동물용품">반려동물용품</option>
-              <option value="식물">식물</option>
-              <option value="기타 중고물품">기타 중고물품</option>
-              <option value="삽니다">삽니다</option>
+              <option value="시급">시급</option>
+              <option value="월급">월급</option>
+              <option value="일급">일급</option>
+              <option value="시급">시급</option>
             </select>
-          </div>
-          <div className="pt-4">
-            <input
-              type="text"
-              placeholder="\ 가격"
-              value={priceValue}
-              onChange={onPriceChange}
+            <div
               style={{
-                border: "1px  #d5d5d5 solid",
-                width: "35%",
+                border: "1px #d5d5d5 solid",
+                width: "140px",
               }}
-            />
+            >
+              <input
+                value={priceValue}
+                onChange={onPriceChange}
+                type="number"
+                placeholder="9,160"
+                style={{ width: "120px" }}
+              />
+              원
+            </div>
+          </div>
+
+          <div>
+            <div className="pt-2">일하는 요일</div>
+            <div className="flex my-2 gap-2">
+              <button
+                className="flex  rounded-full"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  border: "1px #d5d5d5 solid",
+                }}
+              >
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                  }}
+                >
+                  {" "}
+                  월
+                </div>
+              </button>
+              <button
+                className="flex  rounded-full"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  border: "1px #d5d5d5 solid",
+                }}
+              >
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                  }}
+                >
+                  {" "}
+                  화
+                </div>
+              </button>{" "}
+              <button
+                className="flex  rounded-full"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  border: "1px #d5d5d5 solid",
+                }}
+              >
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                  }}
+                >
+                  {" "}
+                  수
+                </div>
+              </button>{" "}
+              <button
+                className="flex  rounded-full"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  border: "1px #d5d5d5 solid",
+                }}
+              >
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                  }}
+                >
+                  {" "}
+                  목
+                </div>
+              </button>{" "}
+              <button
+                className="flex  rounded-full"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  border: "1px #d5d5d5 solid",
+                }}
+              >
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                  }}
+                >
+                  {" "}
+                  금
+                </div>
+              </button>{" "}
+              <button
+                className="flex  rounded-full"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  border: "1px #d5d5d5 solid",
+                }}
+              >
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                  }}
+                >
+                  {" "}
+                  토
+                </div>
+              </button>{" "}
+              <button
+                className="flex  rounded-full"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  border: "1px #d5d5d5 solid",
+                }}
+              >
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                  }}
+                >
+                  {" "}
+                  일
+                </div>
+              </button>
+            </div>
           </div>
           <div>
-            <div className="pt-4">내용</div>
+            {" "}
+            <div className="pt-1">일하는 시간</div>
+            <select
+              value={timeValue}
+              onChange={onTimeChange}
+              style={{
+                border: "1px #d5d5d5 solid",
+                width: "100px",
+              }}
+            >
+              <option value="09:00">09:00</option>
+              <option value="18:00">18:00</option>
+            </select>
+            <span> ~ </span>
+            <select
+              style={{
+                width: "100px",
+                border: "1px #d5d5d5 solid",
+              }}
+            >
+              <option value="18:00">18:00</option>
+            </select>
+          </div>
+          <div className="pt-2">
+            <div className="font-bold">일할 장소에 대해 알려주세요</div>
+            <div className="pt-1">
+              <div> 상호명</div>
+              <input
+                value={category}
+                onChange={onCategoryChange}
+                type="text"
+                placeholder="예) 당근가게"
+                style={{
+                  border: "1px #d5d5d5 solid",
+                  width: "400px",
+                }}
+              />
+            </div>
+            <div className="pt-1">
+              <div> 주소</div>
+              <input
+                value={placeValue}
+                onChange={onPlaceChange}
+                type="text"
+                placeholder="어디에서 일하나요?"
+                style={{
+                  border: "1px #d5d5d5 solid",
+                  width: "100%",
+                }}
+              />
+            </div>
+          </div>
+          <div>
+            <div className="pt-3">내용</div>
             <div>
               <input
                 type="text"
-                placeholder="게시글 내용을 작성해주세요. (가품 및 판매금지 물품은 게시가 제한될 수 있어요)"
+                placeholder="예) 업무예시, 근무 여건, 지원자가 갖추어야 할 능력, 우대 사항 등"
                 value={contentValue}
                 onChange={onContentChange}
                 style={{
@@ -234,7 +421,7 @@ const Test = () => {
               fontWeight: "bolder",
             }}
           >
-            사진은 최대 10장까지 추가할 수 있습니다.
+            일하는 공간이나 일과 관련된 사진을 올려보세요. (최대 10장까지)
           </div>
           <div
             className="flex "
@@ -341,7 +528,7 @@ const Test = () => {
                 transform: "translateX(-50%)",
               }}
             >
-              판매게시글 작성완료
+              작성완료
             </button>
           </div>
           {completeToggle && (
@@ -359,7 +546,7 @@ const Test = () => {
               }}
             >
               <a
-                href={`/articles/${id}`}
+                href={`/jobspost/${id}`}
                 style={{
                   textAlign: "center",
                   width: "100%",
@@ -394,4 +581,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default JobsWrite;

@@ -90,7 +90,7 @@ const Login = () => {
               style={{
                 width: "300px",
                 color: "white",
-                backgroundColor: "#FFB26B",
+                backgroundColor: "#fc9d39",
               }}
             >
               로그인

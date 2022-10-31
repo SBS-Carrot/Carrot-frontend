@@ -17,10 +17,7 @@ const Test = () => {
   const [completeToggle, setCompleteToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
   const [content, setContent] = useState("");
-  const [uploadedImg, setUploadedImg] = useState({
-    fileName: "",
-    fillPath: "",
-  });
+  const [uploadedImg, setUploadedImg] = useState([]);
   const [id, setId] = useState("");
   const onChange = (e) => {
     setContent(e.target.files[0]);
@@ -37,6 +34,7 @@ const Test = () => {
   const onCategoryChange = (e) => {
     setCategoryValue(e.target.value);
   };
+
   //사진 여러개 https://cotak.tistory.com/124
 
   const onCompleteChange = () => {
@@ -45,6 +43,7 @@ const Test = () => {
 
   // 이미지 상대경로 저장
   const handleAddImages = (event) => {
+    setUploadedImg([event.target.files, ...uploadedImg]);
     const imageLists = event.target.files;
     let imageUrlLists = [...showImages];
 
@@ -58,11 +57,17 @@ const Test = () => {
     }
 
     setShowImages(imageUrlLists);
-    console.log(imageUrlLists);
+    // console.log(imageUrlLists);
   };
 
   // X버튼 클릭 시 이미지 삭제
   const handleDeleteImage = (id) => {
+    for (let i = 0; i < uploadedImg.length; i++) {
+      if (id == i) {
+        uploadedImg.splice(i, 1);
+      }
+    }
+
     setShowImages(showImages.filter((_, index) => index !== id));
   };
 
@@ -78,6 +83,7 @@ const Test = () => {
           productContent: contentValue,
         },
       });
+      onCompleteChange();
       setId(data.data.productId);
     } catch (e) {
       console.log(e);
@@ -89,7 +95,7 @@ const Test = () => {
     contentValue,
     category,
     priceValue,
-    showImages
+    uploadedImg
   ) => {
     try {
       const data = await axios({
@@ -104,17 +110,22 @@ const Test = () => {
       });
       setId(data.data.productId);
 
+      const formData = new FormData();
+
+      for (let i = 0; i < uploadedImg.length; i++) {
+        formData.append("file", uploadedImg[i]);
+      }
       const data2 = await axios({
+        headers: { "Content-Type": "multipart/form-data" },
         url: `http://localhost:8083/createProductImages/${id}`,
         method: "POST",
-        data: {
-          file: showImages,
-        },
+        data: formData,
       });
-      console.log(data2);
-      window.alert("사진추가d");
+      console.log("data2 : ", data2.data);
+      onCompleteChange();
     } catch (e) {
       console.log(e);
+      window.alert("게시물 작성에 실패했습니다.");
     }
   };
   return (
@@ -255,7 +266,7 @@ const Test = () => {
                 <input
                   type="file"
                   id="input-file"
-                  multiple
+                  accept="image/*"
                   style={{
                     display: "none",
                   }}
@@ -312,18 +323,16 @@ const Test = () => {
           <div>
             <button
               onClick={() => {
-                if (showImages.length == 0) {
+                if (uploadedImg.length == 0) {
                   onSubmit(subjectValue, contentValue, category, priceValue);
-                  onCompleteChange();
                 } else {
                   onSubmits(
                     subjectValue,
                     contentValue,
                     category,
                     priceValue,
-                    showImages
+                    uploadedImg
                   );
-                  onCompleteChange();
                 }
               }}
               style={{

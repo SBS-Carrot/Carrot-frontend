@@ -43,8 +43,10 @@ const Test = () => {
 
   // 이미지 상대경로 저장
   const handleAddImages = (event) => {
-    setUploadedImg([event.target.files, ...uploadedImg]);
+    setUploadedImg([...event.target.files, ...uploadedImg]);
     const imageLists = event.target.files;
+
+    //이미지 미리보기기능
     let imageUrlLists = [...showImages];
 
     for (let i = 0; i < imageLists.length; i++) {
@@ -62,12 +64,13 @@ const Test = () => {
 
   // X버튼 클릭 시 이미지 삭제
   const handleDeleteImage = (id) => {
+    //img 배열 삭제
     for (let i = 0; i < uploadedImg.length; i++) {
       if (id == i) {
         uploadedImg.splice(i, 1);
       }
     }
-
+    //미리보기 삭제
     setShowImages(showImages.filter((_, index) => index !== id));
   };
 
@@ -98,26 +101,20 @@ const Test = () => {
     uploadedImg
   ) => {
     try {
-      const data = await axios({
-        url: `http://localhost:8083/createProductImages`,
-        method: "POST",
-        data: {
-          productCategory: category,
-          productPrice: priceValue,
-          productSubject: subjectValue,
-          productContent: contentValue,
-        },
-      });
-      setId(data.data.productId);
-
       const formData = new FormData();
-
       for (let i = 0; i < uploadedImg.length; i++) {
         formData.append("file", uploadedImg[i]);
       }
+      const productDto = {
+        productCategory: category,
+        productPrice: priceValue,
+        productSubject: subjectValue,
+        productContent: contentValue,
+      };
+
+      formData.append("productDto", productDto);
       const data2 = await axios({
-        headers: { "Content-Type": "multipart/form-data" },
-        url: `http://localhost:8083/createProductImages/${id}`,
+        url: `http://localhost:8083/createProductImages`,
         method: "POST",
         data: formData,
       });

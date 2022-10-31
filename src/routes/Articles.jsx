@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import {
@@ -6,8 +5,33 @@ import {
   BsChevronLeft,
   BsChevronRight,
 } from "react-icons/bs";
-
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 const Articles = () => {
+  const { num } = useParams();
+  const navigate = useNavigate();
+  const moveBack = () => {
+    navigate(-1);
+  };
+  const [article, setArticle] = useState("");
+  useEffect(() => {
+    const onSubmit = async (num) => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/product/${num}`,
+          method: "GET",
+        });
+        setArticle(data.data);
+      } catch (e) {
+        console.log(e);
+        window.alert("존재하지 않는 게시물입니다.");
+        moveBack();
+      }
+    };
+    onSubmit(num);
+  }, []);
+
   return (
     <div>
       <Header />
@@ -125,7 +149,7 @@ const Articles = () => {
                 fontSize: "1.25rem",
               }}
             >
-              다혼 자전거 판매합니다.
+              {article.productSubject}
             </div>
             <div className="flex gap-2">
               <div
@@ -134,7 +158,7 @@ const Articles = () => {
                   color: "gray",
                 }}
               >
-                스포츠/레저
+                {article.productCategory}
               </div>
               <div
                 className="text-sm"
@@ -151,15 +175,12 @@ const Articles = () => {
                 fontSize: "1.25rem",
               }}
             >
-              10,000원
+              {article.productPrice}원
             </div>
           </div>
           <br />
           <div>
-            <div>
-              오래 방치해서 바퀴에 바람이 빠져있는 상태이나 바람 넣으심 잘 사용
-              가능합니다.
-            </div>
+            <div>{article.productContent}</div>
             <div
               className="flex text-sm gap-2 my-5"
               style={{
@@ -167,11 +188,11 @@ const Articles = () => {
               }}
             >
               <span>관심</span>
-              <div>0</div>
+              <div>{article.productLike}</div>
               <span>채팅</span>
-              <div>0</div>
+              <div>{article.productChatting}</div>
               <span>조회</span>
-              <div>0</div>
+              <div>{article.productView}</div>
             </div>
           </div>
         </section>

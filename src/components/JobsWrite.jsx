@@ -14,7 +14,15 @@ const JobsWrite = () => {
   const [timeValue, setTimeValue] = useState("");
   const [completeToggle, setCompleteToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
-  const [day, setDay] = useState([]);
+  const [day, setDay] = useState("");
+  const [mon, setMon] = useState(false);
+  const [tue, setTue] = useState(false);
+  const [wed, setWed] = useState(false);
+  const [thu, setThu] = useState(false);
+  const [fri, setFri] = useState(false);
+  const [sat, setSat] = useState(false);
+  const [sun, setSun] = useState(false);
+  const [uploadedImg, setUploadedImg] = useState([]);
   const [id, setId] = useState("");
   const onPriceChange = (e) => {
     setPriceValue(e.target.value);
@@ -34,15 +42,48 @@ const JobsWrite = () => {
   const onTimeChange = (e) => {
     setTimeValue(e.target.value);
   };
-  //사진 여러개 https://cotak.tistory.com/124
-
+  const onMonChange = () => {
+    setMon(!mon);
+    onDayChange("월");
+  };
+  const onTueChange = () => {
+    setTue(!tue);
+  };
+  const onWedChange = () => {
+    setWed(!wed);
+  };
+  const onThuChange = () => {
+    setThu(!thu);
+  };
+  const onFriChange = () => {
+    setFri(!fri);
+  };
+  const onSatChange = () => {
+    setSat(!sat);
+  };
+  const onSunChange = () => {
+    setSun(!sun);
+  };
+  const onDayChange = (addDay) => {
+    let result = day.indexOf(addDay);
+    if (result == -1) {
+      setDay(addDay, ...day);
+    } else {
+      setDay(day.slice(result, result + 1));
+    }
+    console.log(result);
+    console.log(day);
+  };
   const onCompleteChange = () => {
     setCompleteToggle(!completeToggle);
   };
 
   // 이미지 상대경로 저장
   const handleAddImages = (event) => {
+    setUploadedImg([...event.target.files, ...uploadedImg]);
     const imageLists = event.target.files;
+
+    //이미지 미리보기기능
     let imageUrlLists = [...showImages];
 
     for (let i = 0; i < imageLists.length; i++) {
@@ -55,91 +96,75 @@ const JobsWrite = () => {
     }
 
     setShowImages(imageUrlLists);
-    console.log(imageUrlLists);
+    // console.log(imageUrlLists);
   };
 
   // X버튼 클릭 시 이미지 삭제
   const handleDeleteImage = (id) => {
+    //img 배열 삭제
+    for (let i = 0; i < uploadedImg.length; i++) {
+      if (id == i) {
+        uploadedImg.splice(i, 1);
+      }
+    }
+    //미리보기 삭제
     setShowImages(showImages.filter((_, index) => index !== id));
   };
-
-  const onSubmit = async (
-    subjectValue,
-    contentValue,
-    category,
-    priceValue,
-    placeValue,
-    timeValue
-  ) => {
+  // 사진없을때
+  const onSubmit = async (subjectValue, contentValue, category, priceValue) => {
     try {
       const data = await axios({
         url: `http://localhost:8083/createProduct`,
         method: "POST",
         data: {
-          jobSubject: subjectValue,
-          jobCategory: category,
-          jobPrice: priceValue,
-          jobPlace: placeValue,
-          jobTime: timeValue,
-          jobContent: contentValue,
+          productCategory: category,
+          productPrice: priceValue,
+          productSubject: subjectValue,
+          productContent: contentValue,
         },
       });
+      onCompleteChange();
       setId(data.data.productId);
     } catch (e) {
       console.log(e);
     }
   };
-
-  const DayArray = (e) => {
-    console.log(e.target.value);
-    setDay([...e.target.value, ...day]);
-    console.log(day);
-  };
-
-  const DayDelete = (id) => {
-    //요일 삭제
-    for (let i = 0; i < day.length; i++) {
-      if (id == i) {
-        day.splic(id, 1);
-      }
-    }
-  };
-
+  // 사진있을때
   const onSubmits = async (
     subjectValue,
     contentValue,
     category,
     priceValue,
-    placeValue,
-    timeValue,
-    showImages
+    uploadedImg
   ) => {
     try {
-      const data = await axios({
-        url: `http://localhost:8083/createJobs`,
-        method: "POST",
-        data: {
-          jobSubject: subjectValue,
-          jobCategory: category,
-          jobPrice: priceValue,
-          jobPlace: placeValue,
-          jobTime: timeValue,
-          jobContent: contentValue,
-        },
-      });
-      setId(data.data.subjectId);
-
+      const formData = new FormData();
+      const productDto = {
+        productCategory: category,
+        productPrice: priceValue,
+        productSubject: subjectValue,
+        productContent: contentValue,
+      };
+      // https://velog.io/@hhhminme/Axios%EC%97%90%EC%84%9C-Post-%EC%8B%9C-Contenttypeapplicationoctet-streamnotsupported-%ED%95%B8%EB%93%A4%EB%A7%81415-%EC%97%90%EB%9F%AC
+      const json = JSON.stringify(productDto);
+      const blob = new Blob([json], { type: "application/json" });
+      formData.append("productDto", blob);
+      for (let i = 0; i < uploadedImg.length; i++) {
+        formData.append("file", uploadedImg[i]);
+      }
       const data2 = await axios({
-        url: `http://localhost:8083/createProductImages/${data.data.productId}`,
-        method: "POST",
-        data: {
-          path: showImages,
+        headers: {
+          "Content-Type": `application/json`,
         },
+        url: `http://localhost:8083/createProductImages`,
+        method: "POST",
+        data: formData,
       });
-      console.log(data2);
-      window.alert("사진추가d");
+      setId(data2.data.productId);
+      onCompleteChange();
     } catch (e) {
       console.log(e);
+      window.alert("게시물 작성에 실패했습니다.");
     }
   };
 
@@ -226,146 +251,342 @@ const JobsWrite = () => {
           <div>
             <div className="pt-2">일하는 요일</div>
             <div className="flex my-2 gap-2">
-              <button
-                onClick={() => {
-                  DayArray();
-                }}
-                className="flex  rounded-full"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  border: "1px #d5d5d5 solid",
-                }}
-              >
+              {mon == false ? (
                 <div
-                  className="flex items-center justify-center"
+                  className="flex  rounded-full"
                   style={{
                     width: "40px",
                     height: "40px",
+                    border: "1px #d5d5d5 solid",
                   }}
                 >
-                  {" "}
-                  월
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onMonChange();
+                    }}
+                  >
+                    월
+                  </button>
                 </div>
-              </button>
-              <button
-                className="flex  rounded-full"
-                onChange={DayArray}
-                // onClick={() => DayArray()}
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  border: "1px #d5d5d5 solid",
-                }}
-              >
+              ) : (
                 <div
-                  className="flex items-center justify-center"
+                  className="flex  rounded-full"
                   style={{
                     width: "40px",
                     height: "40px",
+                    backgroundColor: "#ffa445",
+                    color: "white",
                   }}
                 >
-                  {" "}
-                  화
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onMonChange();
+                    }}
+                  >
+                    월
+                  </button>
                 </div>
-              </button>{" "}
-              <button
-                className="flex  rounded-full"
-                onChange={DayArray}
-                // onClick={() => DayArray()}
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  border: "1px #d5d5d5 solid",
-                }}
-              >
+              )}
+              {tue == false ? (
                 <div
-                  className="flex items-center justify-center"
+                  className="flex  rounded-full"
                   style={{
                     width: "40px",
                     height: "40px",
+                    border: "1px #d5d5d5 solid",
                   }}
                 >
-                  {" "}
-                  수
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onTueChange();
+                    }}
+                  >
+                    화
+                  </button>
                 </div>
-              </button>{" "}
-              <button
-                className="flex  rounded-full"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  border: "1px #d5d5d5 solid",
-                }}
-              >
+              ) : (
                 <div
-                  className="flex items-center justify-center"
+                  className="flex  rounded-full"
                   style={{
                     width: "40px",
                     height: "40px",
+                    backgroundColor: "#ffa445",
+                    color: "white",
                   }}
                 >
-                  {" "}
-                  목
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onTueChange();
+                    }}
+                  >
+                    화
+                  </button>
                 </div>
-              </button>{" "}
-              <button
-                className="flex  rounded-full"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  border: "1px #d5d5d5 solid",
-                }}
-              >
+              )}
+              {wed == false ? (
                 <div
-                  className="flex items-center justify-center"
+                  className="flex  rounded-full"
                   style={{
                     width: "40px",
                     height: "40px",
+                    border: "1px #d5d5d5 solid",
                   }}
                 >
-                  {" "}
-                  금
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onWedChange();
+                    }}
+                  >
+                    수
+                  </button>
                 </div>
-              </button>{" "}
-              <button
-                className="flex  rounded-full"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  border: "1px #d5d5d5 solid",
-                }}
-              >
+              ) : (
                 <div
-                  className="flex items-center justify-center"
+                  className="flex  rounded-full"
                   style={{
                     width: "40px",
                     height: "40px",
+                    backgroundColor: "#ffa445",
+                    color: "white",
                   }}
                 >
-                  {" "}
-                  토
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onWedChange();
+                    }}
+                  >
+                    수
+                  </button>
                 </div>
-              </button>{" "}
-              <button
-                className="flex  rounded-full"
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  border: "1px #d5d5d5 solid",
-                }}
-              >
+              )}
+              {thu == false ? (
                 <div
-                  className="flex items-center justify-center"
+                  className="flex  rounded-full"
                   style={{
                     width: "40px",
                     height: "40px",
+                    border: "1px #d5d5d5 solid",
                   }}
                 >
-                  {" "}
-                  일
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onThuChange();
+                    }}
+                  >
+                    목
+                  </button>
                 </div>
-              </button>
+              ) : (
+                <div
+                  className="flex  rounded-full"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    backgroundColor: "#ffa445",
+                    color: "white",
+                  }}
+                >
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onThuChange();
+                    }}
+                  >
+                    목
+                  </button>
+                </div>
+              )}
+              {mon == false ? (
+                <div
+                  className="flex  rounded-full"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    border: "1px #d5d5d5 solid",
+                  }}
+                >
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onMonChange();
+                    }}
+                  >
+                    월
+                  </button>
+                </div>
+              ) : (
+                <div
+                  className="flex  rounded-full"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    backgroundColor: "#ffa445",
+                    color: "white",
+                  }}
+                >
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onMonChange();
+                    }}
+                  >
+                    월
+                  </button>
+                </div>
+              )}
+              {mon == false ? (
+                <div
+                  className="flex  rounded-full"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    border: "1px #d5d5d5 solid",
+                  }}
+                >
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onMonChange();
+                    }}
+                  >
+                    월
+                  </button>
+                </div>
+              ) : (
+                <div
+                  className="flex  rounded-full"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    backgroundColor: "#ffa445",
+                    color: "white",
+                  }}
+                >
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onMonChange();
+                    }}
+                  >
+                    월
+                  </button>
+                </div>
+              )}
+              {mon == false ? (
+                <div
+                  className="flex  rounded-full"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    border: "1px #d5d5d5 solid",
+                  }}
+                >
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onMonChange();
+                    }}
+                  >
+                    월
+                  </button>
+                </div>
+              ) : (
+                <div
+                  className="flex  rounded-full"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    backgroundColor: "#ffa445",
+                    color: "white",
+                  }}
+                >
+                  <button
+                    className="flex items-center justify-center"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "50%",
+                    }}
+                    onClick={() => {
+                      onMonChange();
+                    }}
+                  >
+                    월
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <div>
@@ -511,7 +732,7 @@ const JobsWrite = () => {
                 <input
                   type="file"
                   id="input-file"
-                  multiple
+                  accept="image/*"
                   style={{
                     display: "none",
                   }}

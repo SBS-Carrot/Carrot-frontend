@@ -25,7 +25,7 @@ const Articles = () => {
         setArticle(data.data);
       } catch (e) {
         console.log(e);
-        window.alert("존재하지 않는 게시물입니다.");
+        window.alert("존재하지 않는 게시물입니다");
         moveBack();
       }
     };

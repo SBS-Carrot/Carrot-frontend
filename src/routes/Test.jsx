@@ -102,23 +102,28 @@ const Test = () => {
   ) => {
     try {
       const formData = new FormData();
-      for (let i = 0; i < uploadedImg.length; i++) {
-        formData.append("file", uploadedImg[i]);
-      }
       const productDto = {
         productCategory: category,
         productPrice: priceValue,
         productSubject: subjectValue,
         productContent: contentValue,
       };
-
-      formData.append("productDto", productDto);
+      // https://velog.io/@hhhminme/Axios%EC%97%90%EC%84%9C-Post-%EC%8B%9C-Contenttypeapplicationoctet-streamnotsupported-%ED%95%B8%EB%93%A4%EB%A7%81415-%EC%97%90%EB%9F%AC
+      const json = JSON.stringify(productDto);
+      const blob = new Blob([json], { type: "application/json" });
+      formData.append("productDto", blob);
+      for (let i = 0; i < uploadedImg.length; i++) {
+        formData.append("file", uploadedImg[i]);
+      }
       const data2 = await axios({
+        headers: {
+          "Content-Type": `application/json`,
+        },
         url: `http://localhost:8083/createProductImages`,
         method: "POST",
         data: formData,
       });
-      console.log("data2 : ", data2.data);
+      setId(data2.data.productId);
       onCompleteChange();
     } catch (e) {
       console.log(e);

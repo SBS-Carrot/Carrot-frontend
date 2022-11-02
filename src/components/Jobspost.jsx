@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../layouts/Header";
+import JobsHeader from "../layouts/JobsHeader";
 import Footer from "../layouts/Footer";
 import {
   BsFillEmojiSmileFill,
@@ -15,7 +15,7 @@ import { BiMap } from "react-icons/bi";
 const Jobspost = () => {
   return (
     <div>
-      <Header />
+      <JobsHeader />
       <div
         style={{
           width: "780px",

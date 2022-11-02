@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import Header from "../layouts/Header";
+import JobsHeader from "../layouts/JobsHeader";
 import axios from "axios";
 import { MdAddAPhoto } from "react-icons/md";
 
@@ -223,7 +223,7 @@ const JobsWrite = () => {
 
   return (
     <div>
-      <Header />
+      <JobsHeader />
       <div
         className="pt-5"
         style={{
@@ -279,7 +279,7 @@ const JobsWrite = () => {
                 width: "35%",
               }}
               value={category}
-              onChange={onCategoryChange}
+              onChange={() => {}}
             >
               <option value="시급">시급</option>
               <option value="일급">일급</option>
@@ -293,11 +293,7 @@ const JobsWrite = () => {
             >
               <input
                 value={priceValue}
-<<<<<<< Updated upstream
                 onChange={(e) => setPriceValue(onPriceChange(e.target.value))}
-=======
-                onChange={onPriceChange}
->>>>>>> Stashed changes
                 type="text"
                 placeholder="9,160"
                 style={{ width: "120px" }}
@@ -850,10 +846,31 @@ const JobsWrite = () => {
             <button
               onClick={() => {
                 if (showImages.length == 0) {
-                  onSubmit();
+                  onSubmit(
+                    subjectValue,
+                    category,
+                    priceValue,
+                    day,
+                    startTimeValue,
+                    endTimeValue,
+                    name,
+                    placeValue,
+                    contentValue
+                  );
                   onCompleteChange();
                 } else {
-                  onSubmits();
+                  onSubmits(
+                    subjectValue,
+                    category,
+                    priceValue,
+                    day,
+                    startTimeValue,
+                    endTimeValue,
+                    name,
+                    placeValue,
+                    contentValue,
+                    uploadedImg
+                  );
                   onCompleteChange();
                 }
               }}

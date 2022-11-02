@@ -11,8 +11,8 @@ import Join from "./routes/Join";
 import Jobspost from "./components/Jobspost";
 import JobsWrite from "./components/JobsWrite";
 import Articles from "./routes/Articles";
+import Realtypost from "./components/Realtypost";
 import Test from "./routes/Test";
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -32,6 +32,7 @@ function App() {
         <Route path="/test" element={<Test />} />
         <Route path="/jobspost/:num" element={<Jobspost />} />
         <Route path="/jobsWrite" element={<JobsWrite />} />
+        <Route path="/realtypost" element={<Realtypost />} />
       </Routes>
     </Router>
   );

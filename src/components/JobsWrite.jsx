@@ -3,15 +3,16 @@ import { useState } from "react";
 import Header from "../layouts/Header";
 import axios from "axios";
 import { MdAddAPhoto } from "react-icons/md";
-import { buildTimeValue } from "@testing-library/user-event/dist/utils";
 
 const JobsWrite = () => {
-  const [category, setCategoryValue] = useState("");
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("시급");
   const [priceValue, setPriceValue] = useState("");
   const [contentValue, setContentValue] = useState("");
   const [subjectValue, setSubjectValue] = useState("");
   const [placeValue, setPlaceValue] = useState("");
-  const [timeValue, setTimeValue] = useState("");
+  const [startTimeValue, setStartTimeValue] = useState("");
+  const [endTimeValue, setEndTimeValue] = useState("");
   const [completeToggle, setCompleteToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
   const [day, setDay] = useState("");
@@ -24,8 +25,21 @@ const JobsWrite = () => {
   const [sun, setSun] = useState(false);
   const [uploadedImg, setUploadedImg] = useState([]);
   const [id, setId] = useState("");
-  const onPriceChange = (e) => {
-    setPriceValue(e.target.value);
+  // https://velog.io/@kingth/react-input-%EA%B0%80%EA%B2%A9%ED%91%9C%EC%8B%9C-3%EC%9E%90%EB%A6%AC-%EB%A7%88%EB%8B%A4-%EC%BD%A4%EB%A7%88
+  // 가격에 , 찍기
+  const onPriceChange = (str) => {
+    const comma = (str) => {
+      str = String(str);
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    };
+    const uncomma = (str) => {
+      str = String(str);
+      return str.replace(/[^\d]+/g, "");
+    };
+    return comma(uncomma(str));
+  };
+  const onCategoryChange = (e) => {
+    setCategory(e.target.value);
   };
   const onContentChange = (e) => {
     setContentValue(e.target.value);
@@ -33,47 +47,61 @@ const JobsWrite = () => {
   const onSubjectChange = (e) => {
     setSubjectValue(e.target.value);
   };
-  const onCategoryChange = (e) => {
-    setCategoryValue(e.target.value);
+  const onNameChange = (e) => {
+    setName(e.target.value);
   };
   const onPlaceChange = (e) => {
     setPlaceValue(e.target.value);
   };
-  const onTimeChange = (e) => {
-    setTimeValue(e.target.value);
+  const onStartTimeChange = (e) => {
+    setStartTimeValue(e.target.value);
   };
+  const onEndTimeChange = (e) => {
+    setEndTimeValue(e.target.value);
+  };
+
   const onMonChange = () => {
     setMon(!mon);
-    onDayChange("월");
+    onDayChange(mon, "월");
   };
   const onTueChange = () => {
     setTue(!tue);
+    onDayChange(tue, "화");
   };
   const onWedChange = () => {
     setWed(!wed);
+    onDayChange(wed, "수");
   };
   const onThuChange = () => {
     setThu(!thu);
+    onDayChange(thu, "목");
   };
   const onFriChange = () => {
     setFri(!fri);
+    onDayChange(fri, "금");
   };
   const onSatChange = () => {
     setSat(!sat);
+    onDayChange(sat, "토");
   };
   const onSunChange = () => {
     setSun(!sun);
+    onDayChange(sun, "일");
   };
-  const onDayChange = (addDay) => {
-    let result = day.indexOf(addDay);
-    if (result == -1) {
-      setDay(addDay, ...day);
+  const onDayChange = (addDay, days) => {
+    let result = day.indexOf(days);
+    if (!addDay) {
+      setDay(day + days);
     } else {
-      setDay(day.slice(result, result + 1));
+      let a = day.slice(0, result);
+      let b = "";
+      if (result + 1 <= day.length) {
+        b = day.slice(result + 1);
+      }
+      setDay(a + b);
     }
-    console.log(result);
-    console.log(day);
   };
+
   const onCompleteChange = () => {
     setCompleteToggle(!completeToggle);
   };
@@ -111,20 +139,35 @@ const JobsWrite = () => {
     setShowImages(showImages.filter((_, index) => index !== id));
   };
   // 사진없을때
-  const onSubmit = async (subjectValue, contentValue, category, priceValue) => {
+  const onSubmit = async (
+    subjectValue,
+    category,
+    priceValue,
+    day,
+    startTimeValue,
+    endTimeValue,
+    name,
+    placeValue,
+    contentValue
+  ) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/createProduct`,
+        url: `http://localhost:8083/createJobs`,
         method: "POST",
         data: {
-          productCategory: category,
-          productPrice: priceValue,
-          productSubject: subjectValue,
-          productContent: contentValue,
+          jobSubject: subjectValue,
+          jobCategory: category,
+          jobPrice: priceValue,
+          jobDay: day,
+          jobStartTime: startTimeValue,
+          jobEndTime: endTimeValue,
+          jobName: name,
+          jobPlace: placeValue,
+          jobContent: contentValue,
         },
       });
       onCompleteChange();
-      setId(data.data.productId);
+      setId(data.data.jobid);
     } catch (e) {
       console.log(e);
     }
@@ -132,23 +175,33 @@ const JobsWrite = () => {
   // 사진있을때
   const onSubmits = async (
     subjectValue,
-    contentValue,
     category,
     priceValue,
+    day,
+    startTimeValue,
+    endTimeValue,
+    name,
+    placeValue,
+    contentValue,
     uploadedImg
   ) => {
     try {
       const formData = new FormData();
-      const productDto = {
-        productCategory: category,
-        productPrice: priceValue,
-        productSubject: subjectValue,
-        productContent: contentValue,
+      const jobDto = {
+        jobSubject: subjectValue,
+        jobCategory: category,
+        jobPrice: priceValue,
+        jobDay: day,
+        jobStartTime: startTimeValue,
+        jobEndTime: endTimeValue,
+        jobName: name,
+        jobPlace: placeValue,
+        jobContent: contentValue,
       };
       // https://velog.io/@hhhminme/Axios%EC%97%90%EC%84%9C-Post-%EC%8B%9C-Contenttypeapplicationoctet-streamnotsupported-%ED%95%B8%EB%93%A4%EB%A7%81415-%EC%97%90%EB%9F%AC
-      const json = JSON.stringify(productDto);
+      const json = JSON.stringify(jobDto);
       const blob = new Blob([json], { type: "application/json" });
-      formData.append("productDto", blob);
+      formData.append("jobDto", blob);
       for (let i = 0; i < uploadedImg.length; i++) {
         formData.append("file", uploadedImg[i]);
       }
@@ -156,11 +209,11 @@ const JobsWrite = () => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/createProductImages`,
+        url: `http://localhost:8083/createJobsImages`,
         method: "POST",
         data: formData,
       });
-      setId(data2.data.productId);
+      setId(data2.data.jobid);
       onCompleteChange();
     } catch (e) {
       console.log(e);
@@ -225,11 +278,12 @@ const JobsWrite = () => {
                 border: "1px #d5d5d5 solid",
                 width: "35%",
               }}
+              value={category}
+              onChange={onCategoryChange}
             >
               <option value="시급">시급</option>
-              <option value="월급">월급</option>
               <option value="일급">일급</option>
-              <option value="시급">시급</option>
+              <option value="월급">월급</option>
             </select>
             <div
               style={{
@@ -239,8 +293,8 @@ const JobsWrite = () => {
             >
               <input
                 value={priceValue}
-                onChange={onPriceChange}
-                type="number"
+                onChange={(e) => setPriceValue(onPriceChange(e.target.value))}
+                type="text"
                 placeholder="9,160"
                 style={{ width: "120px" }}
               />
@@ -251,7 +305,7 @@ const JobsWrite = () => {
           <div>
             <div className="pt-2">일하는 요일</div>
             <div className="flex my-2 gap-2">
-              {mon == false ? (
+              {mon === false ? (
                 <div
                   className="flex  rounded-full"
                   style={{
@@ -299,7 +353,7 @@ const JobsWrite = () => {
                   </button>
                 </div>
               )}
-              {tue == false ? (
+              {tue === false ? (
                 <div
                   className="flex  rounded-full"
                   style={{
@@ -347,7 +401,7 @@ const JobsWrite = () => {
                   </button>
                 </div>
               )}
-              {wed == false ? (
+              {wed === false ? (
                 <div
                   className="flex  rounded-full"
                   style={{
@@ -395,7 +449,7 @@ const JobsWrite = () => {
                   </button>
                 </div>
               )}
-              {thu == false ? (
+              {thu === false ? (
                 <div
                   className="flex  rounded-full"
                   style={{
@@ -443,7 +497,7 @@ const JobsWrite = () => {
                   </button>
                 </div>
               )}
-              {mon == false ? (
+              {fri == false ? (
                 <div
                   className="flex  rounded-full"
                   style={{
@@ -460,10 +514,10 @@ const JobsWrite = () => {
                       borderRadius: "50%",
                     }}
                     onClick={() => {
-                      onMonChange();
+                      onFriChange();
                     }}
                   >
-                    월
+                    금
                   </button>
                 </div>
               ) : (
@@ -484,14 +538,14 @@ const JobsWrite = () => {
                       borderRadius: "50%",
                     }}
                     onClick={() => {
-                      onMonChange();
+                      onFriChange();
                     }}
                   >
-                    월
+                    금
                   </button>
                 </div>
               )}
-              {mon == false ? (
+              {sat == false ? (
                 <div
                   className="flex  rounded-full"
                   style={{
@@ -508,10 +562,10 @@ const JobsWrite = () => {
                       borderRadius: "50%",
                     }}
                     onClick={() => {
-                      onMonChange();
+                      onSatChange();
                     }}
                   >
-                    월
+                    토
                   </button>
                 </div>
               ) : (
@@ -532,14 +586,14 @@ const JobsWrite = () => {
                       borderRadius: "50%",
                     }}
                     onClick={() => {
-                      onMonChange();
+                      onSatChange();
                     }}
                   >
-                    월
+                    토
                   </button>
                 </div>
               )}
-              {mon == false ? (
+              {sun == false ? (
                 <div
                   className="flex  rounded-full"
                   style={{
@@ -556,10 +610,10 @@ const JobsWrite = () => {
                       borderRadius: "50%",
                     }}
                     onClick={() => {
-                      onMonChange();
+                      onSunChange();
                     }}
                   >
-                    월
+                    일
                   </button>
                 </div>
               ) : (
@@ -580,10 +634,10 @@ const JobsWrite = () => {
                       borderRadius: "50%",
                     }}
                     onClick={() => {
-                      onMonChange();
+                      onSunChange();
                     }}
                   >
-                    월
+                    일
                   </button>
                 </div>
               )}
@@ -593,8 +647,8 @@ const JobsWrite = () => {
             {" "}
             <div className="pt-1">일하는 시간</div>
             <select
-              value={timeValue}
-              onChange={onTimeChange}
+              value={startTimeValue}
+              onChange={onStartTimeChange}
               style={{
                 border: "1px #d5d5d5 solid",
                 width: "100px",
@@ -631,6 +685,8 @@ const JobsWrite = () => {
                 width: "100px",
                 border: "1px #d5d5d5 solid",
               }}
+              value={endTimeValue}
+              onChange={onEndTimeChange}
             >
               <option value="24:00">00:00</option>
               <option value="01:00">01:00</option>
@@ -663,8 +719,8 @@ const JobsWrite = () => {
             <div className="pt-1">
               <div> 상호명</div>
               <input
-                value={category}
-                onChange={onCategoryChange}
+                value={name}
+                onChange={onNameChange}
                 type="text"
                 placeholder="예) 당근가게"
                 style={{
@@ -790,16 +846,10 @@ const JobsWrite = () => {
             <button
               onClick={() => {
                 if (showImages.length == 0) {
-                  onSubmit(subjectValue, contentValue, category, priceValue);
+                  onSubmit();
                   onCompleteChange();
                 } else {
-                  onSubmits(
-                    subjectValue,
-                    contentValue,
-                    category,
-                    priceValue,
-                    showImages
-                  );
+                  onSubmits();
                   onCompleteChange();
                 }
               }}

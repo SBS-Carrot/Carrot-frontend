@@ -22,8 +22,16 @@ const Test = () => {
   const onChange = (e) => {
     setContent(e.target.files[0]);
   };
-  const onPriceChange = (e) => {
-    setPriceValue(e.target.value);
+  const onPriceChange = (str) => {
+    const comma = (str) => {
+      str = String(str);
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    };
+    const uncomma = (str) => {
+      str = String(str);
+      return str.replace(/[^\d]+/g, "");
+    };
+    return comma(uncomma(str));
   };
   const onContentChange = (e) => {
     setContentValue(e.target.value);
@@ -216,7 +224,7 @@ const Test = () => {
               type="text"
               placeholder="\ 가격"
               value={priceValue}
-              onChange={onPriceChange}
+              onChange={(e) => setPriceValue(onPriceChange(e.target.value))}
               style={{
                 border: "1px  #d5d5d5 solid",
                 width: "35%",

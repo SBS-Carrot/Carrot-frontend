@@ -68,14 +68,14 @@ const Jobs = () => {
           >
             인기 당근알바
           </h1>
-          <a
-            href={`/jobsWrite`}
+          <span
             className="flex items-end justify-end "
             style={{
               width: "60%",
             }}
           >
-            <span
+            <a
+              href={`/jobsWrite`}
               className="rounded-md p-2"
               style={{
                 backgroundColor: "#fc9d39",
@@ -84,8 +84,8 @@ const Jobs = () => {
             >
               {" "}
               알바 구하기
-            </span>
-          </a>
+            </a>
+          </span>
         </div>
         <ul
           style={{

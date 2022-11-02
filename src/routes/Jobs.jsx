@@ -69,6 +69,10 @@ const Jobs = () => {
             인기 당근알바
           </h1>
           <span
+<<<<<<< Updated upstream
+=======
+            href={`/jobsWrite`}
+>>>>>>> Stashed changes
             className="flex items-end justify-end "
             style={{
               width: "60%",

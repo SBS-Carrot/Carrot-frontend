@@ -293,7 +293,11 @@ const JobsWrite = () => {
             >
               <input
                 value={priceValue}
+<<<<<<< Updated upstream
                 onChange={(e) => setPriceValue(onPriceChange(e.target.value))}
+=======
+                onChange={onPriceChange}
+>>>>>>> Stashed changes
                 type="text"
                 placeholder="9,160"
                 style={{ width: "120px" }}

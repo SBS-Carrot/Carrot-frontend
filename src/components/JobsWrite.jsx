@@ -47,6 +47,7 @@ const JobsWrite = () => {
   const onSubjectChange = (e) => {
     setSubjectValue(e.target.value);
   };
+
   const onNameChange = (e) => {
     setName(e.target.value);
   };

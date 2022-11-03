@@ -131,7 +131,21 @@ const Realtypost = () => {
           }}
         ></div>
         <section>
-          <div className="mt-6">아파트</div>
+          <div className="flex items-center mt-6 gap-2">
+            <div
+              className="flex justify-center text-sm"
+              style={{
+                border: "1px black solid",
+                width: "45px",
+                height: "20px",
+                fontSize: "0.7rem",
+              }}
+            >
+              집주인
+            </div>
+            <div className="font-bold">아파트</div>
+          </div>
+
           <div
             className=" flex items-center gap-3"
             style={{
@@ -168,37 +182,85 @@ const Realtypost = () => {
           </div>
           <br />
         </section>
-        <section>
-          <div
-            className="font-bold pb-2 mt-9"
-            style={{
-              fontSize: "1.2rem",
-            }}
-          >
-            정보
-          </div>
-
+        <div
+          className="font-bold pb-5 mt-9"
+          style={{
+            fontSize: "1.2rem",
+          }}
+        >
+          정보
+        </div>
+        <section className="flex">
           <ul
-            className="flex flex-col gap-6 mb-11"
+            className="flex flex-col gap-4 mb-11 "
             style={{
-              fontSize: "1.3rem",
+              fontSize: "1.1rem",
+              width: "120px",
             }}
           >
             <li className="flex gap-4">
-              <AiOutlineDollar className="mt-2" />
-              <span>월급 130만원</span>
+              <span className="text-gray-400">면적</span>
+            </li>
+
+            <li className="flex gap-4">
+              <span className="text-gray-400">방/욕실 수</span>
             </li>
             <li className="flex gap-4">
-              <BiMap className="mt-2" />
-              <span>대전 서구 둔산동</span>
+              <span className="text-gray-400">층</span>
             </li>
             <li className="flex gap-4">
-              <BsCalendarEvent className="mt-2" />
-              <span>월~금 협의</span>
+              <span className="text-gray-400">대출가능여부</span>
             </li>
             <li className="flex gap-4">
-              <AiOutlineClockCircle className="mt-2" />
-              <span>10:00~16:00</span>
+              <span className="text-gray-400">입주 가능일</span>
+            </li>
+            <li className="flex gap-4">
+              <span className="text-gray-400">반려동물</span>
+            </li>
+            <li className="flex gap-4">
+              <span className="text-gray-400">주차</span>
+            </li>
+            <li className="flex gap-4">
+              <span className="text-gray-400">엘리베이터</span>
+            </li>
+            <li className="flex gap-4">
+              <span className="text-gray-400">내부 시설</span>
+              {/* <div>세탁기, 냉장고, 에어컨, 가스렌지</div> */}
+            </li>
+          </ul>
+          <ul
+            className="flex flex-col gap-4 mb-11 "
+            style={{
+              fontSize: "1.1rem",
+            }}
+          >
+            <li className="flex gap-4 font-bold">
+              <div>9평 · 전용 29.7㎡</div>
+            </li>
+
+            <li className="flex gap-4 font-bold">
+              <div>방 1개 / 욕실 1개</div>
+            </li>
+            <li className="flex gap-4 font-bold">
+              <div>5층</div>
+            </li>
+            <li className="flex gap-4">
+              <div>확인필요</div>
+            </li>
+            <li className="flex gap-4">
+              <div>즉시 가능</div>
+            </li>
+            <li className="flex gap-4">
+              <div>확인필요</div>
+            </li>
+            <li className="flex gap-4">
+              <div>확인필요</div>
+            </li>
+            <li className="flex gap-4">
+              <div>확인필요</div>
+            </li>
+            <li className="flex gap-4">
+              <div>세탁기, 냉장고, 에어컨, 가스렌지</div>
             </li>
           </ul>
         </section>
@@ -209,7 +271,7 @@ const Realtypost = () => {
               fontSize: "1.2rem",
             }}
           >
-            상세 내용
+            소개
           </div>
           <div
             style={{
@@ -225,7 +287,7 @@ const Realtypost = () => {
             height: "30px",
           }}
         >
-          <div>지원자 0{/* {img.imgLike} */}</div>
+          <div>채팅 0{/* {img.imgLike} */}</div>
           <div>관심 0{/* {img.imgLike} */}</div>
           <div>조회수 0{/* {img.imgLike} */}</div>
         </div>
@@ -277,7 +339,7 @@ const Realtypost = () => {
                 backgroundColor: "#fc9d39",
               }}
             >
-              지원하기
+              채팅하기{" "}
             </a>
           </div>
         </section>
@@ -295,97 +357,98 @@ const Realtypost = () => {
                   fontSize: "1.1rem",
                 }}
               >
-                사는 곳 근처 알바
+                부동산 직거래 게시글 더보기
               </div>
             </div>
           </div>
 
           <br />
         </div>
-      </div>
-      <div className="gap-2">
-        <div>
-          <ul className="grid grid-cols-2">
-            <li
-              className="flex  items-center gap-4"
-              style={{
-                height: "120px",
-              }}
-            >
-              <a href="#" className="flex-col flex justify-center">
-                <div className="img1">
-                  <img
-                    src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
-                    alt=""
-                  />
-                </div>
-              </a>
-              <a href="">
-                <div
-                  style={{
-                    height: "120px",
-                  }}
-                >
-                  <div style={{}}>
-                    <span>주방이모 파트타임 오전 6시~오전 10시(4시간)</span>
+        <div className="gap-2">
+          <div>
+            <ul className="grid grid-cols-2">
+              <li
+                className="flex  items-center gap-4"
+                style={{
+                  height: "120px",
+                }}
+              >
+                <a href="#" className="flex-col flex justify-center">
+                  <div className="img1">
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
+                      alt=""
+                    />
                   </div>
+                </a>
+                <a href="">
                   <div
-                    className="text-sm"
                     style={{
-                      color: "#73777B",
-                      paddingTop: "5px",
+                      height: "120px",
                     }}
                   >
-                    <span>밥을짓는홍여사 . 부평동</span>
+                    <div style={{}}>
+                      <span>주방이모 파트타임 오전 6시~오전 10시(4시간)</span>
+                    </div>
+                    <div
+                      className="text-sm"
+                      style={{
+                        color: "#73777B",
+                        paddingTop: "5px",
+                      }}
+                    >
+                      <span>밥을짓는홍여사 . 부평동</span>
+                    </div>
+                    <div className="font-bold pt-1">
+                      <span>시급 10,100</span>
+                    </div>
                   </div>
-                  <div className="font-bold pt-1">
-                    <span>시급 10,100</span>
+                </a>
+              </li>
+              <li
+                className="flex  items-center gap-4"
+                style={{
+                  height: "120px",
+                }}
+              >
+                <a href="#" className="flex-col flex justify-center">
+                  <div className="img1">
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
+                      alt=""
+                    />
                   </div>
-                </div>
-              </a>
-            </li>
-            <li
-              className="flex  items-center gap-4"
-              style={{
-                height: "120px",
-              }}
-            >
-              <a href="#" className="flex-col flex justify-center">
-                <div className="img1">
-                  <img
-                    src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
-                    alt=""
-                  />
-                </div>
-              </a>
-              <a href="">
-                <div
-                  style={{
-                    height: "120px",
-                    marginTop: "25px",
-                  }}
-                >
-                  <div style={{}}>
-                    <span>주방이모 파트타임 오전 6시~오전 10시(4시간)</span>
-                  </div>
+                </a>
+                <a href="">
                   <div
-                    className="text-sm"
                     style={{
-                      color: "#73777B",
-                      paddingTop: "5px",
+                      height: "120px",
+                      marginTop: "25px",
                     }}
                   >
-                    <span>밥을짓는홍여사 . 부평동</span>
+                    <div style={{}}>
+                      <span>주방이모 파트타임 오전 6시~오전 10시(4시간)</span>
+                    </div>
+                    <div
+                      className="text-sm"
+                      style={{
+                        color: "#73777B",
+                        paddingTop: "5px",
+                      }}
+                    >
+                      <span>밥을짓는홍여사 . 부평동</span>
+                    </div>
+                    <div className="font-bold pt-1">
+                      <span>시급 10,100</span>
+                    </div>
                   </div>
-                  <div className="font-bold pt-1">
-                    <span>시급 10,100</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
+
       <Footer />
     </div>
   );

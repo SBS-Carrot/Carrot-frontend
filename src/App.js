@@ -14,6 +14,7 @@ import Articles from "./routes/Articles";
 import Realtypost from "./components/Realtypost";
 import Test from "./routes/Test";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import RealtyWrite from "./components/RealtyWrite";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/jobspost/:num" element={<Jobspost />} />
         <Route path="/jobsWrite" element={<JobsWrite />} />
         <Route path="/realtypost" element={<Realtypost />} />
+        <Route path="/realtyWrite" element={<RealtyWrite />} />
       </Routes>
     </Router>
   );

@@ -296,90 +296,91 @@ const Jobspost = () => {
 
           <br />
         </div>
-      </div>
-      <div className="gap-2">
-        <div>
-          <ul className="grid grid-cols-2">
-            <li
-              className="flex  items-center gap-4"
-              style={{
-                height: "120px",
-              }}
-            >
-              <a href="#" className="flex-col flex justify-center">
-                <div className="img1">
-                  <img
-                    src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
-                    alt=""
-                  />
-                </div>
-              </a>
-              <a href="">
-                <div
-                  style={{
-                    height: "120px",
-                  }}
-                >
-                  <div style={{}}>
-                    <span>주방이모 파트타임 오전 6시~오전 10시(4시간)</span>
+        <div className="gap-2">
+          <div>
+            <ul className="grid grid-cols-2">
+              <li
+                className="flex  items-center gap-4"
+                style={{
+                  height: "120px",
+                }}
+              >
+                <a href="#" className="flex-col flex justify-center">
+                  <div className="img1">
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
+                      alt=""
+                    />
                   </div>
+                </a>
+                <a href="">
                   <div
-                    className="text-sm"
                     style={{
-                      color: "#73777B",
-                      paddingTop: "5px",
+                      height: "120px",
                     }}
                   >
-                    <span>밥을짓는홍여사 . 부평동</span>
+                    <div style={{}}>
+                      <span>주방이모 파트타임 오전 6시~오전 10시(4시간)</span>
+                    </div>
+                    <div
+                      className="text-sm"
+                      style={{
+                        color: "#73777B",
+                        paddingTop: "5px",
+                      }}
+                    >
+                      <span>밥을짓는홍여사 . 부평동</span>
+                    </div>
+                    <div className="font-bold pt-1">
+                      <span>시급 10,100</span>
+                    </div>
                   </div>
-                  <div className="font-bold pt-1">
-                    <span>시급 10,100</span>
+                </a>
+              </li>
+              <li
+                className="flex  items-center gap-4"
+                style={{
+                  height: "120px",
+                }}
+              >
+                <a href="#" className="flex-col flex justify-center">
+                  <div className="img1">
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
+                      alt=""
+                    />
                   </div>
-                </div>
-              </a>
-            </li>
-            <li
-              className="flex  items-center gap-4"
-              style={{
-                height: "120px",
-              }}
-            >
-              <a href="#" className="flex-col flex justify-center">
-                <div className="img1">
-                  <img
-                    src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
-                    alt=""
-                  />
-                </div>
-              </a>
-              <a href="">
-                <div
-                  style={{
-                    height: "120px",
-                    marginTop: "25px",
-                  }}
-                >
-                  <div style={{}}>
-                    <span>주방이모 파트타임 오전 6시~오전 10시(4시간)</span>
-                  </div>
+                </a>
+                <a href="">
                   <div
-                    className="text-sm"
                     style={{
-                      color: "#73777B",
-                      paddingTop: "5px",
+                      height: "120px",
+                      marginTop: "25px",
                     }}
                   >
-                    <span>밥을짓는홍여사 . 부평동</span>
+                    <div style={{}}>
+                      <span>주방이모 파트타임 오전 6시~오전 10시(4시간)</span>
+                    </div>
+                    <div
+                      className="text-sm"
+                      style={{
+                        color: "#73777B",
+                        paddingTop: "5px",
+                      }}
+                    >
+                      <span>밥을짓는홍여사 . 부평동</span>
+                    </div>
+                    <div className="font-bold pt-1">
+                      <span>시급 10,100</span>
+                    </div>
                   </div>
-                  <div className="font-bold pt-1">
-                    <span>시급 10,100</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
+
       <Footer />
     </div>
   );

@@ -9,6 +9,11 @@ const RealtyWrite = () => {
   const [showImages, setShowImages] = useState([]);
   const [uploadedImg, setUploadedImg] = useState([]);
   const [id, setId] = useState("");
+  const [X, setX] = useState([]);
+
+  const WhoClickRadioButton = (e) => {
+    setX(e.target.value);
+  };
 
   const onCompleteChange = () => {
     setCompleteToggle(!completeToggle);
@@ -182,7 +187,28 @@ const RealtyWrite = () => {
         >
           <div className="mb-4">
             <div className="font-bold">이 글을 쓰시는 분은 누구인가요?</div>
-            <div>세입자 집주인</div>
+            <div className="flex gap-2">
+              <div>
+                <input
+                  className="mr-1"
+                  type="radio"
+                  value="1"
+                  checked={X === "1"}
+                  onChange={WhoClickRadioButton}
+                />
+                세입자
+              </div>
+              <div>
+                <input
+                  className="mr-1"
+                  type="radio"
+                  value="2"
+                  checked={X === "2"}
+                  onChange={WhoClickRadioButton}
+                />
+                집주인
+              </div>
+            </div>
           </div>
           <div className="mb-4">
             <div className="font-bold">매물 종류</div>

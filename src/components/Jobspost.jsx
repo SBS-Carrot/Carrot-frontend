@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import JobsHeader from "../layouts/JobsHeader";
 import Footer from "../layouts/Footer";
 import {
@@ -11,8 +11,33 @@ import { AiOutlineDollar, AiOutlineClockCircle } from "react-icons/ai";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
-
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 const Jobspost = () => {
+  const { num } = useParams();
+  const navigate = useNavigate();
+  const moveBack = () => {
+    navigate(-1);
+  };
+  const [jobArticle, setJobArticle] = useState("");
+
+  useEffect(() => {
+    const onSubmit = async (num) => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/Jobs/${num}`,
+          method: "GET",
+        });
+        setJobArticle(data.data);
+      } catch (e) {
+        console.log(e);
+        window.alert("존재하지 않는 게시물입니다");
+        moveBack();
+      }
+    };
+    onSubmit(num);
+  }, []);
+
   return (
     <div>
       <JobsHeader />
@@ -79,7 +104,7 @@ const Jobspost = () => {
                 width: "500px",
               }}
             >
-              <div className="font-bold ">nickname</div>
+              <div className="font-bold ">{jobArticle.jobUserid}</div>
               <div className="text-sm">대전광역시 서구 둔산동</div>
             </div>
           </div>
@@ -139,7 +164,7 @@ const Jobspost = () => {
                 fontSize: "1.25rem",
               }}
             >
-              [대전역]주5일/4시간/130~150만원/홍보/상담/초보 경단가능
+              {jobArticle.jobSubject}
             </div>
             <div className="flex gap-2">
               <div
@@ -148,7 +173,7 @@ const Jobspost = () => {
                   color: "gray",
                 }}
               >
-                (주)케이삼흥
+                {jobArticle.jobName}
               </div>
               <div
                 className="text-sm"
@@ -156,7 +181,7 @@ const Jobspost = () => {
                   color: "gray",
                 }}
               >
-                2일 전
+                {jobArticle.createDate}
               </div>
             </div>
           </div>
@@ -180,15 +205,22 @@ const Jobspost = () => {
           >
             <li className="flex gap-4">
               <AiOutlineDollar className="mt-2" />
-              <span>월급 130만원</span>
+              <span>
+                {jobArticle.jobCategory} {jobArticle.jobPrice}원
+              </span>
             </li>
             <li className="flex gap-4">
               <BiMap className="mt-2" />
-              <span>대전 서구 둔산동</span>
+              <span>{jobArticle.jobPlace}</span>
             </li>
             <li className="flex gap-4">
               <BsCalendarEvent className="mt-2" />
-              <span>월~금 협의</span>
+              <span>
+                {jobArticle.jobDay == "월화수목금"
+                  ? "월~금"
+                  : jobArticle.jobDay}{" "}
+                협의
+              </span>
             </li>
             <li className="flex gap-4">
               <AiOutlineClockCircle className="mt-2" />
@@ -210,7 +242,9 @@ const Jobspost = () => {
               height: "350px",
               border: "1px gray solid",
             }}
-          ></div>
+          >
+            {jobArticle.jobContent}
+          </div>
         </section>
         <div
           className="flex gap-4 align-center font-bold mt-2 pb-11"
@@ -219,9 +253,9 @@ const Jobspost = () => {
             height: "30px",
           }}
         >
-          <div>지원자 0{/* {img.imgLike} */}</div>
-          <div>관심 0{/* {img.imgLike} */}</div>
-          <div>조회수 0{/* {img.imgLike} */}</div>
+          <div>지원자 {jobArticle.jobVolunteer}</div>
+          <div>관심 {jobArticle.jobLike}</div>
+          <div>조회수 {jobArticle.jobCheck}</div>
         </div>
 
         {/* map */}

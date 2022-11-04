@@ -19,6 +19,23 @@ const RealtyWrite = () => {
   const [move, setMove] = useState([]);
   const [inside, setInside] = useState("");
 
+  //값 넣기
+  const [categroy, setCateogry] = useState(""); //매물종류
+  //실평수
+  //면적
+  //방
+  //욕실
+  //주소
+  //전체층
+  //해당층
+  //입주가능일
+  //대출
+  //반려동물
+  //주차
+  //엘리베이터
+  //내부시설
+  //매물 설명
+
   const Inside_List = [
     { id: 0, data: "복층" },
     { id: 1, data: "에어컨" },

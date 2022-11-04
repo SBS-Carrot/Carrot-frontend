@@ -3,16 +3,58 @@ import RealtyHeader from "../layouts/RealtyHeader";
 import { MdAddAPhoto } from "react-icons/md";
 import { useState } from "react";
 import axios from "axios";
+import { getValue } from "@testing-library/user-event/dist/utils";
 
 const RealtyWrite = () => {
   const [completeToggle, setCompleteToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
   const [uploadedImg, setUploadedImg] = useState([]);
   const [id, setId] = useState("");
-  const [X, setX] = useState([]);
+  const [who, setWho] = useState([]);
+  const [loan, setLoan] = useState([]);
+  const [pet, setPet] = useState([]);
+  const [parking, setParking] = useState([]);
+  const [elevator, setElevator] = useState([]);
+  const [dateToggle, setDateToggle] = useState(false);
+  const [move, setMove] = useState([]);
+  const [inside, setInside] = useState("");
 
-  const WhoClickRadioButton = (e) => {
-    setX(e.target.value);
+  const Inside_List = [
+    { id: 0, data: "복층" },
+    { id: 1, data: "에어컨" },
+    { id: 2, data: "침대" },
+    { id: 3, data: "냉장고" },
+    { id: 4, data: "세탁기" },
+    { id: 5, data: "가스렌지" },
+    { id: 6, data: "옥탑" },
+    { id: 7, data: "인덕션" },
+  ];
+  const onCheckInside = (checked, item) => {
+    if (checked) {
+      setInside([...inside, item]);
+    } else {
+      setInside(inside.filter((el) => el !== item));
+    }
+  };
+
+  const moveRadioButton = (e) => {
+    setMove(e.target.value);
+  };
+  const whoRadioButton = (e) => {
+    setWho(e.target.value);
+  };
+  const loanRadioButton = (e) => {
+    setLoan(e.target.value);
+  };
+
+  const petRadioButton = (e) => {
+    setPet(e.target.value);
+  };
+  const parkingRadioButton = (e) => {
+    setParking(e.target.value);
+  };
+  const elevatorRadioButton = (e) => {
+    setElevator(e.target.value);
   };
 
   const onCompleteChange = () => {
@@ -155,7 +197,7 @@ const RealtyWrite = () => {
       <div
         className="font-bold"
         style={{
-          width: "850px",
+          width: "1000px",
           margin: "0 auto",
           fontSize: "1.1rem",
         }}
@@ -171,9 +213,9 @@ const RealtyWrite = () => {
         <span>부동산 직거래에는 개인의 매물만 올려주세요.</span>
       </div>
       <section
-        className="flex"
+        className="flex gap-28"
         style={{
-          width: "850px",
+          width: "1000px",
           hegith: "1000px",
           margin: "0 auto",
         }}
@@ -193,8 +235,8 @@ const RealtyWrite = () => {
                   className="mr-1"
                   type="radio"
                   value="1"
-                  checked={X === "1"}
-                  onChange={WhoClickRadioButton}
+                  checked={who === "1"}
+                  onChange={whoRadioButton}
                 />
                 세입자
               </div>
@@ -203,8 +245,8 @@ const RealtyWrite = () => {
                   className="mr-1"
                   type="radio"
                   value="2"
-                  checked={X === "2"}
-                  onChange={WhoClickRadioButton}
+                  checked={who === "2"}
+                  onChange={whoRadioButton}
                 />
                 집주인
               </div>
@@ -376,9 +418,38 @@ const RealtyWrite = () => {
           </div>
           <div className="font-bold">입주 가능일</div>
           <div className="flex gap-4">
-            <div>즉시 가능</div>
             <div>
-              날짜 지정 <input type="date" />
+              <input
+                className="mr-1"
+                type="radio"
+                value="1"
+                checked={move === "1"}
+                onChange={moveRadioButton}
+              />
+              즉시 가능
+            </div>
+            <div>
+              <div>
+                <div>
+                  <div>
+                    <input
+                      className="mr-1"
+                      type="radio"
+                      value="2"
+                      checked={move === "2"}
+                      onChange={moveRadioButton}
+                    />
+                    날짜지정
+                  </div>
+                  <div
+                    style={{
+                      marginLeft: "15px",
+                    }}
+                  >
+                    <input type="date" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="font-bold">사진</div>
@@ -416,30 +487,31 @@ const RealtyWrite = () => {
               </label>
             </div>
 
-            <ul className="grid grid-cols-3 gap-4 pl-3">
+            <ul className="grid grid-cols-5 gap-4 pl-3 ">
               {showImages.map((image, id) => (
                 <div
                   key={id}
                   style={{
-                    width: "110px",
-                    height: "100px",
+                    width: "90px",
+                    height: "90px",
                     display: "flex",
                     flexDirection: "row",
                     position: "relative",
                     marginBottom: "20px",
                   }}
                 >
-                  <img
-                    src={image}
-                    alt={`${image}-${id}`}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "fill",
-                      display: "block",
-                    }}
-                  />
-                  <div />
+                  <div>
+                    <img
+                      src={image}
+                      alt={`${image}-${id}`}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "fill",
+                        display: "block",
+                      }}
+                    />
+                  </div>
                   <button
                     style={{
                       position: "absolute",
@@ -499,33 +571,238 @@ const RealtyWrite = () => {
           </div>
           <div className="font-bold">대출</div>
           <div className="flex gap-2 mb-4">
-            <div>가능</div>
-            <div>불가능</div>
-            <div>확인필요</div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="1"
+                checked={loan === "1"}
+                onChange={loanRadioButton}
+              />
+              가능
+            </div>
+
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="2"
+                checked={loan === "2"}
+                onChange={loanRadioButton}
+              />
+              불가능
+            </div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="3"
+                checked={loan === "3"}
+                onChange={loanRadioButton}
+              />
+              확인필요
+            </div>
           </div>
           <div className="font-bold">반려동물</div>
           <div className="flex gap-2 mb-4">
-            <div>가능</div>
-            <div>불가능</div>
-            <div>확인필요</div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="1"
+                checked={pet === "1"}
+                onChange={petRadioButton}
+              />
+              가능
+            </div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="2"
+                checked={pet === "2"}
+                onChange={petRadioButton}
+              />
+              불가능
+            </div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="3"
+                checked={pet === "3"}
+                onChange={petRadioButton}
+              />
+              확인필요
+            </div>
           </div>
           <div className="font-bold">주차</div>
           <div className="flex gap-2 mb-4">
-            <div>가능</div>
-            <div>불가능</div>
-            <div>확인필요</div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="1"
+                checked={parking === "1"}
+                onChange={parkingRadioButton}
+              />
+              가능
+            </div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="2"
+                checked={parking === "2"}
+                onChange={parkingRadioButton}
+              />
+              불가능
+            </div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="3"
+                checked={parking === "3"}
+                onChange={parkingRadioButton}
+              />
+              확인필요
+            </div>
           </div>
           <div className="font-bold">엘리베이터</div>
           <div className="flex gap-2 mb-4">
-            <div>있음</div>
-            <div>없음</div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="1"
+                checked={elevator === "1"}
+                onChange={elevatorRadioButton}
+              />
+              있음
+            </div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="2"
+                checked={elevator === "2"}
+                onChange={elevatorRadioButton}
+              />
+              없음
+            </div>
           </div>
           <div className="font-bold">내부시설</div>
           <section>
-            <div>복층</div>
+            <div className="grid grid-cols-2 mb-4 gap-2">
+              {Inside_List.map((item) => {
+                return (
+                  <label key={item.id}>
+                    <input
+                      className="mr-2"
+                      type="checkbox"
+                      value={item.data}
+                      onChange={(e) => {
+                        onCheckInside(e.target.checked, e.target.value);
+                      }}
+                      checked={inside.includes(item.data) ? true : false}
+                    />
+                    {item.data}
+                  </label>
+                );
+              })}
+            </div>
           </section>
+          <div>
+            <div className="font-bold">매물 설명</div>
+            <div className="flex gap-2 mb-4">
+              <input
+                className="pb-56"
+                type="text"
+                placeholder="이 매물의 특징이 있다면 알려주세요."
+                style={{
+                  border: "1px #d5d5d5 solid",
+                  width: "400px",
+                  height: "250px",
+                }}
+              />
+            </div>
+          </div>
         </section>
       </section>
+      <div>
+        <button
+          onClick={() => {
+            if (showImages.length == 0) {
+              onSubmit();
+              onCompleteChange();
+            } else {
+              onSubmits();
+              onCompleteChange();
+            }
+          }}
+          style={{
+            outline: "1px #ffa445 solid",
+            borderRadius: "10px",
+            padding: "15px",
+            fontWeight: "bolder",
+            color: "white",
+            fontSize: "1.1rem",
+            backgroundColor: "#FFB26B",
+            position: "absolute",
+            bottom: "-14%",
+            left: "50%",
+            width: "1000px",
+            transform: "translateX(-50%)",
+          }}
+        >
+          글쓰기
+        </button>
+      </div>
+      {completeToggle && (
+        <div
+          style={{
+            position: "absolute",
+            transform: "translate(95%,-120%)",
+            width: "300px",
+            height: "150px",
+            justifyContent: "center",
+            background: "white",
+            outline: "1px #ffa445 solid",
+            borderRadius: "10px",
+            display: "flex",
+          }}
+        >
+          <a
+            href={`/realtypost/${id}`}
+            style={{
+              textAlign: "center",
+              width: "100%",
+              height: "100%",
+              color: "#ffa445",
+              fontWeight: "bolder",
+              paddingTop: "10px",
+            }}
+          >
+            {" "}
+            게시글 작성이
+            <br />
+            완료되었습니다.
+            <div
+              style={{
+                padding: "10px",
+                outline: "1px #ffa445 solid",
+                borderRadius: "10px",
+                color: "#ffa445",
+                width: "80px",
+                margin: "30px auto",
+              }}
+            >
+              확인
+            </div>
+          </a>
+        </div>
+      )}
     </div>
   );
 };

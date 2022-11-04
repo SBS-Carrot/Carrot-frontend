@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import JobsHeader from "../layouts/JobsHeader";
 import axios from "axios";
+import JobsHeader from "../layouts/JobsHeader";
+
 import { MdAddAPhoto } from "react-icons/md";
 
 const JobsWrite = () => {
@@ -279,7 +280,7 @@ const JobsWrite = () => {
                 width: "35%",
               }}
               value={category}
-              onChange={() => {}}
+              onChange={onCategoryChange}
             >
               <option value="시급">시급</option>
               <option value="일급">일급</option>

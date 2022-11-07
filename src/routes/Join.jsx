@@ -171,7 +171,6 @@ const Join = () => {
   const onJoin = async (
     idValue,
     passwordValue,
-    password1Value,
     nameValue,
     birthValue,
     addressValue,
@@ -187,7 +186,6 @@ const Join = () => {
         data: {
           userid: idValue,
           password: passwordValue,
-          password2: password1Value,
           username: nameValue,
           birth: birth,
           email: emailValue,
@@ -775,7 +773,6 @@ const Join = () => {
                     onJoin(
                       idValue,
                       passwordValue,
-                      password1Value,
                       nameValue,
                       birthValue,
                       addressValue,

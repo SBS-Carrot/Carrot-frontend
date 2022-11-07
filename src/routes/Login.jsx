@@ -1,8 +1,42 @@
-import React from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-
+import axios from "axios";
+import { AiOutlineLogin } from "react-icons/ai";
 const Login = () => {
+  const [idValue, setIdValue] = useState("");
+  const [pwValue, setPwValue] = useState("");
+  const onIdChange = (e) => {
+    if (e.target.value.length >= 20) {
+      return;
+    }
+    setIdValue(e.target.value);
+  };
+  const onPwChange = (e) => {
+    if (e.target.value.length >= 20) {
+      return;
+    }
+    setPwValue(e.target.value);
+  };
+
+  const onLogin = async (idValue, pwValue) => {
+    try {
+      const data = await axios({
+        url: `http://localhost:8083/loginUser`,
+        method: "POST",
+        data: {
+          userid: idValue,
+          password: pwValue,
+        },
+      });
+      if (data.data == "") {
+        console.log("ABC");
+      }
+      console.log(data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <div>
       <div
@@ -63,24 +97,28 @@ const Login = () => {
               <input
                 type="text"
                 placeholder="아이디"
+                value={idValue}
+                onChange={onIdChange}
                 style={{
                   width: "300px",
                   backgroundColor: "#F5F5F5",
                   padding: "5px",
                 }}
-              ></input>
+              />
             </div>
           </div>
           <div style={{ border: "1px #dad4d4 solid" }}>
             <input
               type="password"
               placeholder="비밀번호"
+              value={pwValue}
+              onChange={onPwChange}
               style={{
                 width: "300px",
                 backgroundColor: "#F5F5F5",
                 padding: "5px",
               }}
-            ></input>
+            />
           </div>
 
           <div>
@@ -91,6 +129,15 @@ const Login = () => {
                 width: "300px",
                 color: "white",
                 backgroundColor: "#fc9d39",
+              }}
+              onClick={() => {
+                if (idValue == "") {
+                  window.alert("ID를 입력해 주세요");
+                } else if (pwValue == "") {
+                  window.alert("비밀번호를 입력해 주세요");
+                } else {
+                  onLogin(idValue, pwValue);
+                }
               }}
             >
               로그인

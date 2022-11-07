@@ -20,9 +20,18 @@ const Join = () => {
   const [phoneValue, setPhoneValue] = useState("");
   const [idCheck, setIdCheck] = useState(false);
   const [pwCheck, setPwCheck] = useState(false);
-  const [useid, setUseid] = useState(false);
+  const [pw2Check, setPw2Check] = useState(false);
   const [pwStatus, setPwStatus] = useState(false);
+  const [pw2Status, setPw2Status] = useState(false);
+  const [useid, setUseid] = useState(false);
 
+  const Pw2Check = () => {
+    if (password1Value === passwordValue) {
+      setPw2Check(true);
+    } else {
+      setPw2Check(false);
+    }
+  };
   const IdCheck = async (idValue) => {
     try {
       const data = await axios.get(`http://localhost:8083/checkId/${idValue}`);
@@ -352,7 +361,7 @@ const Join = () => {
                     paddingLeft: "5px",
                   }}
                 >
-                  "비밀번호 양식에 적합합니다."
+                  비밀번호 양식에 적합합니다
                 </span>
               </div>
             ) : (
@@ -377,7 +386,7 @@ const Join = () => {
                     paddingLeft: "5px",
                   }}
                 >
-                  "비밀번호 양식이 틀렸습니다."
+                  비밀번호 양식을 다시 확인해주세요
                 </span>
               </div>
             ))}

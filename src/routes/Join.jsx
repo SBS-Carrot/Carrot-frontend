@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Header from "../layouts/Header";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-
+import { useNavigate } from "react-router-dom";
 const Join = () => {
   const [idValue, setIdValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -24,13 +24,10 @@ const Join = () => {
   const [pwStatus, setPwStatus] = useState(false);
   const [pw2Status, setPw2Status] = useState(false);
   const [useid, setUseid] = useState(false);
-
-  const Pw2Check = () => {
-    if (password1Value === passwordValue) {
-      setPw2Check(true);
-    } else {
-      setPw2Check(false);
-    }
+  const [joinCheck, setJoinCheck] = useState(false);
+  const navigate = useNavigate();
+  const moveLogin = () => {
+    navigate("/login");
   };
   const IdCheck = async (idValue) => {
     try {
@@ -58,6 +55,7 @@ const Join = () => {
     setUseid(!useid);
   };
   const onIdChange = (e) => {
+    setIdCheck(false);
     let value = e.target.value;
     if (e.target.value.length >= 20) {
       return;
@@ -79,10 +77,10 @@ const Join = () => {
 
   const onPasswordChange = (e) => {
     let value = e.target.value;
-    if (e.target.value.length >= 20) {
+    if (value.length >= 20) {
       return;
     }
-    if (e.target.value.length <= 7) {
+    if (value.length <= 7) {
       setPwCheck(false);
     }
     if (value === "") {
@@ -94,8 +92,8 @@ const Join = () => {
       return;
     }
     setPasswordValue(value);
-    if (e.target.value.length >= 8) {
-      if (e.target.value.match(passwordReg) === null) {
+    if (length >= 8) {
+      if (value.match(passwordReg) === null) {
         setPwStatus(false);
       } else {
         setPwStatus(true);
@@ -106,10 +104,40 @@ const Join = () => {
     }
   };
   const onPassword1Change = (e) => {
-    setPassword1Value(e.target.value);
+    let value = e.target.value;
+    if (e.target.value.length >= 20) {
+      return;
+    }
+    if (e.target.value.length <= 7) {
+      setPw2Check(false);
+    }
+    if (value === "") {
+      setPassword1Value(value);
+      return;
+    }
+    let length = value.length;
+    if (dataRuleCheckForPw(value[length - 1]) === false) {
+      return;
+    }
+    setPassword1Value(value);
+
+    if (length >= 8) {
+      setPw2Check(true);
+      if (value === passwordValue) {
+        setPw2Status(true);
+      } else {
+        setPw2Status(false);
+      }
+    } else {
+      setPw2Check(false);
+    }
   };
 
   const onNameChange = (e) => {
+    if (e.target.value.length >= 20) {
+      return;
+    }
+
     setNameValue(e.target.value);
   };
   const onYearChange = (e) => {
@@ -152,18 +180,24 @@ const Join = () => {
     phoneValue
   ) => {
     try {
-      const data = await axios.post(`http://localhost:8083/createUser`, {
-        userid: idValue,
-        password: passwordValue,
-        password2: password1Value,
-        username: nameValue,
-        birth: birthValue,
-        email: emailValue,
-        nickname: nicknameValue,
-        address: addressValue,
-        phone: phoneValue,
+      let birth = JSON.stringify(birthValue);
+      const data = await axios({
+        url: `http://localhost:8083/createUser`,
+        method: "POST",
+        data: {
+          userid: idValue,
+          password: passwordValue,
+          password2: password1Value,
+          username: nameValue,
+          birth: birth,
+          email: emailValue,
+          nickname: nicknameValue,
+          address: addressValue,
+          phone: phoneValue,
+        },
       });
-      window.alert("회원가입 완료");
+
+      setJoinCheck(true);
     } catch (e) {
       console.log(e);
     }
@@ -222,11 +256,16 @@ const Join = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     flexDirection: "column",
+                    zIndex: "9999",
                   }}
                 >
                   <div style={{}}>
                     <div>
-                      <span>"{idValue}"은(는) 사용 가능한 아이디입니다.</span>
+                      <span>
+                        "{idValue}"은(는)
+                        <br />
+                        사용 가능한 아이디입니다.
+                      </span>
                     </div>
                     <div>
                       <span>사용하시겠습니까?</span>
@@ -269,6 +308,7 @@ const Join = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     flexDirection: "column",
+                    zIndex: "9999",
                   }}
                 >
                   <div
@@ -280,7 +320,11 @@ const Join = () => {
                       textAlign: "center",
                     }}
                   >
-                    <span>"{idValue}"은(는) 사용 불가능하거나</span>
+                    <span>
+                      "{idValue}"은(는)
+                      <br />
+                      사용 불가능하거나
+                    </span>
                     <span>이미 존재하는 아이디입니다.</span>
                     <span>다른 아이디를 사용해주세요</span>
                     <div
@@ -343,7 +387,7 @@ const Join = () => {
               <div
                 style={{
                   position: "absolute",
-                  width: "270px",
+                  width: "290px",
                   height: "30px",
                   top: "17.5%",
                   left: "40%",
@@ -368,7 +412,7 @@ const Join = () => {
               <div
                 style={{
                   position: "absolute",
-                  width: "270px",
+                  width: "290px",
                   height: "30px",
                   top: "17.5%",
                   left: "40%",
@@ -413,6 +457,58 @@ const Join = () => {
           >
             비밀번호 재확인
           </h5>
+          {pw2Check == true &&
+            (pw2Status == true ? (
+              <div
+                style={{
+                  position: "absolute",
+                  width: "290px",
+                  height: "30px",
+                  top: "27%",
+                  left: "40%",
+                }}
+              >
+                <AiOutlineCheckCircle
+                  style={{
+                    color: "green",
+                    fontSize: "1.4rem",
+                    display: "inline",
+                  }}
+                />
+                <span
+                  style={{
+                    paddingLeft: "5px",
+                  }}
+                >
+                  비밀번호 일치 확인
+                </span>
+              </div>
+            ) : (
+              <div
+                style={{
+                  position: "absolute",
+                  width: "290px",
+                  height: "30px",
+                  top: "27%",
+                  left: "40%",
+                }}
+              >
+                <AiOutlineCheckCircle
+                  style={{
+                    color: "red",
+                    fontSize: "1.4rem",
+                    display: "inline",
+                  }}
+                />
+                <span
+                  style={{
+                    paddingLeft: "5px",
+                  }}
+                >
+                  비밀번호가 일치하지 않습니다.
+                </span>
+              </div>
+            ))}
           <input
             type="password"
             placeholder="비밀번호는 8자 ~ 20자 이하, 대소문자+숫자+특수문자"
@@ -645,24 +741,94 @@ const Join = () => {
                 fontWeight: "bolder",
               }}
               onClick={() => {
-                if (phoneValue.length == 13) {
-                  onJoin(
-                    idValue,
-                    passwordValue,
-                    password1Value,
-                    nameValue,
-                    birthValue,
-                    addressValue,
-                    emailValue,
-                    nicknameValue,
-                    phoneValue
-                  );
+                if (!idCheck) {
+                  window.alert("아이디확인을 해주세요");
+                  return;
+                } else if (!pwStatus) {
+                  window.alert("비밀번호 양식을 확인해주세요");
+                  return;
+                } else if (!pw2Status) {
+                  window.alert("비밀번호 재확인이 일치하지 않습니다.");
+                  return;
+                } else if (nameValue.length <= 1) {
+                  window.alert("이름은 최소 2글자 이상이어야 합니다.");
+                  return;
+                } else if (birthValue.yy == "") {
+                  window.alert("생년월일을 확인해 주세요");
+                  return;
+                } else if (birthValue.yy.length > 4) {
+                  window.alert("생년이 5글자 이상인지 확인해주세요.");
+                } else if (birthValue.mm == "") {
+                  window.alert("생년월일을 확인해 주세요");
+                  return;
+                } else if (birthValue.dd == "") {
+                  window.alert("생년월일을 확인해 주세요");
+                  return;
+                } else if (addressValue.length <= 6) {
+                  window.alert("주소양식을 확인해 주세요.");
+                  return;
+                } else if (phoneValue.length != 13) {
+                  window.alert("연락처 입력 양식을 확인해 주세요");
+                  return;
+                } else {
+                  if (phoneValue.length == 13) {
+                    onJoin(
+                      idValue,
+                      passwordValue,
+                      password1Value,
+                      nameValue,
+                      birthValue,
+                      addressValue,
+                      emailValue,
+                      nicknameValue,
+                      phoneValue
+                    );
+                  }
                 }
               }}
             >
               가입하기
             </button>
           </div>
+          {joinCheck && (
+            <div
+              style={{
+                width: "300px",
+                height: "160px",
+                border: "1px #fcb264 solid",
+                position: "absolute",
+                top: "20%",
+                left: "20%",
+                backgroundColor: "white",
+                borderRadius: "10px",
+                paddingTop: "15px",
+              }}
+            >
+              <span>
+                회원가입에 성공했습니다.
+                <br />
+                로그인 홈페이지로 이동하여
+                <br />
+                당근마켓을 바로 이용해보세요!
+                <br />
+              </span>
+              <button
+                style={{
+                  backgroundColor: "#fcb264",
+                  color: "white",
+                  width: "250px",
+                  height: "30px",
+                  borderRadius: "10px",
+                  marginTop: "20px",
+                }}
+                onClick={() => {
+                  moveLogin();
+                }}
+              >
+                로그인 페이지로 이동하기
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

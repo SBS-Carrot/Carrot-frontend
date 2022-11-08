@@ -87,7 +87,7 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-      <footer
+      <div
         className="flex py-4 border-t  text-base-content border-base-300 gap-4"
         style={{
           width: "800px",
@@ -176,7 +176,7 @@ const Footer = () => {
             <BsTwitter />
           </a>
         </div>
-      </footer>
+      </div>
     </div>
   );
 };

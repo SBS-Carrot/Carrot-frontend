@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import JobsHeader from "../layouts/JobsHeader";
+import React from "react";
+import RealtyHeader from "../layouts/RealtyHeader";
 import Footer from "../layouts/Footer";
 import {
   BsFillEmojiSmileFill,
@@ -11,36 +11,10 @@ import { AiOutlineDollar, AiOutlineClockCircle } from "react-icons/ai";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-const Jobspost = () => {
-  const { num } = useParams();
-  const navigate = useNavigate();
-  const moveBack = () => {
-    navigate(-1);
-  };
-  const [jobArticle, setJobArticle] = useState("");
-
-  useEffect(() => {
-    const onSubmit = async (num) => {
-      try {
-        const data = await axios({
-          url: `http://localhost:8083/Jobs/${num}`,
-          method: "GET",
-        });
-        setJobArticle(data.data);
-      } catch (e) {
-        console.log(e);
-        window.alert("존재하지 않는 게시물입니다");
-        moveBack();
-      }
-    };
-    onSubmit(num);
-  }, []);
-
+const Realtypost = () => {
   return (
     <div>
-      <JobsHeader />
+      <RealtyHeader />
       <div
         style={{
           width: "780px",
@@ -104,7 +78,7 @@ const Jobspost = () => {
                 width: "500px",
               }}
             >
-              <div className="font-bold ">{jobArticle.jobUserid}</div>
+              <div className="font-bold ">nickname</div>
               <div className="text-sm">대전광역시 서구 둔산동</div>
             </div>
           </div>
@@ -157,74 +131,136 @@ const Jobspost = () => {
           }}
         ></div>
         <section>
-          <div className="mt-6">
+          <div className="flex items-center mt-6 gap-2">
+            <div
+              className="flex justify-center text-sm"
+              style={{
+                border: "1px black solid",
+                width: "45px",
+                height: "20px",
+                fontSize: "0.7rem",
+              }}
+            >
+              집주인
+            </div>
+            <div className="font-bold">아파트</div>
+          </div>
+
+          <div
+            className=" flex items-center gap-3"
+            style={{
+              fontSize: "1.8rem",
+            }}
+          >
             <div
               className="font-bold"
               style={{
-                fontSize: "1.25rem",
+                color: "#ffa445",
               }}
             >
-              {jobArticle.jobSubject}
+              판매중
             </div>
-            <div className="flex gap-2">
-              <div
-                className="text-sm"
-                style={{
-                  color: "gray",
-                }}
-              >
-                {jobArticle.jobName}
-              </div>
-              <div
-                className="text-sm"
-                style={{
-                  color: "gray",
-                }}
-              >
-                {jobArticle.createDate}
-              </div>
+            <div className="font-bold">월세 500 / 60</div>
+          </div>
+          <div className="flex gap-2">
+            <div
+              className="text-sm"
+              style={{
+                color: "gray",
+              }}
+            >
+              2개월 전 작성
+            </div>
+            <div
+              className="text-sm"
+              style={{
+                color: "gray",
+              }}
+            >
+              2일 전
             </div>
           </div>
           <br />
         </section>
-        <section>
-          <div
-            className="font-bold pb-2 mt-9"
-            style={{
-              fontSize: "1.2rem",
-            }}
-          >
-            정보
-          </div>
-
+        <div
+          className="font-bold pb-5 mt-9"
+          style={{
+            fontSize: "1.2rem",
+          }}
+        >
+          정보
+        </div>
+        <section className="flex">
           <ul
-            className="flex flex-col gap-6 mb-11"
+            className="flex flex-col gap-4 mb-11 "
             style={{
-              fontSize: "1.3rem",
+              fontSize: "1.1rem",
+              width: "120px",
             }}
           >
             <li className="flex gap-4">
-              <AiOutlineDollar className="mt-2" />
-              <span>
-                {jobArticle.jobCategory} {jobArticle.jobPrice}원
-              </span>
+              <span className="text-gray-400">면적</span>
+            </li>
+
+            <li className="flex gap-4">
+              <span className="text-gray-400">방/욕실 수</span>
             </li>
             <li className="flex gap-4">
-              <BiMap className="mt-2" />
-              <span>{jobArticle.jobPlace}</span>
+              <span className="text-gray-400">층</span>
             </li>
             <li className="flex gap-4">
-              <BsCalendarEvent className="mt-2" />
-              <span>
-                {jobArticle.jobDay == "월화수목금"
-                  ? "월~금"
-                  : jobArticle.jobDay}{" "}
-                협의
-              </span>
+              <span className="text-gray-400">대출가능여부</span>
             </li>
             <li className="flex gap-4">
-              <AiOutlineClockCircle className="mt-2" />
-              <span>10:00~16:00</span>
+              <span className="text-gray-400">입주 가능일</span>
+            </li>
+            <li className="flex gap-4">
+              <span className="text-gray-400">반려동물</span>
+            </li>
+            <li className="flex gap-4">
+              <span className="text-gray-400">주차</span>
+            </li>
+            <li className="flex gap-4">
+              <span className="text-gray-400">엘리베이터</span>
+            </li>
+            <li className="flex gap-4">
+              <span className="text-gray-400">내부 시설</span>
+              {/* <div>세탁기, 냉장고, 에어컨, 가스렌지</div> */}
+            </li>
+          </ul>
+          <ul
+            className="flex flex-col gap-4 mb-11 "
+            style={{
+              fontSize: "1.1rem",
+            }}
+          >
+            <li className="flex gap-4 font-bold">
+              <div>9평 · 전용 29.7㎡</div>
+            </li>
+
+            <li className="flex gap-4 font-bold">
+              <div>방 1개 / 욕실 1개</div>
+            </li>
+            <li className="flex gap-4 font-bold">
+              <div>5층</div>
+            </li>
+            <li className="flex gap-4">
+              <div>확인필요</div>
+            </li>
+            <li className="flex gap-4">
+              <div>즉시 가능</div>
+            </li>
+            <li className="flex gap-4">
+              <div>확인필요</div>
+            </li>
+            <li className="flex gap-4">
+              <div>확인필요</div>
+            </li>
+            <li className="flex gap-4">
+              <div>확인필요</div>
+            </li>
+            <li className="flex gap-4">
+              <div>세탁기, 냉장고, 에어컨, 가스렌지</div>
             </li>
           </ul>
         </section>
@@ -235,16 +271,14 @@ const Jobspost = () => {
               fontSize: "1.2rem",
             }}
           >
-            상세 내용
+            소개
           </div>
           <div
             style={{
               height: "350px",
               border: "1px gray solid",
             }}
-          >
-            {jobArticle.jobContent}
-          </div>
+          ></div>
         </section>
         <div
           className="flex gap-4 align-center font-bold mt-2 pb-11"
@@ -253,9 +287,9 @@ const Jobspost = () => {
             height: "30px",
           }}
         >
-          <div>지원자 {jobArticle.jobVolunteer}</div>
-          <div>관심 {jobArticle.jobLike}</div>
-          <div>조회수 {jobArticle.jobCheck}</div>
+          <div>채팅 0{/* {img.imgLike} */}</div>
+          <div>관심 0{/* {img.imgLike} */}</div>
+          <div>조회수 0{/* {img.imgLike} */}</div>
         </div>
 
         {/* map */}
@@ -305,7 +339,7 @@ const Jobspost = () => {
                 backgroundColor: "#fc9d39",
               }}
             >
-              지원하기
+              채팅하기{" "}
             </a>
           </div>
         </section>
@@ -323,7 +357,7 @@ const Jobspost = () => {
                   fontSize: "1.1rem",
                 }}
               >
-                사는 곳 근처 알바
+                부동산 직거래 게시글 더보기
               </div>
             </div>
           </div>
@@ -420,4 +454,4 @@ const Jobspost = () => {
   );
 };
 
-export default Jobspost;
+export default Realtypost;

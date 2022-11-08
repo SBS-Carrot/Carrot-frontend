@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import JobsHeader from "../layouts/JobsHeader";
 import axios from "axios";
+import JobsHeader from "../layouts/JobsHeader";
+
 import { MdAddAPhoto } from "react-icons/md";
 
 const JobsWrite = () => {

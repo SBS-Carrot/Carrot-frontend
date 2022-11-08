@@ -18,14 +18,35 @@ const Realty = () => {
             margin: "0 auto",
           }}
         >
-          <div
-            className="font-bold"
-            style={{
-              fontSize: "1.5rem",
-              paddingTop: "5%",
-            }}
-          >
-            인기 부동산 직거래 게시글
+          <div className="flex gap-3">
+            <div
+              className="font-bold"
+              style={{
+                fontSize: "1.5rem",
+                paddingTop: "5%",
+              }}
+            >
+              인기 부동산 직거래 게시글
+            </div>
+            <span
+              href={`/realtyWrite`}
+              className="flex items-end justify-end "
+              style={{
+                width: "62%",
+              }}
+            >
+              <a
+                href={`/realtyWrite`}
+                className="rounded-md p-2"
+                style={{
+                  backgroundColor: "#fc9d39",
+                  color: "white",
+                }}
+              >
+                {" "}
+                내 매물 내놓기
+              </a>
+            </span>
           </div>
           <div>
             <div className="mt-5">

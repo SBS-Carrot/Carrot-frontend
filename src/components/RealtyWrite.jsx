@@ -15,7 +15,6 @@ const RealtyWrite = () => {
   const [pet, setPet] = useState([]);
   const [parking, setParking] = useState([]);
   const [elevator, setElevator] = useState([]);
-  const [dateToggle, setDateToggle] = useState(false);
   const [move, setMove] = useState([]);
   const [inside, setInside] = useState("");
 
@@ -504,7 +503,7 @@ const RealtyWrite = () => {
               </label>
             </div>
 
-            <ul className="grid grid-cols-5 gap-4 pl-3 ">
+            <ul className="grid grid-cols-4 gap-11 pl-3 ">
               {showImages.map((image, id) => (
                 <div
                   key={id}
@@ -767,7 +766,7 @@ const RealtyWrite = () => {
             fontSize: "1.1rem",
             backgroundColor: "#FFB26B",
             position: "absolute",
-            bottom: "-14%",
+            bottom: "-33%",
             left: "50%",
             width: "1000px",
             transform: "translateX(-50%)",

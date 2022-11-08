@@ -10,30 +10,30 @@ const RealtyWrite = () => {
   const [showImages, setShowImages] = useState([]);
   const [uploadedImg, setUploadedImg] = useState([]);
   const [id, setId] = useState("");
-  const [who, setWho] = useState([]);
-  const [loan, setLoan] = useState([]);
-  const [pet, setPet] = useState([]);
-  const [parking, setParking] = useState([]);
-  const [elevator, setElevator] = useState([]);
-  const [move, setMove] = useState([]);
+  const [who, setWho] = useState("");
+  const [loan, setLoan] = useState("");
+  const [pet, setPet] = useState("");
+  const [parking, setParking] = useState("");
+  const [elevator, setElevator] = useState("");
+  const [move, setMove] = useState("");
   const [inside, setInside] = useState("");
-
-  //값 넣기
-  const [categroy, setCateogry] = useState(""); //매물종류
-  //실평수
+  const [moveDate, setMoveDate] = useState("");
+  const [category, setCategory] = useState(""); //매물종류
+  const [spaceValue, setSpaceValue] = useState(""); //실평수
   //면적
+  const [areaValue, setAreaValue] = useState("");
   //방
+  const [roomValue, setRoomValue] = useState("");
   //욕실
+  const [bathValue, setBathValue] = useState("");
   //주소
+  const [addressValue, setAddressValue] = useState("");
   //전체층
+  const [wholeValue, setWholeValue] = useState("");
   //해당층
-  //입주가능일
-  //대출
-  //반려동물
-  //주차
-  //엘리베이터
-  //내부시설
+  const [floorValue, setFloorValue] = useState("");
   //매물 설명
+  const [contentValue, setContentValue] = useState("");
 
   const Inside_List = [
     { id: 0, data: "복층" },
@@ -52,7 +52,36 @@ const RealtyWrite = () => {
       setInside(inside.filter((el) => el !== item));
     }
   };
-
+  const onMoveDateChange = (e) => {
+    setMoveDate(e.target.value);
+  };
+  const onCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+  const onSpaceChange = (e) => {
+    setSpaceValue(e.target.value);
+  };
+  const onAreaChange = (e) => {
+    setAreaValue(e.target.value);
+  };
+  const onRoomChange = (e) => {
+    setRoomValue(e.target.value);
+  };
+  const onBathChange = (e) => {
+    setBathValue(e.target.value);
+  };
+  const onAddressChange = (e) => {
+    setAddressValue(e.target.value);
+  };
+  const onWholeChange = (e) => {
+    setWholeValue(e.target.value);
+  };
+  const onFloorChange = (e) => {
+    setFloorValue(e.target.value);
+  };
+  const onContentChange = (e) => {
+    setContentValue(e.target.value);
+  };
   const moveRadioButton = (e) => {
     setMove(e.target.value);
   };
@@ -62,7 +91,6 @@ const RealtyWrite = () => {
   const loanRadioButton = (e) => {
     setLoan(e.target.value);
   };
-
   const petRadioButton = (e) => {
     setPet(e.target.value);
   };
@@ -111,63 +139,96 @@ const RealtyWrite = () => {
   };
   // 사진없을때
   const onSubmit = async (
-    subjectValue,
+    who,
+    loan,
+    pet,
+    parking,
+    elevator,
+    move,
+    inside,
+    moveDate,
     category,
-    priceValue,
-    day,
-    startTimeValue,
-    endTimeValue,
-    name,
-    placeValue,
+    spaceValue,
+    areaValue,
+    roomValue,
+    bathValue,
+    addressValue,
+    wholeValue,
+    floorValue,
     contentValue
   ) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/createJobs`,
+        url: `http://localhost:8083/createRealty`,
         method: "POST",
         data: {
-          jobSubject: subjectValue,
-          jobCategory: category,
-          jobPrice: priceValue,
-          jobDay: day,
-          jobStartTime: startTimeValue,
-          jobEndTime: endTimeValue,
-          jobName: name,
-          jobPlace: placeValue,
-          jobContent: contentValue,
+          realtyWho: who,
+          realtyCategory: category,
+          realtySpace: spaceValue,
+          realtyArea: areaValue,
+          realtyRoom: roomValue,
+          realtyBath: bathValue,
+          realtyAddress: addressValue,
+          realtyWhole: wholeValue,
+          realtyFloor: floorValue,
+          realtyMove: move,
+          realtyMoveDate: moveDate,
+          realtyLoan: loan,
+          realtyPet: pet,
+          realtyParking: parking,
+          realtyElevator: elevator,
+          realtyInside: inside,
+          realtyContent: contentValue,
         },
       });
       onCompleteChange();
-      setId(data.data.jobid);
+      setId(data.data.realyid);
     } catch (e) {
       console.log(e);
     }
   };
+
   // 사진있을때
   const onSubmits = async (
-    subjectValue,
+    who,
+    loan,
+    pet,
+    parking,
+    elevator,
+    move,
+    inside,
+    moveDate,
     category,
-    priceValue,
-    day,
-    startTimeValue,
-    endTimeValue,
-    name,
-    placeValue,
+    spaceValue,
+    areaValue,
+    roomValue,
+    bathValue,
+    addressValue,
+    wholeValue,
+    floorValue,
     contentValue,
     uploadedImg
   ) => {
     try {
       const formData = new FormData();
       const jobDto = {
-        jobSubject: subjectValue,
-        jobCategory: category,
-        jobPrice: priceValue,
-        jobDay: day,
-        jobStartTime: startTimeValue,
-        jobEndTime: endTimeValue,
-        jobName: name,
-        jobPlace: placeValue,
-        jobContent: contentValue,
+        realtyWho: who,
+        realtyCategory: category,
+        realtySpace: spaceValue,
+        realtyArea: areaValue,
+        realtyRoom: roomValue,
+        realtyBath: bathValue,
+        realtyAddress: addressValue,
+        realtyWhole: wholeValue,
+        realtyFloor: floorValue,
+        realtyMove: move,
+        realtyMoveDate: moveDate,
+        realtyLoan: loan,
+        realtyPet: pet,
+        realtyParking: parking,
+        realtyElevator: elevator,
+        realtyInside: inside,
+        realtyContent: contentValue,
       };
 
       const json = JSON.stringify(jobDto);
@@ -250,8 +311,8 @@ const RealtyWrite = () => {
                 <input
                   className="mr-1"
                   type="radio"
-                  value="1"
-                  checked={who === "1"}
+                  value="세입자"
+                  checked={who === "세입자"}
                   onChange={whoRadioButton}
                 />
                 세입자
@@ -260,8 +321,8 @@ const RealtyWrite = () => {
                 <input
                   className="mr-1"
                   type="radio"
-                  value="2"
-                  checked={who === "2"}
+                  value="집주인"
+                  checked={who === "집주인"}
                   onChange={whoRadioButton}
                 />
                 집주인
@@ -271,6 +332,8 @@ const RealtyWrite = () => {
           <div className="mb-4">
             <div className="font-bold">매물 종류</div>
             <select
+              value={category}
+              onChange={onCategoryChange}
               style={{
                 border: "1px #d5d5d5 solid",
               }}
@@ -300,6 +363,8 @@ const RealtyWrite = () => {
                   className="ml-1"
                   type="number"
                   placeholder="0"
+                  value={spaceValue}
+                  onChange={onSpaceChange}
                   style={{
                     width: "110px",
                     height: "30px",
@@ -320,6 +385,8 @@ const RealtyWrite = () => {
                 <input
                   className="ml-1"
                   type="number"
+                  value={areaValue}
+                  onChange={onAreaChange}
                   placeholder="0"
                   style={{
                     width: "110px",
@@ -345,6 +412,8 @@ const RealtyWrite = () => {
                   className="ml-1"
                   type="number"
                   placeholder="0"
+                  value={roomValue}
+                  onChange={onRoomChange}
                   style={{
                     width: "110px",
                     height: "30px",
@@ -366,6 +435,8 @@ const RealtyWrite = () => {
                   className="ml-1"
                   type="number"
                   placeholder="0"
+                  value={bathValue}
+                  onChange={onBathChange}
                   style={{
                     width: "110px",
                     height: "30px",
@@ -380,6 +451,8 @@ const RealtyWrite = () => {
             <input
               type="text"
               placeholder="주소 입력"
+              value={addressValue}
+              onChange={onAddressChange}
               style={{
                 border: "1px #d5d5d5 solid",
                 width: "400px",
@@ -402,6 +475,8 @@ const RealtyWrite = () => {
                   className="ml-1"
                   type="number"
                   placeholder="0"
+                  value={wholeValue}
+                  onChange={onWholeChange}
                   style={{
                     width: "110px",
                     height: "30px",
@@ -423,6 +498,8 @@ const RealtyWrite = () => {
                   className="ml-1"
                   type="number"
                   placeholder="0"
+                  value={floorValue}
+                  onChange={onFloorChange}
                   style={{
                     width: "110px",
                     height: "30px",
@@ -438,8 +515,8 @@ const RealtyWrite = () => {
               <input
                 className="mr-1"
                 type="radio"
-                value="1"
-                checked={move === "1"}
+                value="즉시 가능"
+                checked={move === "즉시 가능"}
                 onChange={moveRadioButton}
               />
               즉시 가능
@@ -451,18 +528,22 @@ const RealtyWrite = () => {
                     <input
                       className="mr-1"
                       type="radio"
-                      value="2"
-                      checked={move === "2"}
+                      value="날짜지정"
+                      checked={move === "날짜지정"}
                       onChange={moveRadioButton}
                     />
-                    날짜지정
-                  </div>
-                  <div
-                    style={{
-                      marginLeft: "15px",
-                    }}
-                  >
-                    <input type="date" />
+                    날짜 지정
+                    <div
+                      style={{
+                        marginLeft: "15px",
+                      }}
+                    >
+                      <input
+                        type="date"
+                        value={moveDate}
+                        onChange={onMoveDateChange}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -591,8 +672,8 @@ const RealtyWrite = () => {
               <input
                 className="mr-1"
                 type="radio"
-                value="1"
-                checked={loan === "1"}
+                value="가능"
+                checked={loan === "가능"}
                 onChange={loanRadioButton}
               />
               가능
@@ -602,8 +683,8 @@ const RealtyWrite = () => {
               <input
                 className="mr-1"
                 type="radio"
-                value="2"
-                checked={loan === "2"}
+                value="불가능"
+                checked={loan === "불가능"}
                 onChange={loanRadioButton}
               />
               불가능
@@ -612,8 +693,8 @@ const RealtyWrite = () => {
               <input
                 className="mr-1"
                 type="radio"
-                value="3"
-                checked={loan === "3"}
+                value="확인필요"
+                checked={loan === "확인필요"}
                 onChange={loanRadioButton}
               />
               확인필요
@@ -625,8 +706,8 @@ const RealtyWrite = () => {
               <input
                 className="mr-1"
                 type="radio"
-                value="1"
-                checked={pet === "1"}
+                value="가능"
+                checked={pet === "가능"}
                 onChange={petRadioButton}
               />
               가능
@@ -635,8 +716,8 @@ const RealtyWrite = () => {
               <input
                 className="mr-1"
                 type="radio"
-                value="2"
-                checked={pet === "2"}
+                value="불가능"
+                checked={pet === "불가능"}
                 onChange={petRadioButton}
               />
               불가능
@@ -645,8 +726,8 @@ const RealtyWrite = () => {
               <input
                 className="mr-1"
                 type="radio"
-                value="3"
-                checked={pet === "3"}
+                value="확인필요"
+                checked={pet === "확인필요"}
                 onChange={petRadioButton}
               />
               확인필요
@@ -658,8 +739,8 @@ const RealtyWrite = () => {
               <input
                 className="mr-1"
                 type="radio"
-                value="1"
-                checked={parking === "1"}
+                value="가능"
+                checked={parking === "가능"}
                 onChange={parkingRadioButton}
               />
               가능
@@ -668,8 +749,8 @@ const RealtyWrite = () => {
               <input
                 className="mr-1"
                 type="radio"
-                value="2"
-                checked={parking === "2"}
+                value="불가능"
+                checked={parking === "불가능"}
                 onChange={parkingRadioButton}
               />
               불가능
@@ -678,8 +759,8 @@ const RealtyWrite = () => {
               <input
                 className="mr-1"
                 type="radio"
-                value="3"
-                checked={parking === "3"}
+                value="확인필요"
+                checked={parking === "확인필요"}
                 onChange={parkingRadioButton}
               />
               확인필요
@@ -691,8 +772,8 @@ const RealtyWrite = () => {
               <input
                 className="mr-1"
                 type="radio"
-                value="1"
-                checked={elevator === "1"}
+                value="있음"
+                checked={elevator === "있음"}
                 onChange={elevatorRadioButton}
               />
               있음
@@ -701,8 +782,8 @@ const RealtyWrite = () => {
               <input
                 className="mr-1"
                 type="radio"
-                value="2"
-                checked={elevator === "2"}
+                value="없음"
+                checked={elevator === "없음"}
                 onChange={elevatorRadioButton}
               />
               없음
@@ -736,6 +817,8 @@ const RealtyWrite = () => {
                 className="pb-56"
                 type="text"
                 placeholder="이 매물의 특징이 있다면 알려주세요."
+                value={contentValue}
+                onChange={onContentChange}
                 style={{
                   border: "1px #d5d5d5 solid",
                   width: "400px",
@@ -750,10 +833,47 @@ const RealtyWrite = () => {
         <button
           onClick={() => {
             if (showImages.length == 0) {
-              onSubmit();
+              onSubmit(
+                who,
+                loan,
+                pet,
+                parking,
+                elevator,
+                move,
+                inside,
+                moveDate,
+                category,
+                spaceValue,
+                areaValue,
+                roomValue,
+                bathValue,
+                addressValue,
+                wholeValue,
+                floorValue,
+                contentValue
+              );
               onCompleteChange();
             } else {
-              onSubmits();
+              onSubmits(
+                who,
+                loan,
+                pet,
+                parking,
+                elevator,
+                move,
+                inside,
+                moveDate,
+                category,
+                spaceValue,
+                areaValue,
+                roomValue,
+                bathValue,
+                addressValue,
+                wholeValue,
+                floorValue,
+                contentValue,
+                uploadedImg
+              );
               onCompleteChange();
             }
           }}

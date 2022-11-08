@@ -12,7 +12,7 @@ import Jobspost from "./components/Jobspost";
 import JobsWrite from "./components/JobsWrite";
 import Articles from "./routes/Articles";
 import Realtypost from "./components/Realtypost";
-import Test from "./routes/Test";
+import ProductWrite from "./routes/ProductWrite";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RealtyWrite from "./components/RealtyWrite";
 
@@ -29,10 +29,10 @@ function App() {
         <Route path="/realty" element={<Realty />} />
         <Route path="/join" element={<Join />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/articles/:num" element={<Articles />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="/productPost/:num" element={<Articles />} />
+        <Route path="/productWrite" element={<ProductWrite />} />
         <Route path="/jobspost/:num" element={<Jobspost />} />
-        <Route path="/jobsWrite" element={<JobsWrite />} />
+        <Route path="/jobswrite" element={<JobsWrite />} />
         <Route path="/realtypost" element={<Realtypost />} />
         <Route path="/realtyWrite" element={<RealtyWrite />} />
       </Routes>

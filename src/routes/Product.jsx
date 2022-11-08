@@ -3,13 +3,13 @@
 // S3에 이미지 업로드 구현하기 (백엔드)
 // https://velog.io/@modsiw/Spring-Spring-Boot-gradle-S3-React.js-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%97%85%EB%A1%9C%EB%93%9C-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-1-%EB%B0%B1%EC%97%94%EB%93%9C-%EA%B5%AC%ED%98%84
 import { useState } from "react";
-import Header from "../layouts/Header";
+import LoginedHeader from "../layouts/LoginedHeader";
 import axios from "axios";
 
 import { useEffect } from "react";
 import { MdAddAPhoto } from "react-icons/md";
 
-const Test = () => {
+const Product = ({ logined }) => {
   const [category, setCategoryValue] = useState("");
   const [priceValue, setPriceValue] = useState("");
   const [contentValue, setContentValue] = useState("");
@@ -140,7 +140,7 @@ const Test = () => {
   };
   return (
     <div>
-      <Header />
+      <LoginedHeader />
       <div
         className="pt-5"
         style={{
@@ -413,4 +413,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Product;

@@ -5,7 +5,7 @@ import "../styles/Realty.css";
 import { AiOutlineRight } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 
-const Realty = () => {
+const Realty = ({ logined }) => {
   const navigate = useNavigate();
   const { Router } = useParams();
   return (

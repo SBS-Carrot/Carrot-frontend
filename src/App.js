@@ -10,31 +10,50 @@ import RegionTwo from "./routes/RegionTwo";
 import Join from "./routes/Join";
 import Jobspost from "./components/Jobspost";
 import JobsWrite from "./components/JobsWrite";
-import Articles from "./routes/Articles";
+import ProductPost from "./routes/ProductPost";
 import Realtypost from "./components/Realtypost";
-import Test from "./routes/Test";
+import Product from "./routes/Product";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RealtyWrite from "./components/RealtyWrite";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { authenticatedState } from "./recoil/auth";
 
 function App() {
+  const [logined, setLogined] = useRecoilState(authenticatedState);
+  useEffect(() => {
+    setLogined(sessionStorage.getItem("isLogined"));
+  }, []);
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/trust" element={<Trust />} />
-        <Route path="/jobs" element={<Jobs />} />
-        <Route path="/hot_articles" element={<HotArticles />} />
-        <Route path="/region/:address" element={<Region />} />
-        <Route path="/region/:address/:addressTwo" element={<RegionTwo />} />
-        <Route path="/realty" element={<Realty />} />
+        <Route path="/" element={<Home logined={logined} />} />
+        <Route path="/trust" element={<Trust logined={logined} />} />
+        <Route path="/jobs" element={<Jobs logined={logined} />} />
+        <Route
+          path="/hot_articles"
+          element={<HotArticles logined={logined} />}
+        />
+        <Route path="/region/:address" element={<Region logined={logined} />} />
+        <Route
+          path="/region/:address/:addressTwo"
+          element={<RegionTwo logined={logined} />}
+        />
+        <Route path="/realty" element={<Realty logined={logined} />} />
         <Route path="/join" element={<Join />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/articles/:num" element={<Articles />} />
-        <Route path="/test" element={<Test />} />
-        <Route path="/jobspost/:num" element={<Jobspost />} />
-        <Route path="/jobsWrite" element={<JobsWrite />} />
-        <Route path="/realtypost" element={<Realtypost />} />
-        <Route path="/realtyWrite" element={<RealtyWrite />} />
+        <Route
+          path="/productPost/:num"
+          element={<ProductPost logined={logined} />}
+        />
+        <Route path="/productWrite" element={<Product logined={logined} />} />
+        <Route path="/jobspost/:num" element={<Jobspost logined={logined} />} />
+        <Route path="/jobsWrite" element={<JobsWrite logined={logined} />} />
+        <Route path="/realtypost" element={<Realtypost logined={logined} />} />
+        <Route
+          path="/realtyWrite"
+          element={<RealtyWrite logined={logined} />}
+        />
       </Routes>
     </Router>
   );

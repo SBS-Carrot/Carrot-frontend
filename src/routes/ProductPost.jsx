@@ -8,7 +8,7 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-const Articles = () => {
+const ProductPost = ({ logined }) => {
   const { num } = useParams();
   const navigate = useNavigate();
   const moveBack = () => {
@@ -549,4 +549,4 @@ const Articles = () => {
   );
 };
 
-export default Articles;
+export default ProductPost;

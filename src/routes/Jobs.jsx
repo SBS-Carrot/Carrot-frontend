@@ -3,7 +3,7 @@ import JobsHeader from "../layouts/JobsHeader";
 import "../styles/Jobs.css";
 import Footer from "../layouts/Footer";
 import { useNavigate, useParams } from "react-router-dom";
-const Jobs = () => {
+const Jobs = ({ logined }) => {
   const navigate = useNavigate();
   const { Router } = useParams();
 

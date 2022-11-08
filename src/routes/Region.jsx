@@ -4,7 +4,7 @@ import Header from "../layouts/Header";
 import { Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Footer from "../layouts/Footer";
-const Region = () => {
+const Region = ({ logined }) => {
   const navigate = useNavigate();
   const { address } = useParams();
   if (address == "대덕구") {

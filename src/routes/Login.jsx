@@ -3,9 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { AiOutlineLogin } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
   const [idValue, setIdValue] = useState("");
   const [pwValue, setPwValue] = useState("");
+  const onHompage = () => {
+    navigate("/");
+  };
   const onIdChange = (e) => {
     if (e.target.value.length >= 20) {
       return;
@@ -29,10 +34,15 @@ const Login = () => {
           password: pwValue,
         },
       });
-      if (data.data == "") {
-        console.log("ABC");
+      if (data.data == false) {
+        alert("로그인 정보가 일치하지 않습니다.");
+      } else {
+        const logined = data.data.substring(0, 4);
+        const userid = data.data.substring(4);
+        sessionStorage.setItem("isLogined", logined);
+        sessionStorage.setItem("userid", userid);
+        onHompage();
       }
-      console.log(data.data);
     } catch (e) {
       console.log(e);
     }

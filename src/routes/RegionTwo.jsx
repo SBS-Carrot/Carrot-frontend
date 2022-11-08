@@ -4,7 +4,7 @@ import Header from "../layouts/Header";
 import { Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Footer from "../layouts/Footer";
-const RegionTwo = () => {
+const RegionTwo = ({ logined }) => {
   const navigate = useNavigate();
   const { addressTwo } = useParams();
   return (

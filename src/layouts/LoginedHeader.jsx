@@ -4,14 +4,13 @@ import { useRecoilState } from "recoil";
 import { authenticatedState } from "../recoil/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
-
-const JobsHeader = () => {
-  const [logined, setLogined] = useRecoilState(authenticatedState);
-  useEffect(() => {
-    setLogined(sessionStorage.getItem("isLogined"));
-  }, []);
-  console.log("a", logined);
+import "../styles/Header.css";
+import { useNavigate } from "react-router-dom";
+const LoginedHeader = () => {
+  const navigate = useNavigate();
+  const onHomepage = () => {
+    navigate("/");
+  };
 
   return (
     <div
@@ -49,7 +48,7 @@ const JobsHeader = () => {
         >
           <div
             style={{
-              color: "#ffa445",
+              color: "#fc9d39",
               fontSize: "1.4rem",
             }}
           >
@@ -63,14 +62,14 @@ const JobsHeader = () => {
               당근마켓
             </a>
           </div>
-          <div>
-            <a href="http://localhost:3000/">중고거래</a>
-          </div>
           <div
             style={{
               color: "#ffa445",
             }}
           >
+            <a href="http://localhost:3000/">중고거래</a>
+          </div>
+          <div>
             <a href="http://localhost:3000/jobs">알바</a>
           </div>
           <div>
@@ -78,16 +77,19 @@ const JobsHeader = () => {
           </div>
         </div>
         <div className="flex-grow justify-center items-center flex" style={{}}>
-          <a
-            href="http://localhost:3000/login"
+          <button
             style={{
               outline: "1px #bcbcbc solid",
               padding: "5px 10px",
               borderRadius: "5px",
             }}
+            onClick={() => {
+              sessionStorage.clear();
+              window.location.reload();
+            }}
           >
-            로그인
-          </a>
+            로그아웃
+          </button>
         </div>
         <div
           style={{
@@ -118,4 +120,4 @@ const JobsHeader = () => {
   );
 };
 
-export default JobsHeader;
+export default LoginedHeader;

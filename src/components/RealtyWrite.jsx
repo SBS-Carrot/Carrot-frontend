@@ -1,5 +1,5 @@
 import React from "react";
-import RealtyHeader from "../layouts/RealtyHeader";
+import LoginedRealtyHeader from "../layouts/LoginedRealtyHeader";
 import { MdAddAPhoto } from "react-icons/md";
 import { useState } from "react";
 import axios from "axios";
@@ -193,7 +193,7 @@ const RealtyWrite = () => {
   };
   return (
     <div>
-      <RealtyHeader />
+      <LoginedRealtyHeader />
       <div
         className="pt-5 mb-2"
         style={{

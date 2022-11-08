@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import JobsHeader from "../layouts/JobsHeader";
+import LoginedJobsHeader from "../layouts/LoginedJobsHeader";
 
 import { MdAddAPhoto } from "react-icons/md";
 
@@ -225,7 +225,7 @@ const JobsWrite = () => {
 
   return (
     <div>
-      <JobsHeader />
+      <LoginedJobsHeader />
       <div
         className="pt-5"
         style={{

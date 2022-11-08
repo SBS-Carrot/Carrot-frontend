@@ -29,6 +29,7 @@ const Join = () => {
   const moveLogin = () => {
     navigate("/login");
   };
+
   const IdCheck = async (idValue) => {
     try {
       const data = await axios.get(`http://localhost:8083/checkId/${idValue}`);

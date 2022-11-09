@@ -23,6 +23,11 @@ import axios from "axios";
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
+  useEffect(() => {
+    if (sessionStorage.getItem("userid") == null) {
+      setLogined(false);
+    }
+  }, []);
   const onLogin = async (idValue, pwValue) => {
     try {
       const data = await axios({

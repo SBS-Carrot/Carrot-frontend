@@ -294,7 +294,7 @@ const Home = ({ logined, setLogined }) => {
                   paddingBottom: "30px",
                 }}
               >
-                <a href="http://localhost:3000/articles/1">
+                <a href="http://localhost:3000/productpost/1">
                   <div
                     style={{
                       marginLeft: "5px",

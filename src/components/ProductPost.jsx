@@ -47,6 +47,15 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
       } catch (e) {
         console.log(e);
       }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getProductWithImage/${num}`,
+          method: "GET",
+        });
+        console.log(data.data);
+      } catch (e) {
+        console.log(e);
+      }
     };
     onSubmit(num);
   }, []);
@@ -54,19 +63,20 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
   const onArticle = (data) => {
     setArticle((prev) => data);
   };
-
-  const onLikeRe = async (num) => {
-    try {
-      const data = await axios({
-        url: `http://localhost:8083/product/${num}`,
-        method: "GET",
-      });
-      onArticle(data.data);
-      console.log(data.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  useEffect(() => {
+    const onLikeRe = async (num) => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/product/${num}`,
+          method: "GET",
+        });
+        onArticle(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    onLikeRe(num);
+  }, [liked]);
 
   if (logined) {
     return (
@@ -242,7 +252,6 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
                 }}
                 onClick={() => {
                   onLike(num, sessionStorage.getItem("userid"));
-                  onLikeRe(num);
                 }}
               >
                 {liked ? (

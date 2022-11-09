@@ -1,11 +1,22 @@
-import React from "react";
+import { useEffect } from "react";
 import LoginedRealtyHeader from "../layouts/LoginedRealtyHeader";
 import { MdAddAPhoto } from "react-icons/md";
 import { useState } from "react";
 import axios from "axios";
 import { getValue } from "@testing-library/user-event/dist/utils";
+import { useNavigate } from "react-router-dom";
 
-const RealtyWrite = () => {
+const RealtyWrite = ({ logined, setLogined }) => {
+  const navigate = useNavigate();
+  const moveBack = () => {
+    navigate(-1);
+  };
+  useEffect(() => {
+    if (!logined) {
+      window.alert("로그인 후 사용할 수 있는 기능입니다.");
+      moveBack();
+    }
+  }, []);
   const [completeToggle, setCompleteToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
   const [uploadedImg, setUploadedImg] = useState([]);
@@ -193,7 +204,7 @@ const RealtyWrite = () => {
   };
   return (
     <div>
-      <LoginedRealtyHeader />
+      <LoginedRealtyHeader setLogined={setLogined} />
       <div
         className="pt-5 mb-2"
         style={{

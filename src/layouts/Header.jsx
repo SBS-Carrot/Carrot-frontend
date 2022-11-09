@@ -8,6 +8,7 @@ import "../styles/Header.css";
 
 const Header = () => {
   const [logined, setLogined] = useRecoilState(authenticatedState);
+
   return (
     <div
       style={{
@@ -63,7 +64,7 @@ const Header = () => {
               color: "#ffa445",
             }}
           >
-            <a href="http://localhost:3000/">중고거래</a>
+            <a href="http://localhost:3000/hot_articles">중고거래</a>
           </div>
           <div>
             <a href="http://localhost:3000/jobs">알바</a>

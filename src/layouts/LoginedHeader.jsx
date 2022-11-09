@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Header.css";
 import { useNavigate } from "react-router-dom";
-const LoginedHeader = () => {
+const LoginedHeader = ({ setLogined }) => {
   const navigate = useNavigate();
   const onHomepage = () => {
     navigate("/");
@@ -67,7 +67,7 @@ const LoginedHeader = () => {
               color: "#ffa445",
             }}
           >
-            <a href="http://localhost:3000/">중고거래</a>
+            <a href="http://localhost:3000/hot_articles">중고거래</a>
           </div>
           <div>
             <a href="http://localhost:3000/jobs">알바</a>
@@ -85,6 +85,7 @@ const LoginedHeader = () => {
             }}
             onClick={() => {
               sessionStorage.clear();
+              setLogined(false);
               window.location.reload();
             }}
           >

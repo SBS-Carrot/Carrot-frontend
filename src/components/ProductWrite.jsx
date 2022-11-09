@@ -8,8 +8,18 @@ import axios from "axios";
 
 import { useEffect } from "react";
 import { MdAddAPhoto } from "react-icons/md";
-
-const Product = ({ logined }) => {
+import { useNavigate } from "react-router-dom";
+const ProductWrite = ({ logined, setLogined }) => {
+  const navigate = useNavigate();
+  const moveBack = () => {
+    navigate(-1);
+  };
+  useEffect(() => {
+    if (!logined) {
+      window.alert("로그인 후 사용할 수 있는 기능입니다.");
+      moveBack();
+    }
+  }, []);
   const [category, setCategoryValue] = useState("");
   const [priceValue, setPriceValue] = useState("");
   const [contentValue, setContentValue] = useState("");
@@ -140,7 +150,7 @@ const Product = ({ logined }) => {
   };
   return (
     <div>
-      <LoginedHeader />
+      <LoginedHeader setLogined={setLogined} />
       <div
         className="pt-5"
         style={{
@@ -378,7 +388,7 @@ const Product = ({ logined }) => {
               }}
             >
               <a
-                href={`/articles/${id}`}
+                href={`/productpost/${id}`}
                 style={{
                   textAlign: "center",
                   width: "100%",
@@ -413,4 +423,4 @@ const Product = ({ logined }) => {
   );
 };
 
-export default Product;
+export default ProductWrite;

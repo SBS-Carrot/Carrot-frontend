@@ -7,12 +7,6 @@ import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 
 const JobsHeader = () => {
-  const [logined, setLogined] = useRecoilState(authenticatedState);
-  useEffect(() => {
-    setLogined(sessionStorage.getItem("isLogined"));
-  }, []);
-  console.log("a", logined);
-
   return (
     <div
       style={{

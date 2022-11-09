@@ -4,11 +4,18 @@ import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { AiOutlineLogin } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-const Login = () => {
-  const navigate = useNavigate();
+import { useEffect } from "react";
+const Login = ({ onLogin, logined }) => {
+  useEffect(() => {
+    if (logined) {
+      alert("이미 로그인한 상태입니다.");
+      onHomepage();
+    }
+  }, []);
   const [idValue, setIdValue] = useState("");
   const [pwValue, setPwValue] = useState("");
-  const onHompage = () => {
+  const navigate = useNavigate();
+  const onHomepage = () => {
     navigate("/");
   };
   const onIdChange = (e) => {
@@ -24,29 +31,6 @@ const Login = () => {
     setPwValue(e.target.value);
   };
 
-  const onLogin = async (idValue, pwValue) => {
-    try {
-      const data = await axios({
-        url: `http://localhost:8083/loginUser`,
-        method: "POST",
-        data: {
-          userid: idValue,
-          password: pwValue,
-        },
-      });
-      if (data.data == false) {
-        alert("로그인 정보가 일치하지 않습니다.");
-      } else {
-        const logined = data.data.substring(0, 4);
-        const userid = data.data.substring(4);
-        sessionStorage.setItem("isLogined", logined);
-        sessionStorage.setItem("userid", userid);
-        onHompage();
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
   return (
     <div>
       <div
@@ -147,6 +131,7 @@ const Login = () => {
                   window.alert("비밀번호를 입력해 주세요");
                 } else {
                   onLogin(idValue, pwValue);
+                  onHomepage();
                 }
               }}
             >

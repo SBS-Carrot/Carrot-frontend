@@ -8,7 +8,7 @@ import Footer from "../layouts/Footer";
 import { AiFillHome, AiFillFileText, AiFillMessage } from "react-icons/ai";
 import { useEffect } from "react";
 import axios from "axios";
-const Home = ({ logined }) => {
+const Home = ({ logined, setLogined }) => {
   const [user, setUser] = useState(sessionStorage.getItem("user") || "");
 
   useEffect(() => {
@@ -28,10 +28,10 @@ const Home = ({ logined }) => {
     }
   }, []);
 
-  if (sessionStorage.getItem("isLogined") == "true") {
+  if (logined == "true") {
     return (
       <div>
-        <LoginedHeader />
+        <LoginedHeader setLogined={setLogined} />
         <div className="background1 flex items-center">
           <div
             className="flex"

@@ -1,11 +1,21 @@
-import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import LoginedJobsHeader from "../layouts/LoginedJobsHeader";
-
+import { useNavigate } from "react-router-dom";
 import { MdAddAPhoto } from "react-icons/md";
 
-const JobsWrite = () => {
+const JobsWrite = ({ logined, setLogined }) => {
+  const navigate = useNavigate();
+  const moveBack = () => {
+    navigate(-1);
+  };
+  useEffect(() => {
+    if (!logined) {
+      window.alert("로그인 후 사용할 수 있는 기능입니다.");
+      moveBack();
+    }
+  }, []);
   const [name, setName] = useState("");
   const [category, setCategory] = useState("시급");
   const [priceValue, setPriceValue] = useState("");
@@ -225,7 +235,7 @@ const JobsWrite = () => {
 
   return (
     <div>
-      <LoginedJobsHeader />
+      <LoginedJobsHeader setLogined={setLogined} />
       <div
         className="pt-5"
         style={{

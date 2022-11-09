@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useNavigate } from "react-router-dom";
-const LoginedRealtyHeader = () => {
+const LoginedRealtyHeader = ({ setLogined }) => {
   const navigate = useNavigate();
   const onHomepage = () => {
     navigate("/");
@@ -84,6 +84,7 @@ const LoginedRealtyHeader = () => {
             }}
             onClick={() => {
               sessionStorage.clear();
+              setLogined(false);
               window.location.reload();
             }}
           >

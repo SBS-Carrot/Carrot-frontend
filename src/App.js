@@ -10,49 +10,126 @@ import RegionTwo from "./routes/RegionTwo";
 import Join from "./routes/Join";
 import Jobspost from "./components/Jobspost";
 import JobsWrite from "./components/JobsWrite";
-import ProductPost from "./routes/ProductPost";
+import ProductPost from "./components/ProductPost";
 import Realtypost from "./components/Realtypost";
-import Product from "./routes/Product";
+import ProductWrite from "./components/ProductWrite";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RealtyWrite from "./components/RealtyWrite";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { authenticatedState } from "./recoil/auth";
 
+import axios from "axios";
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
-  useEffect(() => {
-    setLogined(sessionStorage.getItem("isLogined"));
-  }, []);
+  const [liked, setLiked] = useState(false);
+  const onLogin = async (idValue, pwValue) => {
+    try {
+      const data = await axios({
+        url: `http://localhost:8083/loginUser`,
+        method: "POST",
+        data: {
+          userid: idValue,
+          password: pwValue,
+        },
+      });
+      if (data.data == false) {
+        alert("로그인 정보가 일치하지 않습니다.");
+      } else {
+        const logined = data.data.substring(0, 4);
+        const userid = data.data.substring(4);
+        sessionStorage.setItem("isLogined", logined);
+        sessionStorage.setItem("userid", userid);
+        setLogined(sessionStorage.getItem("isLogined"));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onLike = async (articleid, userid) => {
+    try {
+      const data = await axios({
+        url: `http://localhost:8083/likeProduct/${articleid}`,
+        method: "GET",
+        params: {
+          productId: articleid,
+          userid,
+        },
+      });
+      setLiked(data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home logined={logined} />} />
-        <Route path="/trust" element={<Trust logined={logined} />} />
-        <Route path="/jobs" element={<Jobs logined={logined} />} />
+        <Route
+          path="/"
+          element={<Home logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/trust"
+          element={<Trust logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/jobs"
+          element={<Jobs logined={logined} setLogined={setLogined} />}
+        />
         <Route
           path="/hot_articles"
-          element={<HotArticles logined={logined} />}
+          element={<HotArticles logined={logined} setLogined={setLogined} />}
         />
-        <Route path="/region/:address" element={<Region logined={logined} />} />
+        <Route
+          path="/region/:address"
+          element={<Region logined={logined} setLogined={setLogined} />}
+        />
         <Route
           path="/region/:address/:addressTwo"
-          element={<RegionTwo logined={logined} />}
+          element={<RegionTwo logined={logined} setLogined={setLogined} />}
         />
-        <Route path="/realty" element={<Realty logined={logined} />} />
+        <Route
+          path="/realty"
+          element={<Realty logined={logined} setLogined={setLogined} />}
+        />
         <Route path="/join" element={<Join />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={<Login onLogin={onLogin} logined={logined} />}
+        />
         <Route
           path="/productPost/:num"
-          element={<ProductPost logined={logined} />}
+          element={
+            <ProductPost
+              logined={logined}
+              setLogined={setLogined}
+              onLike={onLike}
+              liked={liked}
+              setLiked={setLiked}
+            />
+          }
         />
-        <Route path="/productWrite" element={<Product logined={logined} />} />
-        <Route path="/jobspost/:num" element={<Jobspost logined={logined} />} />
-        <Route path="/jobsWrite" element={<JobsWrite logined={logined} />} />
-        <Route path="/realtypost" element={<Realtypost logined={logined} />} />
+        <Route
+          path="/productWrite"
+          element={<ProductWrite logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/jobspost/:num"
+          element={<Jobspost logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/jobsWrite"
+          element={<JobsWrite logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/realtypost"
+          element={<Realtypost logined={logined} setLogined={setLogined} />}
+        />
         <Route
           path="/realtyWrite"
-          element={<RealtyWrite logined={logined} />}
+          element={<RealtyWrite logined={logined} setLogined={setLogined} />}
         />
       </Routes>
     </Router>

@@ -12,7 +12,10 @@ import Jobspost from "./components/Jobspost";
 import JobsWrite from "./components/JobsWrite";
 import ProductPost from "./components/ProductPost";
 import Realtypost from "./components/Realtypost";
+
 import ProductWrite from "./components/ProductWrite";
+
+import ProductWrite from "./routes/ProductWrite";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RealtyWrite from "./components/RealtyWrite";
 import { useEffect } from "react";
@@ -100,6 +103,7 @@ function App() {
           element={<Realty logined={logined} setLogined={setLogined} />}
         />
         <Route path="/join" element={<Join />} />
+
         <Route
           path="/login"
           element={<Login onLogin={onLogin} logined={logined} />}

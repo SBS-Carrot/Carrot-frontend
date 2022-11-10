@@ -20,7 +20,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
   const [completeToggle, setCompleteToggle] = useState(false);
   const [shortdealingToggle, setShortDealingToggle] = useState(false);
   const [monthlydealingToggle, setMonthlyDealingToggle] = useState(false);
-  const [depositdealingToggle, setDepositDealingTogeele] = useState(false);
+  const [depositdealingToggle, setDepositDealingToggle] = useState(false);
   const [dealingToggle, setDealingToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
   const [uploadedImg, setUploadedImg] = useState([]);
@@ -189,28 +189,28 @@ const RealtyWrite = ({ logined, setLogined }) => {
   const onShortDealing = () => {
     setShortDealingToggle(true);
     setMonthlyDealingToggle(false);
-    setDepositDealingTogeele(false);
+    setDepositDealingToggle(false);
     setDealingToggle(false);
   };
 
   const onMonthlyDealing = () => {
     setShortDealingToggle(false);
     setMonthlyDealingToggle(true);
-    setDepositDealingTogeele(false);
+    setDepositDealingToggle(false);
     setDealingToggle(false);
   };
 
   const onDepositDealing = () => {
     setShortDealingToggle(false);
     setMonthlyDealingToggle(false);
-    setDepositDealingTogeele(true);
+    setDepositDealingToggle(true);
     setDealingToggle(false);
   };
 
   const onDealing = () => {
     setShortDealingToggle(false);
     setMonthlyDealingToggle(false);
-    setDepositDealingTogeele(false);
+    setDepositDealingToggle(false);
     setDealingToggle(true);
   };
 

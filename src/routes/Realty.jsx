@@ -5,10 +5,16 @@ import Footer from "../layouts/Footer";
 import "../styles/Realty.css";
 import { AiOutlineRight } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const Realty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const { Router } = useParams();
+  const moveJobs = (id) => {
+    // axios.get(http:~~~/id)
+
+    navigate(`/jobspost/${id}`);
+  };
   if (logined) {
     return (
       <div>
@@ -54,6 +60,14 @@ const Realty = ({ logined, setLogined }) => {
               <div className="mt-5">
                 <div>
                   <ul className="grid grid-cols-2">
+                    {/* jobs.map(key,index)=>{
+                      <li key={index}>
+                          <button onClick={()=> {
+                            //조회수 1 올라가는함수
+                            // 이동하는함수
+                          }}>
+                        <div>
+                            {/* css */}
                     <li
                       className="flex  items-center gap-4"
                       style={{

@@ -15,7 +15,6 @@ import Realtypost from "./components/Realtypost";
 
 import ProductWrite from "./components/ProductWrite";
 
-import ProductWrite from "./routes/ProductWrite";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RealtyWrite from "./components/RealtyWrite";
 import { useEffect } from "react";

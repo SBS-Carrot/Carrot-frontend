@@ -15,10 +15,10 @@ import { FaHeart } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
 import axios from "axios";
 
-const Realtypost = () => {
+const Realtypost = ({ logined, setLogined }) => {
   const { num } = useParams();
   const [article, setArticle] = useState("");
-
+  console.log("d", num);
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);

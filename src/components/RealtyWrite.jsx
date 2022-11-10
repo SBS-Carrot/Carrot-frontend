@@ -296,13 +296,14 @@ const RealtyWrite = ({ logined, setLogined }) => {
           realtyDeal: deal,
         },
       });
+
+      setId(data.data.reatlyId);
       onCompleteChange();
-      setId(data.data.realyid);
     } catch (e) {
       console.log(e);
     }
   };
-
+  console.log("e", id);
   // 사진있을때
   const onSubmits = async (
     who,
@@ -385,6 +386,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
       window.alert("게시물 작성에 실패했습니다.");
     }
   };
+
   return (
     <div>
       <LoginedRealtyHeader setLogined={setLogined} />
@@ -1372,7 +1374,6 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 salePrice,
                 deal
               );
-              onCompleteChange();
             } else {
               onSubmits(
                 who,
@@ -1403,7 +1404,6 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 deal,
                 uploadedImg
               );
-              onCompleteChange();
             }
           }}
           style={{

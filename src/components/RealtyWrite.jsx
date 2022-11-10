@@ -296,14 +296,14 @@ const RealtyWrite = ({ logined, setLogined }) => {
           realtyDeal: deal,
         },
       });
-
-      setId(data.data.reatlyId);
+      setId(data.data.realtyId);
+      console.log("ud", data.data.realtyId);
       onCompleteChange();
     } catch (e) {
       console.log(e);
     }
   };
-  console.log("e", id);
+  console.log("id", id);
   // 사진있을때
   const onSubmits = async (
     who,

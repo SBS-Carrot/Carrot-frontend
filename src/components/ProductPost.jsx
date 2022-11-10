@@ -10,9 +10,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FiHeart } from "react-icons/fi";
+import ProductSlider from "../slider/ProductSlider";
 const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
   const { num } = useParams();
-
+  const [images, setImages] = useState([]);
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);
@@ -52,7 +53,7 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
           url: `http://localhost:8083/getProductWithImage/${num}`,
           method: "GET",
         });
-        console.log(data.data);
+        setImages(data.data.images);
       } catch (e) {
         console.log(e);
       }
@@ -111,13 +112,8 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
             >
               <BsChevronRight />
             </button>
-            <a href="#">
-              <img
-                className="rounded-lg"
-                src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/83cbd5362a585918a9b4a7354984ecbfb20208da27522d9b39579099b2cfe1f9.webp?q=95&s=1440x1440&t=inside"
-                alt=""
-              />
-            </a>
+            {/* 여러개일때 슬라이더해야함. */}
+            <ProductSlider images={images} />
           </div>
           <section className="mt-6 flex justify-end gap-3">
             <div

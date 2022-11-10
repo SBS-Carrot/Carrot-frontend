@@ -12,10 +12,7 @@ import Jobspost from "./components/Jobspost";
 import JobsWrite from "./components/JobsWrite";
 import ProductPost from "./components/ProductPost";
 import Realtypost from "./components/Realtypost";
-
 import ProductWrite from "./components/ProductWrite";
-
-import ProductWrite from "./routes/ProductWrite";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RealtyWrite from "./components/RealtyWrite";
 import { useEffect } from "react";
@@ -133,7 +130,7 @@ function App() {
           element={<JobsWrite logined={logined} setLogined={setLogined} />}
         />
         <Route
-          path="/realtypost"
+          path="/realtypost/:num"
           element={<Realtypost logined={logined} setLogined={setLogined} />}
         />
         <Route

@@ -20,7 +20,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
   const [completeToggle, setCompleteToggle] = useState(false);
   const [shortdealingToggle, setShortDealingToggle] = useState(false);
   const [monthlydealingToggle, setMonthlyDealingToggle] = useState(false);
-  const [depositdealingToggle, setDepositDealingTogeele] = useState(false);
+  const [depositdealingToggle, setDepositDealingToggle] = useState(false);
   const [dealingToggle, setDealingToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
   const [uploadedImg, setUploadedImg] = useState([]);
@@ -66,24 +66,8 @@ const RealtyWrite = ({ logined, setLogined }) => {
   //전세, 매매 가격
   const [salePrice, setSalePrice] = useState("");
   //카테고리 단기, 월세, 전세, 매매
-  const [shortDeal, setShortDeal] = useState("");
-  const [monthlyDeal, setMonthlyDeal] = useState("");
-  const [depositDeal, setDepositDeal] = useState("");
   const [deal, setDeal] = useState("");
 
-  const onShortDeal = (e) => {
-    setShortDeal(e.target.value);
-  };
-  console.log(shortDeal);
-  const onMonthlyDeal = (e) => {
-    setMonthlyDeal(e.target.value);
-  };
-  const onDepositDeal = (e) => {
-    setDepositDeal(e.target.value);
-  };
-  const onDeal = (e) => {
-    setDeal(e.target.value);
-  };
   const Inside_List = [
     { id: 0, data: "복층" },
     { id: 1, data: "에어컨" },
@@ -189,29 +173,33 @@ const RealtyWrite = ({ logined, setLogined }) => {
   const onShortDealing = () => {
     setShortDealingToggle(true);
     setMonthlyDealingToggle(false);
-    setDepositDealingTogeele(false);
+    setDepositDealingToggle(false);
     setDealingToggle(false);
+    setDeal("단기");
   };
 
   const onMonthlyDealing = () => {
     setShortDealingToggle(false);
     setMonthlyDealingToggle(true);
-    setDepositDealingTogeele(false);
+    setDepositDealingToggle(false);
     setDealingToggle(false);
+    setDeal("월세");
   };
 
   const onDepositDealing = () => {
     setShortDealingToggle(false);
     setMonthlyDealingToggle(false);
-    setDepositDealingTogeele(true);
+    setDepositDealingToggle(true);
     setDealingToggle(false);
+    setDeal("전세");
   };
 
   const onDealing = () => {
     setShortDealingToggle(false);
     setMonthlyDealingToggle(false);
-    setDepositDealingTogeele(false);
+    setDepositDealingToggle(false);
     setDealingToggle(true);
+    setDeal("매매");
   };
 
   // 이미지 상대경로 저장
@@ -788,8 +776,6 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 onClick={() => {
                   onShortDealing();
                 }}
-                value={deal}
-                onChange={onDeal}
               >
                 단기
               </button>
@@ -804,8 +790,6 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 onClick={() => {
                   onMonthlyDealing();
                 }}
-                value={deal}
-                onChange={onDeal}
               >
                 월세
               </button>
@@ -820,8 +804,6 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 onClick={() => {
                   onDepositDealing();
                 }}
-                value={deal}
-                onChange={onDeal}
               >
                 전세
               </button>
@@ -836,8 +818,6 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 onClick={() => {
                   onDealing();
                 }}
-                value={deal}
-                onChange={onDeal}
               >
                 매매
               </button>

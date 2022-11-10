@@ -1,4 +1,6 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import RealtyHeader from "../layouts/RealtyHeader";
 import Footer from "../layouts/Footer";
 import {
@@ -11,7 +13,36 @@ import { AiOutlineDollar, AiOutlineClockCircle } from "react-icons/ai";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
+import axios from "axios";
+
 const Realtypost = () => {
+  const { num } = useParams();
+  const [article, setArticle] = useState("");
+
+  const navigate = useNavigate();
+  const moveBack = () => {
+    navigate(-1);
+  };
+
+  const onArticle = (data) => {
+    setArticle((prev) => data);
+  };
+  useEffect(() => {
+    const onSubmit = async (num) => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/realty/${num}`,
+          method: "GET",
+        });
+        onArticle(data.data);
+      } catch {
+        console.log("에러");
+        window.alert("존재하지 않는 게시글입니다.");
+        moveBack();
+      }
+    };
+    onSubmit(num);
+  }, []);
   return (
     <div>
       <RealtyHeader />
@@ -141,9 +172,9 @@ const Realtypost = () => {
                 fontSize: "0.7rem",
               }}
             >
-              집주인
+              {article.realtyWho}
             </div>
-            <div className="font-bold">아파트</div>
+            <div className="font-bold">{article.realtyCategory}</div>
           </div>
 
           <div
@@ -158,9 +189,12 @@ const Realtypost = () => {
                 color: "#ffa445",
               }}
             >
-              판매중
+              {article.realtyDealing}
             </div>
-            <div className="font-bold">월세 500 / 60</div>
+            <div className="font-bold">
+              {article.realtyDeal} {article.realtyDeposit} /{" "}
+              {article.realtyMonthly}
+            </div>
           </div>
           <div className="flex gap-2">
             <div
@@ -169,16 +203,16 @@ const Realtypost = () => {
                 color: "gray",
               }}
             >
-              2개월 전 작성
+              {article.createDate}
             </div>
-            <div
+            {/* <div
               className="text-sm"
               style={{
                 color: "gray",
               }}
             >
               2일 전
-            </div>
+            </div> */}
           </div>
           <br />
         </section>
@@ -225,7 +259,6 @@ const Realtypost = () => {
             </li>
             <li className="flex gap-4">
               <span className="text-gray-400">내부 시설</span>
-              {/* <div>세탁기, 냉장고, 에어컨, 가스렌지</div> */}
             </li>
           </ul>
           <ul
@@ -235,32 +268,38 @@ const Realtypost = () => {
             }}
           >
             <li className="flex gap-4 font-bold">
-              <div>9평 · 전용 29.7㎡</div>
+              <div>
+                {article.realtySpace}평 · 전용 {article.realtyArea}㎡
+              </div>
             </li>
 
             <li className="flex gap-4 font-bold">
-              <div>방 1개 / 욕실 1개</div>
+              <div>
+                방 {article.realtyRoom}개 / 욕실 {article.realtyBath}개
+              </div>
             </li>
             <li className="flex gap-4 font-bold">
-              <div>5층</div>
+              <div>
+                {article.realtyFloor}층 / {article.realtyWhole}층{" "}
+              </div>
             </li>
             <li className="flex gap-4">
-              <div>확인필요</div>
+              <div>{article.realtyLoan}</div>
             </li>
             <li className="flex gap-4">
-              <div>즉시 가능</div>
+              <div>{article.realtyMove}</div>
             </li>
             <li className="flex gap-4">
-              <div>확인필요</div>
+              <div>{article.realtyPet}</div>
             </li>
             <li className="flex gap-4">
-              <div>확인필요</div>
+              <div>{article.realtyParking}</div>
             </li>
             <li className="flex gap-4">
-              <div>확인필요</div>
+              <div>{article.realtyElevator}</div>
             </li>
             <li className="flex gap-4">
-              <div>세탁기, 냉장고, 에어컨, 가스렌지</div>
+              <div>{article.realtyInside}</div>
             </li>
           </ul>
         </section>
@@ -276,9 +315,10 @@ const Realtypost = () => {
           <div
             style={{
               height: "350px",
-              border: "1px gray solid",
             }}
-          ></div>
+          >
+            {article.realtyContent}
+          </div>
         </section>
         <div
           className="flex gap-4 align-center font-bold mt-2 pb-11"
@@ -308,6 +348,7 @@ const Realtypost = () => {
               border: "1px gray solid",
             }}
           ></div>
+          <div>{article.realtyAddress}</div>
         </div>
         <section>
           <div className="py-2 flex gap-5 justify-end" style={{}}>

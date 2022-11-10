@@ -7,6 +7,10 @@ import { getValue } from "@testing-library/user-event/dist/utils";
 
 const RealtyWrite = () => {
   const [completeToggle, setCompleteToggle] = useState(false);
+  const [shortdealingToggle, setShortDealingToggle] = useState(false);
+  const [monthlydealingToggle, setMonthlyDealingToggle] = useState(false);
+  const [depositdealingToggle, setDepositDealingTogeele] = useState(false);
+  const [dealingToggle, setDealingToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
   const [uploadedImg, setUploadedImg] = useState([]);
   const [id, setId] = useState("");
@@ -34,6 +38,22 @@ const RealtyWrite = () => {
   const [floorValue, setFloorValue] = useState("");
   //매물 설명
   const [contentValue, setContentValue] = useState("");
+  //보증금
+  const [depositValue, setDepositValue] = useState("");
+  //월세
+  const [monthlyValue, setMonthlyValue] = useState("");
+  //임대 기간, 조건
+  const [shortTerm, setShortTerm] = useState("");
+  //보증금 조정 가격
+  const [depositChangePrice, setDepositChangePrice] = useState("");
+  //보증금 조정가격 설명
+  const [depositChange, setDepositChange] = useState("");
+  //관리비 가격
+  const [costValue, setCostValue] = useState("");
+  //관리비 설명
+  const [costContent, setCostContent] = useState("");
+  //전세, 매매 가격
+  const [salePrice, setSalePrice] = useState("");
 
   const Inside_List = [
     { id: 0, data: "복층" },
@@ -48,8 +68,10 @@ const RealtyWrite = () => {
   const onCheckInside = (checked, item) => {
     if (checked) {
       setInside([...inside, item]);
+      console.log(inside);
     } else {
       setInside(inside.filter((el) => el !== item));
+      console.log(inside);
     }
   };
   const onMoveDateChange = (e) => {
@@ -82,6 +104,36 @@ const RealtyWrite = () => {
   const onContentChange = (e) => {
     setContentValue(e.target.value);
   };
+  const onDepositValue = (e) => {
+    setDepositValue(e.target.value);
+  };
+  const onMonthlyValue = (e) => {
+    setMonthlyValue(e.target.value);
+  };
+
+  const onCostValue = (e) => {
+    setCostValue(e.target.value);
+  };
+
+  const onCostContent = (e) => {
+    setCostContent(e.target.value);
+  };
+
+  const onSalePrice = (e) => {
+    setSalePrice(e.target.value);
+  };
+
+  const onShortTerm = (e) => {
+    setShortTerm(e.target.value);
+  };
+
+  const onChangePrice = (e) => {
+    setDepositChangePrice(e.target.value);
+  };
+
+  const onDepositChange = (e) => {
+    setDepositChange(e.target.value);
+  };
   const moveRadioButton = (e) => {
     setMove(e.target.value);
   };
@@ -103,6 +155,34 @@ const RealtyWrite = () => {
 
   const onCompleteChange = () => {
     setCompleteToggle(!completeToggle);
+  };
+
+  const onShortDealing = () => {
+    setShortDealingToggle(true);
+    setMonthlyDealingToggle(false);
+    setDepositDealingTogeele(false);
+    setDealingToggle(false);
+  };
+
+  const onMonthlyDealing = () => {
+    setShortDealingToggle(false);
+    setMonthlyDealingToggle(true);
+    setDepositDealingTogeele(false);
+    setDealingToggle(false);
+  };
+
+  const onDepositDealing = () => {
+    setShortDealingToggle(false);
+    setMonthlyDealingToggle(false);
+    setDepositDealingTogeele(true);
+    setDealingToggle(false);
+  };
+
+  const onDealing = () => {
+    setShortDealingToggle(false);
+    setMonthlyDealingToggle(false);
+    setDepositDealingTogeele(false);
+    setDealingToggle(true);
   };
 
   // 이미지 상대경로 저장
@@ -155,7 +235,15 @@ const RealtyWrite = () => {
     addressValue,
     wholeValue,
     floorValue,
-    contentValue
+    contentValue,
+    depositValue,
+    monthlyValue,
+    shortTerm,
+    depositChangePrice,
+    depositChange,
+    costValue,
+    costContent,
+    salePrice
   ) => {
     try {
       const data = await axios({
@@ -179,6 +267,14 @@ const RealtyWrite = () => {
           realtyElevator: elevator,
           realtyInside: inside,
           realtyContent: contentValue,
+          realtyDeposit: depositValue,
+          realtyMonthly: monthlyValue,
+          realtyShortTerm: shortTerm,
+          realtyChangePrice: depositChangePrice,
+          realtyDepositChange: depositChange,
+          realtyCost: costValue,
+          realtyCostContent: costContent,
+          realtySalePrice: salePrice,
         },
       });
       onCompleteChange();
@@ -207,11 +303,19 @@ const RealtyWrite = () => {
     wholeValue,
     floorValue,
     contentValue,
+    depositValue,
+    monthlyValue,
+    shortTerm,
+    depositChangePrice,
+    depositChange,
+    costValue,
+    costContent,
+    salePrice,
     uploadedImg
   ) => {
     try {
       const formData = new FormData();
-      const jobDto = {
+      const realtyDto = {
         realtyWho: who,
         realtyCategory: category,
         realtySpace: spaceValue,
@@ -229,11 +333,19 @@ const RealtyWrite = () => {
         realtyElevator: elevator,
         realtyInside: inside,
         realtyContent: contentValue,
+        realtyDeposit: depositValue,
+        realtyMonthly: monthlyValue,
+        realtyShortTerm: shortTerm,
+        realtyChangePrice: depositChangePrice,
+        realtyDepositChange: depositChange,
+        realtyCost: costValue,
+        realtyCostContent: costContent,
+        realtySalePrice: salePrice,
       };
 
-      const json = JSON.stringify(jobDto);
+      const json = JSON.stringify(realtyDto);
       const blob = new Blob([json], { type: "application/json" });
-      formData.append("jobDto", blob);
+      formData.append("realtyDto", blob);
       for (let i = 0; i < uploadedImg.length; i++) {
         formData.append("file", uploadedImg[i]);
       }
@@ -241,11 +353,11 @@ const RealtyWrite = () => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/createJobsImages`,
+        url: `http://localhost:8083/createRealtyImages`,
         method: "POST",
         data: formData,
       });
-      setId(data2.data.jobid);
+      setId(data2.data.realtyId);
       onCompleteChange();
     } catch (e) {
       console.log(e);
@@ -632,14 +744,20 @@ const RealtyWrite = () => {
           }}
         >
           <div className="font-bold">선호하는 거래 방식</div>
-          <div className="flex gap-3 mt-1 mb-4">
+          <div className="flex gap-3 mt-1 mb-2">
             <div
               className="p-2 rounded-lg text-sm"
               style={{
                 border: "1px #d5d5d5 solid",
               }}
             >
-              <button>단기</button>
+              <button
+                onClick={() => {
+                  onShortDealing();
+                }}
+              >
+                단기
+              </button>
             </div>
             <div
               className="p-2 rounded-lg text-sm"
@@ -647,7 +765,13 @@ const RealtyWrite = () => {
                 border: "1px #d5d5d5 solid",
               }}
             >
-              <button>월세</button>
+              <button
+                onClick={() => {
+                  onMonthlyDealing();
+                }}
+              >
+                월세
+              </button>
             </div>
             <div
               className="p-2 rounded-lg text-sm"
@@ -655,7 +779,13 @@ const RealtyWrite = () => {
                 border: "1px #d5d5d5 solid",
               }}
             >
-              <button>전세</button>
+              <button
+                onClick={() => {
+                  onDepositDealing();
+                }}
+              >
+                전세
+              </button>
             </div>
             <div
               className="p-2 rounded-lg text-sm"
@@ -663,9 +793,369 @@ const RealtyWrite = () => {
                 border: "1px #d5d5d5 solid",
               }}
             >
-              <button>매매</button>
+              <button
+                onClick={() => {
+                  onDealing();
+                }}
+              >
+                매매
+              </button>
             </div>
           </div>
+          {shortdealingToggle && (
+            <div
+              className="rounded-lg mb-2"
+              style={{
+                border: "1px #d5d5d5 solid",
+                width: "350px",
+                height: "240px",
+              }}
+            >
+              <span className="pl-1 font-bold text-sm">단기(1년미만)</span>
+              <span className="ml-2">
+                <span
+                  className="font-bold rounded-lg"
+                  style={{
+                    padding: "0.1rem",
+                    fontSize: "12px",
+                    border: "1px #fdcc99 solid",
+                    backgroundColor: "#fdcc99",
+                    color: "#fd8c16",
+                  }}
+                >
+                  가장 선호하는 방식
+                </span>
+              </span>
+              <div className="pl-1 mb-1 flex gap-2">
+                <div>
+                  <span className="text-sm">보증금</span>{" "}
+                  <div
+                    className="rounded-md"
+                    style={{
+                      border: "1px #d5d5d5 solid",
+                      width: "140px",
+                    }}
+                  >
+                    <input
+                      className="ml-1"
+                      type="number"
+                      placeholder="0"
+                      value={depositValue}
+                      onChange={onDepositValue}
+                      style={{
+                        width: "100px",
+                        height: "30px",
+                      }}
+                    />
+                    만원
+                  </div>
+                </div>
+                <div>
+                  <span className="text-sm">월세</span>
+                  <div
+                    className="rounded-md"
+                    style={{
+                      border: "1px #d5d5d5 solid",
+                      width: "140px",
+                    }}
+                  >
+                    <input
+                      className="ml-1"
+                      type="number"
+                      value={monthlyValue}
+                      onChange={onMonthlyValue}
+                      placeholder="0"
+                      style={{
+                        width: "100px",
+                        height: "30px",
+                      }}
+                    />
+                    만원
+                  </div>
+                </div>
+              </div>
+              <div className="pl-1">
+                <input
+                  className="rounded-md text-sm"
+                  style={{
+                    border: "1px #d5d5d5 solid",
+                    width: "340px",
+                    height: "40px",
+                  }}
+                  type="text"
+                  value={shortTerm}
+                  onChange={onShortTerm}
+                  placeholder="단기임대 기간, 조건에 대해 설명해주세요."
+                />
+              </div>
+
+              <div className="pl-1 ">
+                <div className=" mt-2 mb-1 text-sm font-bold">관리비(선택)</div>
+                <div
+                  className="mb-1 rounded-md"
+                  style={{
+                    border: "1px #d5d5d5 solid",
+                    width: "340px",
+                  }}
+                >
+                  <input
+                    className="ml-1 rounded-md"
+                    type="number"
+                    value={costValue}
+                    onChange={onCostValue}
+                    placeholder="0"
+                    style={{
+                      width: "300px",
+                      height: "30px",
+                    }}
+                  />
+                  만원
+                </div>
+                <div>
+                  <input
+                    className="pl-1 text-sm rounded-md"
+                    style={{
+                      border: "1px #d5d5d5 solid",
+                      width: "340px",
+                      height: "40px",
+                    }}
+                    type="text"
+                    value={costContent}
+                    onChange={onCostContent}
+                    placeholder="관리비 설명(ex. 전기, 수도, 인터넷 포함등)"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          {monthlydealingToggle && (
+            <div
+              className="rounded-lg mb-2"
+              style={{
+                border: "1px #d5d5d5 solid",
+                width: "350px",
+                height: "190px",
+              }}
+            >
+              <span className="pl-1 font-bold text-sm">월세</span>
+              <span className="ml-2">
+                <span
+                  className="font-bold rounded-lg"
+                  style={{
+                    padding: "0.1rem",
+                    fontSize: "12px",
+                    border: "1px #fdcc99 solid",
+                    backgroundColor: "#fdcc99",
+                    color: "#fd8c16",
+                  }}
+                >
+                  가장 선호하는 방식
+                </span>
+              </span>
+              <div className="pl-1 mb-1 flex gap-2">
+                <div>
+                  <span className="text-sm">보증금</span>{" "}
+                  <div
+                    className="rounded-md"
+                    style={{
+                      border: "1px #d5d5d5 solid",
+                      width: "140px",
+                    }}
+                  >
+                    <input
+                      className="ml-1"
+                      type="number"
+                      placeholder="0"
+                      value={depositValue}
+                      onChange={onDepositValue}
+                      style={{
+                        width: "100px",
+                        height: "30px",
+                      }}
+                    />
+                    만원
+                  </div>
+                </div>
+                <div>
+                  <span className="text-sm">월세</span>
+                  <div
+                    className="rounded-md"
+                    style={{
+                      border: "1px #d5d5d5 solid",
+                      width: "140px",
+                    }}
+                  >
+                    <input
+                      className="ml-1"
+                      type="number"
+                      value={monthlyValue}
+                      onChange={onMonthlyValue}
+                      placeholder="0"
+                      style={{
+                        width: "100px",
+                        height: "30px",
+                      }}
+                    />
+                    만원
+                  </div>
+                </div>
+              </div>
+
+              <div className="pl-1 ">
+                <div className=" mt-2 mb-1 text-sm font-bold">
+                  보증금 조정 가능
+                </div>
+                <div
+                  className="mb-1 rounded-md"
+                  style={{
+                    border: "1px #d5d5d5 solid",
+                    width: "340px",
+                  }}
+                >
+                  <input
+                    className="ml-1 rounded-md"
+                    type="number"
+                    value={depositChangePrice}
+                    onChange={onChangePrice}
+                    placeholder="0"
+                    style={{
+                      width: "300px",
+                      height: "30px",
+                    }}
+                  />
+                  만원
+                </div>
+                <div>
+                  <input
+                    className=" pl-1 text-sm rounded-md"
+                    style={{
+                      border: "1px #d5d5d5 solid",
+                      width: "340px",
+                      height: "40px",
+                    }}
+                    type="text"
+                    value={depositChange}
+                    onChange={onDepositChange}
+                    placeholder="보증금 조정시 금액을 설명해주세요."
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          {depositdealingToggle && (
+            <div
+              className="pl-1 rounded-lg mb-2"
+              style={{
+                border: "1px #d5d5d5 solid",
+                width: "350px",
+                height: "158px",
+              }}
+            >
+              <span className=" font-bold text-sm">전세</span>
+              <span className="ml-2">
+                <span
+                  className="font-bold rounded-lg"
+                  style={{
+                    padding: "0.1rem",
+                    fontSize: "12px",
+                    border: "1px #fdcc99 solid",
+                    backgroundColor: "#fdcc99",
+                    color: "#fd8c16",
+                  }}
+                >
+                  가장 선호하는 방식
+                </span>
+              </span>
+              <div className=" text-sm">가격</div>{" "}
+              <div
+                className=" mb-1 rounded-md"
+                style={{
+                  border: "1px #d5d5d5 solid",
+                  width: "340px",
+                }}
+              >
+                <input
+                  className="ml-1 rounded-md"
+                  type="number"
+                  value={salePrice}
+                  onChange={onSalePrice}
+                  placeholder="0"
+                  style={{
+                    width: "300px",
+                    height: "30px",
+                  }}
+                />
+                만원
+              </div>
+              <div>
+                <div className=" mt-2 mb-1 text-sm font-bold">
+                  보증금 조정 가능
+                </div>
+
+                <div>
+                  <input
+                    className="text-sm rounded-md"
+                    style={{
+                      border: "1px #d5d5d5 solid",
+                      width: "340px",
+                      height: "40px",
+                    }}
+                    type="text"
+                    value={depositChange}
+                    onChange={onDepositChange}
+                    placeholder="보증금 조정시 금액을 설명해주세요."
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          {dealingToggle && (
+            <div
+              className="pl-1 rounded-lg mb-2"
+              style={{
+                border: "1px #d5d5d5 solid",
+                width: "350px",
+                height: "85px",
+              }}
+            >
+              <span className=" font-bold text-sm">매매</span>
+              <span className="ml-2">
+                <span
+                  className="font-bold rounded-lg"
+                  style={{
+                    padding: "0.1rem",
+                    fontSize: "12px",
+                    border: "1px #fdcc99 solid",
+                    backgroundColor: "#fdcc99",
+                    color: "#fd8c16",
+                  }}
+                >
+                  가장 선호하는 방식
+                </span>
+              </span>
+              <div className=" text-sm">가격</div>{" "}
+              <div
+                className=" mb-1 rounded-md"
+                style={{
+                  border: "1px #d5d5d5 solid",
+                  width: "340px",
+                }}
+              >
+                <input
+                  className="ml-1 rounded-md"
+                  type="number"
+                  value={salePrice}
+                  onChange={onSalePrice}
+                  placeholder="0"
+                  style={{
+                    width: "300px",
+                    height: "30px",
+                  }}
+                />
+                만원
+              </div>
+            </div>
+          )}
           <div className="font-bold">대출</div>
           <div className="flex gap-2 mb-4">
             <div>
@@ -814,7 +1304,7 @@ const RealtyWrite = () => {
             <div className="font-bold">매물 설명</div>
             <div className="flex gap-2 mb-4">
               <input
-                className="pb-56"
+                className="pb-44"
                 type="text"
                 placeholder="이 매물의 특징이 있다면 알려주세요."
                 value={contentValue}
@@ -822,7 +1312,7 @@ const RealtyWrite = () => {
                 style={{
                   border: "1px #d5d5d5 solid",
                   width: "400px",
-                  height: "250px",
+                  height: "200px",
                 }}
               />
             </div>
@@ -850,7 +1340,15 @@ const RealtyWrite = () => {
                 addressValue,
                 wholeValue,
                 floorValue,
-                contentValue
+                contentValue,
+                depositValue,
+                monthlyValue,
+                shortTerm,
+                depositChangePrice,
+                depositChange,
+                costValue,
+                costContent,
+                salePrice
               );
               onCompleteChange();
             } else {
@@ -872,6 +1370,14 @@ const RealtyWrite = () => {
                 wholeValue,
                 floorValue,
                 contentValue,
+                depositValue,
+                monthlyValue,
+                shortTerm,
+                depositChangePrice,
+                depositChange,
+                costValue,
+                costContent,
+                salePrice,
                 uploadedImg
               );
               onCompleteChange();
@@ -899,7 +1405,7 @@ const RealtyWrite = () => {
         <div
           style={{
             position: "absolute",
-            transform: "translate(95%,-120%)",
+            transform: "translate(265%,-160%)",
             width: "300px",
             height: "150px",
             justifyContent: "center",

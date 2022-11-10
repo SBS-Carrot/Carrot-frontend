@@ -54,7 +54,25 @@ const RealtyWrite = () => {
   const [costContent, setCostContent] = useState("");
   //전세, 매매 가격
   const [salePrice, setSalePrice] = useState("");
+  //카테고리 단기, 월세, 전세, 매매
+  const [shortDeal, setShortDeal] = useState("");
+  const [monthlyDeal, setMonthlyDeal] = useState("");
+  const [depositDeal, setDepositDeal] = useState("");
+  const [deal, setDeal] = useState("");
 
+  const onShortDeal = (e) => {
+    setShortDeal(e.target.value);
+  };
+  console.log(shortDeal);
+  const onMonthlyDeal = (e) => {
+    setMonthlyDeal(e.target.value);
+  };
+  const onDepositDeal = (e) => {
+    setDepositDeal(e.target.value);
+  };
+  const onDeal = (e) => {
+    setDeal(e.target.value);
+  };
   const Inside_List = [
     { id: 0, data: "복층" },
     { id: 1, data: "에어컨" },
@@ -243,7 +261,8 @@ const RealtyWrite = () => {
     depositChange,
     costValue,
     costContent,
-    salePrice
+    salePrice,
+    deal
   ) => {
     try {
       const data = await axios({
@@ -275,6 +294,7 @@ const RealtyWrite = () => {
           realtyCost: costValue,
           realtyCostContent: costContent,
           realtySalePrice: salePrice,
+          realtyDeal: deal,
         },
       });
       onCompleteChange();
@@ -311,6 +331,7 @@ const RealtyWrite = () => {
     costValue,
     costContent,
     salePrice,
+    deal,
     uploadedImg
   ) => {
     try {
@@ -341,6 +362,7 @@ const RealtyWrite = () => {
         realtyCost: costValue,
         realtyCostContent: costContent,
         realtySalePrice: salePrice,
+        realtyDeal: deal,
       };
 
       const json = JSON.stringify(realtyDto);
@@ -755,6 +777,8 @@ const RealtyWrite = () => {
                 onClick={() => {
                   onShortDealing();
                 }}
+                value={deal}
+                onChange={onDeal}
               >
                 단기
               </button>
@@ -769,6 +793,8 @@ const RealtyWrite = () => {
                 onClick={() => {
                   onMonthlyDealing();
                 }}
+                value={deal}
+                onChange={onDeal}
               >
                 월세
               </button>
@@ -783,6 +809,8 @@ const RealtyWrite = () => {
                 onClick={() => {
                   onDepositDealing();
                 }}
+                value={deal}
+                onChange={onDeal}
               >
                 전세
               </button>
@@ -797,6 +825,8 @@ const RealtyWrite = () => {
                 onClick={() => {
                   onDealing();
                 }}
+                value={deal}
+                onChange={onDeal}
               >
                 매매
               </button>
@@ -1348,7 +1378,8 @@ const RealtyWrite = () => {
                 depositChange,
                 costValue,
                 costContent,
-                salePrice
+                salePrice,
+                deal
               );
               onCompleteChange();
             } else {
@@ -1378,6 +1409,7 @@ const RealtyWrite = () => {
                 costValue,
                 costContent,
                 salePrice,
+                deal,
                 uploadedImg
               );
               onCompleteChange();

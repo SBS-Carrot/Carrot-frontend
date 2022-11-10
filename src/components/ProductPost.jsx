@@ -71,14 +71,13 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
           method: "GET",
         });
         onArticle(data.data);
-        console.log("a");
       } catch (e) {
         console.log(e);
       }
     };
     onLikeRe(num);
   }, [liked]);
-  // console.log(article.productCreateTime);
+
   if (logined) {
     return (
       <div>

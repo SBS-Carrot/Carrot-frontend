@@ -21,6 +21,7 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
   const moveBack = () => {
     navigate(-1);
   };
+
   const [article, setArticle] = useState("");
   const onLikes = (data) => {
     setLiked(data);

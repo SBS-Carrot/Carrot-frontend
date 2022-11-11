@@ -11,6 +11,9 @@ const LoginedHeader = ({ setLogined }) => {
   const onHomepage = () => {
     navigate("/");
   };
+  const onMyPage = () => {
+    navigate("/mypage");
+  };
 
   return (
     <div
@@ -76,7 +79,7 @@ const LoginedHeader = ({ setLogined }) => {
             <a href="http://localhost:3000/realty">부동산 직거래</a>
           </div>
         </div>
-        <div className="flex-grow justify-center items-center flex" style={{}}>
+        <div className="flex-grow justify-center items-center flex gap-7">
           <button
             style={{
               outline: "1px #bcbcbc solid",
@@ -91,7 +94,20 @@ const LoginedHeader = ({ setLogined }) => {
           >
             로그아웃
           </button>
+          <button
+            style={{
+              outline: "1px #bcbcbc solid",
+              padding: "5px 10px",
+              borderRadius: "5px",
+            }}
+            onClick={() => {
+              onMyPage();
+            }}
+          >
+            마이 페이지
+          </button>
         </div>
+
         <div
           style={{
             display: "flex",

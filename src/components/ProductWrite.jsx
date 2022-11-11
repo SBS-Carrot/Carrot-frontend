@@ -102,6 +102,7 @@ const ProductWrite = ({ logined, setLogined }) => {
           productPrice: priceValue,
           productSubject: subjectValue,
           productContent: contentValue,
+          productUserid: sessionStorage.getItem("userid"),
         },
       });
       onCompleteChange();
@@ -125,6 +126,7 @@ const ProductWrite = ({ logined, setLogined }) => {
         productPrice: priceValue,
         productSubject: subjectValue,
         productContent: contentValue,
+        productUserid: sessionStorage.getItem("userid"),
       };
       // https://velog.io/@hhhminme/Axios%EC%97%90%EC%84%9C-Post-%EC%8B%9C-Contenttypeapplicationoctet-streamnotsupported-%ED%95%B8%EB%93%A4%EB%A7%81415-%EC%97%90%EB%9F%AC
       const json = JSON.stringify(productDto);
@@ -377,7 +379,7 @@ const ProductWrite = ({ logined, setLogined }) => {
             <div
               style={{
                 position: "absolute",
-                transform: "translate(95%,-120%)",
+                transform: "translate(80%,-150%)",
                 width: "300px",
                 height: "150px",
                 justifyContent: "center",

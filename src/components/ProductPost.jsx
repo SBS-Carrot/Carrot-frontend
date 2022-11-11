@@ -57,6 +57,7 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
       url: images[9],
     },
   ]);
+  const [user, setUser] = useState("");
   useEffect(() => {
     const onSubmit = async (num) => {
       try {
@@ -88,8 +89,20 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
           url: `http://localhost:8083/getProductWithImage/${num}`,
           method: "GET",
         });
-        // setImages(data.data.images);
+
         setImgs(data.data.images);
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${sessionStorage.getItem(
+            "userid"
+          )}`,
+          method: "GET",
+        });
+        setUser(data.data);
+        console.log(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -230,8 +243,10 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
                 width: "500px",
               }}
             >
-              <div className="font-bold ">nickname</div>
-              <div className="text-sm">대전광역시 서구 둔산동</div>
+              <div className="font-bold ">
+                {user.nickname == "닉네임 없음" ? user.username : user.nickname}
+              </div>
+              <div className="text-sm">{user.address}</div>
             </div>
 
             <div
@@ -247,7 +262,7 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
                       color: "green",
                     }}
                   >
-                    38.8
+                    {user.temp}
                   </div>
                   <progress
                     className="flex progress progress-success w-32"

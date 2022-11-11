@@ -5,7 +5,6 @@
 import { useState } from "react";
 import LoginedHeader from "../layouts/LoginedHeader";
 import axios from "axios";
-
 import { useEffect } from "react";
 import { MdAddAPhoto } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -246,8 +245,9 @@ const ProductWrite = ({ logined, setLogined }) => {
           <div>
             <div className="pt-4">내용</div>
             <div>
-              <input
-                type="text"
+              <textarea
+                cols="30"
+                rows="10"
                 placeholder="게시글 내용을 작성해주세요. (가품 및 판매금지 물품은 게시가 제한될 수 있어요)"
                 value={contentValue}
                 onChange={onContentChange}
@@ -256,6 +256,7 @@ const ProductWrite = ({ logined, setLogined }) => {
                   width: "100%",
                   height: "120px",
                   paddingLeft: "5px",
+                  maxHeight: "200px",
                 }}
               />
             </div>
@@ -365,11 +366,8 @@ const ProductWrite = ({ logined, setLogined }) => {
                 color: "white",
                 fontSize: "1.1rem",
                 backgroundColor: "#FFB26B",
-                position: "absolute",
-                bottom: "7%",
-                left: "50%",
+                margin: "15px auto",
                 width: "750px",
-                transform: "translateX(-50%)",
               }}
             >
               판매게시글 작성완료

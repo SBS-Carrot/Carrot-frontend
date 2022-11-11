@@ -275,6 +275,7 @@ const Jobspost = ({ logined }) => {
                 border: "1px gray solid",
               }}
             ></div>
+            {jobArticle.jobPlace}
           </div>
           <section>
             <div className="py-2 flex gap-5 justify-end" style={{}}>

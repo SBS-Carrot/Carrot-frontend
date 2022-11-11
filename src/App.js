@@ -18,7 +18,7 @@ import RealtyWrite from "./components/RealtyWrite";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { authenticatedState } from "./recoil/auth";
-
+import MyPage from "./routes/MyPage";
 import axios from "axios";
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
@@ -105,6 +105,7 @@ function App() {
           path="/login"
           element={<Login onLogin={onLogin} logined={logined} />}
         />
+        <Route path="/mypage" element={<MyPage setLogined={setLogined} />} />
         <Route
           path="/productPost/:num"
           element={

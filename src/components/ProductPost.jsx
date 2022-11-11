@@ -1,6 +1,7 @@
 import LoginedHeader from "../layouts/LoginedHeader";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
+import "../styles/ProductPost.css";
 import {
   BsFillEmojiSmileFill,
   BsChevronLeft,
@@ -10,9 +11,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FiHeart } from "react-icons/fi";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
   const { num } = useParams();
-
+  const [images, setImages] = useState([]);
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);
@@ -21,6 +25,39 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
   const onLikes = (data) => {
     setLiked(data);
   };
+  const [imgs, setImgs] = useState([
+    {
+      url: images[0],
+    },
+    {
+      url: images[1],
+    },
+    {
+      url: images[2],
+    },
+    {
+      url: images[3],
+    },
+    {
+      url: images[4],
+    },
+    {
+      url: images[5],
+    },
+    {
+      url: images[6],
+    },
+    {
+      url: images[7],
+    },
+    {
+      url: images[8],
+    },
+    {
+      url: images[9],
+    },
+  ]);
+  const [user, setUser] = useState("");
   useEffect(() => {
     const onSubmit = async (num) => {
       try {
@@ -52,6 +89,19 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
           url: `http://localhost:8083/getProductWithImage/${num}`,
           method: "GET",
         });
+
+        setImgs(data.data.images);
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${sessionStorage.getItem(
+            "userid"
+          )}`,
+          method: "GET",
+        });
+        setUser(data.data);
         console.log(data.data);
       } catch (e) {
         console.log(e);
@@ -78,6 +128,17 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
     onLikeRe(num);
   }, [liked]);
 
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "0px",
+  };
   if (logined) {
     return (
       <div>
@@ -90,34 +151,80 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
           }}
         >
           <div className="mt-5 relative">
-            <button
-              className="font-bold absolute"
-              style={{
-                fontSize: "1.3rem",
-                top: "50%",
-                left: "-5%",
-              }}
-            >
-              <BsChevronLeft />
-            </button>
-            <button
-              className="font-bold absolute "
-              style={{
-                fontSize: "1.3rem",
-
-                top: "50%",
-                right: "-5%",
-              }}
-            >
-              <BsChevronRight />
-            </button>
-            <a href="#">
-              <img
-                className="rounded-lg"
-                src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/83cbd5362a585918a9b4a7354984ecbfb20208da27522d9b39579099b2cfe1f9.webp?q=95&s=1440x1440&t=inside"
-                alt=""
-              />
-            </a>
+            <div>
+              <Slider {...settings}>
+                {imgs[0] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[0]} alt="" />
+                  </div>
+                )}
+                {imgs[1] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[1]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[2] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[2]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[3] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[3]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[4] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[4]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[5] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[5]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[6] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[6]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[7] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[7]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[8] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[8]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[9] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[9]} alt="" />
+                  </div>
+                )}
+              </Slider>
+            </div>
           </div>
           <section className="mt-6 flex justify-end gap-3">
             <div
@@ -136,8 +243,10 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
                 width: "500px",
               }}
             >
-              <div className="font-bold ">nickname</div>
-              <div className="text-sm">대전광역시 서구 둔산동</div>
+              <div className="font-bold ">
+                {user.nickname == "닉네임 없음" ? user.username : user.nickname}
+              </div>
+              <div className="text-sm">{user.address}</div>
             </div>
 
             <div
@@ -153,7 +262,7 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
                       color: "green",
                     }}
                   >
-                    38.8
+                    {user.temp}
                   </div>
                   <progress
                     className="flex progress progress-success w-32"

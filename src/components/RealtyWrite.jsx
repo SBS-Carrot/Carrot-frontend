@@ -81,10 +81,8 @@ const RealtyWrite = ({ logined, setLogined }) => {
   const onCheckInside = (checked, item) => {
     if (checked) {
       setInside([...inside, item]);
-      console.log(inside);
     } else {
       setInside(inside.filter((el) => el !== item));
-      console.log(inside);
     }
   };
   const onMoveDateChange = (e) => {
@@ -296,14 +294,14 @@ const RealtyWrite = ({ logined, setLogined }) => {
           realtyDeal: deal,
         },
       });
+
       setId(data.data.realtyId);
-      console.log("ud", data.data.realtyId);
       onCompleteChange();
     } catch (e) {
       console.log(e);
     }
   };
-  console.log("id", id);
+
   // 사진있을때
   const onSubmits = async (
     who,
@@ -380,6 +378,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
         data: formData,
       });
       setId(data2.data.realtyId);
+
       onCompleteChange();
     } catch (e) {
       console.log(e);

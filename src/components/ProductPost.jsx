@@ -1,5 +1,4 @@
 import LoginedHeader from "../layouts/LoginedHeader";
-import { UncontrolledCarousel } from "reactstrap";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import "../styles/ProductPost.css";
@@ -12,7 +11,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FiHeart } from "react-icons/fi";
-import ImageGallery from "react-image-gallery";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

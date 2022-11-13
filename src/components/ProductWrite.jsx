@@ -62,6 +62,7 @@ const ProductWrite = ({ logined, setLogined }) => {
   // 이미지 상대경로 저장
   const handleAddImages = (event) => {
     setUploadedImg([...event.target.files, ...uploadedImg]);
+
     const imageLists = event.target.files;
 
     //이미지 미리보기기능

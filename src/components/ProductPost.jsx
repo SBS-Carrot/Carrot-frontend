@@ -102,7 +102,6 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
           method: "GET",
         });
         setUser(data.data);
-        console.log(data.data);
       } catch (e) {
         console.log(e);
       }

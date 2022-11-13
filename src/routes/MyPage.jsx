@@ -1,42 +1,86 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoginedHeader from "../layouts/LoginedHeader";
 import { MdAddAPhoto } from "react-icons/md";
 import { FaCarrot } from "react-icons/fa";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const MyPage = ({ setLogined }) => {
-  const [uploadedImg, setUploadedImg] = useState([]);
-  const [showImages, setShowImages] = useState([]);
+  const [uploadedImg, setUploadedImg] = useState("");
+  const [imageSrc, setImageSrc] = useState("");
+  const [nickname, setNickname] = useState("");
+  const navigate = useNavigate();
+  const onChangeComplete = () => {
+    navigate("/mypage");
+  };
   const handleAddImages = (event) => {
-    if (uploadedImg.length > 1) {
-      setUploadedImg([]);
-      setUploadedImg(event.target.value);
-
-      const imageLists = event.target.files;
-      //이미지 미리보기기능
-      let imageUrlLists = [...showImages];
-
-      const currentImageUrl = URL.createObjectURL(imageLists[0]);
-      imageUrlLists.pop();
-      imageUrlLists.push(currentImageUrl);
-      setShowImages(imageUrlLists);
-      event.target.files = [];
+    setUploadedImg(event.target.files[0]);
+  };
+  const encodeFileToBase64 = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        resolve();
+      };
+    });
+  };
+  const handleDeleteImage = () => {
+    setUploadedImg("");
+    setImageSrc("");
+  };
+  const onNicknameChange = (e) => {
+    if (e.target.value.length > 10) {
       return;
     }
-    const imageLists = event.target.files;
-    //이미지 미리보기기능
-    let imageUrlLists = [...showImages];
-
-    for (let i = 0; i < imageLists.length; i++) {
-      const currentImageUrl = URL.createObjectURL(imageLists[i]);
-      imageUrlLists.push(currentImageUrl);
-    }
-    setShowImages(imageUrlLists);
-    setUploadedImg(event.target.value);
+    setNickname(e.target.value);
   };
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    const onSubmit = async () => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${sessionStorage.getItem(
+            "userid"
+          )}`,
+          method: "GET",
+        });
+        setUser(data.data);
+        if (data.data.profileImage != null) {
+          setImageSrc(data.data.profileImage);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    onSubmit();
+  }, []);
 
-  const handleDeleteImage = () => {
-    setUploadedImg([]);
-    setShowImages([]);
+  const onSubmit1 = async (image, nickname) => {
+    try {
+      const formData = new FormData();
+      const user1 = sessionStorage.getItem("userid");
+      const json = { nickname: nickname, userid: user1 };
+      const _json = JSON.stringify(json);
+      const blob = new Blob([_json], { type: "application/json" });
+
+      formData.append("userdto", blob);
+      formData.append("file", image);
+      const data = await axios({
+        headers: {
+          "Content-Type": `application/json`,
+        },
+        url: `http://localhost:8083/userProfileImageChange`,
+        method: "POST",
+        data: formData,
+      });
+      if (data.data) {
+        window.alert("변경에 성공하였습니다.");
+        onChangeComplete();
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
   return (
     <div>
@@ -50,11 +94,8 @@ const MyPage = ({ setLogined }) => {
         <div
           style={{
             height: "40px",
-            position: "sticky",
-            top: "0%",
             borderBottom: "1px #bcbcbc solid",
             borderTop: "1px #bcbcbc solid",
-            zIndex: "9999",
             display: "flex",
           }}
         >
@@ -92,7 +133,7 @@ const MyPage = ({ setLogined }) => {
                 borderTop: "1px #d5d5d5 solid",
                 borderBottom: "1px #d5d5d5 solid",
                 width: "100%",
-                height: "350px",
+                height: "450px",
                 display: "flex",
                 flexDirection: "column",
               }}
@@ -104,10 +145,137 @@ const MyPage = ({ setLogined }) => {
                   flexDirection: "row",
                 }}
               >
-                프로필사진
-                <div></div>
-                <div>사진변경</div>
-                <div>삭제</div>
+                <div
+                  style={{
+                    borderRight: "1px #d5d5d5 solid",
+                    borderBottom: "1px #d5d5d5 solid",
+                    width: "200px",
+                    fontWeight: "bolder",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  프로필사진
+                </div>
+                <div
+                  style={{
+                    borderBottom: "1px #d5d5d5 solid",
+                    width: "100%",
+                  }}
+                >
+                  <ul className="grid grid-cols-5 gap-4 pl-4">
+                    {imageSrc != "" ? (
+                      <div
+                        className="preview"
+                        style={{
+                          width: "120px",
+                          height: "120px",
+                          display: "flex",
+                          flexDirection: "row",
+                          position: "relative",
+                          marginBottom: "20px",
+                        }}
+                      >
+                        <img
+                          src={imageSrc}
+                          alt="preview-img"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "fill",
+                            display: "block",
+                          }}
+                        />
+
+                        <div />
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          width: "120px",
+                          height: "120px",
+                          display: "flex",
+                          flexDirection: "row",
+                          position: "relative",
+                          marginBottom: "20px",
+                          border: "1px #d5d5d5 solid",
+                          marginTop: "10px",
+                        }}
+                      >
+                        <FaCarrot
+                          style={{
+                            width: "120px",
+                            height: "120px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            fontSize: "3rem",
+                            color: "#fc9d39",
+                          }}
+                        />
+                      </div>
+                    )}
+                  </ul>
+                  <div
+                    className=" rounded-lg"
+                    style={{
+                      border: "1px #d5d5d5 solid",
+                      width: "105px",
+                      height: "100px",
+                      color: "#8f8f8f",
+                      marginLeft: "17px",
+                    }}
+                  >
+                    <label
+                      htmlFor="input-file"
+                      onChange={(e) => {
+                        handleAddImages(e);
+                        encodeFileToBase64(e.target.files[0]);
+                      }}
+                    >
+                      <input
+                        type="file"
+                        id="input-file"
+                        accept="image/*"
+                        style={{
+                          display: "none",
+                        }}
+                      />
+                      <MdAddAPhoto
+                        style={{
+                          fontSize: "3rem",
+                          cursor: "pointer",
+                          margin: "1.5rem",
+                        }}
+                      />
+                      <button>사진 변경하기</button>
+                    </label>
+                  </div>
+                  <div
+                    style={{
+                      transform: "translate(80%,-30%)",
+                      color: "#8f8f8f",
+                      border: "1px #8f8f8f solid",
+                      display: "inline-block",
+
+                      marginLeft: "5rem",
+                    }}
+                  >
+                    <button
+                      onClick={() => {
+                        handleDeleteImage();
+                      }}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        padding: "5px 15px",
+                      }}
+                    >
+                      삭제
+                    </button>
+                  </div>
+                </div>
               </div>
               <div
                 style={{
@@ -116,99 +284,56 @@ const MyPage = ({ setLogined }) => {
                   flexDirection: "row",
                 }}
               >
-                {" "}
-                닉네임
-                <div> input닉네임 </div>
-                <div></div>
+                <div
+                  style={{
+                    borderRight: "1px #d5d5d5 solid",
+                    borderBottom: "1px #d5d5d5 solid",
+                    width: "167px",
+                    fontWeight: "bolder",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  닉네임
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    value={nickname}
+                    onChange={onNicknameChange}
+                    placeholder={user.nickname}
+                    style={{
+                      border: "1px #d5d5d5 solid",
+                      marginLeft: "18px",
+                      width: "200px",
+                      marginTop: "65px",
+                    }}
+                  />
+                </div>
               </div>
             </section>
             <div
-              className=" rounded-lg"
               style={{
-                border: "1px #d5d5d5 solid",
-                width: "100px",
-                height: "100px",
-                color: "#8f8f8f",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
               }}
             >
-              <label htmlFor="input-file" onChange={handleAddImages}>
-                <input
-                  type="file"
-                  id="input-file"
-                  accept="image/*"
+              <button
+                onClick={() => {
+                  onSubmit1(uploadedImg, nickname);
+                }}
+              >
+                <span
                   style={{
-                    display: "none",
+                    border: "1px #d5d5d5 solid",
+                    padding: "5px 10px",
                   }}
-                />
-                <MdAddAPhoto
-                  style={{
-                    fontSize: "3rem",
-                    cursor: "pointer",
-                    margin: "1.5rem",
-                  }}
-                />
-              </label>
-              <ul className="grid grid-cols-5 gap-4 pl-4">
-                {uploadedImg[0] == "" ? (
-                  <div
-                    style={{
-                      width: "110px",
-                      height: "100px",
-                      display: "flex",
-                      flexDirection: "row",
-                      position: "relative",
-                      marginBottom: "20px",
-                    }}
-                  >
-                    <img
-                      src={showImages[0]}
-                      alt=""
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "fill",
-                        display: "block",
-                      }}
-                    />
-
-                    <div />
-                    <button
-                      style={{
-                        position: "absolute",
-                        left: "50%",
-                        bottom: "-30%",
-                      }}
-                      onClick={() => handleDeleteImage()}
-                    >
-                      X
-                    </button>
-                  </div>
-                ) : (
-                  <div
-                    style={{
-                      width: "110px",
-                      height: "100px",
-                      display: "flex",
-                      flexDirection: "row",
-                      position: "relative",
-                      marginBottom: "20px",
-                      border: "1px #d5d5d5 solid",
-                    }}
-                  >
-                    <FaCarrot
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: "3rem",
-                        color: "#fc9d39",
-                      }}
-                    />
-                  </div>
-                )}
-              </ul>
+                >
+                  적용하기
+                </span>
+              </button>
             </div>
           </div>
         </div>

@@ -13,7 +13,7 @@ const HotArticles = ({ logined, setLogined }) => {
   const moveProduct = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/productCheck/${id}`,
+        url: `http://localhost:8083/productView/${id}`,
         method: "POST",
       });
     } catch (e) {

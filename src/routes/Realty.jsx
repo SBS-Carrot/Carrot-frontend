@@ -12,16 +12,25 @@ import { useEffect } from "react";
 const Realty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const { Router } = useParams();
-  const moveRealty = (realtyid) => {
-    // axios.get(http:~~~/id)
+  const [Realty, setRealty] = useState([]);
+  const [address, setAddress] = useState(Realty.realtyAddress || "");
 
-    navigate(`/realtypost/${realtyid}`);
+  const onAddress = () => {
+    let result = Realty.realtyAddress.lastindexOf("동");
+    let a = Realty.realtyAddress.slice(0, result);
+    setAddress(a);
   };
 
-  const [Realty, setRealty] = useState([]);
+  const moveRealty = (id) => {
+    // axios.get(http:~~~/id)
+
+    navigate(`/realtypost/${id}`);
+  };
+
   const onRealty = (data) => {
     setRealty((prev) => data);
   };
+
   useEffect(() => {
     const onSubmit = async () => {
       try {
@@ -30,7 +39,7 @@ const Realty = ({ logined, setLogined }) => {
           method: "GET",
         });
         onRealty(data.data);
-        console.log();
+        console.log(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -81,140 +90,100 @@ const Realty = ({ logined, setLogined }) => {
             </div>
             <div>
               <div className="mt-5">
-                <div>
-                  <ul className="grid grid-cols-2">
-                    {Realty.map((realty, index) => {
-                      <li
-                        key={index}
-                        className="flex  items-center gap-4"
-                        style={{
-                          height: "120px",
+                <ul className="grid grid-cols-2">
+                  {Realty.map((realty, index) => (
+                    <li key={index}>
+                      <button
+                        onClick={() => {
+                          moveRealty(realty.realtyId);
                         }}
                       >
-                        <button
-                          onClick={() => {
-                            moveRealty(realty.realty_id);
+                        <div
+                          className="flex"
+                          style={{
+                            height: "120px",
                           }}
                         >
-                          <a href="#" className="flex-col flex justify-center">
+                          <div className="flex-col flex justify-center">
                             <div className="img1">
                               <img
                                 src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
                                 alt=""
                               />
                             </div>
-                          </a>
-                          <a href="">
+                          </div>
+                          <div
+                            className=""
+                            style={{
+                              height: "120px",
+                            }}
+                          >
+                            <span>{realty.realtyCategory} </span>
+                            <span>
+                              {realty.realtyDeposit}만원/{realty.realtyMonthly}
+                              만원 -
+                            </span>
+                            <div value={address} onChange={onAddress}></div>
                             <div
+                              className="text-sm"
                               style={{
-                                height: "120px",
+                                color: "#73777B",
+                                paddingTop: "5px",
                               }}
                             >
-                              <div style={{}}>
-                                <span>
-                                  주방이모 파트타임 오전 6시~오전 10시(4시간)
-                                </span>
-                              </div>
-                              <div
-                                className="text-sm"
-                                style={{
-                                  color: "#73777B",
-                                  paddingTop: "5px",
-                                }}
-                              >
-                                <span>밥을짓는홍여사 . 부평동</span>
-                              </div>
-                              <div className="font-bold pt-1">
-                                <span>시급 10,100</span>
-                              </div>
+                              <span>밥을짓는홍여사 . 부평동</span>
                             </div>
-                          </a>
-                        </button>
-                      </li>;
-                    })}
-                    <li
-                      className="flex  items-center gap-4"
-                      style={{
-                        height: "120px",
-                      }}
-                    >
-                      <a href="#" className="flex-col flex justify-center">
-                        <div className="img1">
-                          <img
-                            src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
-                            alt=""
-                          />
+                            <div className="font-bold pt-1">
+                              <span>시급 10,100</span>
+                            </div>
+                          </div>
                         </div>
-                      </a>
-                      <a href="">
+                      </button>
+                    </li>
+                  ))}
+
+                  <li
+                    className="flex  items-center gap-4"
+                    style={{
+                      height: "120px",
+                    }}
+                  >
+                    <a href="#" className="flex-col flex justify-center">
+                      <div className="img1">
+                        <img
+                          src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
+                          alt=""
+                        />
+                      </div>
+                    </a>
+                    <a href="">
+                      <div
+                        style={{
+                          height: "120px",
+                          marginTop: "25px",
+                        }}
+                      >
+                        <div style={{}}>
+                          <span>
+                            주방이모 파트타임 오전 6시~오전 10시(4시간)
+                          </span>
+                        </div>
                         <div
+                          className="text-sm"
                           style={{
-                            height: "120px",
+                            color: "#73777B",
+                            paddingTop: "5px",
                           }}
                         >
-                          <div style={{}}>
-                            <span>
-                              주방이모 파트타임 오전 6시~오전 10시(4시간)
-                            </span>
-                          </div>
-                          <div
-                            className="text-sm"
-                            style={{
-                              color: "#73777B",
-                              paddingTop: "5px",
-                            }}
-                          >
-                            <span>밥을짓는홍여사 . 부평동</span>
-                          </div>
-                          <div className="font-bold pt-1">
-                            <span>시급 10,100</span>
-                          </div>
+                          <span>밥을짓는홍여사 . 부평동</span>
                         </div>
-                      </a>
-                    </li>
-                    <li
-                      className="flex  items-center gap-4"
-                      style={{
-                        height: "120px",
-                      }}
-                    >
-                      <a href="#" className="flex-col flex justify-center">
-                        <div className="img1">
-                          <img
-                            src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
-                            alt=""
-                          />
+                        <div className="font-bold pt-1">
+                          <span>시급 10,100</span>
                         </div>
-                      </a>
-                      <a href="">
-                        <div
-                          style={{
-                            height: "120px",
-                            marginTop: "25px",
-                          }}
-                        >
-                          <div style={{}}>
-                            <span>
-                              주방이모 파트타임 오전 6시~오전 10시(4시간)
-                            </span>
-                          </div>
-                          <div
-                            className="text-sm"
-                            style={{
-                              color: "#73777B",
-                              paddingTop: "5px",
-                            }}
-                          >
-                            <span>밥을짓는홍여사 . 부평동</span>
-                          </div>
-                          <div className="font-bold pt-1">
-                            <span>시급 10,100</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
               </div>
               <div className="mt-5">
                 <div>

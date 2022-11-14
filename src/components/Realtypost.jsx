@@ -314,13 +314,7 @@ const Realtypost = ({ logined, setLogined }) => {
             >
               소개
             </div>
-            <div
-              style={{
-                height: "350px",
-              }}
-            >
-              {article.realtyContent}
-            </div>
+            <div className="mb-10">{article.realtyContent}</div>
           </section>
           <div
             className="flex gap-4 align-center font-bold mt-2 pb-11"

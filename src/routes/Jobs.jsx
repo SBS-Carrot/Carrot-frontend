@@ -38,6 +38,7 @@ const Jobs = ({ logined, setLogined }) => {
           method: "GET",
         });
         onJobs(data.data);
+        console.log(data.data);
       } catch (e) {
         console.log(e);
       }

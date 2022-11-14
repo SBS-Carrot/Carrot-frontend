@@ -294,12 +294,14 @@ const RealtyWrite = ({ logined, setLogined }) => {
           realtyDeal: deal,
         },
       });
-      setId((prev) => data.data.realtyId);
+
+      setId(data.data.realtyId);
       onCompleteChange();
     } catch (e) {
       console.log(e);
     }
   };
+
   // 사진있을때
   const onSubmits = async (
     who,
@@ -1323,16 +1325,18 @@ const RealtyWrite = ({ logined, setLogined }) => {
           <div>
             <div className="font-bold">매물 설명</div>
             <div className="flex gap-2 mb-4">
-              <input
+              <textarea
                 className="pb-44"
-                type="text"
+                cols="30"
+                rows="10"
                 placeholder="이 매물의 특징이 있다면 알려주세요."
                 value={contentValue}
                 onChange={onContentChange}
                 style={{
                   border: "1px #d5d5d5 solid",
                   width: "400px",
-                  height: "200px",
+                  height: "250px",
+                  maxHeight: "250px",
                 }}
               />
             </div>
@@ -1404,6 +1408,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
             }
           }}
           style={{
+            marginTop: "15px",
             outline: "1px #ffa445 solid",
             borderRadius: "10px",
             padding: "15px",
@@ -1411,11 +1416,8 @@ const RealtyWrite = ({ logined, setLogined }) => {
             color: "white",
             fontSize: "1.1rem",
             backgroundColor: "#FFB26B",
-            position: "absolute",
-            bottom: "-33%",
-            left: "50%",
+            marginLeft: "18%",
             width: "1000px",
-            transform: "translateX(-50%)",
           }}
         >
           글쓰기

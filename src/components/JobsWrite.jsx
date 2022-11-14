@@ -54,6 +54,9 @@ const JobsWrite = ({ logined, setLogined }) => {
   };
   const onContentChange = (e) => {
     setContentValue(e.target.value);
+    if (e.target.value.length > 1000) {
+      return;
+    }
   };
   const onSubjectChange = (e) => {
     setSubjectValue(e.target.value);
@@ -758,8 +761,9 @@ const JobsWrite = ({ logined, setLogined }) => {
           <div>
             <div className="pt-3">내용</div>
             <div>
-              <input
-                type="text"
+              <textarea
+                cols="30"
+                rows="10"
                 placeholder="예) 업무예시, 근무 여건, 지원자가 갖추어야 할 능력, 우대 사항 등"
                 value={contentValue}
                 onChange={onContentChange}
@@ -768,6 +772,7 @@ const JobsWrite = ({ logined, setLogined }) => {
                   width: "100%",
                   height: "120px",
                   paddingLeft: "5px",
+                  maxHeight: "250px",
                 }}
               />
             </div>
@@ -894,11 +899,8 @@ const JobsWrite = ({ logined, setLogined }) => {
                 color: "white",
                 fontSize: "1.1rem",
                 backgroundColor: "#FFB26B",
-                position: "absolute",
-                bottom: "7%",
-                left: "50%",
+                margin: "15px auto",
                 width: "750px",
-                transform: "translateX(-50%)",
               }}
             >
               작성완료

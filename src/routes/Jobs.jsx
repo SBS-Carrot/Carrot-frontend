@@ -4,9 +4,47 @@ import LoginedJobsHeader from "../layouts/LoginedJobsHeader";
 import "../styles/Jobs.css";
 import Footer from "../layouts/Footer";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
+
 const Jobs = ({ logined, setLogined }) => {
   const navigate = useNavigate();
+  const { num } = useParams();
+  const [Jobs, setJobs] = useState([]);
   const { Router } = useParams();
+
+  const moveJobs = async (id) => {
+    try {
+      await axios({
+        url: `http://localhost:8083/jobsCheck/${id}`,
+        method: "POST",
+      });
+    } catch (e) {
+      console.log(e);
+    }
+    navigate(`/jobspost/${id}`);
+  };
+
+  const onJobs = (data) => {
+    setJobs((prev) => data);
+  };
+
+  useEffect(() => {
+    const onSubmit = async () => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/jobs`,
+          method: "GET",
+        });
+        onJobs(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    onSubmit();
+  }, []);
+
   if (logined) {
     return (
       <div>
@@ -96,65 +134,71 @@ const Jobs = ({ logined, setLogined }) => {
             }}
             className="grid grid-cols-2 jobBox"
           >
-            <li>
-              {/* 조회수 1 증가하는 기능 */}
-              <a href="#">
-                <div
-                  style={{
-                    width: "140px",
-                    display: "flex",
-                    borderRadius: "10px",
+            {Jobs.map((job, index) => (
+              <li key={index}>
+                <button
+                  onClick={() => {
+                    moveJobs(job.jobid);
                   }}
-                  className="gap-3"
                 >
-                  <img
-                    src="https://dnvefa72aowie.cloudfront.net/jobs/article/430198/1646300764992/job-post-2947125003.jpeg?q=95&s=1440x1440&t=inside"
-                    alt=""
+                  <div
                     style={{
-                      objectFit: "auto",
-                      width: "100%",
-                      display: "block",
+                      width: "140px",
+                      display: "flex",
                       borderRadius: "10px",
                     }}
-                  />
-                  <div
-                    className="flex flex-col"
-                    style={{
-                      width: "300px",
-                      height: "150px",
-                    }}
+                    className="gap-3"
                   >
-                    <span
+                    <img
+                      src="https://dnvefa72aowie.cloudfront.net/jobs/article/430198/1646300764992/job-post-2947125003.jpeg?q=95&s=1440x1440&t=inside"
+                      alt=""
+                      style={{
+                        objectFit: "auto",
+                        width: "100%",
+                        display: "block",
+                        borderRadius: "10px",
+                      }}
+                    />
+                    <div
+                      className="flex flex-col"
                       style={{
                         width: "300px",
                         height: "150px",
-                        fontSize: "1.2rem",
                       }}
                     >
-                      칠성뷔페 주방/홀 직원모집
-                    </span>
-                    <span
-                      style={{
-                        width: "250px",
-                        height: "150px",
-                      }}
-                    >
-                      칠성뷔페 · 제주 특별자치도 제주시 일도1동
-                    </span>
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontWeight: "bolder",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      월급 3,000,000
-                    </span>
+                      <span
+                        style={{
+                          width: "300px",
+                          height: "150px",
+                          fontSize: "1.2rem",
+                        }}
+                      >
+                        {job.jobSubject}
+                      </span>
+                      <span
+                        style={{
+                          width: "250px",
+                          height: "150px",
+                        }}
+                      >
+                        <span>{job.jobPlace}</span>
+                      </span>
+                      <span
+                        style={{
+                          width: "300px",
+                          height: "150px",
+                          fontWeight: "bolder",
+                          fontSize: "1.1rem",
+                        }}
+                      >
+                        {job.jobCategory} {job.jobPrice}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </a>
-            </li>
+                </button>
+              </li>
+            ))}
+
             <li>
               <a href="#">
                 <div
@@ -501,64 +545,7 @@ const Jobs = ({ logined, setLogined }) => {
                 </div>
               </a>
             </li>
-            <li>
-              <a href="#">
-                <div
-                  style={{
-                    width: "140px",
-                    display: "flex",
-                    borderRadius: "10px",
-                  }}
-                  className="gap-3"
-                >
-                  <img
-                    src="https://dnvefa72aowie.cloudfront.net/jobs/article/430198/1646300764992/job-post-2947125003.jpeg?q=95&s=1440x1440&t=inside"
-                    alt=""
-                    style={{
-                      objectFit: "auto",
-                      width: "100%",
-                      display: "block",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <div
-                    className="flex flex-col"
-                    style={{
-                      width: "300px",
-                      height: "150px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontSize: "1.2rem",
-                      }}
-                    >
-                      칠성뷔페 주방/홀 직원모집
-                    </span>
-                    <span
-                      style={{
-                        width: "250px",
-                        height: "150px",
-                      }}
-                    >
-                      칠성뷔페 · 제주 특별자치도 제주시 일도1동
-                    </span>
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontWeight: "bolder",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      월급 3,000,000
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
+
             <li>
               <a href="#">
                 <div

@@ -6,15 +6,38 @@ import "../styles/Realty.css";
 import { AiOutlineRight } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Realty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const { Router } = useParams();
-  const moveJobs = (id) => {
+  const moveRealty = (realtyid) => {
     // axios.get(http:~~~/id)
 
-    navigate(`/jobspost/${id}`);
+    navigate(`/realtypost/${realtyid}`);
   };
+
+  const [Realty, setRealty] = useState([]);
+  const onRealty = (data) => {
+    setRealty((prev) => data);
+  };
+  useEffect(() => {
+    const onSubmit = async () => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/realty`,
+          method: "GET",
+        });
+        onRealty(data.data);
+        console.log();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    onSubmit();
+  }, []);
+
   if (logined) {
     return (
       <div>
@@ -60,14 +83,55 @@ const Realty = ({ logined, setLogined }) => {
               <div className="mt-5">
                 <div>
                   <ul className="grid grid-cols-2">
-                    {/* jobs.map(key,index)=>{
-                      <li key={index}>
-                          <button onClick={()=> {
-                            //조회수 1 올라가는함수
-                            // 이동하는함수
-                          }}>
-                        <div>
-                            {/* css */}
+                    {Realty.map((realty, index) => {
+                      <li
+                        key={index}
+                        className="flex  items-center gap-4"
+                        style={{
+                          height: "120px",
+                        }}
+                      >
+                        <button
+                          onClick={() => {
+                            moveRealty(realty.realty_id);
+                          }}
+                        >
+                          <a href="#" className="flex-col flex justify-center">
+                            <div className="img1">
+                              <img
+                                src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
+                                alt=""
+                              />
+                            </div>
+                          </a>
+                          <a href="">
+                            <div
+                              style={{
+                                height: "120px",
+                              }}
+                            >
+                              <div style={{}}>
+                                <span>
+                                  주방이모 파트타임 오전 6시~오전 10시(4시간)
+                                </span>
+                              </div>
+                              <div
+                                className="text-sm"
+                                style={{
+                                  color: "#73777B",
+                                  paddingTop: "5px",
+                                }}
+                              >
+                                <span>밥을짓는홍여사 . 부평동</span>
+                              </div>
+                              <div className="font-bold pt-1">
+                                <span>시급 10,100</span>
+                              </div>
+                            </div>
+                          </a>
+                        </button>
+                      </li>;
+                    })}
                     <li
                       className="flex  items-center gap-4"
                       style={{

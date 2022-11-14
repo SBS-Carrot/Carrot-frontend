@@ -14,13 +14,66 @@ import { FaHeart } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-const Jobspost = ({ logined }) => {
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+const Jobspost = ({
+  logined,
+  setLogined,
+  onJobsLike,
+  jobsLiked,
+  setJobsLiked,
+}) => {
   const { num } = useParams();
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);
   };
+  const [userid, setUserid] = useState(sessionStorage.getItem("userid") || "");
   const [jobArticle, setJobArticle] = useState("");
+  const [user, setUser] = useState("");
+  const [writer, setWriter] = useState("");
+  const [articleWriter, setArticleWriter] = useState("");
+  const [images, setImages] = useState([]);
+  const onLikes = (data) => {
+    setJobsLiked(data);
+  };
+
+  const onArticle = (data) => {
+    setJobArticle((prev) => data);
+  };
+  const [imgs, setImgs] = useState([
+    {
+      url: images[0],
+    },
+    {
+      url: images[1],
+    },
+    {
+      url: images[2],
+    },
+    {
+      url: images[3],
+    },
+    {
+      url: images[4],
+    },
+    {
+      url: images[5],
+    },
+    {
+      url: images[6],
+    },
+    {
+      url: images[7],
+    },
+    {
+      url: images[8],
+    },
+    {
+      url: images[9],
+    },
+  ]);
 
   useEffect(() => {
     const onSubmit = async (num) => {
@@ -29,19 +82,90 @@ const Jobspost = ({ logined }) => {
           url: `http://localhost:8083/Jobs/${num}`,
           method: "GET",
         });
-        setJobArticle(data.data);
+        setWriter(data.data.productUserid);
+        onArticle(data.data);
       } catch (e) {
         console.log(e);
-        window.alert("존재하지 않는 게시물입니다");
-        moveBack();
+        // window.alert("존재하지 않는 게시물입니다");
+        // moveBack();
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/likeJobsCheck/${num}`,
+          method: "GET",
+          params: {
+            jobsId: num,
+            userid: sessionStorage.getItem("userid"),
+          },
+        });
+        onLikes(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getJobsWithImage/${num}`,
+          method: "GET",
+        });
+
+        setImgs(data.data.images);
+      } catch (e) {
+        console.log(e);
+      }
+
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${userid}`,
+          method: "GET",
+        });
+        setUser(data.data);
+      } catch (e) {
+        console.log(e);
+        console.log("error");
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${writer}`,
+          method: "GET",
+        });
+        setArticleWriter(data.data);
+      } catch (e) {
+        console.log(e);
       }
     };
     onSubmit(num);
   }, []);
+
+  useEffect(() => {
+    const onLikeRe = async (num) => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/Jobs/${num}`,
+          method: "GET",
+        });
+        onArticle(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    onLikeRe(num);
+  }, [jobsLiked]);
+
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "0px",
+  };
   if (logined) {
     return (
       <div>
-        <LoginedJobsHeader />
+        <LoginedJobsHeader setLogined={setLogined} />
         <div
           style={{
             width: "780px",
@@ -49,38 +173,80 @@ const Jobspost = ({ logined }) => {
           }}
         >
           <div className="mt-5 relative">
-            <button
-              className="font-bold absolute"
-              style={{
-                fontSize: "1.3rem",
-                top: "50%",
-                left: "-5%",
-              }}
-            >
-              <BsChevronLeft />
-            </button>
-            <button
-              className="font-bold absolute "
-              style={{
-                fontSize: "1.3rem",
-
-                top: "50%",
-                right: "-5%",
-              }}
-            >
-              <BsChevronRight />
-            </button>
-            <button href="#">
-              <img
-                className="rounded-lg "
-                style={{
-                  width: "800px",
-                  height: "500px",
-                }}
-                src="https://dnvefa72aowie.cloudfront.net/jobs/article/36458049/1649751854029/job-post-3286665810.jpeg?q=95&s=1440x1440&t=inside"
-                alt=""
-              />
-            </button>
+            <div>
+              <Slider {...settings}>
+                {imgs[0] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[0]} alt="" />
+                  </div>
+                )}
+                {imgs[1] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[1]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[2] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[2]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[3] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[3]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[4] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[4]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[5] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[5]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[6] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[6]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[7] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[7]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[8] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[8]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[9] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[9]} alt="" />
+                  </div>
+                )}
+              </Slider>
+            </div>
           </div>
           <section className="mt-6 flex justify-end gap-3">
             <div
@@ -282,19 +448,19 @@ const Jobspost = ({ logined }) => {
                 style={{
                   fontSize: "1.5rem",
                 }}
-                // onClick={() => {
-                //   onLike(img.id, userinfo.userid, img.imgSrc);
-                // }}
+                onClick={() => {
+                  onJobsLike(num, sessionStorage.getItem("userid"));
+                }}
               >
-                {/* {like ? (
-                <FaHeart
-                  style={{
-                    color: "pink",
-                  }}
-                />
-              ) : ( */}
-                <FiHeart />
-                {/* )} */}
+                {jobsLiked ? (
+                  <FiHeart
+                    style={{
+                      color: "pink",
+                    }}
+                  />
+                ) : (
+                  <FiHeart />
+                )}
               </button>
 
               <a

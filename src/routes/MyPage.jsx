@@ -4,15 +4,22 @@ import { MdAddAPhoto } from "react-icons/md";
 import { FaCarrot } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const MyPage = ({ setLogined }) => {
+const MyPage = ({ logined, setLogined }) => {
   const [user, setUser] = useState("");
   const [uploadedImg, setUploadedImg] = useState([]);
   const [imageSrc, setImageSrc] = useState("");
   const [nickname, setNickname] = useState(user.nickname || "");
   const navigate = useNavigate();
   const onChangeComplete = () => {
-    navigate("/mypage");
+    window.location.replace("/mypage");
   };
+  const moveBack = () => {
+    alert("로그인 후 사용할 수 있는 기능입니다.");
+    navigate(-1);
+  };
+  if (!logined) {
+    moveBack();
+  }
   const handleAddImages = (event) => {
     setUploadedImg(event.target.files[0]);
   };
@@ -28,10 +35,32 @@ const MyPage = ({ setLogined }) => {
     });
   };
 
-  const handleDeleteImage = () => {
-    setUploadedImg([]);
-    setImageSrc("");
+  const handleDeleteImage = async () => {
+    try {
+      const formData = new FormData();
+      const user1 = sessionStorage.getItem("userid");
+      const json = { userid: user1 };
+      const _json = JSON.stringify(json);
+      const blob = new Blob([_json], { type: "application/json" });
+
+      formData.append("userdto", blob);
+
+      const data = await axios({
+        headers: {
+          "Content-Type": `application/json`,
+        },
+        url: `http://localhost:8083/userProfileImageReset`,
+        method: "POST",
+        data: formData,
+      });
+
+      window.alert("초기화에 성공하였습니다.");
+      onChangeComplete();
+    } catch (e) {
+      console.log(e);
+    }
   };
+
   const onNicknameChange = (e) => {
     if (e.target.value.length > 10) {
       return;
@@ -129,7 +158,7 @@ const MyPage = ({ setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/userProfileImageReset`,
+        url: `http://localhost:8083/userProfileImageAndNicknameReset`,
         method: "POST",
         data: formData,
       });
@@ -163,9 +192,19 @@ const MyPage = ({ setLogined }) => {
               fontWeight: "bolder",
             }}
           >
-            <li>내 프로필</li>
-            <li>보안설정</li>
-            <li>게시글 관리</li>
+            <li
+              style={{
+                color: "#ffa445",
+              }}
+            >
+              <a href="/mypage">내 프로필</a>{" "}
+            </li>
+            <li>
+              <a href="/security">보안설정</a>
+            </li>
+            <li>
+              <a href="/articleControl">게시글 관리</a>
+            </li>
           </ul>
         </div>
         <div style={{}}>
@@ -310,29 +349,6 @@ const MyPage = ({ setLogined }) => {
                       <button>사진 변경하기</button>
                     </label>
                   </div>
-                  <div
-                    style={{
-                      transform: "translate(80%,-30%)",
-                      color: "#8f8f8f",
-                      border: "1px #8f8f8f solid",
-                      display: "inline-block",
-
-                      marginLeft: "5rem",
-                    }}
-                  >
-                    <button
-                      onClick={() => {
-                        handleDeleteImage();
-                      }}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        padding: "5px 15px",
-                      }}
-                    >
-                      삭제
-                    </button>
-                  </div>
                 </div>
               </div>
               <div
@@ -376,6 +392,7 @@ const MyPage = ({ setLogined }) => {
                 display: "flex",
                 justifyContent: "center",
                 marginTop: "20px",
+                gap: "20px",
               }}
             >
               <button
@@ -394,6 +411,22 @@ const MyPage = ({ setLogined }) => {
                   }}
                 >
                   적용하기
+                </span>
+              </button>
+              <button
+                onClick={() => {
+                  if (window.confirm("정말 사진을 초기화하시겠습니까?")) {
+                    handleDeleteImage();
+                  }
+                }}
+              >
+                <span
+                  style={{
+                    border: "1px #d5d5d5 solid",
+                    padding: "5px 10px",
+                  }}
+                >
+                  사진 초기화하기
                 </span>
               </button>
               <button

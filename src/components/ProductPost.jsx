@@ -14,15 +14,17 @@ import { FiHeart } from "react-icons/fi";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { FaCarrot } from "react-icons/fa";
 const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
   const { num } = useParams();
-  const [images, setImages] = useState([]);
+  const [articleWriter, setArticleWriter] = useState("");
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);
   };
 
   const [article, setArticle] = useState("");
+  const [images, setImages] = useState([]);
   const onLikes = (data) => {
     setLiked(data);
   };
@@ -59,6 +61,7 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
     },
   ]);
   const [user, setUser] = useState("");
+  const [writer, setWriter] = useState("");
   useEffect(() => {
     const onSubmit = async (num) => {
       try {
@@ -66,6 +69,8 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
           url: `http://localhost:8083/product/${num}`,
           method: "GET",
         });
+
+        setWriter(data.data.productUserid);
         onArticle(data.data);
       } catch (e) {
         console.log(e);
@@ -106,6 +111,15 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
       } catch (e) {
         console.log(e);
       }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${writer}`,
+          method: "GET",
+        });
+        setArticleWriter(data.data);
+      } catch (e) {
+        console.log(e);
+      }
     };
     onSubmit(num);
   }, []);
@@ -142,7 +156,7 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
   if (logined) {
     return (
       <div>
-        <LoginedHeader />
+        <LoginedHeader setLogined={setLogined} />
 
         <div
           style={{
@@ -234,7 +248,19 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
               }}
             >
               <div className="w-12 rounded-full">
-                <img src="https://placeimg.com/192/192/people" />
+                {articleWriter.profileImage != null ? (
+                  <img src={articleWriter.profileImage} />
+                ) : (
+                  <FaCarrot
+                    style={{
+                      color: "#fc9d39",
+                      fontSize: "3rem",
+                      transform: "translate(0%,0%)",
+                      border: "0.1px #fc9d39 solid",
+                      borderRadius: "50%",
+                    }}
+                  />
+                )}
               </div>
             </div>
             <div
@@ -244,7 +270,9 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
               }}
             >
               <div className="font-bold ">
-                {user.nickname == "닉네임 없음" ? user.username : user.nickname}
+                {articleWriter.nickname == "닉네임 없음"
+                  ? articleWriter.username
+                  : user.nickname}
               </div>
               <div className="text-sm">{user.address}</div>
             </div>
@@ -762,34 +790,80 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
           }}
         >
           <div className="mt-5 relative">
-            <button
-              className="font-bold absolute"
-              style={{
-                fontSize: "1.3rem",
-                top: "50%",
-                left: "-5%",
-              }}
-            >
-              <BsChevronLeft />
-            </button>
-            <button
-              className="font-bold absolute "
-              style={{
-                fontSize: "1.3rem",
-
-                top: "50%",
-                right: "-5%",
-              }}
-            >
-              <BsChevronRight />
-            </button>
-            <a href="#">
-              <img
-                className="rounded-lg"
-                src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/83cbd5362a585918a9b4a7354984ecbfb20208da27522d9b39579099b2cfe1f9.webp?q=95&s=1440x1440&t=inside"
-                alt=""
-              />
-            </a>
+            <div>
+              <Slider {...settings}>
+                {imgs[0] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[0]} alt="" />
+                  </div>
+                )}
+                {imgs[1] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[1]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[2] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[2]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[3] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[3]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[4] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[4]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[5] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[5]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[6] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[6]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[7] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[7]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[8] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[8]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[9] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[9]} alt="" />
+                  </div>
+                )}
+              </Slider>
+            </div>
           </div>
           <section className="mt-6 flex justify-end gap-3">
             <div
@@ -799,7 +873,19 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
               }}
             >
               <div className="w-12 rounded-full">
-                <img src="https://placeimg.com/192/192/people" />
+                {articleWriter.profileImage != null ? (
+                  <img src={articleWriter.profileImage} />
+                ) : (
+                  <FaCarrot
+                    style={{
+                      color: "#fc9d39",
+                      fontSize: "3rem",
+                      transform: "translate(0%,0%)",
+                      border: "0.1px #fc9d39 solid",
+                      borderRadius: "50%",
+                    }}
+                  />
+                )}
               </div>
             </div>
             <div
@@ -808,8 +894,8 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
                 width: "500px",
               }}
             >
-              <div className="font-bold ">nickname</div>
-              <div className="text-sm">대전광역시 서구 둔산동</div>
+              <div className="font-bold ">{articleWriter.nickname}</div>
+              <div className="text-sm">{articleWriter.address}</div>
             </div>
 
             <div
@@ -825,7 +911,7 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
                       color: "green",
                     }}
                   >
-                    38.8
+                    {articleWriter.temp}
                   </div>
                   <progress
                     className="flex progress progress-success w-32"
@@ -885,7 +971,7 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
                     color: "gray",
                   }}
                 >
-                  2일 전
+                  {article.productCreateTime}
                 </div>
               </div>
               <div

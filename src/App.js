@@ -26,6 +26,7 @@ function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
   const [jobsLiked, setJobsLiked] = useState(false);
+  const [realtyLiked, setRealtyLiked] = useState(false);
   useEffect(() => {
     if (sessionStorage.getItem("userid") == null) {
       setLogined(false);
@@ -82,6 +83,22 @@ function App() {
         },
       });
       setJobsLiked(data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onRealtyLike = async (articleid, userid) => {
+    try {
+      const data = await axios({
+        url: `http://localhost:8083/likeRealty/${articleid}`,
+        method: "GET",
+        params: {
+          realtyId: articleid,
+          userid,
+        },
+      });
+      setRealtyLiked(data.data);
     } catch (e) {
       console.log(e);
     }
@@ -170,7 +187,15 @@ function App() {
         />
         <Route
           path="/realtypost/:num"
-          element={<Realtypost logined={logined} setLogined={setLogined} />}
+          element={
+            <Realtypost
+              logined={logined}
+              setLogined={setLogined}
+              setRealtyLiked={setRealtyLiked}
+              realtyLiked={realtyLiked}
+              onRealtyLike={onRealtyLike}
+            />
+          }
         />
         <Route
           path="/realtyWrite"

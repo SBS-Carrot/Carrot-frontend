@@ -13,12 +13,11 @@ const Realty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const { Router } = useParams();
   const [Realty, setRealty] = useState([]);
-  const [address, setAddress] = useState(Realty.realtyAddress || "");
+  const [address, setAddress] = useState("");
 
   const onAddress = () => {
-    let result = Realty.realtyAddress.lastindexOf("동");
-    let a = Realty.realtyAddress.slice(0, result);
-    setAddress(a);
+    let index = address.includes("대전광역시");
+    console.log(index);
   };
 
   const moveRealty = (id) => {
@@ -39,7 +38,8 @@ const Realty = ({ logined, setLogined }) => {
           method: "GET",
         });
         onRealty(data.data);
-        console.log(data.data);
+        setAddress(data.data.realtyAddress);
+        onAddress();
       } catch (e) {
         console.log(e);
       }
@@ -122,6 +122,21 @@ const Realty = ({ logined, setLogined }) => {
                             <span>
                               {realty.realtyDeposit}만원/{realty.realtyMonthly}
                               만원 -
+                              <span
+                                style={{
+                                  border: "1px red solid",
+                                  width: "125px",
+                                  overflow: "hidden",
+                                  whiteSpace: "nowrap",
+                                  display: "inline-block",
+                                }}
+                              >
+                                {realty.realtyAddress.includes(
+                                  "대전광역시" || "대전시"
+                                )
+                                  ? realty.realtyAddress
+                                  : "대전광역시" + realty.realtyAddress}
+                              </span>
                             </span>
                             <div value={address} onChange={onAddress}></div>
                             <div

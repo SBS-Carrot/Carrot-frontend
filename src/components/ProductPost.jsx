@@ -61,21 +61,40 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
     },
   ]);
   const [user, setUser] = useState("");
-  const [writer, setWriter] = useState("");
   useEffect(() => {
     const onSubmit = async (num) => {
+      let abcd = "";
       try {
         const data = await axios({
           url: `http://localhost:8083/product/${num}`,
           method: "GET",
         });
+        abcd = data.data.productUserid;
 
-        setWriter(data.data.productUserid);
         onArticle(data.data);
       } catch (e) {
         console.log(e);
         window.alert("존재하지 않는 게시물입니다");
         moveBack();
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${abcd}`,
+          method: "GET",
+        });
+        setArticleWriter(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getProductWithImage/${num}`,
+          method: "GET",
+        });
+
+        setImgs(data.data.images);
+      } catch (e) {
+        console.log(e);
       }
       try {
         const data = await axios({
@@ -92,31 +111,12 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
       }
       try {
         const data = await axios({
-          url: `http://localhost:8083/getProductWithImage/${num}`,
-          method: "GET",
-        });
-
-        setImgs(data.data.images);
-      } catch (e) {
-        console.log(e);
-      }
-      try {
-        const data = await axios({
           url: `http://localhost:8083/getUser/${sessionStorage.getItem(
             "userid"
           )}`,
           method: "GET",
         });
         setUser(data.data);
-      } catch (e) {
-        console.log(e);
-      }
-      try {
-        const data = await axios({
-          url: `http://localhost:8083/getUser/${writer}`,
-          method: "GET",
-        });
-        setArticleWriter(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -894,7 +894,11 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
                 width: "500px",
               }}
             >
-              <div className="font-bold ">{articleWriter.nickname}</div>
+              <div className="font-bold ">
+                {articleWriter.nickname == "닉네임 없음"
+                  ? articleWriter.username
+                  : articleWriter.nickname}
+              </div>
               <div className="text-sm">{articleWriter.address}</div>
             </div>
 

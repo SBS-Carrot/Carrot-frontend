@@ -15,11 +15,26 @@ import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
 import axios from "axios";
-
-const Realtypost = ({ logined, setLogined }) => {
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { FaCarrot } from "react-icons/fa";
+const Realtypost = ({
+  logined,
+  setLogined,
+  realtyLiked,
+  setRealtyLiked,
+  onRealtyLike,
+}) => {
   const { num } = useParams();
   const [article, setArticle] = useState("");
-
+  const [userid, setUserid] = useState(sessionStorage.getItem("userid"));
+  const [user, setUser] = useState("");
+  const [articleWriter, setArticleWriter] = useState("");
+  const [images, setImages] = useState([]);
+  const onLikes = (data) => {
+    setRealtyLiked(data);
+  };
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);
@@ -28,22 +43,128 @@ const Realtypost = ({ logined, setLogined }) => {
   const onArticle = (data) => {
     setArticle((prev) => data);
   };
+  const [imgs, setImgs] = useState([
+    {
+      url: images[0],
+    },
+    {
+      url: images[1],
+    },
+    {
+      url: images[2],
+    },
+    {
+      url: images[3],
+    },
+    {
+      url: images[4],
+    },
+    {
+      url: images[5],
+    },
+    {
+      url: images[6],
+    },
+    {
+      url: images[7],
+    },
+    {
+      url: images[8],
+    },
+    {
+      url: images[9],
+    },
+  ]);
+
   useEffect(() => {
     const onSubmit = async (num) => {
+      let abcd = "";
       try {
         const data = await axios({
           url: `http://localhost:8083/realty/${num}`,
           method: "GET",
         });
+        abcd = data.data.realtyUserid;
         onArticle(data.data);
       } catch {
         console.log("에러");
         window.alert("존재하지 않는 게시글입니다.");
         moveBack();
       }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${abcd}`,
+          method: "GET",
+        });
+        setArticleWriter(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getRealtyWithImage/${num}`,
+          method: "GET",
+        });
+
+        setImgs(data.data.images);
+      } catch (e) {
+        console.log(e);
+      }
+
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/likeRealtyCheck/${num}`,
+          method: "GET",
+          params: {
+            realtyId: num,
+            userid: sessionStorage.getItem("userid"),
+          },
+        });
+        onLikes(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${userid}`,
+          method: "GET",
+        });
+        setUser(data.data);
+      } catch (e) {
+        console.log(e);
+      }
     };
     onSubmit(num);
   }, []);
+
+  useEffect(() => {
+    const onLikeRe = async (num) => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/realty/${num}`,
+          method: "GET",
+        });
+        onArticle(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    onLikeRe(num);
+  }, [realtyLiked]);
+
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "0px",
+  };
+
   if (logined) {
     return (
       <div>
@@ -55,38 +176,80 @@ const Realtypost = ({ logined, setLogined }) => {
           }}
         >
           <div className="mt-5 relative">
-            <button
-              className="font-bold absolute"
-              style={{
-                fontSize: "1.3rem",
-                top: "50%",
-                left: "-5%",
-              }}
-            >
-              <BsChevronLeft />
-            </button>
-            <button
-              className="font-bold absolute "
-              style={{
-                fontSize: "1.3rem",
-
-                top: "50%",
-                right: "-5%",
-              }}
-            >
-              <BsChevronRight />
-            </button>
-            <button href="#">
-              <img
-                className="rounded-lg "
-                style={{
-                  width: "800px",
-                  height: "500px",
-                }}
-                src="https://dnvefa72aowie.cloudfront.net/jobs/article/36458049/1649751854029/job-post-3286665810.jpeg?q=95&s=1440x1440&t=inside"
-                alt=""
-              />
-            </button>
+            <div>
+              <Slider {...settings}>
+                {imgs[0] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[0]} alt="" />
+                  </div>
+                )}
+                {imgs[1] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[1]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[2] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[2]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[3] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[3]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[4] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[4]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[5] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[5]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[6] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[6]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[7] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[7]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[8] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[8]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[9] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[9]} alt="" />
+                  </div>
+                )}
+              </Slider>
+            </div>
           </div>
           <section className="mt-6 flex justify-end gap-3">
             <div
@@ -102,7 +265,19 @@ const Realtypost = ({ logined, setLogined }) => {
                 }}
               >
                 <div className="w-12 rounded-full">
-                  <img src="https://placeimg.com/192/192/people" />
+                  {articleWriter.profileImage != null ? (
+                    <img src={articleWriter.profileImage} />
+                  ) : (
+                    <FaCarrot
+                      style={{
+                        color: "#fc9d39",
+                        fontSize: "3rem",
+                        transform: "translate(0%,0%)",
+                        border: "0.1px #fc9d39 solid",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  )}
                 </div>
               </div>
               <div
@@ -111,8 +286,12 @@ const Realtypost = ({ logined, setLogined }) => {
                   width: "500px",
                 }}
               >
-                <div className="font-bold ">nickname</div>
-                <div className="text-sm">대전광역시 서구 둔산동</div>
+                <div className="font-bold ">
+                  {articleWriter.nickname == "닉네임 없음"
+                    ? article.realtyUserid
+                    : articleWriter.nickname}
+                </div>
+                <div className="text-sm">{articleWriter.address}</div>
               </div>
             </div>
             <div
@@ -128,7 +307,7 @@ const Realtypost = ({ logined, setLogined }) => {
                       color: "green",
                     }}
                   >
-                    38.8
+                    {articleWriter.temp}
                   </div>
                   <progress
                     className="flex progress progress-success w-32"
@@ -207,14 +386,6 @@ const Realtypost = ({ logined, setLogined }) => {
               >
                 {article.createDate}
               </div>
-              {/* <div
-                className="text-sm"
-                style={{
-                  color: "gray",
-                }}
-              >
-                2일 전
-              </div> */}
             </div>
             <br />
           </section>
@@ -323,9 +494,9 @@ const Realtypost = ({ logined, setLogined }) => {
               height: "30px",
             }}
           >
-            <div>채팅 0{/* {img.imgLike} */}</div>
-            <div>관심 0{/* {img.imgLike} */}</div>
-            <div>조회수 0{/* {img.imgLike} */}</div>
+            <div>채팅 {article.realtyChatting}</div>
+            <div>관심 {article.realtyLike}</div>
+            <div>조회수 {article.realtyCheck}</div>
           </div>
 
           {/* map */}
@@ -352,19 +523,19 @@ const Realtypost = ({ logined, setLogined }) => {
                 style={{
                   fontSize: "1.5rem",
                 }}
-                // onClick={() => {
-                //   onLike(img.id, userinfo.userid, img.imgSrc);
-                // }}
+                onClick={() => {
+                  onRealtyLike(num, userid);
+                }}
               >
-                {/* {like ? (
-                  <FaHeart
+                {realtyLiked ? (
+                  <FiHeart
                     style={{
                       color: "pink",
                     }}
                   />
-                ) : ( */}
-                <FiHeart />
-                {/* )} */}
+                ) : (
+                  <FiHeart />
+                )}
               </button>
 
               <a
@@ -500,38 +671,80 @@ const Realtypost = ({ logined, setLogined }) => {
           }}
         >
           <div className="mt-5 relative">
-            <button
-              className="font-bold absolute"
-              style={{
-                fontSize: "1.3rem",
-                top: "50%",
-                left: "-5%",
-              }}
-            >
-              <BsChevronLeft />
-            </button>
-            <button
-              className="font-bold absolute "
-              style={{
-                fontSize: "1.3rem",
-
-                top: "50%",
-                right: "-5%",
-              }}
-            >
-              <BsChevronRight />
-            </button>
-            <button href="#">
-              <img
-                className="rounded-lg "
-                style={{
-                  width: "800px",
-                  height: "500px",
-                }}
-                src="https://dnvefa72aowie.cloudfront.net/jobs/article/36458049/1649751854029/job-post-3286665810.jpeg?q=95&s=1440x1440&t=inside"
-                alt=""
-              />
-            </button>
+            <div>
+              <Slider {...settings}>
+                {imgs[0] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[0]} alt="" />
+                  </div>
+                )}
+                {imgs[1] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[1]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[2] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[2]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[3] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[3]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[4] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[4]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[5] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[5]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[6] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[6]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[7] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[7]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[8] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[8]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[9] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[9]} alt="" />
+                  </div>
+                )}
+              </Slider>
+            </div>
           </div>
           <section className="mt-6 flex justify-end gap-3">
             <div
@@ -547,7 +760,19 @@ const Realtypost = ({ logined, setLogined }) => {
                 }}
               >
                 <div className="w-12 rounded-full">
-                  <img src="https://placeimg.com/192/192/people" />
+                  {articleWriter.profileImage != null ? (
+                    <img src={articleWriter.profileImage} />
+                  ) : (
+                    <FaCarrot
+                      style={{
+                        color: "#fc9d39",
+                        fontSize: "3rem",
+                        transform: "translate(0%,0%)",
+                        border: "0.1px #fc9d39 solid",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  )}
                 </div>
               </div>
               <div
@@ -556,8 +781,12 @@ const Realtypost = ({ logined, setLogined }) => {
                   width: "500px",
                 }}
               >
-                <div className="font-bold ">nickname</div>
-                <div className="text-sm">대전광역시 서구 둔산동</div>
+                <div className="font-bold ">
+                  {articleWriter.nickname == "닉네임 없음"
+                    ? article.realtyUserid
+                    : articleWriter.nickname}
+                </div>
+                <div className="text-sm">{articleWriter.address}</div>
               </div>
             </div>
             <div
@@ -573,7 +802,7 @@ const Realtypost = ({ logined, setLogined }) => {
                       color: "green",
                     }}
                   >
-                    38.8
+                    {articleWriter.temp}
                   </div>
                   <progress
                     className="flex progress progress-success w-32"
@@ -652,14 +881,6 @@ const Realtypost = ({ logined, setLogined }) => {
               >
                 {article.createDate}
               </div>
-              {/* <div
-                className="text-sm"
-                style={{
-                  color: "gray",
-                }}
-              >
-                2일 전
-              </div> */}
             </div>
             <br />
           </section>
@@ -774,9 +995,9 @@ const Realtypost = ({ logined, setLogined }) => {
               height: "30px",
             }}
           >
-            <div>채팅 0{/* {img.imgLike} */}</div>
-            <div>관심 0{/* {img.imgLike} */}</div>
-            <div>조회수 0{/* {img.imgLike} */}</div>
+            <div>채팅 {article.realtyChatting}</div>
+            <div>관심 {article.realtyLike}</div>
+            <div>조회수 {article.realtyCheck}</div>
           </div>
 
           {/* map */}
@@ -803,23 +1024,17 @@ const Realtypost = ({ logined, setLogined }) => {
                 style={{
                   fontSize: "1.5rem",
                 }}
-                // onClick={() => {
-                //   onLike(img.id, userinfo.userid, img.imgSrc);
-                // }}
+                onClick={() => {
+                  window.alert("로그인 후 사용할 수 있는 기능입니다.");
+                }}
               >
-                {/* {like ? (
-                  <FaHeart
-                    style={{
-                      color: "pink",
-                    }}
-                  />
-                ) : ( */}
                 <FiHeart />
-                {/* )} */}
               </button>
 
-              <a
-                href="#"
+              <button
+                onClick={() => {
+                  window.alert("로그인 후 사용할 수 있는 기능입니다.");
+                }}
                 className="rounded p-2 font-bold flex justify-center"
                 style={{
                   width: "300px",
@@ -828,7 +1043,7 @@ const Realtypost = ({ logined, setLogined }) => {
                 }}
               >
                 채팅하기{" "}
-              </a>
+              </button>
             </div>
           </section>
 

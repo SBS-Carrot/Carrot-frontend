@@ -17,6 +17,7 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { FaCarrot } from "react-icons/fa";
 const Jobspost = ({
   logined,
   setLogined,
@@ -29,10 +30,9 @@ const Jobspost = ({
   const moveBack = () => {
     navigate(-1);
   };
-  const [userid, setUserid] = useState(sessionStorage.getItem("userid") || "");
+  const [userid, setUserid] = useState(sessionStorage.getItem("userid"));
   const [jobArticle, setJobArticle] = useState("");
   const [user, setUser] = useState("");
-  const [writer, setWriter] = useState("");
   const [articleWriter, setArticleWriter] = useState("");
   const [images, setImages] = useState([]);
   const onLikes = (data) => {
@@ -77,28 +77,26 @@ const Jobspost = ({
 
   useEffect(() => {
     const onSubmit = async (num) => {
+      let abcd = "";
       try {
         const data = await axios({
           url: `http://localhost:8083/Jobs/${num}`,
           method: "GET",
         });
-        setWriter(data.data.productUserid);
+
+        abcd = data.data.jobUserid;
         onArticle(data.data);
       } catch (e) {
         console.log(e);
-        // window.alert("존재하지 않는 게시물입니다");
-        // moveBack();
+        window.alert("존재하지 않는 게시물입니다");
+        moveBack();
       }
       try {
         const data = await axios({
-          url: `http://localhost:8083/likeJobsCheck/${num}`,
+          url: `http://localhost:8083/getUser/${abcd}`,
           method: "GET",
-          params: {
-            jobsId: num,
-            userid: sessionStorage.getItem("userid"),
-          },
         });
-        onLikes(data.data);
+        setArticleWriter(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -115,20 +113,24 @@ const Jobspost = ({
 
       try {
         const data = await axios({
+          url: `http://localhost:8083/likeJobsCheck/${num}`,
+          method: "GET",
+          params: {
+            jobsId: num,
+            userid: sessionStorage.getItem("userid"),
+          },
+        });
+        onLikes(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+
+      try {
+        const data = await axios({
           url: `http://localhost:8083/getUser/${userid}`,
           method: "GET",
         });
         setUser(data.data);
-      } catch (e) {
-        console.log(e);
-        console.log("error");
-      }
-      try {
-        const data = await axios({
-          url: `http://localhost:8083/getUser/${writer}`,
-          method: "GET",
-        });
-        setArticleWriter(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -162,6 +164,7 @@ const Jobspost = ({
     centerMode: true,
     centerPadding: "0px",
   };
+
   if (logined) {
     return (
       <div>
@@ -262,7 +265,19 @@ const Jobspost = ({
                 }}
               >
                 <div className="w-12 rounded-full">
-                  <img src="https://placeimg.com/192/192/people" />
+                  {articleWriter.profileImage != null ? (
+                    <img src={articleWriter.profileImage} />
+                  ) : (
+                    <FaCarrot
+                      style={{
+                        color: "#fc9d39",
+                        fontSize: "3rem",
+                        transform: "translate(0%,0%)",
+                        border: "0.1px #fc9d39 solid",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  )}
                 </div>
               </div>
               <div
@@ -272,7 +287,7 @@ const Jobspost = ({
                 }}
               >
                 <div className="font-bold ">{jobArticle.jobUserid}</div>
-                <div className="text-sm">대전광역시 서구 둔산동</div>
+                <div className="text-sm">{articleWriter.address}</div>
               </div>
             </div>
             <div
@@ -288,7 +303,7 @@ const Jobspost = ({
                       color: "green",
                     }}
                   >
-                    38.8
+                    {articleWriter.temp}
                   </div>
                   <progress
                     className="flex progress progress-success w-32"
@@ -391,7 +406,9 @@ const Jobspost = ({
               </li>
               <li className="flex gap-4">
                 <AiOutlineClockCircle className="mt-2" />
-                <span>10:00~16:00</span>
+                <span>
+                  {jobArticle.jobStartTime}~{jobArticle.jobEndTime}
+                </span>
               </li>
             </ul>
           </section>
@@ -425,7 +442,6 @@ const Jobspost = ({
             <div>조회수 {jobArticle.jobCheck}</div>
           </div>
 
-          {/* map */}
           <div>
             <div
               className="font-bold pt-2"
@@ -597,38 +613,78 @@ const Jobspost = ({
           }}
         >
           <div className="mt-5 relative">
-            <button
-              className="font-bold absolute"
-              style={{
-                fontSize: "1.3rem",
-                top: "50%",
-                left: "-5%",
-              }}
-            >
-              <BsChevronLeft />
-            </button>
-            <button
-              className="font-bold absolute "
-              style={{
-                fontSize: "1.3rem",
-
-                top: "50%",
-                right: "-5%",
-              }}
-            >
-              <BsChevronRight />
-            </button>
-            <button href="#">
-              <img
-                className="rounded-lg "
-                style={{
-                  width: "800px",
-                  height: "500px",
-                }}
-                src="https://dnvefa72aowie.cloudfront.net/jobs/article/36458049/1649751854029/job-post-3286665810.jpeg?q=95&s=1440x1440&t=inside"
-                alt=""
-              />
-            </button>
+            <Slider {...settings}>
+              {imgs[0] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[0]} alt="" />
+                </div>
+              )}
+              {imgs[1] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[1]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[2] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[2]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[3] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[3]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[4] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[4]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[5] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[5]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[6] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[6]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[7] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[7]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[8] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[8]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[9] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[9]} alt="" />
+                </div>
+              )}
+            </Slider>
           </div>
           <section className="mt-6 flex justify-end gap-3">
             <div
@@ -644,7 +700,19 @@ const Jobspost = ({
                 }}
               >
                 <div className="w-12 rounded-full">
-                  <img src="https://placeimg.com/192/192/people" />
+                  {articleWriter.profileImage != null ? (
+                    <img src={articleWriter.profileImage} />
+                  ) : (
+                    <FaCarrot
+                      style={{
+                        color: "#fc9d39",
+                        fontSize: "3rem",
+                        transform: "translate(0%,0%)",
+                        border: "0.1px #fc9d39 solid",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  )}
                 </div>
               </div>
               <div
@@ -653,8 +721,12 @@ const Jobspost = ({
                   width: "500px",
                 }}
               >
-                <div className="font-bold ">{jobArticle.jobUserid}</div>
-                <div className="text-sm">대전광역시 서구 둔산동</div>
+                <div className="font-bold ">
+                  {articleWriter.nickname == "닉네임 없음"
+                    ? articleWriter.username
+                    : articleWriter.nickname}
+                </div>
+                <div className="text-sm">{articleWriter.address}</div>
               </div>
             </div>
             <div
@@ -670,7 +742,7 @@ const Jobspost = ({
                       color: "green",
                     }}
                   >
-                    38.8
+                    {articleWriter.temp}
                   </div>
                   <progress
                     className="flex progress progress-success w-32"
@@ -773,7 +845,10 @@ const Jobspost = ({
               </li>
               <li className="flex gap-4">
                 <AiOutlineClockCircle className="mt-2" />
-                <span>10:00~16:00</span>
+                <span>
+                  {" "}
+                  {jobArticle.jobStartTime}~{jobArticle.jobEndTime}
+                </span>
               </li>
             </ul>
           </section>
@@ -830,23 +905,17 @@ const Jobspost = ({
                 style={{
                   fontSize: "1.5rem",
                 }}
-                // onClick={() => {
-                //   onLike(img.id, userinfo.userid, img.imgSrc);
-                // }}
+                onClick={() => {
+                  alert("로그인 후 사용할 수 있는 기능입니다.");
+                }}
               >
-                {/* {like ? (
-                <FaHeart
-                  style={{
-                    color: "pink",
-                  }}
-                />
-              ) : ( */}
                 <FiHeart />
-                {/* )} */}
               </button>
 
-              <a
-                href="#"
+              <button
+                onClick={() => {
+                  alert("로그인 후 사용할 수 있는 기능입니다.");
+                }}
                 className="rounded p-2 font-bold flex justify-center"
                 style={{
                   width: "300px",
@@ -855,7 +924,7 @@ const Jobspost = ({
                 }}
               >
                 지원하기
-              </a>
+              </button>
             </div>
           </section>
 

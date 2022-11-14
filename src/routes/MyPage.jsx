@@ -5,9 +5,10 @@ import { FaCarrot } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const MyPage = ({ setLogined }) => {
-  const [uploadedImg, setUploadedImg] = useState("");
+  const [user, setUser] = useState("");
+  const [uploadedImg, setUploadedImg] = useState([]);
   const [imageSrc, setImageSrc] = useState("");
-  const [nickname, setNickname] = useState("");
+  const [nickname, setNickname] = useState(user.nickname || "");
   const navigate = useNavigate();
   const onChangeComplete = () => {
     navigate("/mypage");
@@ -15,6 +16,7 @@ const MyPage = ({ setLogined }) => {
   const handleAddImages = (event) => {
     setUploadedImg(event.target.files[0]);
   };
+
   const encodeFileToBase64 = (fileBlob) => {
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
@@ -25,8 +27,9 @@ const MyPage = ({ setLogined }) => {
       };
     });
   };
+
   const handleDeleteImage = () => {
-    setUploadedImg("");
+    setUploadedImg([]);
     setImageSrc("");
   };
   const onNicknameChange = (e) => {
@@ -35,7 +38,6 @@ const MyPage = ({ setLogined }) => {
     }
     setNickname(e.target.value);
   };
-  const [user, setUser] = useState("");
   useEffect(() => {
     const onSubmit = async () => {
       try {
@@ -60,6 +62,9 @@ const MyPage = ({ setLogined }) => {
     try {
       const formData = new FormData();
       const user1 = sessionStorage.getItem("userid");
+      if (nickname == "") {
+        nickname = user.nickname;
+      }
       const json = { nickname: nickname, userid: user1 };
       const _json = JSON.stringify(json);
       const blob = new Blob([_json], { type: "application/json" });
@@ -74,10 +79,63 @@ const MyPage = ({ setLogined }) => {
         method: "POST",
         data: formData,
       });
-      if (data.data) {
-        window.alert("변경에 성공하였습니다.");
-        onChangeComplete();
+
+      window.alert("변경에 성공하였습니다.");
+      onChangeComplete();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onSubmit2 = async (nickname) => {
+    try {
+      const formData = new FormData();
+      if (nickname == "") {
+        nickname = user.nickname;
       }
+      const user1 = sessionStorage.getItem("userid");
+      const json = { nickname: nickname, userid: user1 };
+      const _json = JSON.stringify(json);
+      const blob = new Blob([_json], { type: "application/json" });
+
+      formData.append("userdto", blob);
+      const data = await axios({
+        headers: {
+          "Content-Type": `application/json`,
+        },
+        url: `http://localhost:8083/userProfileChange`,
+        method: "POST",
+        data: formData,
+      });
+
+      window.alert("변경에 성공하였습니다.");
+      onChangeComplete();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onReset = async () => {
+    try {
+      const formData = new FormData();
+      const user1 = sessionStorage.getItem("userid");
+      const json = { userid: user1 };
+      const _json = JSON.stringify(json);
+      const blob = new Blob([_json], { type: "application/json" });
+
+      formData.append("userdto", blob);
+
+      const data = await axios({
+        headers: {
+          "Content-Type": `application/json`,
+        },
+        url: `http://localhost:8083/userProfileImageReset`,
+        method: "POST",
+        data: formData,
+      });
+
+      window.alert("초기화에 성공하였습니다.");
+      onChangeComplete();
     } catch (e) {
       console.log(e);
     }
@@ -164,7 +222,7 @@ const MyPage = ({ setLogined }) => {
                     width: "100%",
                   }}
                 >
-                  <ul className="grid grid-cols-5 gap-4 pl-4">
+                  <ul className="gap-4 pl-4 mt-4">
                     {imageSrc != "" ? (
                       <div
                         className="preview"
@@ -322,7 +380,11 @@ const MyPage = ({ setLogined }) => {
             >
               <button
                 onClick={() => {
-                  onSubmit1(uploadedImg, nickname);
+                  if (uploadedImg == "") {
+                    onSubmit2(nickname);
+                  } else {
+                    onSubmit1(uploadedImg, nickname);
+                  }
                 }}
               >
                 <span
@@ -332,6 +394,24 @@ const MyPage = ({ setLogined }) => {
                   }}
                 >
                   적용하기
+                </span>
+              </button>
+              <button
+                onClick={() => {
+                  if (
+                    window.confirm("정말 사진과 닉네임을 초기화하시겠습니까?")
+                  ) {
+                    onReset();
+                  }
+                }}
+              >
+                <span
+                  style={{
+                    border: "1px #d5d5d5 solid",
+                    padding: "5px 10px",
+                  }}
+                >
+                  초기화
                 </span>
               </button>
             </div>

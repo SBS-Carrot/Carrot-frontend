@@ -5,8 +5,8 @@ import "../styles/Jobs.css";
 import Footer from "../layouts/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { BsDot } from "react-icons/bs";
 
 const Jobs = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -38,6 +38,7 @@ const Jobs = ({ logined, setLogined }) => {
           method: "GET",
         });
         onJobs(data.data);
+        console.log(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -167,6 +168,7 @@ const Jobs = ({ logined, setLogined }) => {
                       }}
                     >
                       <span
+                        className="flex"
                         style={{
                           width: "300px",
                           height: "150px",
@@ -176,14 +178,18 @@ const Jobs = ({ logined, setLogined }) => {
                         {job.jobSubject}
                       </span>
                       <span
+                        className="flex items-center"
                         style={{
-                          width: "250px",
+                          width: "300px",
                           height: "150px",
                         }}
                       >
-                        <span>{job.jobPlace}</span>
+                        <span className="flex">
+                          {job.jobName} {job.jobPlace}
+                        </span>
                       </span>
                       <span
+                        className="flex justify-start"
                         style={{
                           width: "300px",
                           height: "150px",

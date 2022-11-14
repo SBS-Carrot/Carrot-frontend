@@ -474,7 +474,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
             >
               <option value="매물종류 선택">매물종류선택</option>
               <option value="원룸">원룸</option>
-              <option value="빌라(투룸 이상)">빌라(투룸 이상)</option>
+              <option value="투룸 이상">투룸 이상</option>
               <option value="아파트">아파트</option>
               <option value="상가">상가</option>
               <option value="기타(사무실, 주택, 토지 등)">

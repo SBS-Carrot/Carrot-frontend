@@ -9,14 +9,15 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import { FaCarrot } from "react-icons/fa";
+import "../styles/Jobs.css";
 const Realty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const [Realty, setRealty] = useState([]);
   const [address, setAddress] = useState("");
 
   const onAddress = () => {
-    let index = address.includes("대전광역시");
-    console.log(index);
+    // let index = address.includes("대전광역시");
+    // console.log(index);
   };
 
   const moveRealty = async (id) => {
@@ -43,6 +44,7 @@ const Realty = ({ logined, setLogined }) => {
           method: "GET",
         });
         onRealty(data.data);
+        console.log(data.data);
         setAddress(data.data.realtyAddress);
         onAddress();
       } catch (e) {
@@ -95,7 +97,7 @@ const Realty = ({ logined, setLogined }) => {
             </div>
             <div>
               <div className="mt-5">
-                <ul className="grid grid-cols-2">
+                <ul className="grid grid-cols-2 gap-5">
                   {Realty.map((realty, index) => (
                     <li key={index}>
                       <button
@@ -109,7 +111,14 @@ const Realty = ({ logined, setLogined }) => {
                             height: "120px",
                           }}
                         >
-                          <div className="flex-col flex justify-center">
+                          <div
+                            style={{
+                              width: "120px",
+                              height: "120px",
+
+                              borderRadius: "10px",
+                            }}
+                          >
                             {realty.profileImage != null ? (
                               <img
                                 src={realty.profileImage}
@@ -126,8 +135,8 @@ const Realty = ({ logined, setLogined }) => {
                               <FaCarrot
                                 style={{
                                   color: "#fc9d39",
-                                  fontSize: "10rem",
-                                  transform: "translate(12.5%,12.5%)",
+                                  fontSize: "7rem",
+                                  transform: "translate(1.5%,1.5%)",
                                   border: "0.1px #fc9d39 solid",
                                   borderRadius: "50%",
                                 }}
@@ -137,41 +146,95 @@ const Realty = ({ logined, setLogined }) => {
                           <div
                             className=""
                             style={{
-                              height: "120px",
+                              textAlign: "left",
+                              marginLeft: "10px",
                             }}
                           >
-                            <span>{realty.realtyCategory} </span>
+                            <span
+                              style={{
+                                textAlign: "left",
+                              }}
+                            >
+                              {realty.realtyCategory}{" "}
+                            </span>
                             <span>
                               {realty.realtyDeposit}만원/{realty.realtyMonthly}
                               만원 -
                               <span
                                 style={{
-                                  border: "1px red solid",
-                                  width: "125px",
-                                  overflow: "hidden",
-                                  whiteSpace: "nowrap",
-                                  display: "inline-block",
+                                  width: "240px",
+                                  height: "50px",
+                                  textAlign: "left",
                                 }}
+                                className="ellipsis_2"
                               >
-                                {realty.realtyAddress.includes(
-                                  "대전광역시" || "대전시"
-                                )
-                                  ? realty.realtyAddress
-                                  : "대전광역시" + realty.realtyAddress}
+                                {realty.realtyAddress}
                               </span>
                             </span>
-                            <div value={address} onChange={onAddress}></div>
                             <div
                               className="text-sm"
                               style={{
                                 color: "#73777B",
-                                paddingTop: "5px",
+                                textAlign: "left",
                               }}
                             >
-                              <span>밥을짓는홍여사 . 부평동</span>
+                              <div>OO동</div>
                             </div>
-                            <div className="font-bold pt-1">
-                              <span>시급 10,100</span>
+
+                            <div
+                              className="font-bold pt-1"
+                              style={{
+                                textAlign: "left",
+                              }}
+                            >
+                              {realty.realtyDealing === "전세" ? (
+                                <div>
+                                  {realty.realtyDealing} &nbsp;
+                                  {realty.realtySalePrice.length >= 5 ? (
+                                    <span
+                                      style={{
+                                        border: "1px red solid",
+                                        width: "10px",
+                                        whiteSpace: "nowrap",
+                                        display: "inline-flex",
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      {realty.realtySalePrice}
+                                    </span>
+                                  ) : (
+                                    realty.realtySalePrice + "만원"
+                                  )}
+                                </div>
+                              ) : (
+                                ""
+                              )}{" "}
+                              {realty.realtyDealing === "매매" ? (
+                                <div>
+                                  {realty.realtyDealing} &nbsp;
+                                  {realty.realtySalePrice}
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {realty.realtyDealing === "월세" ? (
+                                <div>
+                                  {realty.realtyDealing} {realty.realtyDeposit}/
+                                  {realty.realtyMonthly}
+                                </div>
+                              ) : (
+                                ""
+                              )}{" "}
+                              {realty.realtyDealing === "단기" ? (
+                                <div>
+                                  {realty.realtyDealing} {realty.realtyDeposit}/
+                                  {realty.realtyMonthly}
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              <div></div>
+                              <div></div>
                             </div>
                           </div>
                         </div>

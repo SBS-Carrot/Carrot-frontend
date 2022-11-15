@@ -8,10 +8,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import { FaCarrot } from "react-icons/fa";
 const Realty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
-  const { Router } = useParams();
   const [Realty, setRealty] = useState([]);
   const [address, setAddress] = useState("");
 
@@ -20,9 +19,15 @@ const Realty = ({ logined, setLogined }) => {
     console.log(index);
   };
 
-  const moveRealty = (id) => {
-    // axios.get(http:~~~/id)
-
+  const moveRealty = async (id) => {
+    try {
+      await axios({
+        url: `http://localhost:8083/realtyCheck/${id}`,
+        method: "POST",
+      });
+    } catch (e) {
+      console.log(e);
+    }
     navigate(`/realtypost/${id}`);
   };
 
@@ -105,12 +110,29 @@ const Realty = ({ logined, setLogined }) => {
                           }}
                         >
                           <div className="flex-col flex justify-center">
-                            <div className="img1">
+                            {realty.profileImage != null ? (
                               <img
-                                src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
+                                src={realty.profileImage}
                                 alt=""
+                                style={{
+                                  borderRadius: "15px",
+                                  width: "100%",
+                                  height: "100%",
+                                  objectFit: "fill",
+                                  display: "block",
+                                }}
                               />
-                            </div>
+                            ) : (
+                              <FaCarrot
+                                style={{
+                                  color: "#fc9d39",
+                                  fontSize: "10rem",
+                                  transform: "translate(12.5%,12.5%)",
+                                  border: "0.1px #fc9d39 solid",
+                                  borderRadius: "50%",
+                                }}
+                              />
+                            )}
                           </div>
                           <div
                             className=""

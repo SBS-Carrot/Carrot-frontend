@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaCarrot } from "react-icons/fa";
 const HotArticles = ({ logined, setLogined }) => {
   const [Product, setProduct] = useState([]);
   const navigate = useNavigate();
@@ -158,17 +159,33 @@ const HotArticles = ({ logined, setLogined }) => {
                         width: "200px",
                         height: "200px",
                         borderRadius: "15px",
-                        outline: "gray 1px solid",
+
                         marginBottom: "10px",
                       }}
                     >
-                      <img
-                        src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-                        alt=""
-                        style={{
-                          borderRadius: "15px",
-                        }}
-                      />
+                      {product.profileImage != null ? (
+                        <img
+                          src={product.profileImage}
+                          alt=""
+                          style={{
+                            borderRadius: "15px",
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "fill",
+                            display: "block",
+                          }}
+                        />
+                      ) : (
+                        <FaCarrot
+                          style={{
+                            color: "#fc9d39",
+                            fontSize: "10rem",
+                            transform: "translate(12.5%,12.5%)",
+                            border: "0.1px #fc9d39 solid",
+                            borderRadius: "50%",
+                          }}
+                        />
+                      )}
                     </div>
                     <div
                       className="flex"

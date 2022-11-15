@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { BsDot } from "react-icons/bs";
-
+import { FaCarrot } from "react-icons/fa";
 const Jobs = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const { num } = useParams();
@@ -145,21 +145,35 @@ const Jobs = ({ logined, setLogined }) => {
                   <div
                     style={{
                       width: "140px",
+                      height: "140px",
                       display: "flex",
                       borderRadius: "10px",
                     }}
                     className="gap-3"
                   >
-                    <img
-                      src="https://dnvefa72aowie.cloudfront.net/jobs/article/430198/1646300764992/job-post-2947125003.jpeg?q=95&s=1440x1440&t=inside"
-                      alt=""
-                      style={{
-                        objectFit: "auto",
-                        width: "100%",
-                        display: "block",
-                        borderRadius: "10px",
-                      }}
-                    />
+                    {job.profileImage != null ? (
+                      <img
+                        src={job.profileImage}
+                        alt=""
+                        style={{
+                          borderRadius: "15px",
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "fill",
+                          display: "block",
+                        }}
+                      />
+                    ) : (
+                      <FaCarrot
+                        style={{
+                          color: "#fc9d39",
+                          fontSize: "10rem",
+                          transform: "translate(12.5%,12.5%)",
+                          border: "0.1px #fc9d39 solid",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    )}
                     <div
                       className="flex flex-col"
                       style={{

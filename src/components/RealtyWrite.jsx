@@ -5,6 +5,9 @@ import { useState } from "react";
 import axios from "axios";
 import { getValue } from "@testing-library/user-event/dist/utils";
 import { useNavigate } from "react-router-dom";
+// import PopupDom from "./PopupDom";
+// import PopupPostCode from "./PopupPostCode";
+import DaumPostcode from "react-daum-postcode";
 
 const RealtyWrite = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -67,6 +70,8 @@ const RealtyWrite = ({ logined, setLogined }) => {
   const [salePrice, setSalePrice] = useState("");
   //카테고리 단기, 월세, 전세, 매매
   const [deal, setDeal] = useState("");
+  //한줄소개
+  const [introduce, setIntroduce] = useState("");
 
   const Inside_List = [
     { id: 0, data: "복층" },
@@ -168,7 +173,12 @@ const RealtyWrite = ({ logined, setLogined }) => {
   const elevatorRadioButton = (e) => {
     setElevator(e.target.value);
   };
-
+  const onIntroduce = (e) => {
+    if (e.target.value.length > 20) {
+      return;
+    }
+    setIntroduce(e.target.value);
+  };
   const onCompleteChange = () => {
     setCompleteToggle(!completeToggle);
   };
@@ -204,6 +214,53 @@ const RealtyWrite = ({ logined, setLogined }) => {
     setDealingToggle(true);
     setDeal("매매");
   };
+
+  const [address, setAddress] = useState(""); // 주소
+  const [addressDetail, setAddressDetail] = useState(""); // 상세주소
+
+  const [isOpenPost, setIsOpenPost] = useState(false);
+
+  const onChangeOpenPost = () => {
+    setIsOpenPost(!isOpenPost);
+  };
+
+  const onCompletePost = (data) => {
+    let fullAddr = data.address;
+    let extraAddr = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddr += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddr +=
+          extraAddr !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddr += extraAddr !== "" ? ` (${extraAddr})` : "";
+    }
+
+    setAddress(data.zonecode);
+    setAddressDetail(fullAddr);
+    setIsOpenPost(false);
+  };
+
+  const postCodeStyle = {
+    display: "block",
+    position: "relative",
+    top: "0%",
+    width: "400px",
+    height: "400px",
+    padding: "7px",
+  };
+
+  // const [isPopupOpen, setIsPopupOpen] = useState(false);
+  // const openPostCode = () => {
+  //   setIsPopupOpen(true);
+  // };
+
+  // const closePostCode = () => {
+  //   setIsPopupOpen(false);
+  // };
 
   // 이미지 상대경로 저장
   const handleAddImages = (event) => {
@@ -592,7 +649,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
             </div>
           </div>
           <div className="font-bold">주소</div>
-          <div className="mb-4 flex gap-2">
+          <div className="mb-4 gap-2">
             <input
               type="text"
               placeholder="주소 입력"
@@ -600,10 +657,50 @@ const RealtyWrite = ({ logined, setLogined }) => {
               onChange={onAddressChange}
               style={{
                 border: "1px #d5d5d5 solid",
-                width: "400px",
+                width: "300px",
                 height: "30px",
               }}
             />
+            <span>
+              <button
+                type="button"
+                onClick={onChangeOpenPost}
+                style={{
+                  border: "1px #d5d5d5 solid",
+
+                  height: "30px",
+                }}
+              >
+                우편번호 검색
+              </button>
+              {isOpenPost ? (
+                <DaumPostcode
+                  style={postCodeStyle}
+                  autoClose
+                  onComplete={onCompletePost}
+                />
+              ) : null}
+              {/* <div id="popupDom">
+                {isPopupOpen && (
+                  <PopupDom>
+                    <PopupPostCode onClose={closePostCode} />
+                  </PopupDom>
+                )}
+              </div> */}
+            </span>
+            <div>
+              <input
+                type="text"
+                placeholder="한줄 소개 해주세요."
+                value={introduce}
+                onChange={onIntroduce}
+                style={{
+                  border: "1px #d5d5d5 solid",
+                  width: "400px",
+                  height: "30px",
+                }}
+              />
+            </div>
           </div>
           <div className="font-bold">층</div>
           <div className="mb-4 flex gap-2">

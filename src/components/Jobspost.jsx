@@ -423,8 +423,8 @@ const Jobspost = ({
             </div>
             <div
               style={{
-                height: "350px",
-                border: "1px gray solid",
+                height: "200px",
+                // border: "1px gray solid",
               }}
             >
               {jobArticle.jobContent}
@@ -453,7 +453,7 @@ const Jobspost = ({
             </div>
             <div
               style={{
-                height: "200px",
+                height: "50px",
                 border: "1px gray solid",
               }}
             ></div>

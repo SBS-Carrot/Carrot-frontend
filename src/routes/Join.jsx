@@ -75,7 +75,6 @@ const Join = () => {
   };
   const passwordReg =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/g;
-
   const onPasswordChange = (e) => {
     let value = e.target.value;
     if (value.length >= 20) {
@@ -104,6 +103,7 @@ const Join = () => {
       setPwCheck((prev) => false);
     }
   };
+
   const onPassword1Change = (e) => {
     let value = e.target.value;
     if (e.target.value.length >= 20) {
@@ -121,7 +121,6 @@ const Join = () => {
       return;
     }
     setPassword1Value(value);
-
     if (length >= 8) {
       setPw2Check(true);
       if (value === passwordValue) {
@@ -258,7 +257,7 @@ const Join = () => {
                     zIndex: "9999",
                   }}
                 >
-                  <div style={{}}>
+                  <div>
                     <div>
                       <span>
                         "{idValue}"은(는)

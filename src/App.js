@@ -20,9 +20,13 @@ import { useRecoilState } from "recoil";
 import { authenticatedState } from "./recoil/auth";
 import MyPage from "./routes/MyPage";
 import axios from "axios";
+import Security from "./routes/Security";
+import ArticleControl from "./routes/ArticleControl";
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
+  const [jobsLiked, setJobsLiked] = useState(false);
+  const [realtyLiked, setRealtyLiked] = useState(false);
   useEffect(() => {
     if (sessionStorage.getItem("userid") == null) {
       setLogined(false);
@@ -68,6 +72,38 @@ function App() {
     }
   };
 
+  const onJobsLike = async (articleid, userid) => {
+    try {
+      const data = await axios({
+        url: `http://localhost:8083/likeJob/${articleid}`,
+        method: "GET",
+        params: {
+          jobId: articleid,
+          userid,
+        },
+      });
+      setJobsLiked(data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onRealtyLike = async (articleid, userid) => {
+    try {
+      const data = await axios({
+        url: `http://localhost:8083/likeRealty/${articleid}`,
+        method: "GET",
+        params: {
+          realtyId: articleid,
+          userid,
+        },
+      });
+      setRealtyLiked(data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Router>
       <Routes>
@@ -105,7 +141,18 @@ function App() {
           path="/login"
           element={<Login onLogin={onLogin} logined={logined} />}
         />
-        <Route path="/mypage" element={<MyPage setLogined={setLogined} />} />
+        <Route
+          path="/mypage"
+          element={<MyPage logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/security"
+          element={<Security logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/articleControl"
+          element={<ArticleControl logined={logined} setLogined={setLogined} />}
+        />
         <Route
           path="/productPost/:num"
           element={
@@ -124,7 +171,15 @@ function App() {
         />
         <Route
           path="/jobspost/:num"
-          element={<Jobspost logined={logined} setLogined={setLogined} />}
+          element={
+            <Jobspost
+              logined={logined}
+              setLogined={setLogined}
+              onJobsLike={onJobsLike}
+              jobsLiked={jobsLiked}
+              setJobsLiked={setJobsLiked}
+            />
+          }
         />
         <Route
           path="/jobsWrite"
@@ -132,7 +187,15 @@ function App() {
         />
         <Route
           path="/realtypost/:num"
-          element={<Realtypost logined={logined} setLogined={setLogined} />}
+          element={
+            <Realtypost
+              logined={logined}
+              setLogined={setLogined}
+              setRealtyLiked={setRealtyLiked}
+              realtyLiked={realtyLiked}
+              onRealtyLike={onRealtyLike}
+            />
+          }
         />
         <Route
           path="/realtyWrite"

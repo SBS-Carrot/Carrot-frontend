@@ -166,6 +166,7 @@ const JobsWrite = ({ logined, setLogined }) => {
     contentValue
   ) => {
     try {
+      const userid = sessionStorage.getItem("userid");
       const data = await axios({
         url: `http://localhost:8083/createJobs`,
         method: "POST",
@@ -179,6 +180,7 @@ const JobsWrite = ({ logined, setLogined }) => {
           jobName: name,
           jobPlace: placeValue,
           jobContent: contentValue,
+          jobUserid: userid,
         },
       });
       onCompleteChange();
@@ -201,6 +203,7 @@ const JobsWrite = ({ logined, setLogined }) => {
     uploadedImg
   ) => {
     try {
+      const userid = sessionStorage.getItem("userid");
       const formData = new FormData();
       const jobDto = {
         jobSubject: subjectValue,
@@ -212,11 +215,13 @@ const JobsWrite = ({ logined, setLogined }) => {
         jobName: name,
         jobPlace: placeValue,
         jobContent: contentValue,
+        jobUserid: userid,
       };
       // https://velog.io/@hhhminme/Axios%EC%97%90%EC%84%9C-Post-%EC%8B%9C-Contenttypeapplicationoctet-streamnotsupported-%ED%95%B8%EB%93%A4%EB%A7%81415-%EC%97%90%EB%9F%AC
       const json = JSON.stringify(jobDto);
       const blob = new Blob([json], { type: "application/json" });
       formData.append("jobDto", blob);
+      uploadedImg.reverse();
       for (let i = 0; i < uploadedImg.length; i++) {
         formData.append("file", uploadedImg[i]);
       }
@@ -228,6 +233,7 @@ const JobsWrite = ({ logined, setLogined }) => {
         method: "POST",
         data: formData,
       });
+
       setId(data2.data.jobid);
       onCompleteChange();
     } catch (e) {

@@ -14,34 +14,161 @@ import { FaHeart } from "react-icons/fa";
 import { BiMap } from "react-icons/bi";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-const Jobspost = ({ logined }) => {
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { FaCarrot } from "react-icons/fa";
+const Jobspost = ({
+  logined,
+  setLogined,
+  onJobsLike,
+  jobsLiked,
+  setJobsLiked,
+}) => {
   const { num } = useParams();
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);
   };
+  const [userid, setUserid] = useState(sessionStorage.getItem("userid"));
   const [jobArticle, setJobArticle] = useState("");
+  const [user, setUser] = useState("");
+  const [articleWriter, setArticleWriter] = useState("");
+  const [images, setImages] = useState([]);
+  const onLikes = (data) => {
+    setJobsLiked(data);
+  };
+
+  const onArticle = (data) => {
+    setJobArticle((prev) => data);
+  };
+  const [imgs, setImgs] = useState([
+    {
+      url: images[0],
+    },
+    {
+      url: images[1],
+    },
+    {
+      url: images[2],
+    },
+    {
+      url: images[3],
+    },
+    {
+      url: images[4],
+    },
+    {
+      url: images[5],
+    },
+    {
+      url: images[6],
+    },
+    {
+      url: images[7],
+    },
+    {
+      url: images[8],
+    },
+    {
+      url: images[9],
+    },
+  ]);
 
   useEffect(() => {
     const onSubmit = async (num) => {
+      let abcd = "";
       try {
         const data = await axios({
           url: `http://localhost:8083/Jobs/${num}`,
           method: "GET",
         });
-        setJobArticle(data.data);
+
+        abcd = data.data.jobUserid;
+        onArticle(data.data);
       } catch (e) {
         console.log(e);
         window.alert("존재하지 않는 게시물입니다");
         moveBack();
       }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${abcd}`,
+          method: "GET",
+        });
+        setArticleWriter(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getJobsWithImage/${num}`,
+          method: "GET",
+        });
+
+        setImgs(data.data.images);
+      } catch (e) {
+        console.log(e);
+      }
+
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/likeJobsCheck/${num}`,
+          method: "GET",
+          params: {
+            jobsId: num,
+            userid: sessionStorage.getItem("userid"),
+          },
+        });
+        onLikes(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${userid}`,
+          method: "GET",
+        });
+        setUser(data.data);
+      } catch (e) {
+        console.log(e);
+      }
     };
     onSubmit(num);
   }, []);
+
+  useEffect(() => {
+    const onLikeRe = async (num) => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/Jobs/${num}`,
+          method: "GET",
+        });
+        onArticle(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    onLikeRe(num);
+  }, [jobsLiked]);
+
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "0px",
+  };
+
   if (logined) {
     return (
       <div>
-        <LoginedJobsHeader />
+        <LoginedJobsHeader setLogined={setLogined} />
         <div
           style={{
             width: "780px",
@@ -49,38 +176,80 @@ const Jobspost = ({ logined }) => {
           }}
         >
           <div className="mt-5 relative">
-            <button
-              className="font-bold absolute"
-              style={{
-                fontSize: "1.3rem",
-                top: "50%",
-                left: "-5%",
-              }}
-            >
-              <BsChevronLeft />
-            </button>
-            <button
-              className="font-bold absolute "
-              style={{
-                fontSize: "1.3rem",
-
-                top: "50%",
-                right: "-5%",
-              }}
-            >
-              <BsChevronRight />
-            </button>
-            <button href="#">
-              <img
-                className="rounded-lg "
-                style={{
-                  width: "800px",
-                  height: "500px",
-                }}
-                src="https://dnvefa72aowie.cloudfront.net/jobs/article/36458049/1649751854029/job-post-3286665810.jpeg?q=95&s=1440x1440&t=inside"
-                alt=""
-              />
-            </button>
+            <div>
+              <Slider {...settings}>
+                {imgs[0] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[0]} alt="" />
+                  </div>
+                )}
+                {imgs[1] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[1]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[2] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[2]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[3] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[3]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[4] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[4]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[5] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[5]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[6] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[6]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[7] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[7]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[8] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[8]} alt="" />
+                  </div>
+                )}{" "}
+                {imgs[9] == undefined ? (
+                  ""
+                ) : (
+                  <div>
+                    <img src={imgs[9]} alt="" />
+                  </div>
+                )}
+              </Slider>
+            </div>
           </div>
           <section className="mt-6 flex justify-end gap-3">
             <div
@@ -96,7 +265,19 @@ const Jobspost = ({ logined }) => {
                 }}
               >
                 <div className="w-12 rounded-full">
-                  <img src="https://placeimg.com/192/192/people" />
+                  {articleWriter.profileImage != null ? (
+                    <img src={articleWriter.profileImage} />
+                  ) : (
+                    <FaCarrot
+                      style={{
+                        color: "#fc9d39",
+                        fontSize: "3rem",
+                        transform: "translate(0%,0%)",
+                        border: "0.1px #fc9d39 solid",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  )}
                 </div>
               </div>
               <div
@@ -106,7 +287,7 @@ const Jobspost = ({ logined }) => {
                 }}
               >
                 <div className="font-bold ">{jobArticle.jobUserid}</div>
-                <div className="text-sm">대전광역시 서구 둔산동</div>
+                <div className="text-sm">{articleWriter.address}</div>
               </div>
             </div>
             <div
@@ -122,7 +303,7 @@ const Jobspost = ({ logined }) => {
                       color: "green",
                     }}
                   >
-                    38.8
+                    {articleWriter.temp}
                   </div>
                   <progress
                     className="flex progress progress-success w-32"
@@ -225,7 +406,9 @@ const Jobspost = ({ logined }) => {
               </li>
               <li className="flex gap-4">
                 <AiOutlineClockCircle className="mt-2" />
-                <span>10:00~16:00</span>
+                <span>
+                  {jobArticle.jobStartTime}~{jobArticle.jobEndTime}
+                </span>
               </li>
             </ul>
           </section>
@@ -259,7 +442,6 @@ const Jobspost = ({ logined }) => {
             <div>조회수 {jobArticle.jobCheck}</div>
           </div>
 
-          {/* map */}
           <div>
             <div
               className="font-bold pt-2"
@@ -275,6 +457,7 @@ const Jobspost = ({ logined }) => {
                 border: "1px gray solid",
               }}
             ></div>
+            {jobArticle.jobPlace}
           </div>
           <section>
             <div className="py-2 flex gap-5 justify-end" style={{}}>
@@ -282,19 +465,19 @@ const Jobspost = ({ logined }) => {
                 style={{
                   fontSize: "1.5rem",
                 }}
-                // onClick={() => {
-                //   onLike(img.id, userinfo.userid, img.imgSrc);
-                // }}
+                onClick={() => {
+                  onJobsLike(num, sessionStorage.getItem("userid"));
+                }}
               >
-                {/* {like ? (
-                <FaHeart
-                  style={{
-                    color: "pink",
-                  }}
-                />
-              ) : ( */}
-                <FiHeart />
-                {/* )} */}
+                {jobsLiked ? (
+                  <FiHeart
+                    style={{
+                      color: "pink",
+                    }}
+                  />
+                ) : (
+                  <FiHeart />
+                )}
               </button>
 
               <a
@@ -430,38 +613,78 @@ const Jobspost = ({ logined }) => {
           }}
         >
           <div className="mt-5 relative">
-            <button
-              className="font-bold absolute"
-              style={{
-                fontSize: "1.3rem",
-                top: "50%",
-                left: "-5%",
-              }}
-            >
-              <BsChevronLeft />
-            </button>
-            <button
-              className="font-bold absolute "
-              style={{
-                fontSize: "1.3rem",
-
-                top: "50%",
-                right: "-5%",
-              }}
-            >
-              <BsChevronRight />
-            </button>
-            <button href="#">
-              <img
-                className="rounded-lg "
-                style={{
-                  width: "800px",
-                  height: "500px",
-                }}
-                src="https://dnvefa72aowie.cloudfront.net/jobs/article/36458049/1649751854029/job-post-3286665810.jpeg?q=95&s=1440x1440&t=inside"
-                alt=""
-              />
-            </button>
+            <Slider {...settings}>
+              {imgs[0] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[0]} alt="" />
+                </div>
+              )}
+              {imgs[1] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[1]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[2] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[2]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[3] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[3]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[4] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[4]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[5] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[5]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[6] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[6]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[7] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[7]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[8] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[8]} alt="" />
+                </div>
+              )}{" "}
+              {imgs[9] == undefined ? (
+                ""
+              ) : (
+                <div>
+                  <img src={imgs[9]} alt="" />
+                </div>
+              )}
+            </Slider>
           </div>
           <section className="mt-6 flex justify-end gap-3">
             <div
@@ -477,7 +700,19 @@ const Jobspost = ({ logined }) => {
                 }}
               >
                 <div className="w-12 rounded-full">
-                  <img src="https://placeimg.com/192/192/people" />
+                  {articleWriter.profileImage != null ? (
+                    <img src={articleWriter.profileImage} />
+                  ) : (
+                    <FaCarrot
+                      style={{
+                        color: "#fc9d39",
+                        fontSize: "3rem",
+                        transform: "translate(0%,0%)",
+                        border: "0.1px #fc9d39 solid",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  )}
                 </div>
               </div>
               <div
@@ -486,8 +721,12 @@ const Jobspost = ({ logined }) => {
                   width: "500px",
                 }}
               >
-                <div className="font-bold ">{jobArticle.jobUserid}</div>
-                <div className="text-sm">대전광역시 서구 둔산동</div>
+                <div className="font-bold ">
+                  {articleWriter.nickname == "닉네임 없음"
+                    ? articleWriter.username
+                    : articleWriter.nickname}
+                </div>
+                <div className="text-sm">{articleWriter.address}</div>
               </div>
             </div>
             <div
@@ -503,7 +742,7 @@ const Jobspost = ({ logined }) => {
                       color: "green",
                     }}
                   >
-                    38.8
+                    {articleWriter.temp}
                   </div>
                   <progress
                     className="flex progress progress-success w-32"
@@ -606,7 +845,10 @@ const Jobspost = ({ logined }) => {
               </li>
               <li className="flex gap-4">
                 <AiOutlineClockCircle className="mt-2" />
-                <span>10:00~16:00</span>
+                <span>
+                  {" "}
+                  {jobArticle.jobStartTime}~{jobArticle.jobEndTime}
+                </span>
               </li>
             </ul>
           </section>
@@ -663,23 +905,17 @@ const Jobspost = ({ logined }) => {
                 style={{
                   fontSize: "1.5rem",
                 }}
-                // onClick={() => {
-                //   onLike(img.id, userinfo.userid, img.imgSrc);
-                // }}
+                onClick={() => {
+                  alert("로그인 후 사용할 수 있는 기능입니다.");
+                }}
               >
-                {/* {like ? (
-                <FaHeart
-                  style={{
-                    color: "pink",
-                  }}
-                />
-              ) : ( */}
                 <FiHeart />
-                {/* )} */}
               </button>
 
-              <a
-                href="#"
+              <button
+                onClick={() => {
+                  alert("로그인 후 사용할 수 있는 기능입니다.");
+                }}
                 className="rounded p-2 font-bold flex justify-center"
                 style={{
                   width: "300px",
@@ -688,7 +924,7 @@ const Jobspost = ({ logined }) => {
                 }}
               >
                 지원하기
-              </a>
+              </button>
             </div>
           </section>
 

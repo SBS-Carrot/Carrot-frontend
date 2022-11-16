@@ -93,9 +93,11 @@ const RealtyWrite = ({ logined, setLogined }) => {
   };
   const onSpaceChange = (e) => {
     setSpaceValue(e.target.value);
+    setAreaValue((e.target.value * 3.3).toFixed(2));
   };
   const onAreaChange = (e) => {
     setAreaValue(e.target.value);
+    setSpaceValue((e.target.value * 0.3).toFixed(2));
   };
   const onRoomChange = (e) => {
     setRoomValue(e.target.value);
@@ -108,6 +110,9 @@ const RealtyWrite = ({ logined, setLogined }) => {
   };
   const onWholeChange = (e) => {
     setWholeValue(e.target.value);
+    if (e.target.value == 1) {
+      setFloorValue(e.target.value);
+    }
   };
   const onFloorChange = (e) => {
     setFloorValue(e.target.value);
@@ -262,6 +267,8 @@ const RealtyWrite = ({ logined, setLogined }) => {
     deal
   ) => {
     try {
+      const userid = sessionStorage.getItem("userid");
+
       const data = await axios({
         url: `http://localhost:8083/createRealty`,
         method: "POST",
@@ -292,6 +299,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
           realtyCostContent: costContent,
           realtySalePrice: salePrice,
           realtyDeal: deal,
+          realtyUserid: userid,
         },
       });
 
@@ -333,6 +341,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     uploadedImg
   ) => {
     try {
+      const userid = sessionStorage.getItem("userid");
       const formData = new FormData();
       const realtyDto = {
         realtyWho: who,
@@ -361,11 +370,13 @@ const RealtyWrite = ({ logined, setLogined }) => {
         realtyCostContent: costContent,
         realtySalePrice: salePrice,
         realtyDeal: deal,
+        realtyUserid: userid,
       };
 
       const json = JSON.stringify(realtyDto);
       const blob = new Blob([json], { type: "application/json" });
       formData.append("realtyDto", blob);
+      uploadedImg.reverse();
       for (let i = 0; i < uploadedImg.length; i++) {
         formData.append("file", uploadedImg[i]);
       }
@@ -474,7 +485,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
             >
               <option value="매물종류 선택">매물종류선택</option>
               <option value="원룸">원룸</option>
-              <option value="빌라(투룸 이상)">빌라(투룸 이상)</option>
+              <option value="투룸 이상">투룸 이상</option>
               <option value="아파트">아파트</option>
               <option value="상가">상가</option>
               <option value="기타(사무실, 주택, 토지 등)">
@@ -1343,7 +1354,12 @@ const RealtyWrite = ({ logined, setLogined }) => {
           </div>
         </section>
       </section>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <button
           onClick={() => {
             if (showImages.length == 0) {
@@ -1416,8 +1432,8 @@ const RealtyWrite = ({ logined, setLogined }) => {
             color: "white",
             fontSize: "1.1rem",
             backgroundColor: "#FFB26B",
-            marginLeft: "18%",
             width: "1000px",
+            position: "relative",
           }}
         >
           글쓰기
@@ -1427,7 +1443,9 @@ const RealtyWrite = ({ logined, setLogined }) => {
         <div
           style={{
             position: "absolute",
-            transform: "translate(265%,-160%)",
+            top: "65%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
             width: "300px",
             height: "150px",
             justifyContent: "center",
@@ -1435,6 +1453,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
             outline: "1px #ffa445 solid",
             borderRadius: "10px",
             display: "flex",
+            position: "absolute",
           }}
         >
           <a

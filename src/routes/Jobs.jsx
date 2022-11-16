@@ -5,9 +5,9 @@ import "../styles/Jobs.css";
 import Footer from "../layouts/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
-
+import { useState, useEffect } from "react";
+import { BsDot } from "react-icons/bs";
+import { FaCarrot } from "react-icons/fa";
 const Jobs = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const { num } = useParams();
@@ -38,6 +38,7 @@ const Jobs = ({ logined, setLogined }) => {
           method: "GET",
         });
         onJobs(data.data);
+        console.log(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -135,60 +136,96 @@ const Jobs = ({ logined, setLogined }) => {
             className="grid grid-cols-2 jobBox"
           >
             {Jobs.map((job, index) => (
-              <li key={index}>
+              <li key={index} style={{}}>
                 <button
                   onClick={() => {
                     moveJobs(job.jobid);
                   }}
                 >
-                  <div
-                    style={{
-                      width: "140px",
-                      display: "flex",
-                      borderRadius: "10px",
-                    }}
-                    className="gap-3"
-                  >
-                    <img
-                      src="https://dnvefa72aowie.cloudfront.net/jobs/article/430198/1646300764992/job-post-2947125003.jpeg?q=95&s=1440x1440&t=inside"
-                      alt=""
+                  <div className="flex flex-row">
+                    <div
                       style={{
-                        objectFit: "auto",
-                        width: "100%",
-                        display: "block",
+                        width: "140px",
+                        height: "140px",
                         borderRadius: "10px",
+                        display: "flex",
                       }}
-                    />
+                      className="gap-3"
+                    >
+                      {job.profileImage != null ? (
+                        <img
+                          src={job.profileImage}
+                          alt=""
+                          style={{
+                            borderRadius: "15px",
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "fill",
+                            display: "block",
+                          }}
+                        />
+                      ) : (
+                        <FaCarrot
+                          style={{
+                            color: "#fc9d39",
+                            fontSize: "7rem",
+                            transform: "translate(12.5%,12.5%)",
+                            border: "0.1px #fc9d39 solid",
+                            borderRadius: "50%",
+                          }}
+                        />
+                      )}
+                    </div>
                     <div
                       className="flex flex-col"
                       style={{
-                        width: "300px",
+                        width: "280px",
                         height: "150px",
+
+                        paddingLeft: "5px",
                       }}
                     >
-                      <span
+                      <div
+                        className="JobSubjectBox ellipsis_2"
                         style={{
-                          width: "300px",
-                          height: "150px",
-                          fontSize: "1.2rem",
+                          textAlign: "start",
                         }}
                       >
                         {job.jobSubject}
-                      </span>
+                      </div>
                       <span
+                        className="flex items-center"
                         style={{
-                          width: "250px",
+                          width: "280px",
                           height: "150px",
                         }}
                       >
-                        <span>{job.jobPlace}</span>
+                        <div
+                          className="JobNameBox ellipsis_1"
+                          style={{
+                            width: "280px",
+                            height: "60px",
+                            textAlign: "start",
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: "0.9rem",
+                              color: "gray",
+                            }}
+                          >
+                            {job.jobName}&nbsp; ·&nbsp; {job.jobPlace}
+                          </span>
+                        </div>
                       </span>
                       <span
+                        className="flex justify-start"
                         style={{
-                          width: "300px",
+                          width: "280px",
                           height: "150px",
                           fontWeight: "bolder",
-                          fontSize: "1.1rem",
+                          paddingLeft: "3px",
+                          paddingTop: "5px",
                         }}
                       >
                         {job.jobCategory} {job.jobPrice}

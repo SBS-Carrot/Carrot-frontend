@@ -44,7 +44,7 @@ const Realty = ({ logined, setLogined }) => {
           method: "GET",
         });
         onRealty(data.data);
-        console.log(data.data);
+
         setAddress(data.data.realtyAddress);
         onAddress();
       } catch (e) {
@@ -202,27 +202,33 @@ const Realty = ({ logined, setLogined }) => {
                                     >
                                       <span
                                         style={{
-                                          border: "1px red solid",
-                                          width: "10px",
+                                          width: "20px",
                                           whiteSpace: "nowrap",
                                           display: "inline-flex",
                                           overflow: "hidden",
+                                          justifyContent: "end",
                                         }}
                                       >
-                                        {realty.realtySalePrice}
+                                        {realty.realtySalePrice.charAt(0)}
                                       </span>
                                       <span>억</span>
-                                      <span
-                                        style={{
-                                          border: "1px red solid",
-                                          width: "10px",
-                                          whiteSpace: "nowrap",
-                                          display: "inline-flex",
-                                          overflow: "hidden",
-                                        }}
-                                      >
-                                        {realty.realtySalePrice}
-                                      </span>
+                                      {realty.realtySalePrice.substring(1) !=
+                                      0 ? (
+                                        <span
+                                          style={{
+                                            width: "50px",
+                                            whiteSpace: "nowrap",
+                                            display: "inline-flex",
+                                            overflow: "hidden",
+                                            textAlign: "end",
+                                            marginLeft: "10px",
+                                          }}
+                                        >
+                                          {realty.realtySalePrice.substring(1)}
+                                        </span>
+                                      ) : (
+                                        ""
+                                      )}
                                     </div>
                                   ) : (
                                     realty.realtySalePrice + "만원"
@@ -232,9 +238,51 @@ const Realty = ({ logined, setLogined }) => {
                                 ""
                               )}{" "}
                               {realty.realtyDealing === "매매" ? (
-                                <div>
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
                                   {realty.realtyDealing} &nbsp;
-                                  {realty.realtySalePrice}
+                                  {realty.realtySalePrice.length >= 5 ? (
+                                    <div
+                                      style={{
+                                        display: "inline",
+                                      }}
+                                    >
+                                      <span
+                                        style={{
+                                          width: "20px",
+                                          whiteSpace: "nowrap",
+                                          display: "inline-flex",
+                                          overflow: "hidden",
+                                          justifyContent: "end",
+                                        }}
+                                      >
+                                        {realty.realtySalePrice.charAt(0)}
+                                      </span>
+                                      <span>억</span>
+                                      {realty.realtySalePrice.substring(1) !=
+                                      0 ? (
+                                        <span
+                                          style={{
+                                            width: "50px",
+                                            whiteSpace: "nowrap",
+                                            display: "inline-flex",
+                                            overflow: "hidden",
+                                            textAlign: "end",
+                                            marginLeft: "10px",
+                                          }}
+                                        >
+                                          {realty.realtySalePrice.substring(1)}
+                                        </span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                  ) : (
+                                    realty.realtySalePrice + "만원"
+                                  )}
                                 </div>
                               ) : (
                                 ""

@@ -5,8 +5,6 @@ import { useState } from "react";
 import axios from "axios";
 import { getValue } from "@testing-library/user-event/dist/utils";
 import { useNavigate } from "react-router-dom";
-// import PopupDom from "./PopupDom";
-// import PopupPostCode from "./PopupPostCode";
 import DaumPostcode from "react-daum-postcode";
 
 const RealtyWrite = ({ logined, setLogined }) => {
@@ -44,8 +42,6 @@ const RealtyWrite = ({ logined, setLogined }) => {
   const [roomValue, setRoomValue] = useState("");
   //욕실
   const [bathValue, setBathValue] = useState("");
-  //주소
-  const [addressValue, setAddressValue] = useState("");
   //전체층
   const [wholeValue, setWholeValue] = useState("");
   //해당층
@@ -109,9 +105,6 @@ const RealtyWrite = ({ logined, setLogined }) => {
   };
   const onBathChange = (e) => {
     setBathValue(e.target.value);
-  };
-  const onAddressChange = (e) => {
-    setAddressValue(e.target.value);
   };
   const onWholeChange = (e) => {
     setWholeValue(e.target.value);
@@ -242,25 +235,17 @@ const RealtyWrite = ({ logined, setLogined }) => {
     setAddress(data.zonecode);
     setAddressDetail(fullAddr);
     setIsOpenPost(false);
+    console.log(fullAddr);
   };
 
   const postCodeStyle = {
     display: "block",
     position: "relative",
     top: "0%",
-    width: "400px",
-    height: "400px",
+    width: "480px",
+    height: "500px",
     padding: "7px",
   };
-
-  // const [isPopupOpen, setIsPopupOpen] = useState(false);
-  // const openPostCode = () => {
-  //   setIsPopupOpen(true);
-  // };
-
-  // const closePostCode = () => {
-  //   setIsPopupOpen(false);
-  // };
 
   // 이미지 상대경로 저장
   const handleAddImages = (event) => {
@@ -309,7 +294,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     areaValue,
     roomValue,
     bathValue,
-    addressValue,
+    addressDetail,
     wholeValue,
     floorValue,
     contentValue,
@@ -336,7 +321,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
           realtyArea: areaValue,
           realtyRoom: roomValue,
           realtyBath: bathValue,
-          realtyAddress: addressValue,
+          realtyAddress: addressDetail,
           realtyWhole: wholeValue,
           realtyFloor: floorValue,
           realtyMove: move,
@@ -382,7 +367,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     areaValue,
     roomValue,
     bathValue,
-    addressValue,
+    addressDetail,
     wholeValue,
     floorValue,
     contentValue,
@@ -407,7 +392,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
         realtyArea: areaValue,
         realtyRoom: roomValue,
         realtyBath: bathValue,
-        realtyAddress: addressValue,
+        realtyAddress: addressDetail,
         realtyWhole: wholeValue,
         realtyFloor: floorValue,
         realtyMove: move,
@@ -649,45 +634,44 @@ const RealtyWrite = ({ logined, setLogined }) => {
             </div>
           </div>
           <div className="font-bold">주소</div>
+          <span>
+            <button
+              type="button"
+              style={{
+                border: "1px #d5d5d5 solid",
+                width: "120px",
+                height: "30px",
+              }}
+              onClick={() => {
+                onChangeOpenPost();
+              }}
+            >
+              우편번호 검색
+            </button>
+          </span>
           <div className="mb-4 gap-2">
             <input
               type="text"
               placeholder="주소 입력"
-              value={addressValue}
-              onChange={onAddressChange}
+              value={addressDetail}
+              onChange={onCompletePost}
               style={{
                 border: "1px #d5d5d5 solid",
-                width: "300px",
+                width: "400px",
                 height: "30px",
               }}
             />
-            <span>
-              <button
-                type="button"
-                onClick={onChangeOpenPost}
-                style={{
-                  border: "1px #d5d5d5 solid",
-                  height: "30px",
-                }}
-              >
-                우편번호 검색
-              </button>
-              {isOpenPost ? (
+
+            {isOpenPost && (
+              <span>
                 <DaumPostcode
                   style={postCodeStyle}
                   autoClose
                   onComplete={onCompletePost}
                 />
-              ) : null}
-              {/* <div id="popupDom">
-                {isPopupOpen && (
-                  <PopupDom>
-                    <PopupPostCode onClose={closePostCode} />
-                  </PopupDom>
-                )}
-              </div> */}
-            </span>
-            <div>
+              </span>
+            )}
+            <div className="mt-2">
               <input
                 type="text"
                 placeholder="한줄 소개 해주세요."
@@ -1473,7 +1457,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 areaValue,
                 roomValue,
                 bathValue,
-                addressValue,
+                addressDetail,
                 wholeValue,
                 floorValue,
                 contentValue,
@@ -1502,7 +1486,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 areaValue,
                 roomValue,
                 bathValue,
-                addressValue,
+                addressDetail,
                 wholeValue,
                 floorValue,
                 contentValue,

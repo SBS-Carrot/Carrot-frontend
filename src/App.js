@@ -22,6 +22,7 @@ import MyPage from "./routes/MyPage";
 import axios from "axios";
 import Security from "./routes/Security";
 import ArticleControl from "./routes/ArticleControl";
+import AllProduct from "./routes/AllProduct";
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
@@ -200,6 +201,10 @@ function App() {
         <Route
           path="/realtyWrite"
           element={<RealtyWrite logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/allProduct/:num"
+          element={<AllProduct logined={logined} setLogined={setLogined} />}
         />
       </Routes>
     </Router>

@@ -8,13 +8,25 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaCarrot } from "react-icons/fa";
 import "../styles/Jobs.css";
-
+import ProductPaging from "../components/ProductPaging";
 import Product from "../components/Product";
+import { useParams } from "react-router-dom";
 const HotArticles = ({ logined, setLogined }) => {
+  const { num } = useParams;
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [currentPosts, setCurrentPosts] = useState([]);
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+  const [postPerPage] = useState(7);
+  const indexOfLastPost = page * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+
   const onProduct = (data) => {
     setPosts((prev) => data);
   };
+  //   npm i react-js-pagination
   useEffect(() => {
     const onSubmit = async () => {
       try {
@@ -29,17 +41,12 @@ const HotArticles = ({ logined, setLogined }) => {
     };
     onSubmit();
   }, []);
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postPerPage] = useState(12);
 
+  useEffect(() => {
+    setPosts([...Lists].reverse());
+    setCurrentPosts(posts, slice(indexOfFirstPost, indexOfLastPost));
+  }, [indexOfFirstPost, indexOfLastPost, weightLists, page]);
   const navigate = useNavigate();
-
-  const indexOfLastPost = currentPage * postPerPage;
-  const indexOfFirstPost = indexOfLastPost - postPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-  const paginate = (pageNum) => setCurrentPage(pageNum);
-
   const moveProduct = async (id) => {
     try {
       await axios({
@@ -151,103 +158,104 @@ const HotArticles = ({ logined, setLogined }) => {
               </ul>
             </div>
           </div>
-          <div className="container"></div>
-          {/* <ul className="grid grid-cols-4">
-            {posts.map((product, index) => (
-              <li key={index}>
-                <button
-                  onClick={() => {
-                    moveProduct(product.productId);
-                  }}
-                >
-                  <div
-                    style={{
-                      paddingTop: "3rem",
-                      paddingLeft: "10px",
+          <div className="container">
+            <ul className="grid grid-cols-4">
+              {posts.map((product, index) => (
+                <li key={index}>
+                  <button
+                    onClick={() => {
+                      moveProduct(product.productId);
                     }}
                   >
                     <div
                       style={{
-                        width: "200px",
-                        height: "200px",
-                        borderRadius: "15px",
+                        paddingTop: "3rem",
+                        paddingLeft: "10px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "200px",
+                          height: "200px",
+                          borderRadius: "15px",
 
-                        marginBottom: "10px",
-                      }}
-                    >
-                      {product.profileImage != null ? (
-                        <img
-                          src={product.profileImage}
-                          alt=""
-                          style={{
-                            borderRadius: "15px",
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "fill",
-                            display: "block",
-                          }}
-                        />
-                      ) : (
-                        <FaCarrot
-                          style={{
-                            color: "#fc9d39",
-                            fontSize: "10rem",
-                            transform: "translate(12.5%,12.5%)",
-                            border: "0.1px #fc9d39 solid",
-                            borderRadius: "50%",
-                          }}
-                        />
-                      )}
-                    </div>
-                    <div
-                      className="ellipsis_1"
-                      style={{
-                        width: "200px",
-                        height: "25px",
-                        textAlign: "start",
-                      }}
-                    >
-                      <span>{product.productSubject}</span>
-                    </div>
-                    <div className="flex ">
-                      <span
+                          marginBottom: "10px",
+                        }}
+                      >
+                        {product.profileImage != null ? (
+                          <img
+                            src={product.profileImage}
+                            alt=""
+                            style={{
+                              borderRadius: "15px",
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "fill",
+                              display: "block",
+                            }}
+                          />
+                        ) : (
+                          <FaCarrot
+                            style={{
+                              color: "#fc9d39",
+                              fontSize: "10rem",
+                              transform: "translate(12.5%,12.5%)",
+                              border: "0.1px #fc9d39 solid",
+                              borderRadius: "50%",
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div
                         className="ellipsis_1"
                         style={{
-                          fontWeight: "bold",
-                          width: "100px",
-                          height: "20px",
-
+                          width: "200px",
+                          height: "25px",
                           textAlign: "start",
                         }}
                       >
-                        {product.productPrice}원
-                      </span>
+                        <span>{product.productSubject}</span>
+                      </div>
+                      <div className="flex ">
+                        <span
+                          className="ellipsis_1"
+                          style={{
+                            fontWeight: "bold",
+                            width: "100px",
+                            height: "20px",
+
+                            textAlign: "start",
+                          }}
+                        >
+                          {product.productPrice}원
+                        </span>
+                      </div>
+                      <div
+                        className="flex"
+                        style={{
+                          fontSize: "0.9rem",
+                        }}
+                      >
+                        <span>부산 진구 부전동</span>
+                      </div>
+                      <div
+                        className="flex"
+                        style={{
+                          paddingBottom: "3rem",
+                          fontSize: "0.8rem",
+                          color: "gray",
+                        }}
+                      >
+                        <span>관심 {product.productLike}</span>
+                        &nbsp; ·&nbsp;
+                        <span>채팅 {product.productChatting}</span>
+                      </div>
                     </div>
-                    <div
-                      className="flex"
-                      style={{
-                        fontSize: "0.9rem",
-                      }}
-                    >
-                      <span>부산 진구 부전동</span>
-                    </div>
-                    <div
-                      className="flex"
-                      style={{
-                        paddingBottom: "3rem",
-                        fontSize: "0.8rem",
-                        color: "gray",
-                      }}
-                    >
-                      <span>관심 {product.productLike}</span>
-                      &nbsp; ·&nbsp;
-                      <span>채팅 {product.productChatting}</span>
-                    </div>
-                  </div>
-                </button>
-              </li>
-            ))}
-          </ul> */}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
         <div
           style={{
@@ -309,6 +317,13 @@ const HotArticles = ({ logined, setLogined }) => {
               Google Play
             </a>
           </div>
+          <ProductPaging
+            totalCount={posts.length}
+            page={page}
+            postPerPage={postPerPage}
+            pageRangeDisplayed={5}
+            handlePageChange={handlePageChange}
+          />
         </div>
         <Footer />
       </div>

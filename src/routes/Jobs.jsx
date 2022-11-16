@@ -233,414 +233,62 @@ const Jobs = ({ logined, setLogined }) => {
                     </div>
                   </div>
                 </button>
+                {index == 4 ? (
+                  <div
+                    style={{
+                      backgroundColor: "#e6f3ff",
+                      height: "150px",
+                      width: "880px",
+                      margin: "0 auto",
+                      borderRadius: "15px",
+                      marginLeft: "80px",
+                      marginTop: "20px",
+                      position: "relative",
+                    }}
+                  >
+                    <a href="#">
+                      <div className="">
+                        <h1
+                          style={{
+                            fontSize: "1.5rem",
+                            fontWeight: "bolder",
+                            width: "270px",
+                            paddingTop: "2rem",
+                            paddingLeft: "2rem",
+                          }}
+                        >
+                          이웃의 일손을 빠르게
+                        </h1>
+                        <h1
+                          style={{
+                            fontSize: "1.5rem",
+                            fontWeight: "bolder",
+                            width: "450px",
+                            paddingLeft: "2rem",
+                          }}
+                        >
+                          당근알바에서 바로 찾아보세요!
+                        </h1>
+                      </div>
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: "80%",
+                          top: "3%",
+                        }}
+                      >
+                        <img
+                          src="https://i.postimg.cc/HkQh8THv/123.png"
+                          alt=""
+                        />
+                      </div>
+                    </a>
+                  </div>
+                ) : (
+                  ""
+                )}
               </li>
             ))}
-
-            <li>
-              <a href="#">
-                <div
-                  style={{
-                    width: "140px",
-                    display: "flex",
-                    borderRadius: "10px",
-                  }}
-                  className="gap-3"
-                >
-                  <img
-                    src="https://dnvefa72aowie.cloudfront.net/jobs/article/430198/1646300764992/job-post-2947125003.jpeg?q=95&s=1440x1440&t=inside"
-                    alt=""
-                    style={{
-                      objectFit: "auto",
-                      width: "100%",
-                      display: "block",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <div
-                    className="flex flex-col"
-                    style={{
-                      width: "300px",
-                      height: "150px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontSize: "1.2rem",
-                      }}
-                    >
-                      칠성뷔페 주방/홀 직원모집
-                    </span>
-                    <span
-                      style={{
-                        width: "250px",
-                        height: "150px",
-                      }}
-                    >
-                      칠성뷔페 · 제주 특별자치도 제주시 일도1동
-                    </span>
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontWeight: "bolder",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      월급 3,000,000
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div
-                  style={{
-                    width: "140px",
-                    display: "flex",
-                    borderRadius: "10px",
-                  }}
-                  className="gap-3"
-                >
-                  <img
-                    src="https://dnvefa72aowie.cloudfront.net/jobs/article/430198/1646300764992/job-post-2947125003.jpeg?q=95&s=1440x1440&t=inside"
-                    alt=""
-                    style={{
-                      objectFit: "auto",
-                      width: "100%",
-                      display: "block",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <div
-                    className="flex flex-col"
-                    style={{
-                      width: "300px",
-                      height: "150px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontSize: "1.2rem",
-                      }}
-                    >
-                      칠성뷔페 주방/홀 직원모집
-                    </span>
-                    <span
-                      style={{
-                        width: "250px",
-                        height: "150px",
-                      }}
-                    >
-                      칠성뷔페 · 제주 특별자치도 제주시 일도1동
-                    </span>
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontWeight: "bolder",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      월급 3,000,000
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div
-                  style={{
-                    width: "140px",
-                    display: "flex",
-                    borderRadius: "10px",
-                  }}
-                  className="gap-3"
-                >
-                  <img
-                    src="https://dnvefa72aowie.cloudfront.net/jobs/article/430198/1646300764992/job-post-2947125003.jpeg?q=95&s=1440x1440&t=inside"
-                    alt=""
-                    style={{
-                      objectFit: "auto",
-                      width: "100%",
-                      display: "block",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <div
-                    className="flex flex-col"
-                    style={{
-                      width: "300px",
-                      height: "150px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontSize: "1.2rem",
-                      }}
-                    >
-                      칠성뷔페 주방/홀 직원모집
-                    </span>
-                    <span
-                      style={{
-                        width: "250px",
-                        height: "150px",
-                      }}
-                    >
-                      칠성뷔페 · 제주 특별자치도 제주시 일도1동
-                    </span>
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontWeight: "bolder",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      월급 3,000,000
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
-          <div
-            style={{
-              backgroundColor: "#e6f3ff",
-              height: "150px",
-              width: "880px",
-              margin: "0 auto",
-              borderRadius: "15px",
-              marginLeft: "80px",
-              marginTop: "20px",
-              position: "relative",
-            }}
-          >
-            <a href="#">
-              <div className="">
-                <h1
-                  style={{
-                    fontSize: "1.5rem",
-                    fontWeight: "bolder",
-                    width: "270px",
-                    paddingTop: "2rem",
-                    paddingLeft: "2rem",
-                  }}
-                >
-                  이웃의 일손을 빠르게
-                </h1>
-                <h1
-                  style={{
-                    fontSize: "1.5rem",
-                    fontWeight: "bolder",
-                    width: "450px",
-                    paddingLeft: "2rem",
-                  }}
-                >
-                  당근알바에서 바로 찾아보세요!
-                </h1>
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  left: "80%",
-                  top: "3%",
-                }}
-              >
-                <img src="https://i.postimg.cc/HkQh8THv/123.png" alt="" />
-              </div>
-            </a>
-          </div>
-
-          <ul
-            style={{
-              paddingTop: "3rem",
-              paddingLeft: "5rem",
-            }}
-            className="grid grid-cols-2 jobBox"
-          >
-            <li>
-              <a href="#">
-                <div
-                  style={{
-                    width: "140px",
-                    display: "flex",
-                    borderRadius: "10px",
-                  }}
-                  className="gap-3"
-                >
-                  <img
-                    src="https://dnvefa72aowie.cloudfront.net/jobs/article/430198/1646300764992/job-post-2947125003.jpeg?q=95&s=1440x1440&t=inside"
-                    alt=""
-                    style={{
-                      objectFit: "auto",
-                      width: "100%",
-                      display: "block",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <div
-                    className="flex flex-col"
-                    style={{
-                      width: "300px",
-                      height: "150px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontSize: "1.2rem",
-                      }}
-                    >
-                      칠성뷔페 주방/홀 직원모집
-                    </span>
-                    <span
-                      style={{
-                        width: "250px",
-                        height: "150px",
-                      }}
-                    >
-                      칠성뷔페 · 제주 특별자치도 제주시 일도1동
-                    </span>
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontWeight: "bolder",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      월급 3,000,000
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <div
-                  style={{
-                    width: "140px",
-                    display: "flex",
-                    borderRadius: "10px",
-                  }}
-                  className="gap-3"
-                >
-                  <img
-                    src="https://dnvefa72aowie.cloudfront.net/jobs/article/430198/1646300764992/job-post-2947125003.jpeg?q=95&s=1440x1440&t=inside"
-                    alt=""
-                    style={{
-                      objectFit: "auto",
-                      width: "100%",
-                      display: "block",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <div
-                    className="flex flex-col"
-                    style={{
-                      width: "300px",
-                      height: "150px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontSize: "1.2rem",
-                      }}
-                    >
-                      칠성뷔페 주방/홀 직원모집
-                    </span>
-                    <span
-                      style={{
-                        width: "250px",
-                        height: "150px",
-                      }}
-                    >
-                      칠성뷔페 · 제주 특별자치도 제주시 일도1동
-                    </span>
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontWeight: "bolder",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      월급 3,000,000
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
-
-            <li>
-              <a href="#">
-                <div
-                  style={{
-                    width: "140px",
-                    display: "flex",
-                    borderRadius: "10px",
-                  }}
-                  className="gap-3"
-                >
-                  <img
-                    src="https://dnvefa72aowie.cloudfront.net/jobs/article/430198/1646300764992/job-post-2947125003.jpeg?q=95&s=1440x1440&t=inside"
-                    alt=""
-                    style={{
-                      objectFit: "auto",
-                      width: "100%",
-                      display: "block",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <div
-                    className="flex flex-col"
-                    style={{
-                      width: "300px",
-                      height: "150px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontSize: "1.2rem",
-                      }}
-                    >
-                      칠성뷔페 주방/홀 직원모집
-                    </span>
-                    <span
-                      style={{
-                        width: "250px",
-                        height: "150px",
-                      }}
-                    >
-                      칠성뷔페 · 제주 특별자치도 제주시 일도1동
-                    </span>
-                    <span
-                      style={{
-                        width: "300px",
-                        height: "150px",
-                        fontWeight: "bolder",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      월급 3,000,000
-                    </span>
-                  </div>
-                </div>
-              </a>
-            </li>
           </ul>
         </div>
         <Footer />

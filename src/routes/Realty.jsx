@@ -188,20 +188,42 @@ const Realty = ({ logined, setLogined }) => {
                               }}
                             >
                               {realty.realtyDealing === "전세" ? (
-                                <div>
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
                                   {realty.realtyDealing} &nbsp;
                                   {realty.realtySalePrice.length >= 5 ? (
-                                    <span
+                                    <div
                                       style={{
-                                        border: "1px red solid",
-                                        width: "10px",
-                                        whiteSpace: "nowrap",
-                                        display: "inline-flex",
-                                        overflow: "hidden",
+                                        display: "inline",
                                       }}
                                     >
-                                      {realty.realtySalePrice}
-                                    </span>
+                                      <span
+                                        style={{
+                                          border: "1px red solid",
+                                          width: "10px",
+                                          whiteSpace: "nowrap",
+                                          display: "inline-flex",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        {realty.realtySalePrice}
+                                      </span>
+                                      <span>억</span>
+                                      <span
+                                        style={{
+                                          border: "1px red solid",
+                                          width: "10px",
+                                          whiteSpace: "nowrap",
+                                          display: "inline-flex",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        {realty.realtySalePrice}
+                                      </span>
+                                    </div>
                                   ) : (
                                     realty.realtySalePrice + "만원"
                                   )}

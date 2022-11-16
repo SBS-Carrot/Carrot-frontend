@@ -185,7 +185,12 @@ const Jobs = ({ logined, setLogined }) => {
                         paddingLeft: "5px",
                       }}
                     >
-                      <div className="JobSubjectBox ellipsis_2">
+                      <div
+                        className="JobSubjectBox ellipsis_2"
+                        style={{
+                          textAlign: "start",
+                        }}
+                      >
                         {job.jobSubject}
                       </div>
                       <span
@@ -200,6 +205,7 @@ const Jobs = ({ logined, setLogined }) => {
                           style={{
                             width: "280px",
                             height: "60px",
+                            textAlign: "start",
                           }}
                         >
                           <span

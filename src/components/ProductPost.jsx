@@ -15,6 +15,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaCarrot } from "react-icons/fa";
+
 const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
   const { num } = useParams();
   const [articleWriter, setArticleWriter] = useState("");

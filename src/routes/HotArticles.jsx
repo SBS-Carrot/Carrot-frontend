@@ -193,6 +193,7 @@ const HotArticles = ({ logined, setLogined }) => {
                       style={{
                         width: "200px",
                         height: "25px",
+                        textAlign: "start",
                       }}
                     >
                       <span>{product.productSubject}</span>
@@ -202,13 +203,14 @@ const HotArticles = ({ logined, setLogined }) => {
                         className="ellipsis_1"
                         style={{
                           fontWeight: "bold",
-                          width: "160px",
+                          width: "100px",
                           height: "20px",
+
+                          textAlign: "start",
                         }}
                       >
-                        {product.productPrice}
+                        {product.productPrice}원
                       </span>
-                      <span>원</span>
                     </div>
                     <div
                       className="flex"

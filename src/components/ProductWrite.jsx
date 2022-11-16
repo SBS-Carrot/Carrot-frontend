@@ -46,6 +46,9 @@ const ProductWrite = ({ logined, setLogined }) => {
     setContentValue(e.target.value);
   };
   const onSubjectChange = (e) => {
+    if (e.target.value.length > 20) {
+      return;
+    }
     setSubjectValue(e.target.value);
   };
   const onCategoryChange = (e) => {
@@ -132,6 +135,7 @@ const ProductWrite = ({ logined, setLogined }) => {
       const json = JSON.stringify(productDto);
       const blob = new Blob([json], { type: "application/json" });
       formData.append("productDto", blob);
+      uploadedImg.reverse();
       for (let i = 0; i < uploadedImg.length; i++) {
         formData.append("file", uploadedImg[i]);
       }

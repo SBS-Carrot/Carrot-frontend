@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaCarrot } from "react-icons/fa";
+import "../styles/Jobs.css";
 const HotArticles = ({ logined, setLogined }) => {
   const [Product, setProduct] = useState([]);
   const navigate = useNavigate();
@@ -188,25 +189,26 @@ const HotArticles = ({ logined, setLogined }) => {
                       )}
                     </div>
                     <div
-                      className="flex"
+                      className="ellipsis_1"
                       style={{
                         width: "200px",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        overflowX: "hidden",
-                        marginBottom: "5px",
+                        height: "25px",
                       }}
                     >
                       <span>{product.productSubject}</span>
                     </div>
-                    <div className="flex">
+                    <div className="flex ">
                       <span
+                        className="ellipsis_1"
                         style={{
                           fontWeight: "bold",
+                          width: "160px",
+                          height: "20px",
                         }}
                       >
-                        {product.productPrice}원
+                        {product.productPrice}
                       </span>
+                      <span>원</span>
                     </div>
                     <div
                       className="flex"
@@ -225,7 +227,7 @@ const HotArticles = ({ logined, setLogined }) => {
                       }}
                     >
                       <span>관심 {product.productLike}</span>
-                      <span className="mx-2"> º </span>
+                      &nbsp; ·&nbsp;
                       <span>채팅 {product.productChatting}</span>
                     </div>
                   </div>
@@ -292,7 +294,7 @@ const HotArticles = ({ logined, setLogined }) => {
                   }}
                 >
                   <span>관심 5</span>
-                  <span> º </span>
+                  &nbsp; ·&nbsp;
                   <span>채팅 42</span>
                 </div>
               </div>

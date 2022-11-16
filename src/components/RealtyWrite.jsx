@@ -376,6 +376,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
       const json = JSON.stringify(realtyDto);
       const blob = new Blob([json], { type: "application/json" });
       formData.append("realtyDto", blob);
+      uploadedImg.reverse();
       for (let i = 0; i < uploadedImg.length; i++) {
         formData.append("file", uploadedImg[i]);
       }

@@ -203,7 +203,7 @@ function App() {
           element={<RealtyWrite logined={logined} setLogined={setLogined} />}
         />
         <Route
-          path="/allProduct/:num"
+          path="/allProduct"
           element={<AllProduct logined={logined} setLogined={setLogined} />}
         />
       </Routes>

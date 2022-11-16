@@ -65,7 +65,7 @@ const LoginedJobsHeader = ({ setLogined }) => {
             </a>
           </div>
           <div>
-            <a href="http://localhost:3000/hot_articles">중고거래</a>
+            <a href="http://localhost:3000/allproduct">중고거래</a>
           </div>
           <div
             style={{

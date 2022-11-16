@@ -8,8 +8,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaCarrot } from "react-icons/fa";
 import "../styles/Jobs.css";
-
-import Product from "../components/Product";
 const HotArticles = ({ logined, setLogined }) => {
   const [posts, setPosts] = useState([]);
   const onProduct = (data) => {

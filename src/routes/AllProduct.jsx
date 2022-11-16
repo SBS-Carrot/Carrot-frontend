@@ -9,22 +9,22 @@ import { useNavigate } from "react-router-dom";
 import { FaCarrot } from "react-icons/fa";
 import "../styles/Jobs.css";
 import ProductPaging from "../components/ProductPaging";
-import Product from "../components/Product";
 import { useParams } from "react-router-dom";
+import "../styles/Pagination.css";
 const HotArticles = ({ logined, setLogined }) => {
-  const { num } = useParams;
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [currentPosts, setCurrentPosts] = useState([]);
   const handlePageChange = (page) => {
     setPage(page);
   };
-  const [postPerPage] = useState(7);
+  const [postPerPage] = useState(8);
   const indexOfLastPost = page * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
 
   const onProduct = (data) => {
-    setPosts((prev) => data);
+    const datas = data.reverse();
+    setPosts((prev) => datas);
   };
   //   npm i react-js-pagination
   useEffect(() => {
@@ -35,6 +35,7 @@ const HotArticles = ({ logined, setLogined }) => {
           method: "GET",
         });
         onProduct(data.data);
+        setCurrentPosts(data.data.slice(0, 8));
       } catch (e) {
         console.log(e);
       }
@@ -43,9 +44,8 @@ const HotArticles = ({ logined, setLogined }) => {
   }, []);
 
   useEffect(() => {
-    setPosts([...Lists].reverse());
-    setCurrentPosts(posts, slice(indexOfFirstPost, indexOfLastPost));
-  }, [indexOfFirstPost, indexOfLastPost, weightLists, page]);
+    setCurrentPosts(posts.slice(indexOfFirstPost, indexOfLastPost));
+  }, [indexOfFirstPost, indexOfLastPost, page]);
   const navigate = useNavigate();
   const moveProduct = async (id) => {
     try {
@@ -76,8 +76,9 @@ const HotArticles = ({ logined, setLogined }) => {
               textAlign: "center",
             }}
           >
-            중고거래 인기매물
+            중고거래 모든 매물보기
           </h1>
+
           <div
             style={{
               transform: "translateX(10%)",
@@ -160,7 +161,7 @@ const HotArticles = ({ logined, setLogined }) => {
           </div>
           <div className="container">
             <ul className="grid grid-cols-4">
-              {posts.map((product, index) => (
+              {currentPosts.map((product, index) => (
                 <li key={index}>
                   <button
                     onClick={() => {
@@ -256,6 +257,13 @@ const HotArticles = ({ logined, setLogined }) => {
               ))}
             </ul>
           </div>
+          <ProductPaging
+            totalCount={posts.length}
+            page={page}
+            postPerPage={postPerPage}
+            pageRangeDisplayed={5}
+            handlePageChange={handlePageChange}
+          />
         </div>
         <div
           style={{
@@ -317,13 +325,6 @@ const HotArticles = ({ logined, setLogined }) => {
               Google Play
             </a>
           </div>
-          <ProductPaging
-            totalCount={posts.length}
-            page={page}
-            postPerPage={postPerPage}
-            pageRangeDisplayed={5}
-            handlePageChange={handlePageChange}
-          />
         </div>
         <Footer />
       </div>

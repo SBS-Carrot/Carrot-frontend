@@ -70,7 +70,7 @@ const LoginedHeader = ({ setLogined }) => {
               color: "#ffa445",
             }}
           >
-            <a href="http://localhost:3000/hot_articles">중고거래</a>
+            <a href="http://localhost:3000/allproduct">중고거래</a>
           </div>
           <div>
             <a href="http://localhost:3000/jobs">알바</a>

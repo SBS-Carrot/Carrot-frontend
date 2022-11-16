@@ -667,7 +667,6 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 onClick={onChangeOpenPost}
                 style={{
                   border: "1px #d5d5d5 solid",
-
                   height: "30px",
                 }}
               >

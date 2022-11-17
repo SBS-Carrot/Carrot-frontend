@@ -451,11 +451,7 @@ const Jobspost = ({
                 fontSize: "1.2rem",
               }}
             >
-              <Map
-              // search={
-              //   jobArticle.address
-              // }
-              />
+              <Map searchPlace="빕스" />
             </div>
 
             <div

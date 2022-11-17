@@ -10,6 +10,7 @@ import { FaCarrot } from "react-icons/fa";
 import "../styles/Jobs.css";
 import ProductPaging from "./ProductPaging";
 import "../styles/Pagination.css";
+import Realty from "../routes/Realty";
 const AllProduct = ({ logined, setLogined }) => {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
@@ -265,7 +266,7 @@ const AllProduct = ({ logined, setLogined }) => {
                           fontSize: "0.9rem",
                         }}
                       >
-                        <span>부산 진구 부전동</span>
+                        <span>{product.productDealAddress}</span>
                       </div>
                       <div
                         className="flex"
@@ -369,23 +370,23 @@ const AllProduct = ({ logined, setLogined }) => {
           }}
         >
           <div
+            className="mt-1"
             style={{
               width: "100%",
+
               height: "120px",
             }}
           >
             <div
               style={{
-                transform: "translate(-20%,10%)",
-
+                transform: "translate(10%,10%)",
                 display: "inline-block",
-                width: "100px",
+                width: "90px",
                 textAlign: "center",
                 marginLeft: "2.5rem",
                 backgroundColor: "#fc9d39",
                 borderRadius: "10px",
-
-                height: "60px",
+                height: "55px",
               }}
             >
               <a
@@ -410,7 +411,7 @@ const AllProduct = ({ logined, setLogined }) => {
             </div>
             <h1
               style={{
-                fontSize: "2rem",
+                fontSize: "1.7rem",
                 fontWeight: "bolder",
                 textAlign: "center",
                 margin: "0 auto",
@@ -424,10 +425,8 @@ const AllProduct = ({ logined, setLogined }) => {
             <div
               style={{
                 position: "relative",
-                marginTop: "1rem",
                 display: "inline",
                 width: "350px",
-
                 left: "10%",
               }}
             >
@@ -475,14 +474,21 @@ const AllProduct = ({ logined, setLogined }) => {
               style={{
                 textAlign: "center",
                 fontWeight: "bolder",
-                fontSize: "1.5rem",
-                transform: "translateX(-5%)",
+                fontSize: "1.3rem",
+                transform: "translateX(-8%)",
               }}
             >
               <a href="/hot_articles">＞ 인기매물 보러가기</a>
             </h2>
           </div>
-          <div className="container">
+          <div
+            className="container"
+            style={{
+              width: "800px",
+
+              margin: "0 auto",
+            }}
+          >
             <ul className="grid grid-cols-4">
               {currentPosts.map((product, index) => (
                 <li key={index}>
@@ -499,8 +505,8 @@ const AllProduct = ({ logined, setLogined }) => {
                     >
                       <div
                         style={{
-                          width: "200px",
-                          height: "200px",
+                          width: "150px",
+                          height: "150px",
                           borderRadius: "15px",
 
                           marginBottom: "10px",
@@ -523,7 +529,7 @@ const AllProduct = ({ logined, setLogined }) => {
                             style={{
                               color: "#fc9d39",
                               fontSize: "10rem",
-                              transform: "translate(12.5%,12.5%)",
+                              transform: "translate(-5% ,-5%)",
                               border: "0.1px #fc9d39 solid",
                               borderRadius: "50%",
                             }}
@@ -560,7 +566,7 @@ const AllProduct = ({ logined, setLogined }) => {
                           fontSize: "0.9rem",
                         }}
                       >
-                        <span>부산 진구 부전동</span>
+                        <span>{product.productDealAddress}</span>
                       </div>
                       <div
                         className="flex"

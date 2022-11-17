@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { getValue } from "@testing-library/user-event/dist/utils";
 import { useNavigate } from "react-router-dom";
+import DaumPostcode from "react-daum-postcode";
 
 const RealtyWrite = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -41,8 +42,6 @@ const RealtyWrite = ({ logined, setLogined }) => {
   const [roomValue, setRoomValue] = useState("");
   //욕실
   const [bathValue, setBathValue] = useState("");
-  //주소
-  const [addressValue, setAddressValue] = useState("");
   //전체층
   const [wholeValue, setWholeValue] = useState("");
   //해당층
@@ -66,7 +65,9 @@ const RealtyWrite = ({ logined, setLogined }) => {
   //전세, 매매 가격
   const [salePrice, setSalePrice] = useState("");
   //카테고리 단기, 월세, 전세, 매매
-  const [deal, setDeal] = useState("");
+  const [dealing, setDealing] = useState("");
+  //한줄소개
+  const [introduce, setIntroduce] = useState("");
 
   const Inside_List = [
     { id: 0, data: "복층" },
@@ -81,8 +82,10 @@ const RealtyWrite = ({ logined, setLogined }) => {
   const onCheckInside = (checked, item) => {
     if (checked) {
       setInside([...inside, item]);
+      console.log(inside);
     } else {
       setInside(inside.filter((el) => el !== item));
+      console.log(inside);
     }
   };
   const onMoveDateChange = (e) => {
@@ -104,9 +107,6 @@ const RealtyWrite = ({ logined, setLogined }) => {
   };
   const onBathChange = (e) => {
     setBathValue(e.target.value);
-  };
-  const onAddressChange = (e) => {
-    setAddressValue(e.target.value);
   };
   const onWholeChange = (e) => {
     setWholeValue(e.target.value);
@@ -168,7 +168,12 @@ const RealtyWrite = ({ logined, setLogined }) => {
   const elevatorRadioButton = (e) => {
     setElevator(e.target.value);
   };
-
+  const onIntroduce = (e) => {
+    if (e.target.value.length > 20) {
+      return;
+    }
+    setIntroduce(e.target.value);
+  };
   const onCompleteChange = () => {
     setCompleteToggle(!completeToggle);
   };
@@ -178,7 +183,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     setMonthlyDealingToggle(false);
     setDepositDealingToggle(false);
     setDealingToggle(false);
-    setDeal("단기");
+    setDealing("단기");
   };
 
   const onMonthlyDealing = () => {
@@ -186,7 +191,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     setMonthlyDealingToggle(true);
     setDepositDealingToggle(false);
     setDealingToggle(false);
-    setDeal("월세");
+    setDealing("월세");
   };
 
   const onDepositDealing = () => {
@@ -194,7 +199,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     setMonthlyDealingToggle(false);
     setDepositDealingToggle(true);
     setDealingToggle(false);
-    setDeal("전세");
+    setDealing("전세");
   };
 
   const onDealing = () => {
@@ -202,7 +207,45 @@ const RealtyWrite = ({ logined, setLogined }) => {
     setMonthlyDealingToggle(false);
     setDepositDealingToggle(false);
     setDealingToggle(true);
-    setDeal("매매");
+    setDealing("매매");
+  };
+
+  const [address, setAddress] = useState(""); // 주소
+  const [addressDetail, setAddressDetail] = useState(""); // 상세주소
+
+  const [isOpenPost, setIsOpenPost] = useState(false);
+
+  const onChangeOpenPost = () => {
+    setIsOpenPost(!isOpenPost);
+  };
+
+  const onCompletePost = (data) => {
+    let fullAddr = data.address;
+    let extraAddr = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddr += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddr +=
+          extraAddr !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddr += extraAddr !== "" ? ` (${extraAddr})` : "";
+    }
+    setAddressDetail(fullAddr);
+    setIsOpenPost(false);
+    const dong = fullAddr.split(" ");
+    setAddress(dong[2]);
+  };
+
+  const postCodeStyle = {
+    display: "block",
+    position: "relative",
+    top: "0%",
+    width: "480px",
+    height: "500px",
+    padding: "7px",
   };
 
   // 이미지 상대경로 저장
@@ -252,7 +295,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     areaValue,
     roomValue,
     bathValue,
-    addressValue,
+    addressDetail,
     wholeValue,
     floorValue,
     contentValue,
@@ -264,7 +307,9 @@ const RealtyWrite = ({ logined, setLogined }) => {
     costValue,
     costContent,
     salePrice,
-    deal
+    dealing,
+    introduce,
+    address
   ) => {
     try {
       const userid = sessionStorage.getItem("userid");
@@ -279,7 +324,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
           realtyArea: areaValue,
           realtyRoom: roomValue,
           realtyBath: bathValue,
-          realtyAddress: addressValue,
+          realtyAddress: addressDetail,
           realtyWhole: wholeValue,
           realtyFloor: floorValue,
           realtyMove: move,
@@ -298,8 +343,10 @@ const RealtyWrite = ({ logined, setLogined }) => {
           realtyCost: costValue,
           realtyCostContent: costContent,
           realtySalePrice: salePrice,
-          realtyDeal: deal,
+          realtyDealing: dealing,
           realtyUserid: userid,
+          realtyIntroduce: introduce,
+          realtyAddressDong: address,
         },
       });
 
@@ -325,7 +372,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     areaValue,
     roomValue,
     bathValue,
-    addressValue,
+    addressDetail,
     wholeValue,
     floorValue,
     contentValue,
@@ -337,8 +384,10 @@ const RealtyWrite = ({ logined, setLogined }) => {
     costValue,
     costContent,
     salePrice,
-    deal,
-    uploadedImg
+    dealing,
+    uploadedImg,
+    introduce,
+    address
   ) => {
     try {
       const userid = sessionStorage.getItem("userid");
@@ -350,7 +399,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
         realtyArea: areaValue,
         realtyRoom: roomValue,
         realtyBath: bathValue,
-        realtyAddress: addressValue,
+        realtyAddress: addressDetail,
         realtyWhole: wholeValue,
         realtyFloor: floorValue,
         realtyMove: move,
@@ -369,8 +418,10 @@ const RealtyWrite = ({ logined, setLogined }) => {
         realtyCost: costValue,
         realtyCostContent: costContent,
         realtySalePrice: salePrice,
-        realtyDeal: deal,
+        realtyDealing: dealing,
         realtyUserid: userid,
+        realtyIntroduce: introduce,
+        realtyAddressDong: address,
       };
 
       const json = JSON.stringify(realtyDto);
@@ -592,18 +643,57 @@ const RealtyWrite = ({ logined, setLogined }) => {
             </div>
           </div>
           <div className="font-bold">주소</div>
-          <div className="mb-4 flex gap-2">
+          <span>
+            <button
+              type="button"
+              style={{
+                border: "1px #d5d5d5 solid",
+                width: "120px",
+                height: "30px",
+              }}
+              onClick={() => {
+                onChangeOpenPost();
+              }}
+            >
+              우편번호 검색
+            </button>
+          </span>
+          <div className="mb-4 gap-2">
             <input
               type="text"
               placeholder="주소 입력"
-              value={addressValue}
-              onChange={onAddressChange}
+              value={addressDetail}
+              onChange={onCompletePost}
               style={{
                 border: "1px #d5d5d5 solid",
                 width: "400px",
                 height: "30px",
               }}
+              disabled
             />
+
+            {isOpenPost && (
+              <span>
+                <DaumPostcode
+                  style={postCodeStyle}
+                  autoClose
+                  onComplete={onCompletePost}
+                />
+              </span>
+            )}
+            <div className="mt-2">
+              <input
+                type="text"
+                placeholder="한줄 소개 해주세요."
+                value={introduce}
+                onChange={onIntroduce}
+                style={{
+                  border: "1px #d5d5d5 solid",
+                  width: "400px",
+                  height: "30px",
+                }}
+              />
+            </div>
           </div>
           <div className="font-bold">층</div>
           <div className="mb-4 flex gap-2">
@@ -1377,7 +1467,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 areaValue,
                 roomValue,
                 bathValue,
-                addressValue,
+                addressDetail,
                 wholeValue,
                 floorValue,
                 contentValue,
@@ -1389,7 +1479,9 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 costValue,
                 costContent,
                 salePrice,
-                deal
+                dealing,
+                introduce,
+                address
               );
             } else {
               onSubmits(
@@ -1406,7 +1498,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 areaValue,
                 roomValue,
                 bathValue,
-                addressValue,
+                addressDetail,
                 wholeValue,
                 floorValue,
                 contentValue,
@@ -1418,8 +1510,10 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 costValue,
                 costContent,
                 salePrice,
-                deal,
-                uploadedImg
+                dealing,
+                uploadedImg,
+                introduce,
+                address
               );
             }
           }}

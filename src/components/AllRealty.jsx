@@ -199,7 +199,7 @@ const AllRealty = ({ logined, setLogined }) => {
                                 textAlign: "left",
                               }}
                             >
-                              <div>OO동</div>
+                              <div>{realty.realtyAddressDong}</div>
                             </div>
 
                             <div

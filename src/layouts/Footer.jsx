@@ -21,7 +21,7 @@ const Footer = () => {
           margin: "0 auto",
         }}
       >
-        <div className=" flex  gap-12">
+        <div className=" flex gap-12">
           <div className="flex justify-center flex-col gap-10">
             <a href="#" className=" link-hover">
               중고거래
@@ -98,7 +98,6 @@ const Footer = () => {
           className="text-sm "
           style={{
             width: "520px",
-
             color: "gray",
           }}
         >

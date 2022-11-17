@@ -213,12 +213,12 @@ const HotArticles = ({ logined, setLogined }) => {
                       </span>
                     </div>
                     <div
-                      className="flex"
+                      className="flex mt-1"
                       style={{
-                        fontSize: "0.9rem",
+                        fontSize: "0.8rem",
                       }}
                     >
-                      <span>부산 진구 부전동</span>
+                      <span>{product.productDealAddress}</span>
                     </div>
                     <div
                       className="flex"

@@ -3,6 +3,8 @@ import axios from "axios";
 import Header from "../layouts/Header";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import DaumPostcode from "react-daum-postcode";
+
 const Join = () => {
   const [idValue, setIdValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -155,9 +157,7 @@ const Join = () => {
       return { ...prev, dd: e.target.value };
     });
   };
-  const onAddressChange = (e) => {
-    setAddressValue(e.target.value);
-  };
+
   const onEmailChange = (e) => {
     setEmailValue(e.target.value);
   };
@@ -199,6 +199,40 @@ const Join = () => {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const [isOpenPost, setIsOpenPost] = useState(false);
+
+  const onChangeOpenPost = () => {
+    setIsOpenPost(!isOpenPost);
+  };
+
+  const onCompletePost = (data) => {
+    let fullAddr = data.address;
+    let extraAddr = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddr += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddr +=
+          extraAddr !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddr += extraAddr !== "" ? ` (${extraAddr})` : "";
+    }
+    setAddressValue(fullAddr);
+    setIsOpenPost(false);
+  };
+
+  const postCodeStyle = {
+    display: "block",
+    position: "relative",
+    top: "0%",
+    margin: "0 auto",
+    width: "450px",
+    height: "480px",
+    padding: "7px",
   };
 
   return (
@@ -652,13 +686,25 @@ const Join = () => {
             type="text"
             placeholder="대전시 OO구 OO동까지 입력해주세요"
             value={addressValue}
-            onChange={onAddressChange}
+            onChange={onCompletePost}
+            onClick={() => {
+              onChangeOpenPost();
+            }}
             style={{
               outline: "1px #d5d5d5 solid",
               width: "400px",
               height: "50px",
             }}
           />
+          {isOpenPost && (
+            <span>
+              <DaumPostcode
+                style={postCodeStyle}
+                autoClose
+                onComplete={onCompletePost}
+              />
+            </span>
+          )}
           <h5
             style={{
               textAlign: "start",

@@ -65,7 +65,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
   //전세, 매매 가격
   const [salePrice, setSalePrice] = useState("");
   //카테고리 단기, 월세, 전세, 매매
-  const [deal, setDeal] = useState("");
+  const [dealing, setDealing] = useState("");
   //한줄소개
   const [introduce, setIntroduce] = useState("");
 
@@ -82,8 +82,10 @@ const RealtyWrite = ({ logined, setLogined }) => {
   const onCheckInside = (checked, item) => {
     if (checked) {
       setInside([...inside, item]);
+      console.log(inside);
     } else {
       setInside(inside.filter((el) => el !== item));
+      console.log(inside);
     }
   };
   const onMoveDateChange = (e) => {
@@ -181,7 +183,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     setMonthlyDealingToggle(false);
     setDepositDealingToggle(false);
     setDealingToggle(false);
-    setDeal("단기");
+    setDealing("단기");
   };
 
   const onMonthlyDealing = () => {
@@ -189,7 +191,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     setMonthlyDealingToggle(true);
     setDepositDealingToggle(false);
     setDealingToggle(false);
-    setDeal("월세");
+    setDealing("월세");
   };
 
   const onDepositDealing = () => {
@@ -197,7 +199,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     setMonthlyDealingToggle(false);
     setDepositDealingToggle(true);
     setDealingToggle(false);
-    setDeal("전세");
+    setDealing("전세");
   };
 
   const onDealing = () => {
@@ -205,7 +207,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     setMonthlyDealingToggle(false);
     setDepositDealingToggle(false);
     setDealingToggle(true);
-    setDeal("매매");
+    setDealing("매매");
   };
 
   const [address, setAddress] = useState(""); // 주소
@@ -231,11 +233,10 @@ const RealtyWrite = ({ logined, setLogined }) => {
       }
       fullAddr += extraAddr !== "" ? ` (${extraAddr})` : "";
     }
-
-    setAddress(data.zonecode);
     setAddressDetail(fullAddr);
     setIsOpenPost(false);
-    console.log(fullAddr);
+    const dong = fullAddr.split(" ");
+    setAddress(dong[2]);
   };
 
   const postCodeStyle = {
@@ -306,7 +307,9 @@ const RealtyWrite = ({ logined, setLogined }) => {
     costValue,
     costContent,
     salePrice,
-    deal
+    dealing,
+    introduce,
+    address
   ) => {
     try {
       const userid = sessionStorage.getItem("userid");
@@ -340,8 +343,10 @@ const RealtyWrite = ({ logined, setLogined }) => {
           realtyCost: costValue,
           realtyCostContent: costContent,
           realtySalePrice: salePrice,
-          realtyDeal: deal,
+          realtyDealing: dealing,
           realtyUserid: userid,
+          realtyIntroduce: introduce,
+          realtyAddressDong: address,
         },
       });
 
@@ -379,8 +384,10 @@ const RealtyWrite = ({ logined, setLogined }) => {
     costValue,
     costContent,
     salePrice,
-    deal,
-    uploadedImg
+    dealing,
+    uploadedImg,
+    introduce,
+    address
   ) => {
     try {
       const userid = sessionStorage.getItem("userid");
@@ -411,8 +418,10 @@ const RealtyWrite = ({ logined, setLogined }) => {
         realtyCost: costValue,
         realtyCostContent: costContent,
         realtySalePrice: salePrice,
-        realtyDeal: deal,
+        realtyDealing: dealing,
         realtyUserid: userid,
+        realtyIntroduce: introduce,
+        realtyAddressDong: address,
       };
 
       const json = JSON.stringify(realtyDto);
@@ -660,6 +669,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 width: "400px",
                 height: "30px",
               }}
+              disabled
             />
 
             {isOpenPost && (
@@ -1469,7 +1479,9 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 costValue,
                 costContent,
                 salePrice,
-                deal
+                dealing,
+                introduce,
+                address
               );
             } else {
               onSubmits(
@@ -1498,8 +1510,10 @@ const RealtyWrite = ({ logined, setLogined }) => {
                 costValue,
                 costContent,
                 salePrice,
-                deal,
-                uploadedImg
+                dealing,
+                uploadedImg,
+                introduce,
+                address
               );
             }
           }}

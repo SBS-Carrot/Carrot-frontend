@@ -370,10 +370,10 @@ const Realtypost = ({
                   color: "#ffa445",
                 }}
               >
-                {article.realtyDealing}
+                {article.realtyDeal}
               </div>
               <div className="font-bold">
-                {article.realtyDeal} {article.realtyDeposit} /{" "}
+                {article.realtyDealing} {article.realtyDeposit} /{" "}
                 {article.realtyMonthly}
               </div>
             </div>
@@ -967,7 +967,9 @@ const Realtypost = ({
                 <div>{article.realtyElevator}</div>
               </li>
               <li className="flex gap-4">
-                <div>{article.realtyInside}</div>
+                <div>
+                  {article.realtyInside == null ? "없음" : article.realtyInside}
+                </div>
               </li>
             </ul>
           </section>

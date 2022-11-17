@@ -168,7 +168,7 @@ const Realty = ({ logined, setLogined }) => {
                                 }}
                                 className="ellipsis_2"
                               >
-                                {realty.realtyAddress}
+                                {realty.realtyIntroduce}
                               </span>
                             </span>
                             <div
@@ -178,7 +178,7 @@ const Realty = ({ logined, setLogined }) => {
                                 textAlign: "left",
                               }}
                             >
-                              <div>OO동</div>
+                              <div>{realty.realtyAddressDong}</div>
                             </div>
 
                             <div

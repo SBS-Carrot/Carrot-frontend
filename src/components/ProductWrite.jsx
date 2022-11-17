@@ -27,6 +27,10 @@ const ProductWrite = ({ logined, setLogined }) => {
   const [showImages, setShowImages] = useState([]);
   const [content, setContent] = useState("");
   const [uploadedImg, setUploadedImg] = useState([]);
+  const [dealAddress, setDealAddress] = useState("");
+  const onDealAddress = (e) => {
+    setDealAddress(e.target.value);
+  };
   const [id, setId] = useState("");
   const onChange = (e) => {
     setContent(e.target.files[0]);
@@ -105,6 +109,7 @@ const ProductWrite = ({ logined, setLogined }) => {
           productPrice: priceValue,
           productSubject: subjectValue,
           productContent: contentValue,
+          productDealAddress: dealAddress,
           productUserid: sessionStorage.getItem("userid"),
         },
       });
@@ -120,7 +125,8 @@ const ProductWrite = ({ logined, setLogined }) => {
     contentValue,
     category,
     priceValue,
-    uploadedImg
+    uploadedImg,
+    dealAddress
   ) => {
     try {
       const formData = new FormData();
@@ -129,6 +135,7 @@ const ProductWrite = ({ logined, setLogined }) => {
         productPrice: priceValue,
         productSubject: subjectValue,
         productContent: contentValue,
+        productDealAddress: dealAddress,
         productUserid: sessionStorage.getItem("userid"),
       };
       // https://velog.io/@hhhminme/Axios%EC%97%90%EC%84%9C-Post-%EC%8B%9C-Contenttypeapplicationoctet-streamnotsupported-%ED%95%B8%EB%93%A4%EB%A7%81415-%EC%97%90%EB%9F%AC
@@ -247,6 +254,20 @@ const ProductWrite = ({ logined, setLogined }) => {
               }}
             />
           </div>
+          <div className="pt-4">
+            <div> 거래장소</div>
+            <input
+              type="text"
+              placeholder="거래할 장소를 입력해주세요."
+              value={dealAddress}
+              onChange={onDealAddress}
+              style={{
+                border: "1px  #d5d5d5 solid",
+                width: "60%",
+                height: "30px",
+              }}
+            />
+          </div>
           <div>
             <div className="pt-4">내용</div>
             <div>
@@ -352,14 +373,21 @@ const ProductWrite = ({ logined, setLogined }) => {
             <button
               onClick={() => {
                 if (uploadedImg.length == 0) {
-                  onSubmit(subjectValue, contentValue, category, priceValue);
+                  onSubmit(
+                    subjectValue,
+                    contentValue,
+                    category,
+                    priceValue,
+                    dealAddress
+                  );
                 } else {
                   onSubmits(
                     subjectValue,
                     contentValue,
                     category,
                     priceValue,
-                    uploadedImg
+                    uploadedImg,
+                    dealAddress
                   );
                 }
               }}

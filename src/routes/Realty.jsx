@@ -236,7 +236,7 @@ const Realty = ({ logined, setLogined }) => {
                                     display: "inline",
                                   }}
                                 >
-                                  {realty.realtyDealing} &nbsp;
+                                  {realty.realtyDealing}
                                   {realty.realtySalePrice.length >= 5 ? (
                                     <div
                                       style={{

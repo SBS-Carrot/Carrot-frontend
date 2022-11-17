@@ -171,7 +171,7 @@ const Realtypost = ({
         <LoginedRealtyHeader setLogined={setLogined} />
         <div
           style={{
-            width: "780px",
+            width: "700px",
             margin: "0 auto",
           }}
         >
@@ -283,7 +283,7 @@ const Realtypost = ({
               <div
                 className="flex justify-center flex-col"
                 style={{
-                  width: "500px",
+                  width: "470px",
                 }}
               >
                 <div className="font-bold ">
@@ -373,8 +373,20 @@ const Realtypost = ({
                 {article.realtyDeal}
               </div>
               <div className="font-bold">
-                {article.realtyDealing} {article.realtyDeposit} /{" "}
-                {article.realtyMonthly}
+                {article.realtyDealing === "매매" ? (
+                  <div>
+                    {article.realtyDealing} {article.realtySalePrice}
+                  </div>
+                ) : (
+                  ""
+                )}
+                {article.realtyDealing === "전세" ? (
+                  <div>
+                    {article.realtyDealing} {article.realtySalePrice}
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             <div className="flex gap-2">

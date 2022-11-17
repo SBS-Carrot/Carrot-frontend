@@ -189,7 +189,7 @@ const AllRealty = ({ logined, setLogined }) => {
                                 }}
                                 className="ellipsis_2"
                               >
-                                {realty.realtyAddress}
+                                {realty.realtyIntroduce}
                               </span>
                             </span>
                             <div

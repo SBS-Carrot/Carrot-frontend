@@ -4,6 +4,7 @@ import axios from "axios";
 import LoginedJobsHeader from "../layouts/LoginedJobsHeader";
 import { useNavigate } from "react-router-dom";
 import { MdAddAPhoto } from "react-icons/md";
+import DaumPostcode from "react-daum-postcode";
 
 const JobsWrite = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -65,9 +66,7 @@ const JobsWrite = ({ logined, setLogined }) => {
   const onNameChange = (e) => {
     setName(e.target.value);
   };
-  const onPlaceChange = (e) => {
-    setPlaceValue(e.target.value);
-  };
+
   const onStartTimeChange = (e) => {
     setStartTimeValue(e.target.value);
   };
@@ -119,6 +118,39 @@ const JobsWrite = ({ logined, setLogined }) => {
 
   const onCompleteChange = () => {
     setCompleteToggle(!completeToggle);
+  };
+
+  const [isOpenPost, setIsOpenPost] = useState(false);
+
+  const onChangeOpenPost = () => {
+    setIsOpenPost(!isOpenPost);
+  };
+
+  const onCompletePost = (data) => {
+    let fullAddr = data.address;
+    let extraAddr = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddr += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddr +=
+          extraAddr !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddr += extraAddr !== "" ? ` (${extraAddr})` : "";
+    }
+    setPlaceValue(fullAddr);
+    setIsOpenPost(false);
+  };
+
+  const postCodeStyle = {
+    display: "block",
+    position: "relative",
+    top: "0%",
+    width: "480px",
+    height: "500px",
+    padding: "7px",
   };
 
   // 이미지 상대경로 저장
@@ -752,16 +784,32 @@ const JobsWrite = ({ logined, setLogined }) => {
             </div>
             <div className="pt-1">
               <div> 주소</div>
-              <input
-                value={placeValue}
-                onChange={onPlaceChange}
-                type="text"
-                placeholder="어디에서 일하나요?"
-                style={{
-                  border: "1px #d5d5d5 solid",
-                  width: "100%",
-                }}
-              />
+              <div className="mb-4 gap-2">
+                <input
+                  type="text"
+                  placeholder="어디에서 일하나요?"
+                  onClick={() => {
+                    onChangeOpenPost();
+                  }}
+                  value={placeValue}
+                  onChange={onCompletePost}
+                  style={{
+                    border: "1px #d5d5d5 solid",
+                    width: "100%",
+                    height: "30px",
+                  }}
+                />
+
+                {isOpenPost && (
+                  <span>
+                    <DaumPostcode
+                      style={postCodeStyle}
+                      autoClose
+                      onComplete={onCompletePost}
+                    />
+                  </span>
+                )}
+              </div>
             </div>
           </div>
           <div>

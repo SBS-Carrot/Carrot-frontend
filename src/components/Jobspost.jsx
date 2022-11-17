@@ -173,7 +173,7 @@ const Jobspost = ({
         <LoginedJobsHeader setLogined={setLogined} />
         <div
           style={{
-            width: "780px",
+            width: "700px",
             margin: "0 auto",
           }}
         >
@@ -285,7 +285,7 @@ const Jobspost = ({
               <div
                 className="flex justify-center flex-col"
                 style={{
-                  width: "500px",
+                  width: "470px",
                 }}
               >
                 <div className="font-bold ">{jobArticle.jobUserid}</div>

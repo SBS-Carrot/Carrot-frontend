@@ -69,51 +69,16 @@ const HotArticles = ({ logined, setLogined }) => {
           }}
         >
           {" "}
-          <div
-            style={{
-              transform: "translate(-20%,10%)",
-
-              display: "inline-block",
-              width: "100px",
-              textAlign: "center",
-              marginLeft: "2.5rem",
-              backgroundColor: "#fc9d39",
-              borderRadius: "10px",
-
-              height: "60px",
-            }}
-          >
-            <a
-              href="/productWrite"
-              style={{
-                color: "white",
-                fontWeight: "bolder",
-              }}
-            >
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  paddingTop: "5px",
-                }}
-              >
-                중고매물
-                <br />
-                거래하기
-              </div>
-            </a>
-          </div>
           <h1
             style={{
-              fontSize: "2rem",
+              marginTop: "5px",
+              fontSize: "1.7rem",
               fontWeight: "bolder",
               textAlign: "center",
               margin: "0 auto",
-              display: "inline",
-              paddingLeft: "9rem",
             }}
           >
-            중고거래 인기 매물보기
+            중고거래 인기매물
           </h1>
           <div
             style={{
@@ -122,7 +87,7 @@ const HotArticles = ({ logined, setLogined }) => {
               display: "inline",
               width: "350px",
 
-              left: "10%",
+              left: "70%",
             }}
           >
             <div className="dropdown dropdown-hover">
@@ -165,7 +130,13 @@ const HotArticles = ({ logined, setLogined }) => {
               </ul>
             </div>
           </div>
-          <div className="container">
+          <div
+            className="container"
+            style={{
+              width: "800px",
+              margin: "0 auto",
+            }}
+          >
             <ul className="grid grid-cols-4">
               {currentPosts.map((product, index) => (
                 <li key={index}>
@@ -182,8 +153,8 @@ const HotArticles = ({ logined, setLogined }) => {
                     >
                       <div
                         style={{
-                          width: "200px",
-                          height: "200px",
+                          width: "150px",
+                          height: "150px",
                           borderRadius: "15px",
 
                           marginBottom: "10px",
@@ -206,7 +177,7 @@ const HotArticles = ({ logined, setLogined }) => {
                             style={{
                               color: "#fc9d39",
                               fontSize: "10rem",
-                              transform: "translate(12.5%,12.5%)",
+                              transform: "translate(-5%, -5%)",
                               border: "0.1px #fc9d39 solid",
                               borderRadius: "50%",
                             }}
@@ -230,6 +201,7 @@ const HotArticles = ({ logined, setLogined }) => {
                             fontWeight: "bold",
                             width: "100px",
                             height: "20px",
+                            textAlign: "start",
                           }}
                         >
                           {product.productPrice}원

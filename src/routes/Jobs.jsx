@@ -122,25 +122,6 @@ const Jobs = ({ logined, setLogined }) => {
             >
               인기 당근알바
             </h1>
-            <span
-              href={`/jobsWrite`}
-              className="flex items-end justify-end "
-              style={{
-                width: "60%",
-              }}
-            >
-              <a
-                href={`/jobsWrite`}
-                className="rounded-md p-2"
-                style={{
-                  backgroundColor: "#fc9d39",
-                  color: "white",
-                }}
-              >
-                {" "}
-                알바 구하기
-              </a>
-            </span>
           </div>
           <ul
             style={{

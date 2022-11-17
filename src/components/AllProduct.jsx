@@ -124,10 +124,8 @@ const AllProduct = ({ logined, setLogined }) => {
             <div
               style={{
                 position: "relative",
-                marginTop: "1rem",
                 display: "inline",
                 width: "350px",
-
                 left: "10%",
               }}
             >
@@ -230,7 +228,7 @@ const AllProduct = ({ logined, setLogined }) => {
                             style={{
                               color: "#fc9d39",
                               fontSize: "10rem",
-                              transform: "translate(-5%)",
+                              transform: "translate(-5% ,-5%)",
                               border: "0.1px #fc9d39 solid",
                               borderRadius: "50%",
                             }}

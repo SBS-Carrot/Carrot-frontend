@@ -61,14 +61,14 @@ const RealtyHeader = () => {
             <a href="http://localhost:3000/allproduct">중고거래</a>
           </div>
           <div>
-            <a href="http://localhost:3000/jobs">알바</a>
+            <a href="http://localhost:3000/alljobs">알바</a>
           </div>
           <div
             style={{
               color: "#ffa445",
             }}
           >
-            <a href="http://localhost:3000/realty">부동산 직거래</a>
+            <a href="http://localhost:3000/allrealty">부동산 직거래</a>
           </div>
         </div>
         <div className="flex-grow justify-center items-center flex" style={{}}>

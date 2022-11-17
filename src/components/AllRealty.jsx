@@ -10,8 +10,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { FaCarrot } from "react-icons/fa";
 import "../styles/Jobs.css";
-import RealtyPaging from "../components/RealtyPaging";
-const Realty = ({ logined, setLogined }) => {
+import RealtyPaging from "./RealtyPaging";
+const AllRealty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const [Realty, setRealty] = useState([]);
   const [address, setAddress] = useState("");
@@ -85,7 +85,7 @@ const Realty = ({ logined, setLogined }) => {
                   paddingTop: "5%",
                 }}
               >
-                인기 부동산 직거래 게시글
+                모든 부동산 직거래 게시글
               </div>
               <span
                 href={`/realtyWrite`}
@@ -107,6 +107,15 @@ const Realty = ({ logined, setLogined }) => {
                 </a>
               </span>
             </div>
+            <h2
+              style={{
+                fontSize: "1.3rem",
+                fontWeight: "bolder",
+                marginTop: "10px",
+              }}
+            >
+              <a href="/realty">＞인기 부동산 매물 보러가기</a>
+            </h2>
             <div>
               <div className="mt-5">
                 <ul className="grid grid-cols-2 gap-5">
@@ -408,6 +417,15 @@ const Realty = ({ logined, setLogined }) => {
                 </a>
               </span>
             </div>
+            <h2
+              style={{
+                fontSize: "1.3rem",
+                fontWeight: "bolder",
+                marginTop: "10px",
+              }}
+            >
+              <a href="/realty">＞인기 부동산 매물 보러가기</a>
+            </h2>
             <div>
               <div className="mt-5">
                 <ul className="grid grid-cols-2 gap-5">
@@ -671,4 +689,4 @@ const Realty = ({ logined, setLogined }) => {
   }
 };
 
-export default Realty;
+export default AllRealty;

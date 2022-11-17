@@ -22,7 +22,9 @@ import MyPage from "./routes/MyPage";
 import axios from "axios";
 import Security from "./routes/Security";
 import ArticleControl from "./routes/ArticleControl";
-import AllProduct from "./routes/AllProduct";
+import AllProduct from "./components/AllProduct";
+import AllJobs from "./components/AllJobs";
+import AllRealty from "./components/AllRealty";
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
@@ -205,6 +207,14 @@ function App() {
         <Route
           path="/allProduct"
           element={<AllProduct logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/allJobs"
+          element={<AllJobs logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/allrealty"
+          element={<AllRealty logined={logined} setLogined={setLogined} />}
         />
       </Routes>
     </Router>

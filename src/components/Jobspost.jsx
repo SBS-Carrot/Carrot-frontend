@@ -18,6 +18,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaCarrot } from "react-icons/fa";
+import { MdKeyboardCapslock } from "react-icons/md";
+import Map from "./Map";
 const Jobspost = ({
   logined,
   setLogined,
@@ -449,14 +451,13 @@ const Jobspost = ({
                 fontSize: "1.2rem",
               }}
             >
-              주소
+              <Map
+              // search={
+              //   jobArticle.address
+              // }
+              />
             </div>
-            <div
-              style={{
-                height: "200px",
-                border: "1px gray solid",
-              }}
-            ></div>
+
             {jobArticle.jobPlace}
           </div>
           <section>

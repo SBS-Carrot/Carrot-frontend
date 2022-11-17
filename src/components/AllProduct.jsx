@@ -8,9 +8,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaCarrot } from "react-icons/fa";
 import "../styles/Jobs.css";
-import ProductPaging from "../components/ProductPaging";
+import ProductPaging from "./ProductPaging";
 import "../styles/Pagination.css";
-const HotArticles = ({ logined, setLogined }) => {
+const AllProduct = ({ logined, setLogined }) => {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [currentPosts, setCurrentPosts] = useState([]);
@@ -68,102 +68,119 @@ const HotArticles = ({ logined, setLogined }) => {
             margin: "0 auto",
           }}
         >
-          {" "}
           <div
             style={{
-              transform: "translate(-20%,10%)",
-
-              display: "inline-block",
-              width: "100px",
-              textAlign: "center",
-              marginLeft: "2.5rem",
-              backgroundColor: "#fc9d39",
-              borderRadius: "10px",
-
-              height: "60px",
+              width: "100%",
+              height: "120px",
             }}
           >
-            <a
-              href="/productWrite"
+            <div
               style={{
-                color: "white",
-                fontWeight: "bolder",
+                transform: "translate(-20%,10%)",
+
+                display: "inline-block",
+                width: "100px",
+                textAlign: "center",
+                marginLeft: "2.5rem",
+                backgroundColor: "#fc9d39",
+                borderRadius: "10px",
+
+                height: "60px",
               }}
             >
-              <div
+              <a
+                href="/productWrite"
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  paddingTop: "5px",
+                  color: "white",
+                  fontWeight: "bolder",
                 }}
               >
-                중고매물
-                <br />
-                거래하기
-              </div>
-            </a>
-          </div>
-          <h1
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bolder",
-              textAlign: "center",
-              margin: "0 auto",
-              display: "inline",
-              paddingLeft: "9rem",
-            }}
-          >
-            중고거래 인기 매물보기
-          </h1>
-          <div
-            style={{
-              position: "relative",
-              marginTop: "1rem",
-              display: "inline",
-              width: "350px",
+                <div
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    paddingTop: "5px",
+                  }}
+                >
+                  중고매물
+                  <br />
+                  거래하기
+                </div>
+              </a>
+            </div>
+            <h1
+              style={{
+                fontSize: "2rem",
+                fontWeight: "bolder",
+                textAlign: "center",
+                margin: "0 auto",
+                display: "inline",
+                paddingLeft: "9rem",
+                position: "relative",
+              }}
+            >
+              중고거래 모든 매물보기
+            </h1>
+            <div
+              style={{
+                position: "relative",
+                marginTop: "1rem",
+                display: "inline",
+                width: "350px",
 
-              left: "10%",
-            }}
-          >
-            <div className="dropdown dropdown-hover">
-              <label tabIndex={0} className="btn m-1">
-                대전광역시
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <a href="#">대전광역시</a>
-                </li>
-              </ul>
+                left: "10%",
+              }}
+            >
+              <div className="dropdown dropdown-hover">
+                <label tabIndex={0} className="btn m-1">
+                  대전광역시
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <a href="#">대전광역시</a>
+                  </li>
+                </ul>
+              </div>
+              <div className="dropdown dropdown-hover">
+                <label tabIndex={0} className="btn m-1">
+                  동네를 선택하세요
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                  style={{}}
+                >
+                  <li>
+                    <a href="http://localhost:3000/region/대덕구">대덕구</a>
+                  </li>
+                  <li>
+                    <a href="http://localhost:3000/region/동구">동구</a>
+                  </li>
+                  <li>
+                    <a href="http://localhost:3000/region/서구">서구</a>
+                  </li>
+                  <li>
+                    <a href="http://localhost:3000/region/유성구">유성구</a>
+                  </li>
+                  <li>
+                    <a href="http://localhost:3000/region/중구">중구</a>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div className="dropdown dropdown-hover">
-              <label tabIndex={0} className="btn m-1">
-                동네를 선택하세요
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                style={{}}
-              >
-                <li>
-                  <a href="http://localhost:3000/region/대덕구">대덕구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/동구">동구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/서구">서구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/유성구">유성구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/중구">중구</a>
-                </li>
-              </ul>
-            </div>
+            <h2
+              style={{
+                textAlign: "center",
+                fontWeight: "bolder",
+                fontSize: "1.5rem",
+                transform: "translateX(-5%)",
+              }}
+            >
+              <a href="/hot_articles">＞ 인기매물 보러가기</a>
+            </h2>
           </div>
           <div className="container">
             <ul className="grid grid-cols-4">
@@ -346,102 +363,119 @@ const HotArticles = ({ logined, setLogined }) => {
             margin: "0 auto",
           }}
         >
-          {" "}
           <div
             style={{
-              transform: "translate(-20%,10%)",
-
-              display: "inline-block",
-              width: "100px",
-              textAlign: "center",
-              marginLeft: "2.5rem",
-              backgroundColor: "#fc9d39",
-              borderRadius: "10px",
-
-              height: "60px",
+              width: "100%",
+              height: "120px",
             }}
           >
-            <a
-              href="/productWrite"
+            <div
               style={{
-                color: "white",
-                fontWeight: "bolder",
+                transform: "translate(-20%,10%)",
+
+                display: "inline-block",
+                width: "100px",
+                textAlign: "center",
+                marginLeft: "2.5rem",
+                backgroundColor: "#fc9d39",
+                borderRadius: "10px",
+
+                height: "60px",
               }}
             >
-              <div
+              <a
+                href="/productWrite"
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  paddingTop: "5px",
+                  color: "white",
+                  fontWeight: "bolder",
                 }}
               >
-                중고매물
-                <br />
-                거래하기
-              </div>
-            </a>
-          </div>
-          <h1
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bolder",
-              textAlign: "center",
-              margin: "0 auto",
-              display: "inline",
-              paddingLeft: "9rem",
-            }}
-          >
-            중고거래 모든 매물보기
-          </h1>
-          <div
-            style={{
-              position: "relative",
-              marginTop: "1rem",
-              display: "inline",
-              width: "350px",
+                <div
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    paddingTop: "5px",
+                  }}
+                >
+                  중고매물
+                  <br />
+                  거래하기
+                </div>
+              </a>
+            </div>
+            <h1
+              style={{
+                fontSize: "2rem",
+                fontWeight: "bolder",
+                textAlign: "center",
+                margin: "0 auto",
+                display: "inline",
+                paddingLeft: "9rem",
+                position: "relative",
+              }}
+            >
+              중고거래 모든 매물보기
+            </h1>
+            <div
+              style={{
+                position: "relative",
+                marginTop: "1rem",
+                display: "inline",
+                width: "350px",
 
-              left: "10%",
-            }}
-          >
-            <div className="dropdown dropdown-hover">
-              <label tabIndex={0} className="btn m-1">
-                대전광역시
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <a href="#">대전광역시</a>
-                </li>
-              </ul>
+                left: "10%",
+              }}
+            >
+              <div className="dropdown dropdown-hover">
+                <label tabIndex={0} className="btn m-1">
+                  대전광역시
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <a href="#">대전광역시</a>
+                  </li>
+                </ul>
+              </div>
+              <div className="dropdown dropdown-hover">
+                <label tabIndex={0} className="btn m-1">
+                  동네를 선택하세요
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                  style={{}}
+                >
+                  <li>
+                    <a href="http://localhost:3000/region/대덕구">대덕구</a>
+                  </li>
+                  <li>
+                    <a href="http://localhost:3000/region/동구">동구</a>
+                  </li>
+                  <li>
+                    <a href="http://localhost:3000/region/서구">서구</a>
+                  </li>
+                  <li>
+                    <a href="http://localhost:3000/region/유성구">유성구</a>
+                  </li>
+                  <li>
+                    <a href="http://localhost:3000/region/중구">중구</a>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div className="dropdown dropdown-hover">
-              <label tabIndex={0} className="btn m-1">
-                동네를 선택하세요
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                style={{}}
-              >
-                <li>
-                  <a href="http://localhost:3000/region/대덕구">대덕구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/동구">동구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/서구">서구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/유성구">유성구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/중구">중구</a>
-                </li>
-              </ul>
-            </div>
+            <h2
+              style={{
+                textAlign: "center",
+                fontWeight: "bolder",
+                fontSize: "1.5rem",
+                transform: "translateX(-5%)",
+              }}
+            >
+              <a href="/hot_articles">＞ 인기매물 보러가기</a>
+            </h2>
           </div>
           <div className="container">
             <ul className="grid grid-cols-4">
@@ -617,4 +651,4 @@ const HotArticles = ({ logined, setLogined }) => {
   }
 };
 
-export default HotArticles;
+export default AllProduct;

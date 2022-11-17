@@ -8,8 +8,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { BsDot } from "react-icons/bs";
 import { FaCarrot } from "react-icons/fa";
-import JobsPaging from "../components/JobsPaging";
-const Jobs = ({ logined, setLogined }) => {
+import JobsPaging from "./JobsPaging";
+const AllJobs = ({ logined, setLogined }) => {
   const [page, setPage] = useState(1);
   const [currentPosts, setCurrentPosts] = useState([]);
   const navigate = useNavigate();
@@ -118,10 +118,13 @@ const Jobs = ({ logined, setLogined }) => {
                 fontWeight: "bolder",
                 paddingTop: "5rem",
                 paddingLeft: "5rem",
+
+                whiteSpace: "nowrap",
               }}
             >
-              인기 당근알바
+              모든 당근알바
             </h1>
+
             <span
               href={`/jobsWrite`}
               className="flex items-end justify-end "
@@ -142,6 +145,18 @@ const Jobs = ({ logined, setLogined }) => {
               </a>
             </span>
           </div>
+          <h2
+            style={{
+              display: "inline",
+
+              fontSize: "1.5rem",
+              paddingLeft: "5rem",
+              whiteSpace: "nowrap",
+              fontWeight: "bolder",
+            }}
+          >
+            <a href="/jobs">＞ 인기알바 보러가기 </a>
+          </h2>
           <ul
             style={{
               paddingTop: "3rem",
@@ -366,10 +381,13 @@ const Jobs = ({ logined, setLogined }) => {
                 fontWeight: "bolder",
                 paddingTop: "5rem",
                 paddingLeft: "5rem",
+
+                whiteSpace: "nowrap",
               }}
             >
-              인기 당근알바
+              모든 당근알바
             </h1>
+
             <span
               href={`/jobsWrite`}
               className="flex items-end justify-end "
@@ -390,6 +408,18 @@ const Jobs = ({ logined, setLogined }) => {
               </a>
             </span>
           </div>
+          <h2
+            style={{
+              display: "inline",
+
+              fontSize: "1.5rem",
+              paddingLeft: "5rem",
+              whiteSpace: "nowrap",
+              fontWeight: "bolder",
+            }}
+          >
+            <a href="/jobs">＞ 인기알바 보러가기 </a>
+          </h2>
           <ul
             style={{
               paddingTop: "3rem",
@@ -559,4 +589,4 @@ const Jobs = ({ logined, setLogined }) => {
   }
 };
 
-export default Jobs;
+export default AllJobs;

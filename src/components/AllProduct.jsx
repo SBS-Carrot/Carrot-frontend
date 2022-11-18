@@ -7,10 +7,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaCarrot } from "react-icons/fa";
-import "../styles/Jobs.css";
 import ProductPaging from "./ProductPaging";
 import "../styles/Pagination.css";
-import Realty from "../routes/Realty";
+
 const AllProduct = ({ logined, setLogined }) => {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);

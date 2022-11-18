@@ -6,7 +6,7 @@ import axios from "axios";
 import { getValue } from "@testing-library/user-event/dist/utils";
 import { useNavigate } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
-
+// npm i react-daum-postcode
 const RealtyWrite = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const moveBack = () => {

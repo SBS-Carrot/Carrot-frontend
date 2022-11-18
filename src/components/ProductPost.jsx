@@ -15,8 +15,20 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaCarrot } from "react-icons/fa";
+import { FiMoreHorizontal } from "react-icons/fi";
 
-const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
+const ProductPost = ({
+  logined,
+  setLogined,
+  onLike,
+  liked,
+  setLiked,
+  onRemove,
+  deleteToggle,
+  onDeleteToggle,
+  menuToggle,
+  onMenuToggle,
+}) => {
   const { num } = useParams();
   const [articleWriter, setArticleWriter] = useState("");
   const navigate = useNavigate();
@@ -309,6 +321,7 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
                   <BsFillEmojiSmileFill />
                 </div>
               </div>
+
               <div
                 className="text-sm flex justify-end"
                 style={{
@@ -329,13 +342,82 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
           <section>
             <div className="mt-6">
               <div
-                className="font-bold"
+                className="font-bold flex"
                 style={{
                   fontSize: "1.25rem",
+                  position: "relative",
                 }}
               >
                 {article.productSubject}
+                <span className="flex items-center">
+                  <button
+                    onClick={() => {
+                      onMenuToggle();
+                    }}
+                    style={{
+                      marginLeft: "625px",
+                    }}
+                  >
+                    <FiMoreHorizontal />
+                  </button>
+                </span>
               </div>
+              {menuToggle && (
+                <div
+                  className="flex flex-col items-center"
+                  style={{
+                    marginLeft: "93%",
+                    position: "absoulte",
+                    width: "50px",
+                    height: "50px",
+                  }}
+                >
+                  <button
+                  // onClick={() => {
+                  //   onEditToggle();
+                  // }}
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={() => {
+                      onDeleteToggle();
+                    }}
+                  >
+                    삭제
+                  </button>
+                </div>
+              )}
+              {deleteToggle && (
+                <div
+                  className="p-2 rounded-md"
+                  style={{
+                    width: "250px",
+                    height: "80px",
+                    border: "1px gray solid",
+                  }}
+                >
+                  <div className="flex justify-center">
+                    게시물을 삭제하시겠어요?
+                  </div>
+                  <div className="flex justify-center gap-4 mt-3">
+                    <button
+                      className=" rounded-md font-bold"
+                      style={{
+                        padding: "5px",
+                        color: "red",
+                      }}
+                      onClick={() => {
+                        onRemove();
+                      }}
+                    >
+                      삭제
+                    </button>
+                    <button>취소</button>
+                  </div>
+                </div>
+              )}
+
               <div className="flex gap-2">
                 <div
                   className="text-sm"

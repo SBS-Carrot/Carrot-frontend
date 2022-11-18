@@ -645,6 +645,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
           <div className="font-bold">주소</div>
           <span>
             <button
+              className="mb-2"
               type="button"
               style={{
                 border: "1px #d5d5d5 solid",

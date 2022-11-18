@@ -4,7 +4,7 @@ import cn from "classnames";
 import axios from "axios";
 const { kakao } = window;
 // Authorization: KakaoAK 5746dccb1aec4544a4fc066fca39ccc6
-const Map = ({ searchPlace }) => {
+const ReadMap = ({ searchPlace }) => {
   let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
   useEffect(() => {
     if (searchPlace === "") return;
@@ -57,11 +57,13 @@ const Map = ({ searchPlace }) => {
       <div
         id="myMap"
         style={{
-          width: "500px",
-          height: "500px",
+          width: "800px",
+          height: "300px",
+          border: "1px #d5d5d5 solid",
+          marginBottom: "10px",
         }}
       ></div>
     </div>
   );
 };
-export default Map;
+export default ReadMap;

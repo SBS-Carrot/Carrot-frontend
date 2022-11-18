@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import LoginedHeader from "../layouts/LoginedHeader";
 import { useNavigate } from "react-router-dom";
 const Security = ({ logined, setLogined }) => {
   const navigate = useNavigate();
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+  const [checked, setChecked] = useState(false);
   const onChangeComplete = () => {
     window.location.replace("/security");
+  };
+  const onChange = (e) => {
+    if (e.target.value.length > 20) {
+      return;
+    }
+    setPassword(e.target.value);
   };
   const moveBack = () => {
     alert("로그인 후 사용할 수 있는 기능입니다.");
@@ -13,6 +23,36 @@ const Security = ({ logined, setLogined }) => {
   if (!logined) {
     moveBack();
   }
+  useEffect(() => {
+    const onSubmit = async () => {
+      let abcd = sessionStorage.getItem("userid");
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${abcd}`,
+          method: "GET",
+        });
+        setUser(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    onSubmit();
+  }, []);
+
+  const pwCheck = async (password) => {
+    const userDto = { userid: sessionStorage.getItem("userid"), password };
+    const data = await axios({
+      url: `http://localhost:8083/checkPw`,
+      method: "POST",
+      data: userDto,
+    });
+    if (data.data) {
+      setChecked(data.data);
+    } else {
+      alert("비밀번호가 일치하지 않습니다.");
+    }
+  };
+
   return (
     <div>
       <LoginedHeader setLogined={setLogined} />
@@ -52,6 +92,82 @@ const Security = ({ logined, setLogined }) => {
           </ul>
         </div>
       </div>
+      {!checked && (
+        <div
+          style={{
+            margin: "0 auto",
+            width: "800px",
+            height: "400px",
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            borderRadius: "15px",
+            border: "1px #bcbcbc solid",
+            marginTop: "50px",
+          }}
+        >
+          <h1>본인확인을 위해 비밀번호를 입력해 주세요</h1>
+          <div className="mt-2">
+            <input
+              type="password"
+              value={password}
+              onChange={onChange}
+              style={{
+                width: "250px",
+                height: "50px",
+                border: "1px #fc9d39 solid",
+                borderRadius: "15px",
+              }}
+            />
+            <button
+              onClick={() => {
+                pwCheck(password);
+              }}
+              style={{
+                width: "70px",
+                height: "40px",
+                border: "1px #fc9d39 solid",
+                borderRadius: "10px",
+                marginLeft: "15px",
+              }}
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
+      {checked && (
+        <div
+          style={{
+            width: "1000px",
+            height: "80vh",
+            border: "1px red solid",
+            margin: "0 auto",
+          }}
+        >
+          <div
+            style={{
+              width: "750px",
+              border: "1px #fc9d39 solid",
+              borderRadius: "20px",
+              margin: "0 auto",
+              height: "100px",
+            }}
+          >
+            <span
+              style={{
+                color: "gray",
+                marginLeft: "20px",
+              }}
+            >
+              기본보안설정
+            </span>
+            <div>비밀번호 변경</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

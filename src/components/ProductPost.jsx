@@ -167,78 +167,84 @@ const ProductPost = ({ logined, setLogined, onLike, liked, setLiked }) => {
         >
           <div className="mt-5 relative">
             <div>
-              <Slider {...settings}>
-                {imgs[0] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[0]} alt="" />
-                  </div>
-                )}
-                {imgs[1] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[1]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[2] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[2]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[3] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[3]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[4] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[4]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[5] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[5]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[6] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[6]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[7] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[7]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[8] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[8]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[9] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[9]} alt="" />
-                  </div>
-                )}
-              </Slider>
+              {imgs[0].url != undefined ? (
+                <div>
+                  <Slider {...settings}>
+                    {imgs[0] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[0]} alt="" />
+                      </div>
+                    )}
+                    {imgs[1] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[1]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[2] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[2]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[3] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[3]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[4] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[4]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[5] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[5]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[6] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[6]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[7] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[7]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[8] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[8]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[9] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[9]} alt="" />
+                      </div>
+                    )}
+                  </Slider>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <section className="mt-6 flex justify-end gap-3">

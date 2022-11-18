@@ -19,6 +19,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaCarrot } from "react-icons/fa";
+import ReadMap from "./ReadMap";
 const Realtypost = ({
   logined,
   setLogined,
@@ -177,78 +178,84 @@ const Realtypost = ({
         >
           <div className="mt-5 relative">
             <div>
-              <Slider {...settings}>
-                {imgs[0] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[0]} alt="" />
-                  </div>
-                )}
-                {imgs[1] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[1]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[2] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[2]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[3] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[3]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[4] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[4]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[5] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[5]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[6] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[6]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[7] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[7]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[8] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[8]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[9] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[9]} alt="" />
-                  </div>
-                )}
-              </Slider>
+              {imgs[0].url != undefined ? (
+                <div>
+                  <Slider {...settings}>
+                    {imgs[0] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[0]} alt="" />
+                      </div>
+                    )}
+                    {imgs[1] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[1]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[2] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[2]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[3] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[3]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[4] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[4]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[5] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[5]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[6] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[6]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[7] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[7]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[8] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[8]} alt="" />
+                      </div>
+                    )}{" "}
+                    {imgs[9] == undefined ? (
+                      ""
+                    ) : (
+                      <div>
+                        <img src={imgs[9]} alt="" />
+                      </div>
+                    )}
+                  </Slider>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <section className="mt-6 flex justify-end gap-3">
@@ -521,16 +528,16 @@ const Realtypost = ({
             >
               주소
             </div>
-            <div
-              style={{
-                height: "200px",
-                border: "1px gray solid",
-              }}
-            ></div>
+            <ReadMap searchPlace={article.realtyAddress} />
             <div>{article.realtyAddress}</div>
           </div>
           <section>
-            <div className="py-2 flex gap-5 justify-end" style={{}}>
+            <div
+              className="py-2 flex gap-5 justify-end"
+              style={{
+                width: "800px",
+              }}
+            >
               <button
                 style={{
                   fontSize: "1.5rem",

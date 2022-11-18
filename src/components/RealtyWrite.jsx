@@ -6,7 +6,8 @@ import axios from "axios";
 import { getValue } from "@testing-library/user-event/dist/utils";
 import { useNavigate } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
-// npm i react-daum-postcode
+import WriteMap from "./WriteMap";
+
 const RealtyWrite = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const moveBack = () => {
@@ -642,59 +643,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
               </div>
             </div>
           </div>
-          <div className="font-bold">주소</div>
-          <span>
-            <button
-              type="button"
-              style={{
-                border: "1px #d5d5d5 solid",
-                width: "120px",
-                height: "30px",
-              }}
-              onClick={() => {
-                onChangeOpenPost();
-              }}
-            >
-              우편번호 검색
-            </button>
-          </span>
-          <div className="mb-4 gap-2">
-            <input
-              type="text"
-              placeholder="주소 입력"
-              value={addressDetail}
-              onChange={onCompletePost}
-              style={{
-                border: "1px #d5d5d5 solid",
-                width: "400px",
-                height: "30px",
-              }}
-              disabled
-            />
 
-            {isOpenPost && (
-              <span>
-                <DaumPostcode
-                  style={postCodeStyle}
-                  autoClose
-                  onComplete={onCompletePost}
-                />
-              </span>
-            )}
-            <div className="mt-2">
-              <input
-                type="text"
-                placeholder="한줄 소개 해주세요."
-                value={introduce}
-                onChange={onIntroduce}
-                style={{
-                  border: "1px #d5d5d5 solid",
-                  width: "400px",
-                  height: "30px",
-                }}
-              />
-            </div>
-          </div>
           <div className="font-bold">층</div>
           <div className="mb-4 flex gap-2">
             <div>
@@ -784,6 +733,150 @@ const RealtyWrite = ({ logined, setLogined }) => {
               </div>
             </div>
           </div>
+          <div className="font-bold">대출</div>
+          <div className="flex gap-2 mb-4">
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="가능"
+                checked={loan === "가능"}
+                onChange={loanRadioButton}
+              />
+              가능
+            </div>
+
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="불가능"
+                checked={loan === "불가능"}
+                onChange={loanRadioButton}
+              />
+              불가능
+            </div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="확인필요"
+                checked={loan === "확인필요"}
+                onChange={loanRadioButton}
+              />
+              확인필요
+            </div>
+          </div>
+          <div className="font-bold">반려동물</div>
+          <div className="flex gap-2 mb-4">
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="가능"
+                checked={pet === "가능"}
+                onChange={petRadioButton}
+              />
+              가능
+            </div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="불가능"
+                checked={pet === "불가능"}
+                onChange={petRadioButton}
+              />
+              불가능
+            </div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="확인필요"
+                checked={pet === "확인필요"}
+                onChange={petRadioButton}
+              />
+              확인필요
+            </div>
+          </div>
+          <div className="font-bold">주차</div>
+          <div className="flex gap-2 mb-4">
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="가능"
+                checked={parking === "가능"}
+                onChange={parkingRadioButton}
+              />
+              가능
+            </div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="불가능"
+                checked={parking === "불가능"}
+                onChange={parkingRadioButton}
+              />
+              불가능
+            </div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="확인필요"
+                checked={parking === "확인필요"}
+                onChange={parkingRadioButton}
+              />
+              확인필요
+            </div>
+          </div>
+          <div className="font-bold">엘리베이터</div>
+          <div className="flex gap-2 mb-4">
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="있음"
+                checked={elevator === "있음"}
+                onChange={elevatorRadioButton}
+              />
+              있음
+            </div>
+            <div>
+              <input
+                className="mr-1"
+                type="radio"
+                value="없음"
+                checked={elevator === "없음"}
+                onChange={elevatorRadioButton}
+              />
+              없음
+            </div>
+          </div>
+          <div className="font-bold">내부시설</div>
+          <section>
+            <div className="grid grid-cols-2 mb-4 gap-2">
+              {Inside_List.map((item) => {
+                return (
+                  <label key={item.id}>
+                    <input
+                      className="mr-2"
+                      type="checkbox"
+                      value={item.data}
+                      onChange={(e) => {
+                        onCheckInside(e.target.checked, e.target.value);
+                      }}
+                      checked={inside.includes(item.data) ? true : false}
+                    />
+                    {item.data}
+                  </label>
+                );
+              })}
+            </div>
+          </section>
           <div className="font-bold">사진</div>
           <div
             className="flex "
@@ -832,7 +925,12 @@ const RealtyWrite = ({ logined, setLogined }) => {
                     marginBottom: "20px",
                   }}
                 >
-                  <div>
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
                     <img
                       src={image}
                       alt={`${image}-${id}`}
@@ -1279,150 +1377,64 @@ const RealtyWrite = ({ logined, setLogined }) => {
               </div>
             </div>
           )}
-          <div className="font-bold">대출</div>
-          <div className="flex gap-2 mb-4">
-            <div>
-              <input
-                className="mr-1"
-                type="radio"
-                value="가능"
-                checked={loan === "가능"}
-                onChange={loanRadioButton}
-              />
-              가능
-            </div>
+          <div className="font-bold">주소</div>
+          <span>
+            <button
+              className="mb-2"
+              type="button"
+              style={{
+                border: "1px #d5d5d5 solid",
+                width: "120px",
+                height: "30px",
+              }}
+              onClick={() => {
+                onChangeOpenPost();
+              }}
+            >
+              우편번호 검색
+            </button>
+          </span>
+          <div className="mb-4 gap-2">
+            <input
+              type="text"
+              placeholder="주소 입력"
+              value={addressDetail}
+              onChange={onCompletePost}
+              style={{
+                border: "1px #d5d5d5 solid",
+                width: "400px",
+                height: "30px",
 
-            <div>
+                marginBottom: "10px",
+              }}
+              disabled
+            />
+
+            {isOpenPost && (
+              <span>
+                <DaumPostcode
+                  style={postCodeStyle}
+                  autoClose
+                  onComplete={onCompletePost}
+                />
+              </span>
+            )}
+            <WriteMap searchPlace={addressDetail} />
+            <div className="mt-2">
               <input
-                className="mr-1"
-                type="radio"
-                value="불가능"
-                checked={loan === "불가능"}
-                onChange={loanRadioButton}
+                type="text"
+                placeholder="한줄 소개 해주세요."
+                value={introduce}
+                onChange={onIntroduce}
+                style={{
+                  border: "1px #d5d5d5 solid",
+                  width: "400px",
+                  height: "30px",
+                }}
               />
-              불가능
-            </div>
-            <div>
-              <input
-                className="mr-1"
-                type="radio"
-                value="확인필요"
-                checked={loan === "확인필요"}
-                onChange={loanRadioButton}
-              />
-              확인필요
             </div>
           </div>
-          <div className="font-bold">반려동물</div>
-          <div className="flex gap-2 mb-4">
-            <div>
-              <input
-                className="mr-1"
-                type="radio"
-                value="가능"
-                checked={pet === "가능"}
-                onChange={petRadioButton}
-              />
-              가능
-            </div>
-            <div>
-              <input
-                className="mr-1"
-                type="radio"
-                value="불가능"
-                checked={pet === "불가능"}
-                onChange={petRadioButton}
-              />
-              불가능
-            </div>
-            <div>
-              <input
-                className="mr-1"
-                type="radio"
-                value="확인필요"
-                checked={pet === "확인필요"}
-                onChange={petRadioButton}
-              />
-              확인필요
-            </div>
-          </div>
-          <div className="font-bold">주차</div>
-          <div className="flex gap-2 mb-4">
-            <div>
-              <input
-                className="mr-1"
-                type="radio"
-                value="가능"
-                checked={parking === "가능"}
-                onChange={parkingRadioButton}
-              />
-              가능
-            </div>
-            <div>
-              <input
-                className="mr-1"
-                type="radio"
-                value="불가능"
-                checked={parking === "불가능"}
-                onChange={parkingRadioButton}
-              />
-              불가능
-            </div>
-            <div>
-              <input
-                className="mr-1"
-                type="radio"
-                value="확인필요"
-                checked={parking === "확인필요"}
-                onChange={parkingRadioButton}
-              />
-              확인필요
-            </div>
-          </div>
-          <div className="font-bold">엘리베이터</div>
-          <div className="flex gap-2 mb-4">
-            <div>
-              <input
-                className="mr-1"
-                type="radio"
-                value="있음"
-                checked={elevator === "있음"}
-                onChange={elevatorRadioButton}
-              />
-              있음
-            </div>
-            <div>
-              <input
-                className="mr-1"
-                type="radio"
-                value="없음"
-                checked={elevator === "없음"}
-                onChange={elevatorRadioButton}
-              />
-              없음
-            </div>
-          </div>
-          <div className="font-bold">내부시설</div>
-          <section>
-            <div className="grid grid-cols-2 mb-4 gap-2">
-              {Inside_List.map((item) => {
-                return (
-                  <label key={item.id}>
-                    <input
-                      className="mr-2"
-                      type="checkbox"
-                      value={item.data}
-                      onChange={(e) => {
-                        onCheckInside(e.target.checked, e.target.value);
-                      }}
-                      checked={inside.includes(item.data) ? true : false}
-                    />
-                    {item.data}
-                  </label>
-                );
-              })}
-            </div>
-          </section>
+
           <div>
             <div className="font-bold">매물 설명</div>
             <div className="flex gap-2 mb-4">
@@ -1548,6 +1560,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
             borderRadius: "10px",
             display: "flex",
             position: "absolute",
+            zIndex: "9999",
           }}
         >
           <a

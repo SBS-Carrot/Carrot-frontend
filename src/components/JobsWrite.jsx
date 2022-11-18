@@ -5,7 +5,7 @@ import LoginedJobsHeader from "../layouts/LoginedJobsHeader";
 import { useNavigate } from "react-router-dom";
 import { MdAddAPhoto } from "react-icons/md";
 import DaumPostcode from "react-daum-postcode";
-import Map from "./Map";
+import WriteMap from "./WriteMap";
 
 const JobsWrite = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -786,34 +786,49 @@ const JobsWrite = ({ logined, setLogined }) => {
             <div className="pt-1">
               <div> 주소</div>
               <div className="mb-4 gap-2">
-                <input
-                  type="text"
-                  placeholder="어디에서 일하나요?"
-                  onClick={() => {
-                    onChangeOpenPost();
-                  }}
-                  value={placeValue}
-                  onChange={onCompletePost}
-                  style={{
-                    border: "1px #d5d5d5 solid",
-                    width: "100%",
-                    height: "30px",
-                  }}
-                />
-
-                {isOpenPost && (
-                  <span>
-                    <DaumPostcode
-                      style={postCodeStyle}
-                      autoClose
-                      onComplete={onCompletePost}
-                    />
-                  </span>
-                )}
+                <span>
+                  <button
+                    type="button"
+                    style={{
+                      border: "1px #d5d5d5 solid",
+                      width: "120px",
+                      height: "30px",
+                      marginBottom: "10px",
+                    }}
+                    onClick={() => {
+                      onChangeOpenPost();
+                    }}
+                  >
+                    우편번호 검색
+                  </button>
+                </span>{" "}
+                <div>
+                  <input
+                    type="text"
+                    placeholder="주소 입력"
+                    value={placeValue}
+                    onChange={onCompletePost}
+                    style={{
+                      border: "1px #d5d5d5 solid",
+                      width: "400px",
+                      height: "30px",
+                    }}
+                    disabled
+                  />
+                  {isOpenPost && (
+                    <span>
+                      <DaumPostcode
+                        style={postCodeStyle}
+                        autoClose
+                        onComplete={onCompletePost}
+                      />
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-          <Map searchPlace={placeValue} />
+          <WriteMap searchPlace={placeValue} />
           <div>
             <div className="pt-3">내용</div>
             <div>

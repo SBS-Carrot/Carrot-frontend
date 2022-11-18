@@ -5,6 +5,7 @@ import LoginedJobsHeader from "../layouts/LoginedJobsHeader";
 import { useNavigate } from "react-router-dom";
 import { MdAddAPhoto } from "react-icons/md";
 import DaumPostcode from "react-daum-postcode";
+import Map from "./Map";
 
 const JobsWrite = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -812,6 +813,7 @@ const JobsWrite = ({ logined, setLogined }) => {
               </div>
             </div>
           </div>
+          <Map searchPlace={placeValue} />
           <div>
             <div className="pt-3">내용</div>
             <div>

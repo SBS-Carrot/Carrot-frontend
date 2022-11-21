@@ -112,12 +112,14 @@ const Realty = ({ logined, setLogined }) => {
                           className="flex"
                           style={{
                             height: "120px",
+                            width: "100%",
                           }}
                         >
                           <div
                             style={{
-                              width: "120px",
                               height: "120px",
+                              minWidth: "120px",
+                              maxWidth: "120px",
 
                               borderRadius: "10px",
                             }}

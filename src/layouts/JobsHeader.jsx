@@ -34,7 +34,7 @@ const JobsHeader = () => {
         <div
           className="flex items-center justify-around"
           style={{
-            width: "500px",
+            width: "550px",
             height: "100%",
             fontSize: "1.2rem",
             fontWeight: "bolder",
@@ -69,6 +69,9 @@ const JobsHeader = () => {
           </div>
           <div>
             <a href="http://localhost:3000/allrealty">부동산 직거래</a>
+          </div>
+          <div>
+            <a href="http://localhost:3000/board">동네게시판</a>
           </div>
         </div>
         <div className="flex-grow justify-center items-center flex" style={{}}>

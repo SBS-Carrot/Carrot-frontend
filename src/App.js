@@ -26,6 +26,7 @@ import AllProduct from "./components/AllProduct";
 import AllJobs from "./components/AllJobs";
 import AllRealty from "./components/AllRealty";
 import ChangePassword from "./routes/ChangePassword";
+import Board from "./routes/Board";
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
@@ -247,6 +248,10 @@ function App() {
         <Route
           path="/changepassword"
           element={<ChangePassword logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/board"
+          element={<Board logined={logined} setLogined={setLogined} />}
         />
       </Routes>
     </Router>

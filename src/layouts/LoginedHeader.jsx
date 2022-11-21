@@ -42,7 +42,7 @@ const LoginedHeader = ({ setLogined }) => {
         <div
           className="flex items-center justify-around"
           style={{
-            width: "500px",
+            width: "550px",
             height: "100%",
             fontSize: "1.2rem",
             fontWeight: "bolder",
@@ -78,12 +78,15 @@ const LoginedHeader = ({ setLogined }) => {
           <div>
             <a href="http://localhost:3000/allrealty">부동산 직거래</a>
           </div>
+          <div>
+            <a href="http://localhost:3000/board">동네게시판</a>
+          </div>
         </div>
         <div className="flex-grow justify-center items-center flex gap-7">
           <button
             style={{
               outline: "1px #bcbcbc solid",
-              padding: "5px 10px",
+              padding: "5px 5px",
               borderRadius: "5px",
             }}
             onClick={() => {

@@ -4,16 +4,11 @@ import { useRecoilState } from "recoil";
 import { authenticatedState } from "../recoil/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import "../styles/Header.css";
 
-import { useNavigate } from "react-router-dom";
-const LoginedJobsHeader = ({ setLogined }) => {
-  const navigate = useNavigate();
-  const onHomepage = () => {
-    navigate("/");
-  };
-  const onMyPage = () => {
-    navigate("/mypage");
-  };
+const BoardHeader = () => {
+  const [logined, setLogined] = useRecoilState(authenticatedState);
+
   return (
     <div
       style={{
@@ -50,7 +45,7 @@ const LoginedJobsHeader = ({ setLogined }) => {
         >
           <div
             style={{
-              color: "#ffa445",
+              color: "#fc9d39",
               fontSize: "1.4rem",
             }}
           >
@@ -67,50 +62,31 @@ const LoginedJobsHeader = ({ setLogined }) => {
           <div>
             <a href="http://localhost:3000/allproduct">중고거래</a>
           </div>
-          <div
-            style={{
-              color: "#ffa445",
-            }}
-          >
+          <div>
             <a href="http://localhost:3000/alljobs">알바</a>
           </div>
           <div>
             <a href="http://localhost:3000/allrealty">부동산 직거래</a>
           </div>
-          <div>
+          <div
+            style={{
+              color: "#ffa445",
+            }}
+          >
             <a href="http://localhost:3000/board">동네게시판</a>
           </div>
         </div>
-        <div
-          className="flex-grow justify-center items-center flex gap-7"
-          style={{}}
-        >
-          <button
-            style={{
-              outline: "1px #bcbcbc solid",
-              padding: "5px 5px",
-              borderRadius: "5px",
-            }}
-            onClick={() => {
-              sessionStorage.clear();
-              setLogined(false);
-              window.location.reload();
-            }}
-          >
-            로그아웃
-          </button>
-          <button
+        <div className="flex-grow justify-center items-center flex" style={{}}>
+          <a
+            href="http://localhost:3000/login"
             style={{
               outline: "1px #bcbcbc solid",
               padding: "5px 10px",
               borderRadius: "5px",
             }}
-            onClick={() => {
-              onMyPage();
-            }}
           >
-            마이 페이지
-          </button>
+            로그인
+          </a>
         </div>
         <div
           style={{
@@ -141,4 +117,4 @@ const LoginedJobsHeader = ({ setLogined }) => {
   );
 };
 
-export default LoginedJobsHeader;
+export default BoardHeader;

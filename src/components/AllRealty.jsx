@@ -138,7 +138,8 @@ const AllRealty = ({ logined, setLogined }) => {
                         >
                           <div
                             style={{
-                              width: "120px",
+                              minWidth: "120px",
+                              maxWidth: "120px",
                               height: "120px",
 
                               borderRadius: "10px",

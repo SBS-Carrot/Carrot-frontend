@@ -32,6 +32,16 @@ function App() {
   const [jobsLiked, setJobsLiked] = useState(false);
   const [realtyLiked, setRealtyLiked] = useState(false);
 
+  const [menuToggle, setMenuToggle] = useState(false);
+  const onMenuToggle = () => {
+    setMenuToggle(!menuToggle);
+  };
+
+  const [deleteToggle, setDeleteTogge] = useState(false);
+  const onDeleteToggle = () => {
+    setDeleteTogge(!deleteToggle);
+  };
+
   useEffect(() => {
     if (sessionStorage.getItem("userid") == null) {
       setLogined(false);
@@ -109,6 +119,17 @@ function App() {
     }
   };
 
+  const onRemove = async (productid) => {
+    try {
+      await axios({
+        url: `http://localhost:8083/productdelete?id=${productid}`,
+        method: "DELTE",
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Router>
       <Routes>
@@ -167,6 +188,11 @@ function App() {
               onLike={onLike}
               liked={liked}
               setLiked={setLiked}
+              menuToggle={menuToggle}
+              onMenuToggle={onMenuToggle}
+              deleteToggle={deleteToggle}
+              onDeleteToggle={onDeleteToggle}
+              onRemove={onRemove}
             />
           }
         />

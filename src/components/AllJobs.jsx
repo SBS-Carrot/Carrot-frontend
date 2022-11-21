@@ -230,7 +230,7 @@ const AllJobs = ({ logined, setLogined }) => {
                         }}
                       >
                         <div
-                          className="JobNameBox ellipsis_1"
+                          className="JobNameBox"
                           style={{
                             width: "280px",
                             height: "60px",

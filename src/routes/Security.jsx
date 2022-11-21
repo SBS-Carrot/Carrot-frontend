@@ -7,6 +7,10 @@ const Security = ({ logined, setLogined }) => {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
+  const [changePassword, setChangePassword] = useState(false);
+  const onChangePassword = () => {
+    navigate("/changepassword");
+  };
   const onChangeComplete = () => {
     window.location.replace("/security");
   };
@@ -143,7 +147,7 @@ const Security = ({ logined, setLogined }) => {
           style={{
             width: "1000px",
             height: "80vh",
-            border: "1px red solid",
+
             margin: "0 auto",
           }}
         >
@@ -152,7 +156,7 @@ const Security = ({ logined, setLogined }) => {
               width: "750px",
               border: "1px #fc9d39 solid",
               borderRadius: "20px",
-              margin: "0 auto",
+              margin: "20px auto",
               height: "100px",
             }}
           >
@@ -164,7 +168,73 @@ const Security = ({ logined, setLogined }) => {
             >
               기본보안설정
             </span>
-            <div>비밀번호 변경</div>
+            <div
+              style={{
+                margin: "5px auto",
+                display: "flex",
+                justifyContent: "space-between",
+                width: "710px",
+              }}
+            >
+              <span>비밀번호 변경</span>
+              <button
+                onClick={() => {
+                  onChangePassword();
+                }}
+                style={{
+                  padding: "5px 10px",
+                  borderRadius: "10px",
+                  backgroundColor: "#eeeeee",
+                  color: "gray",
+                }}
+              >
+                수정
+              </button>
+            </div>
+          </div>
+          <div
+            style={{
+              width: "750px",
+              border: "1px #fc9d39 solid",
+              borderRadius: "20px",
+              margin: "20px auto",
+              height: "100px",
+            }}
+          >
+            <span
+              style={{
+                color: "gray",
+                marginLeft: "20px",
+              }}
+            >
+              다른보안설정
+            </span>
+            <div
+              style={{
+                margin: "5px auto",
+                display: "flex",
+                justifyContent: "space-between",
+                width: "710px",
+              }}
+            ></div>
+          </div>
+          <div
+            style={{
+              width: "750px",
+              border: "1px #fc9d39 solid",
+              borderRadius: "20px",
+              margin: "20px auto",
+              height: "100px",
+            }}
+          >
+            <span
+              style={{
+                color: "gray",
+                marginLeft: "20px",
+              }}
+            >
+              또다른보안설정
+            </span>
           </div>
         </div>
       )}

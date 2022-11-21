@@ -25,11 +25,13 @@ import ArticleControl from "./routes/ArticleControl";
 import AllProduct from "./components/AllProduct";
 import AllJobs from "./components/AllJobs";
 import AllRealty from "./components/AllRealty";
+import ChangePassword from "./routes/ChangePassword";
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
   const [jobsLiked, setJobsLiked] = useState(false);
   const [realtyLiked, setRealtyLiked] = useState(false);
+
   useEffect(() => {
     if (sessionStorage.getItem("userid") == null) {
       setLogined(false);
@@ -215,6 +217,10 @@ function App() {
         <Route
           path="/allrealty"
           element={<AllRealty logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/changepassword"
+          element={<ChangePassword logined={logined} setLogined={setLogined} />}
         />
       </Routes>
     </Router>

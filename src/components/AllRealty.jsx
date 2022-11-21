@@ -14,7 +14,6 @@ import RealtyPaging from "./RealtyPaging";
 const AllRealty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const [Realty, setRealty] = useState([]);
-  const [address, setAddress] = useState("");
   const [page, setPage] = useState(1);
   const [currentPosts, setCurrentPosts] = useState([]);
   const handlePageChange = (page) => {
@@ -23,11 +22,6 @@ const AllRealty = ({ logined, setLogined }) => {
   const [postPerPage] = useState(10);
   const indexOfLastPost = page * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
-
-  const onAddress = () => {
-    // let index = address.includes("대전광역시");
-    // console.log(index);
-  };
 
   const moveRealty = async (id) => {
     try {

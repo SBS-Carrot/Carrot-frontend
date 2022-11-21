@@ -682,10 +682,33 @@ const Join = () => {
           >
             주소
           </h5>
+          <span
+            style={{
+              display: "flex",
+              justifyContent: "start",
+              marginLeft: "50px",
+            }}
+          >
+            <button
+              className="mb-2"
+              type="button"
+              style={{
+                border: "1px #d5d5d5 solid",
+                width: "120px",
+                height: "30px",
+              }}
+              onClick={() => {
+                onChangeOpenPost();
+              }}
+            >
+              우편번호 검색
+            </button>
+          </span>
           <input
             type="text"
             placeholder="대전시 OO구 OO동까지 입력해주세요"
             value={addressValue}
+            disabled
             onChange={onCompletePost}
             onClick={() => {
               onChangeOpenPost();

@@ -131,7 +131,10 @@ const Login = ({ onLogin, logined }) => {
                   window.alert("비밀번호를 입력해 주세요");
                 } else {
                   onLogin(idValue, pwValue);
-                  onHomepage();
+
+                  if (logined) {
+                    onHomepage();
+                  }
                 }
               }}
             >

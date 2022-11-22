@@ -101,8 +101,8 @@ const ArticleControl = ({ logined, setLogined }) => {
   const JindexOfFirstPost = JindexOfLastPost - JpostPerPage;
 
   useEffect(() => {
-    setCurrentProducts(product.slice(PindexOfFirstPost, PindexOfLastPost));
-  }, [PindexOfFirstPost, PindexOfLastPost, Ppage]);
+    setCurrentJobs(jobs.slice(JindexOfFirstPost, JindexOfLastPost));
+  }, [JindexOfFirstPost, JindexOfLastPost, Jpage]);
 
   const moveJobs = async (id) => {
     try {

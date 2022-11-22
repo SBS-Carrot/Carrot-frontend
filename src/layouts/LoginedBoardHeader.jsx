@@ -4,9 +4,17 @@ import { useRecoilState } from "recoil";
 import { authenticatedState } from "../recoil/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
-
+import "../styles/Header.css";
+import { useNavigate } from "react-router-dom";
 const LoginedBoardHeader = ({ setLogined }) => {
+  const navigate = useNavigate();
+  const onHomepage = () => {
+    navigate("/");
+  };
+  const onMyPage = () => {
+    navigate("/mypage");
+  };
+
   return (
     <div
       style={{
@@ -43,7 +51,7 @@ const LoginedBoardHeader = ({ setLogined }) => {
         >
           <div
             style={{
-              color: "#ffa445",
+              color: "#fc9d39",
               fontSize: "1.4rem",
             }}
           >
@@ -74,18 +82,35 @@ const LoginedBoardHeader = ({ setLogined }) => {
             <a href="http://localhost:3000/board">동네게시판</a>
           </div>
         </div>
-        <div className="flex-grow justify-center items-center flex" style={{}}>
-          <a
-            href="http://localhost:3000/login"
+        <div className="flex-grow justify-center items-center flex gap-7">
+          <button
+            style={{
+              outline: "1px #bcbcbc solid",
+              padding: "5px 5px",
+              borderRadius: "5px",
+            }}
+            onClick={() => {
+              sessionStorage.clear();
+              setLogined(false);
+              window.location.replace("");
+            }}
+          >
+            로그아웃
+          </button>
+          <button
             style={{
               outline: "1px #bcbcbc solid",
               padding: "5px 10px",
               borderRadius: "5px",
             }}
+            onClick={() => {
+              onMyPage();
+            }}
           >
-            로그인
-          </a>
+            마이 페이지
+          </button>
         </div>
+
         <div
           style={{
             display: "flex",

@@ -421,7 +421,7 @@ const Join = () => {
                   position: "absolute",
                   width: "290px",
                   height: "30px",
-                  top: "17.5%",
+                  top: "170px",
                   left: "40%",
                 }}
               >
@@ -446,7 +446,7 @@ const Join = () => {
                   position: "absolute",
                   width: "290px",
                   height: "30px",
-                  top: "17.5%",
+                  top: "170px",
                   left: "40%",
                 }}
               >
@@ -496,7 +496,7 @@ const Join = () => {
                   position: "absolute",
                   width: "290px",
                   height: "30px",
-                  top: "27%",
+                  top: "265px",
                   left: "40%",
                 }}
               >
@@ -521,7 +521,7 @@ const Join = () => {
                   position: "absolute",
                   width: "290px",
                   height: "30px",
-                  top: "27%",
+                  top: "265px",
                   left: "40%",
                 }}
               >

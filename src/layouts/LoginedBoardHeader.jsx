@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 
-const LoginedBoardHeader = () => {
+const LoginedBoardHeader = ({ setLogined }) => {
   return (
     <div
       style={{

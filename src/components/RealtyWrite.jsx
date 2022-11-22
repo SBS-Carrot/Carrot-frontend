@@ -644,38 +644,6 @@ const RealtyWrite = ({ logined, setLogined }) => {
             </div>
           </div>
 
-          <div className="font-bold">주소</div>
-          <span>
-            <button
-              className="mb-2"
-              type="button"
-              style={{
-                border: "1px #d5d5d5 solid",
-                width: "120px",
-                height: "30px",
-              }}
-              onClick={() => {
-                onChangeOpenPost();
-              }}
-            >
-              우편번호 검색
-            </button>
-          </span>
-          <div className="mb-4 gap-2">
-            <input
-              type="text"
-              placeholder="주소 입력"
-              value={addressDetail}
-              onChange={onCompletePost}
-              style={{
-                border: "1px #d5d5d5 solid",
-                width: "400px",
-                height: "30px",
-              }}
-              disabled
-            />
-          </div>
-
           <div className="font-bold">층</div>
           <div className="mb-4 flex gap-2">
             <div>

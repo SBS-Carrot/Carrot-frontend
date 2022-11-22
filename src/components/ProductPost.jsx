@@ -28,14 +28,19 @@ const ProductPost = ({
   onDeleteToggle,
   menuToggle,
   onMenuToggle,
+  setMenuToggle,
 }) => {
   const { num } = useParams();
+
   const [articleWriter, setArticleWriter] = useState("");
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);
   };
 
+  const productmove = () => {
+    navigate(`/allproduct`);
+  };
   const [article, setArticle] = useState("");
   const [images, setImages] = useState([]);
   const onLikes = (data) => {
@@ -170,7 +175,6 @@ const ProductPost = ({
     return (
       <div>
         <LoginedHeader setLogined={setLogined} />
-
         <div
           style={{
             width: "700px",
@@ -179,7 +183,7 @@ const ProductPost = ({
         >
           <div className="mt-5 relative">
             <div>
-              {imgs[0].url != undefined ? (
+              {imgs[0] != undefined ? (
                 <div>
                   <Slider {...settings}>
                     {imgs[0] == undefined ? (
@@ -346,54 +350,62 @@ const ProductPost = ({
             }}
           ></div>
           <section>
-            <div className="mt-6">
+            <div className="mt-6 ">
               <div
-                className="font-bold flex"
+                className="flex"
                 style={{
-                  fontSize: "1.25rem",
-                  position: "relative",
+                  justifyContent: "space-between",
                 }}
               >
-                {article.productSubject}
-                <span className="flex items-center">
+                <div
+                  className="font-bold flex"
+                  style={{
+                    fontSize: "1.25rem",
+                  }}
+                >
+                  {article.productSubject}
+                </div>
+                <span
+                  className=""
+                  style={{
+                    position: "relative",
+                  }}
+                >
                   <button
                     onClick={() => {
                       onMenuToggle();
                     }}
-                    style={{
-                      marginLeft: "625px",
-                    }}
                   >
                     <FiMoreHorizontal />
                   </button>
+                  {menuToggle && (
+                    <div
+                      className="flex flex-col items-center"
+                      style={{
+                        position: "absolute",
+                        width: "50px",
+                        height: "50px",
+                        left: "-22px",
+                      }}
+                    >
+                      <button
+                      // onClick={() => {
+                      //   onEditToggle();
+                      // }}
+                      >
+                        수정
+                      </button>
+                      <button
+                        onClick={() => {
+                          onDeleteToggle();
+                        }}
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  )}
                 </span>
               </div>
-              {menuToggle && (
-                <div
-                  className="flex flex-col items-center"
-                  style={{
-                    marginLeft: "93%",
-                    position: "absoulte",
-                    width: "50px",
-                    height: "50px",
-                  }}
-                >
-                  <button
-                  // onClick={() => {
-                  //   onEditToggle();
-                  // }}
-                  >
-                    수정
-                  </button>
-                  <button
-                    onClick={() => {
-                      onDeleteToggle();
-                    }}
-                  >
-                    삭제
-                  </button>
-                </div>
-              )}
               {deleteToggle && (
                 <div
                   className="p-2 rounded-md"
@@ -401,6 +413,9 @@ const ProductPost = ({
                     width: "250px",
                     height: "80px",
                     border: "1px gray solid",
+                    position: "absolute",
+                    left: "50%",
+                    transform: "translateX(-50%)",
                   }}
                 >
                   <div className="flex justify-center">
@@ -414,12 +429,22 @@ const ProductPost = ({
                         color: "red",
                       }}
                       onClick={() => {
-                        onRemove();
+                        onRemove(num);
+                        alert("삭제되었습니다.");
+                        onMenuToggle();
+                        onDeleteToggle(false);
+                        productmove();
                       }}
                     >
                       삭제
                     </button>
-                    <button>취소</button>
+                    <button
+                      onClick={() => {
+                        onDeleteToggle(false);
+                      }}
+                    >
+                      취소
+                    </button>
                   </div>
                 </div>
               )}

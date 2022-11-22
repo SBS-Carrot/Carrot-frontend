@@ -178,7 +178,7 @@ const Jobspost = ({
           }}
         >
           <div className="mt-5 relative">
-            {imgs[0].url != undefined ? (
+            {imgs[0] != undefined ? (
               <div>
                 <Slider {...settings}>
                   {imgs[0] == undefined ? (

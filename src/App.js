@@ -123,11 +123,11 @@ function App() {
     }
   };
 
-  const onRemove = async (productid) => {
+  const onRemove = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/productdelete?id=${productid}`,
-        method: "DELTE",
+        url: `http://localhost:8083/productdelete/${id}`,
+        method: "POST",
       });
     } catch (e) {
       console.log(e);
@@ -194,6 +194,7 @@ function App() {
               setLiked={setLiked}
               menuToggle={menuToggle}
               onMenuToggle={onMenuToggle}
+              setMenuToggle={setMenuToggle}
               deleteToggle={deleteToggle}
               onDeleteToggle={onDeleteToggle}
               onRemove={onRemove}

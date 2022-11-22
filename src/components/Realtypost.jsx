@@ -178,7 +178,7 @@ const Realtypost = ({
         >
           <div className="mt-5 relative">
             <div>
-              {imgs[0].url != undefined ? (
+              {imgs[0] != undefined ? (
                 <div>
                   <Slider {...settings}>
                     {imgs[0] == undefined ? (

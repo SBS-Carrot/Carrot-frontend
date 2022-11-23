@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import RealtyHeader from "../layouts/RealtyHeader";
 import LoginedRealtyHeader from "../layouts/LoginedRealtyHeader";
 import Footer from "../layouts/Footer";
+import { FiMoreHorizontal } from "react-icons/fi";
 import {
   BsFillEmojiSmileFill,
   BsChevronLeft,
@@ -26,6 +27,12 @@ const Realtypost = ({
   realtyLiked,
   setRealtyLiked,
   onRealtyLike,
+  onRemoveRealty,
+  deleteToggle,
+  onDeleteToggle,
+  menuToggle,
+  onMenuToggle,
+  setMenuToggle,
 }) => {
   const { num } = useParams();
   const [article, setArticle] = useState("");
@@ -41,6 +48,9 @@ const Realtypost = ({
     navigate(-1);
   };
 
+  const realtymove = () => {
+    navigate(`/allrealty`);
+  };
   const onArticle = (data) => {
     setArticle((prev) => data);
   };
@@ -362,7 +372,107 @@ const Realtypost = ({
               >
                 {article.realtyWho}
               </div>
-              <div className="font-bold">{article.realtyCategory}</div>
+              <div>
+                <div
+                  className="flex "
+                  style={{
+                    justifyContent: "space-between",
+                    width: "650px",
+                  }}
+                >
+                  <span className="font-bold">{article.realtyCategory}</span>
+                  {article.realtyUserid === userid ? (
+                    <span>
+                      {" "}
+                      <span
+                        className=""
+                        style={{
+                          position: "relative",
+                        }}
+                      >
+                        <button
+                          onClick={() => {
+                            onMenuToggle();
+                          }}
+                        >
+                          <FiMoreHorizontal />
+                        </button>
+                        {menuToggle && (
+                          <div
+                            className="flex flex-col items-center"
+                            style={{
+                              position: "absolute",
+                              width: "50px",
+                              height: "50px",
+                              left: "-22px",
+                            }}
+                          >
+                            <button
+                            // onClick={() => {
+                            //   onEditToggle();
+                            // }}
+                            >
+                              수정
+                            </button>
+                            <button
+                              onClick={() => {
+                                onDeleteToggle();
+                              }}
+                            >
+                              삭제
+                            </button>
+                          </div>
+                        )}
+                      </span>{" "}
+                      {deleteToggle && (
+                        <div
+                          className="p-2 rounded-md"
+                          style={{
+                            width: "250px",
+                            height: "80px",
+                            border: "1px gray solid",
+                            position: "absolute",
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                            background: "white",
+                          }}
+                        >
+                          <div className="flex justify-center">
+                            게시물을 삭제하시겠어요?
+                          </div>
+                          <div className="flex justify-center gap-4 mt-3">
+                            <button
+                              className=" rounded-md font-bold"
+                              style={{
+                                padding: "5px",
+                                color: "red",
+                              }}
+                              onClick={() => {
+                                onRemoveRealty(num);
+                                alert("삭제되었습니다.");
+                                setMenuToggle();
+                                onDeleteToggle(false);
+                                realtymove();
+                              }}
+                            >
+                              삭제
+                            </button>
+                            <button
+                              onClick={() => {
+                                onDeleteToggle(false);
+                              }}
+                            >
+                              취소
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
             </div>
 
             <div
@@ -377,6 +487,7 @@ const Realtypost = ({
                   color: "#ffa445",
                 }}
               >
+                {" "}
                 {article.realtyDeal}
               </div>
               <div className="font-bold">
@@ -390,6 +501,22 @@ const Realtypost = ({
                 {article.realtyDealing === "전세" ? (
                   <div>
                     {article.realtyDealing} {article.realtySalePrice}
+                  </div>
+                ) : (
+                  ""
+                )}
+                {article.realtyDealing === "월세" ? (
+                  <div>
+                    {article.realtyDealing} {article.realtyDeposit} /{" "}
+                    {article.realtyMonthly}
+                  </div>
+                ) : (
+                  ""
+                )}
+                {article.realtyDealing === "단기" ? (
+                  <div>
+                    {article.realtyDealing} {article.realtyDeposit} /{" "}
+                    {article.realtyMonthly}
                   </div>
                 ) : (
                   ""

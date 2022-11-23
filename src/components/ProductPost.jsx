@@ -31,7 +31,7 @@ const ProductPost = ({
   setMenuToggle,
 }) => {
   const { num } = useParams();
-
+  const [userid, setUserid] = useState(sessionStorage.getItem("userid"));
   const [articleWriter, setArticleWriter] = useState("");
   const navigate = useNavigate();
   const moveBack = () => {
@@ -365,46 +365,52 @@ const ProductPost = ({
                 >
                   {article.productSubject}
                 </div>
-                <span
-                  className=""
-                  style={{
-                    position: "relative",
-                  }}
-                >
-                  <button
-                    onClick={() => {
-                      onMenuToggle();
-                    }}
-                  >
-                    <FiMoreHorizontal />
-                  </button>
-                  {menuToggle && (
-                    <div
-                      className="flex flex-col items-center"
+                {article.productUserid === userid ? (
+                  <span>
+                    <span
+                      className=""
                       style={{
-                        position: "absolute",
-                        width: "50px",
-                        height: "50px",
-                        left: "-22px",
+                        position: "relative",
                       }}
                     >
                       <button
-                      // onClick={() => {
-                      //   onEditToggle();
-                      // }}
-                      >
-                        수정
-                      </button>
-                      <button
                         onClick={() => {
-                          onDeleteToggle();
+                          onMenuToggle();
                         }}
                       >
-                        삭제
+                        <FiMoreHorizontal />
                       </button>
-                    </div>
-                  )}
-                </span>
+                      {menuToggle && (
+                        <div
+                          className="flex flex-col items-center"
+                          style={{
+                            position: "absolute",
+                            width: "50px",
+                            height: "50px",
+                            left: "-22px",
+                          }}
+                        >
+                          <button
+                          // onClick={() => {
+                          //   onEditToggle();
+                          // }}
+                          >
+                            수정
+                          </button>
+                          <button
+                            onClick={() => {
+                              onDeleteToggle();
+                            }}
+                          >
+                            삭제
+                          </button>
+                        </div>
+                      )}
+                    </span>
+                  </span>
+                ) : (
+                  ""
+                )}
               </div>
               {deleteToggle && (
                 <div
@@ -431,7 +437,7 @@ const ProductPost = ({
                       onClick={() => {
                         onRemove(num);
                         alert("삭제되었습니다.");
-                        onMenuToggle();
+                        setMenuToggle();
                         onDeleteToggle(false);
                         productmove();
                       }}

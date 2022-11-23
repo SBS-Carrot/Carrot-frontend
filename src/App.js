@@ -123,7 +123,27 @@ function App() {
   const onRemove = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/productdelete/${id}`,
+        url: `http://localhost:8083/productDelete/${id}`,
+        method: "POST",
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const onRemoveJobs = async (id) => {
+    try {
+      await axios({
+        url: `http://localhost:8083/jobsDelete/${id}`,
+        method: "POST",
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const onRemoveRealty = async (id) => {
+    try {
+      await axios({
+        url: `http://localhost:8083/realtyDelete/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -211,6 +231,12 @@ function App() {
               onJobsLike={onJobsLike}
               jobsLiked={jobsLiked}
               setJobsLiked={setJobsLiked}
+              menuToggle={menuToggle}
+              onMenuToggle={onMenuToggle}
+              setMenuToggle={setMenuToggle}
+              deleteToggle={deleteToggle}
+              onDeleteToggle={onDeleteToggle}
+              onRemoveJobs={onRemoveJobs}
             />
           }
         />
@@ -227,6 +253,12 @@ function App() {
               setRealtyLiked={setRealtyLiked}
               realtyLiked={realtyLiked}
               onRealtyLike={onRealtyLike}
+              menuToggle={menuToggle}
+              onMenuToggle={onMenuToggle}
+              setMenuToggle={setMenuToggle}
+              deleteToggle={deleteToggle}
+              onDeleteToggle={onDeleteToggle}
+              onRemoveRealty={onRemoveRealty}
             />
           }
         />

@@ -31,7 +31,8 @@
     "recoil-persist": "^4.2.0",
     "slick-carousel": "^1.8.1",
     "swiper": "^8.4.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "ws": "^8.11.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -21,7 +21,7 @@ const Chat = ({ logined, setLogined }) => {
   const [chatList, setChatList] = useState([]);
   const [chat, setChat] = useState("");
   const [roomId, setRoomId] = useState("");
-  const { apply_id } = useParams();
+
   const client = useRef({});
 
   const connect = () => {
@@ -29,36 +29,40 @@ const Chat = ({ logined, setLogined }) => {
       brokerURL: "ws://localhost:8083/ws",
       onConnect: () => {
         console.log("success");
+        onCreateRoom();
         subscribe();
       },
-      connectHeaders: {
-        // 이 부분 새로 추가
-        Authorization: window.localStorage.getItem("authorization"),
-      },
+      // connectHeaders: {
+
+      //   Authorization: window.localStorage.getItem("authorization"),
+      // },
     });
     client.current.activate();
   };
 
   const publish = (chat) => {
     if (!client.current.connected) return;
-
-    client.current = new StompJs.Client({
-      brokerURL: "http://localhost:8083/ws",
-      onConnect: () => {
-        console.log("success");
-        subscribe();
-      },
-      connectHeaders: {
-        Authorization: window.localStorage.getItem("authorization"),
-      },
+    console.log(roomId);
+    client.current.publish({
+      destination: "/pub/chat",
+      body: JSON.stringify({
+        sender: sessionStorage.getItem("userid"),
+        roomId,
+        message: chat,
+      }),
+      // connectHeaders: {
+      //   Authorization: window.localStorage.getItem("authorization"),
+      // },
     });
 
     setChat("");
   };
 
   const subscribe = () => {
-    client.current.subscribe("/sub/chat/" + apply_id, (body) => {
+    console.log("roomId : ", roomId);
+    client.current.subscribe(`/sub/ws/${roomId}`, (body) => {
       const json_body = JSON.parse(body.body);
+      console.log("body : ", body.body);
       setChatList((_chat_list) => [..._chat_list, json_body]);
     });
   };
@@ -72,9 +76,9 @@ const Chat = ({ logined, setLogined }) => {
     setChat(event.target.value);
   };
 
-  const handleSubmit = (event, chat) => {
+  const handleSubmit = (chat) => {
     // 보내기 버튼 눌렀을 때 publish
-    event.preventDefault();
+    // event.preventDefault();
 
     publish(chat);
   };
@@ -87,14 +91,13 @@ const Chat = ({ logined, setLogined }) => {
 
   const onCreateRoom = async () => {
     try {
-      const userid = sessionStorage.getItem("userid");
+      const name = sessionStorage.getItem("userid");
       const data = await axios({
         url: `http://localhost:8083/chat`,
         method: "POST",
-        data: userid,
+        data: { name },
       });
-      setRoomId(data.data.setRoomId);
-      console.log(data.data);
+      setRoomId(data.data.roomId);
     } catch (e) {
       console.log(e);
     }
@@ -164,7 +167,7 @@ const Chat = ({ logined, setLogined }) => {
           />
           <button
             onClick={() => {
-              onMessage(chat);
+              handleSubmit(chat);
             }}
             style={{
               padding: "5px",

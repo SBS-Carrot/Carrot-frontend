@@ -34,6 +34,8 @@ const Jobspost = ({
   menuToggle,
   onMenuToggle,
   setMenuToggle,
+  editToggle,
+  onEditToggle,
 }) => {
   const { num } = useParams();
   const navigate = useNavigate();

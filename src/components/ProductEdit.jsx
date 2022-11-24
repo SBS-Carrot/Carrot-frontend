@@ -7,8 +7,10 @@ import LoginedHeader from "../layouts/LoginedHeader";
 import axios from "axios";
 import { useEffect } from "react";
 import { MdAddAPhoto } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
-const ProductWrite = ({ logined, setLogined }) => {
+import { useNavigate, useParams } from "react-router-dom";
+import { data } from "autoprefixer";
+const ProductEdit = ({ logined, setLogined }) => {
+  const { num } = useParams();
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);
@@ -99,7 +101,8 @@ const ProductWrite = ({ logined, setLogined }) => {
     setShowImages(showImages.filter((_, index) => index !== id));
   };
 
-  const onSubmit = async (
+  //수정함
+  const onEdit = async (
     subjectValue,
     contentValue,
     category,
@@ -108,7 +111,7 @@ const ProductWrite = ({ logined, setLogined }) => {
   ) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/createProduct`,
+        url: `http://localhost:8083/productEdit/${num}`,
         method: "POST",
         data: {
           productCategory: category,
@@ -116,7 +119,6 @@ const ProductWrite = ({ logined, setLogined }) => {
           productSubject: subjectValue,
           productContent: contentValue,
           productDealAddress: dealAddress,
-          productUserid: sessionStorage.getItem("userid"),
         },
       });
       onCompleteChange();
@@ -126,7 +128,37 @@ const ProductWrite = ({ logined, setLogined }) => {
     }
   };
 
-  const onSubmits = async (
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/product/${num}`,
+          method: "GET",
+        });
+        //console.log(data.data);
+        setSubjectValue(data.data.productSubject);
+        setCategoryValue(data.data.productCategory);
+        setPriceValue(data.data.productPrice);
+        setDealAddress(data.data.productDealAddress);
+        setContentValue(data.data.productContent);
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        const data1 = await axios({
+          url: `http://localhost:8083/getProductWithImage/${num}`,
+          method: "GET",
+        });
+        //console.log("data1 :", data1.data);
+        setShowImages(data1.data.images);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getData();
+  }, []);
+
+  const onEdits = async (
     subjectValue,
     contentValue,
     category,
@@ -142,7 +174,6 @@ const ProductWrite = ({ logined, setLogined }) => {
         productSubject: subjectValue,
         productContent: contentValue,
         productDealAddress: dealAddress,
-        productUserid: sessionStorage.getItem("userid"),
       };
       // https://velog.io/@hhhminme/Axios%EC%97%90%EC%84%9C-Post-%EC%8B%9C-Contenttypeapplicationoctet-streamnotsupported-%ED%95%B8%EB%93%A4%EB%A7%81415-%EC%97%90%EB%9F%AC
       const json = JSON.stringify(productDto);
@@ -156,7 +187,7 @@ const ProductWrite = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/createProductImages`,
+        url: `http://localhost:8083/productImageEdit`,
         method: "POST",
         data: formData,
       });
@@ -167,6 +198,7 @@ const ProductWrite = ({ logined, setLogined }) => {
       window.alert("게시물 작성에 실패했습니다.");
     }
   };
+
   return (
     <div>
       <LoginedHeader setLogined={setLogined} />
@@ -183,7 +215,7 @@ const ProductWrite = ({ logined, setLogined }) => {
             color: "#ffa445",
           }}
         >
-          중고거래 글쓰기
+          중고거래 수정하기
         </span>
       </div>
       <div
@@ -206,7 +238,6 @@ const ProductWrite = ({ logined, setLogined }) => {
             <div>
               <input
                 type="text"
-                placeholder="게시글 제목"
                 value={subjectValue}
                 onChange={onSubjectChange}
                 style={{
@@ -379,7 +410,7 @@ const ProductWrite = ({ logined, setLogined }) => {
             <button
               onClick={() => {
                 if (uploadedImg.length == 0) {
-                  onSubmit(
+                  onEdit(
                     subjectValue,
                     contentValue,
                     category,
@@ -387,7 +418,7 @@ const ProductWrite = ({ logined, setLogined }) => {
                     dealAddress
                   );
                 } else {
-                  onSubmits(
+                  onEdits(
                     subjectValue,
                     contentValue,
                     category,
@@ -409,7 +440,7 @@ const ProductWrite = ({ logined, setLogined }) => {
                 width: "750px",
               }}
             >
-              판매게시글 작성완료
+              판매게시글 수정완료
             </button>
           </div>
           {completeToggle && (
@@ -438,7 +469,7 @@ const ProductWrite = ({ logined, setLogined }) => {
                 }}
               >
                 {" "}
-                게시글 작성이
+                게시글 수정이
                 <br />
                 완료되었습니다.
                 <div
@@ -462,4 +493,4 @@ const ProductWrite = ({ logined, setLogined }) => {
   );
 };
 
-export default ProductWrite;
+export default ProductEdit;

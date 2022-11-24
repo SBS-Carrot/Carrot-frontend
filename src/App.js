@@ -27,6 +27,7 @@ import AllJobs from "./components/AllJobs";
 import AllRealty from "./components/AllRealty";
 import ChangePassword from "./routes/ChangePassword";
 import Board from "./routes/Board";
+import ProductEdit from "./components/ProductEdit";
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
@@ -41,6 +42,11 @@ function App() {
   const [deleteToggle, setDeleteTogge] = useState(false);
   const onDeleteToggle = () => {
     setDeleteTogge(!deleteToggle);
+  };
+
+  const [editToggle, setEditToggle] = useState(false);
+  const onEditToggle = () => {
+    setEditToggle(!editToggle);
   };
 
   useEffect(() => {
@@ -201,6 +207,10 @@ function App() {
           element={<ArticleControl logined={logined} setLogined={setLogined} />}
         />
         <Route
+          path="/allProduct"
+          element={<AllProduct logined={logined} setLogined={setLogined} />}
+        />
+        <Route
           path="/productPost/:num"
           element={
             <ProductPost
@@ -215,12 +225,22 @@ function App() {
               deleteToggle={deleteToggle}
               onDeleteToggle={onDeleteToggle}
               onRemove={onRemove}
+              editToggle={editToggle}
+              onEditToggle={onEditToggle}
             />
           }
         />
         <Route
           path="/productWrite"
           element={<ProductWrite logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/productedit/:num"
+          element={<ProductEdit logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/allJobs"
+          element={<AllJobs logined={logined} setLogined={setLogined} />}
         />
         <Route
           path="/jobspost/:num"
@@ -237,12 +257,18 @@ function App() {
               deleteToggle={deleteToggle}
               onDeleteToggle={onDeleteToggle}
               onRemoveJobs={onRemoveJobs}
+              editToggle={editToggle}
+              onEditToggle={onEditToggle}
             />
           }
         />
         <Route
           path="/jobsWrite"
           element={<JobsWrite logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/allrealty"
+          element={<AllRealty logined={logined} setLogined={setLogined} />}
         />
         <Route
           path="/realtypost/:num"
@@ -259,6 +285,8 @@ function App() {
               deleteToggle={deleteToggle}
               onDeleteToggle={onDeleteToggle}
               onRemoveRealty={onRemoveRealty}
+              editToggle={editToggle}
+              onEditToggle={onEditToggle}
             />
           }
         />
@@ -266,18 +294,7 @@ function App() {
           path="/realtyWrite"
           element={<RealtyWrite logined={logined} setLogined={setLogined} />}
         />
-        <Route
-          path="/allProduct"
-          element={<AllProduct logined={logined} setLogined={setLogined} />}
-        />
-        <Route
-          path="/allJobs"
-          element={<AllJobs logined={logined} setLogined={setLogined} />}
-        />
-        <Route
-          path="/allrealty"
-          element={<AllRealty logined={logined} setLogined={setLogined} />}
-        />
+
         <Route
           path="/changepassword"
           element={<ChangePassword logined={logined} setLogined={setLogined} />}

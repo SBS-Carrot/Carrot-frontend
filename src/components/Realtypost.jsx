@@ -33,6 +33,8 @@ const Realtypost = ({
   menuToggle,
   onMenuToggle,
   setMenuToggle,
+  editToggle,
+  onEditToggle,
 }) => {
   const { num } = useParams();
   const [article, setArticle] = useState("");

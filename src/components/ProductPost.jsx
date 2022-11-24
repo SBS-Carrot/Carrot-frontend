@@ -29,6 +29,8 @@ const ProductPost = ({
   menuToggle,
   onMenuToggle,
   setMenuToggle,
+  editToggle,
+  onEditToggle,
 }) => {
   const { num } = useParams();
   const [userid, setUserid] = useState(sessionStorage.getItem("userid"));
@@ -42,6 +44,7 @@ const ProductPost = ({
     navigate(`/allproduct`);
   };
   const [article, setArticle] = useState("");
+
   const [images, setImages] = useState([]);
   const onLikes = (data) => {
     setLiked(data);
@@ -390,13 +393,7 @@ const ProductPost = ({
                             left: "-22px",
                           }}
                         >
-                          <button
-                          // onClick={() => {
-                          //   onEditToggle();
-                          // }}
-                          >
-                            수정
-                          </button>
+                          <a href={`/productedit/${num}`}>수정</a>
                           <button
                             onClick={() => {
                               onDeleteToggle();
@@ -412,6 +409,7 @@ const ProductPost = ({
                   ""
                 )}
               </div>
+
               {deleteToggle && (
                 <div
                   className="p-2 rounded-md"

@@ -6,8 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import * as StompJs from "@stomp/stompjs";
+import * as SockJS from "sockjs-client";
 import axios from "axios";
 // npm i @stomp/stompjs
+// npm i react-stomp
 // npm i ws
 const Chat = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -18,31 +20,42 @@ const Chat = ({ logined, setLogined }) => {
   if (!logined) {
     moveBack();
   }
+
   const [chatList, setChatList] = useState([]);
   const [chat, setChat] = useState("");
   const [roomId, setRoomId] = useState("");
 
   const client = useRef({});
 
+  useEffect(() => {
+    connect();
+
+    return () => disconnect();
+  }, []);
   const connect = () => {
     client.current = new StompJs.Client({
-      brokerURL: "ws://localhost:8083/ws",
+      brokerURL: "ws://localhost:8083/wss", // 웹소켓 서버 직접 접속
+      // https://www.daddyprogrammer.org/post/4077/spring-websocket-chatting/
+      // https://sg-choi.tistory.com/294
+
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
       onConnect: () => {
         console.log("success");
         onCreateRoom();
         subscribe();
       },
-      // connectHeaders: {
-
-      //   Authorization: window.localStorage.getItem("authorization"),
-      // },
+      connectHeaders: {
+        "auth-token": "spring-chat-auth-token",
+      },
     });
     client.current.activate();
   };
 
   const publish = (chat) => {
     if (!client.current.connected) return;
-    console.log(roomId);
+    console.log("룸 :", roomId.charAt(0));
     client.current.publish({
       destination: "/pub/chat",
       body: JSON.stringify({
@@ -50,17 +63,16 @@ const Chat = ({ logined, setLogined }) => {
         roomId,
         message: chat,
       }),
-      // connectHeaders: {
-      //   Authorization: window.localStorage.getItem("authorization"),
-      // },
+      connectHeaders: {
+        "auth-token": "spring-chat-auth-token",
+      },
     });
 
     setChat("");
   };
 
   const subscribe = () => {
-    console.log("roomId : ", roomId);
-    client.current.subscribe(`/sub/ws/${roomId}`, (body) => {
+    client.current.subscribe(`/sub/chat/1`, (body) => {
       const json_body = JSON.parse(body.body);
       console.log("body : ", body.body);
       setChatList((_chat_list) => [..._chat_list, json_body]);
@@ -83,12 +95,6 @@ const Chat = ({ logined, setLogined }) => {
     publish(chat);
   };
 
-  useEffect(() => {
-    connect();
-
-    return () => disconnect();
-  }, []);
-
   const onCreateRoom = async () => {
     try {
       const name = sessionStorage.getItem("userid");
@@ -97,6 +103,7 @@ const Chat = ({ logined, setLogined }) => {
         method: "POST",
         data: { name },
       });
+      console.log(data.data);
       setRoomId(data.data.roomId);
     } catch (e) {
       console.log(e);
@@ -152,6 +159,7 @@ const Chat = ({ logined, setLogined }) => {
           >
             채팅들
           </div>
+
           <input
             type="text"
             value={chat}

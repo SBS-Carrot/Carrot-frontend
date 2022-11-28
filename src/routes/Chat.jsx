@@ -55,12 +55,13 @@ const Chat = ({ logined, setLogined }) => {
 
   const publish = (chat) => {
     if (!client.current.connected) return;
-    console.log("룸 :", roomId.charAt(0));
+
     client.current.publish({
       destination: "/pub/chat",
       body: JSON.stringify({
+        type: "TALK",
+        roomId: "371b5d8a-68df-498e-a095-da66dab88557",
         sender: sessionStorage.getItem("userid"),
-        roomId,
         message: chat,
       }),
       connectHeaders: {

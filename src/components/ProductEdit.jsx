@@ -87,8 +87,9 @@ const ProductEdit = ({ logined, setLogined }) => {
 
     setShowImages(imageUrlLists);
     // console.log(imageUrlLists);
+    console.log("업로드", imageUrlLists);
   };
-  console.log(uploadedImg);
+
   // X버튼 클릭 시 이미지 삭제
   const handleDeleteImage = (id) => {
     //img 배열 삭제
@@ -151,7 +152,7 @@ const ProductEdit = ({ logined, setLogined }) => {
         });
         console.log("data1 :", data1.data);
         setShowImages(data1.data.images);
-        // setUploadedImg(data1.data);
+        //setUploadedImg(data1.data);
       } catch (e) {
         console.log(e);
       }

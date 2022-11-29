@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Header.css";
 import { useNavigate } from "react-router-dom";
+import ArticleControl from "../routes/ArticleControl";
+import { BsWordpress } from "react-icons/bs";
 const LoginedHeader = ({ setLogined }) => {
   const navigate = useNavigate();
   const onHomepage = () => {
@@ -14,6 +16,20 @@ const LoginedHeader = ({ setLogined }) => {
   const onMyPage = () => {
     navigate("/mypage");
   };
+
+  const [search, setSearch] = useState("");
+  const [searchList, setSearchList] = useState([]);
+  const onSearchChange = (e) => {
+    setSearch(e.target.value.toLocaleLowerCase());
+  };
+
+  //const onSearch = async(search) =>{
+  //try{
+  // const data = await axios({
+  // url: `http://localhost:8083`
+  //})
+  // }
+  //}
 
   return (
     <div
@@ -124,6 +140,7 @@ const LoginedHeader = ({ setLogined }) => {
               fontSize: "1.5rem",
             }}
           />
+
           <input
             type="text"
             placeholder="물품이나 동네를 검색해 보세요"
@@ -133,6 +150,8 @@ const LoginedHeader = ({ setLogined }) => {
               padding: "5px 10px",
               borderRadius: "10px",
             }}
+            value={search}
+            onChange={onSearchChange}
           />
         </div>
       </div>

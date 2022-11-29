@@ -5,12 +5,16 @@ import Footer from "../layouts/Footer";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Stomp from "stompjs";
 import * as StompJs from "@stomp/stompjs";
 import * as SockJS from "sockjs-client";
+import SockJsClient from "react-stomp";
 import axios from "axios";
 // npm i @stomp/stompjs
+// npm i sockjs-client
 // npm i react-stomp
 // npm i ws
+// npm i stompjs
 const Chat = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const moveBack = () => {
@@ -20,21 +24,24 @@ const Chat = ({ logined, setLogined }) => {
   if (!logined) {
     moveBack();
   }
-
+  const stomp = require("stompjs");
   const [chatList, setChatList] = useState([]);
   const [chat, setChat] = useState("");
   const [roomId, setRoomId] = useState("");
-
+  const [sockjs, setSockjs] = useState();
   const client = useRef({});
-
   useEffect(() => {
     connect();
 
     return () => disconnect();
   }, []);
+  // const sock = StompJs.over(new WebSocket("http://localhost:8083/wss/chat"));
+  // let socket = new SockJS("http://localhost:8083/wss/chat");
   const connect = () => {
+    // let stompClient = Stomp.over(socket);
+
     client.current = new StompJs.Client({
-      brokerURL: "ws://localhost:8083/wss", // 웹소켓 서버 직접 접속
+      brokerURL: "ws://localhost:8083/wss/chat", // 웹소켓 서버 직접 접속
       // https://www.daddyprogrammer.org/post/4077/spring-websocket-chatting/
       // https://sg-choi.tistory.com/294
 
@@ -60,7 +67,7 @@ const Chat = ({ logined, setLogined }) => {
       destination: "/pub/chat",
       body: JSON.stringify({
         type: "TALK",
-        roomId: "371b5d8a-68df-498e-a095-da66dab88557",
+        roomId: "e7e13230-7404-453c-b3ca-ec9bd8cf58c2",
         sender: sessionStorage.getItem("userid"),
         message: chat,
       }),
@@ -75,7 +82,7 @@ const Chat = ({ logined, setLogined }) => {
   const subscribe = () => {
     client.current.subscribe(`/sub/chat/1`, (body) => {
       const json_body = JSON.parse(body.body);
-      console.log("body : ", body.body);
+      console.log("body : ", json_body);
       setChatList((_chat_list) => [..._chat_list, json_body]);
     });
   };

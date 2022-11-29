@@ -88,7 +88,7 @@ const ProductEdit = ({ logined, setLogined }) => {
     setShowImages(imageUrlLists);
     // console.log(imageUrlLists);
   };
-
+  console.log(uploadedImg);
   // X버튼 클릭 시 이미지 삭제
   const handleDeleteImage = (id) => {
     //img 배열 삭제
@@ -149,8 +149,9 @@ const ProductEdit = ({ logined, setLogined }) => {
           url: `http://localhost:8083/getProductWithImage/${num}`,
           method: "GET",
         });
-        //console.log("data1 :", data1.data);
+        console.log("data1 :", data1.data);
         setShowImages(data1.data.images);
+        // setUploadedImg(data1.data);
       } catch (e) {
         console.log(e);
       }
@@ -187,7 +188,7 @@ const ProductEdit = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/productImageEdit`,
+        url: `http://localhost:8083/productImageEdit/${num}`,
         method: "POST",
         data: formData,
       });
@@ -458,7 +459,7 @@ const ProductEdit = ({ logined, setLogined }) => {
               }}
             >
               <a
-                href={`/productpost/${id}`}
+                href={`/productpost/${num}`}
                 style={{
                   textAlign: "center",
                   width: "100%",

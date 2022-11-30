@@ -83,7 +83,7 @@ const LoginedBoardHeader = ({ setLogined }) => {
               borderRadius: "5px",
             }}
           >
-            로그인
+            로그아웃
           </a>
         </div>
         <div

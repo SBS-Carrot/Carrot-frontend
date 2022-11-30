@@ -23,12 +23,10 @@ const LoginedHeader = ({ setLogined }) => {
     setSearch(e.target.value);
   };
 
-  const params = useParams();
-
   const onSearch = async () => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/product/search?search=${keyword}`,
+        url: `http://localhost:8083/product/search`,
         method: "GET",
       });
       setSearchList(data.data);
@@ -50,7 +48,7 @@ const LoginedHeader = ({ setLogined }) => {
     >
       <div
         style={{
-          width: "1100px",
+          width: "1200px",
           height: "100%",
           justifyContent: "space-between",
           margin: "0 auto",
@@ -149,6 +147,7 @@ const LoginedHeader = ({ setLogined }) => {
 
           <input
             type="text"
+            name="keyword"
             placeholder="물품이나 동네를 검색해 보세요"
             style={{
               width: "300px",

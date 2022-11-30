@@ -114,7 +114,6 @@ const Login = ({ onLogin, logined }) => {
               }}
             />
           </div>
-
           <div>
             <br />
             <button
@@ -131,10 +130,7 @@ const Login = ({ onLogin, logined }) => {
                   window.alert("비밀번호를 입력해 주세요");
                 } else {
                   onLogin(idValue, pwValue);
-
-                  if (logined) {
-                    onHomepage();
-                  }
+                  onHomepage();
                 }
               }}
             >

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { FaCarrot } from "react-icons/fa";
 import ProductPaging from "./ProductPaging";
 import "../styles/Pagination.css";
+import Board from "../routes/Board";
 
 const AllProduct = ({ logined, setLogined }) => {
   const [posts, setPosts] = useState([]);
@@ -34,6 +35,7 @@ const AllProduct = ({ logined, setLogined }) => {
           method: "GET",
         });
         onProduct(data.data);
+
         setCurrentPosts(data.data.slice(0, 8));
       } catch (e) {
         console.log(e);

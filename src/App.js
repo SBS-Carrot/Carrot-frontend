@@ -256,7 +256,7 @@ function App() {
           element={<Board logined={logined} setLogined={setLogined} />}
         />
         <Route
-          path="/chat"
+          path="/chat/:roomId"
           element={<Chat logined={logined} setLogined={setLogined} />}
         />
       </Routes>

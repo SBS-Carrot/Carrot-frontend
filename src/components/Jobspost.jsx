@@ -139,7 +139,7 @@ const Jobspost = ({
     };
     onSubmit(num);
   }, []);
-  console.log(imgs[0]);
+
   useEffect(() => {
     const onLikeRe = async (num) => {
       try {

@@ -27,6 +27,7 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "react-stomp": "^5.1.0",
+    "react-uuid": "^2.0.0",
     "reactstrap": "^9.1.5",
     "recoil": "^0.7.5",
     "recoil-persist": "^4.2.0",

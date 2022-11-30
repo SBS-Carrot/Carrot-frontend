@@ -10,10 +10,13 @@ import * as StompJs from "@stomp/stompjs";
 import * as SockJS from "sockjs-client";
 import SockJsClient from "react-stomp";
 import axios from "axios";
+import uuid from "react-uuid";
 // npm i @stomp/stompjs
-// npm i sockjs-client
-// npm i react-stomp
+// npm i react-uuid
 // npm i ws
+// npm i sockjs-client
+// 위 4개 해보고 안되면 밑에꺼
+// npm i react-stomp
 // npm i stompjs
 const Chat = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -24,22 +27,18 @@ const Chat = ({ logined, setLogined }) => {
   if (!logined) {
     moveBack();
   }
-  const stomp = require("stompjs");
+
   const [chatList, setChatList] = useState([]);
   const [chat, setChat] = useState("");
-  const [roomId, setRoomId] = useState("");
-  const [sockjs, setSockjs] = useState();
+  const { roomId } = useParams();
+
   const client = useRef({});
   useEffect(() => {
     connect();
-
     return () => disconnect();
   }, []);
-  // const sock = StompJs.over(new WebSocket("http://localhost:8083/wss/chat"));
-  // let socket = new SockJS("http://localhost:8083/wss/chat");
-  const connect = () => {
-    // let stompClient = Stomp.over(socket);
 
+  const connect = () => {
     client.current = new StompJs.Client({
       brokerURL: "ws://localhost:8083/wss/chat", // 웹소켓 서버 직접 접속
       // https://www.daddyprogrammer.org/post/4077/spring-websocket-chatting/
@@ -49,7 +48,6 @@ const Chat = ({ logined, setLogined }) => {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
       onConnect: () => {
-        console.log("success");
         onCreateRoom();
         subscribe();
       },
@@ -67,7 +65,7 @@ const Chat = ({ logined, setLogined }) => {
       destination: "/pub/chat",
       body: JSON.stringify({
         type: "TALK",
-        roomId: "e7e13230-7404-453c-b3ca-ec9bd8cf58c2",
+        roomId,
         sender: sessionStorage.getItem("userid"),
         message: chat,
       }),
@@ -80,10 +78,10 @@ const Chat = ({ logined, setLogined }) => {
   };
 
   const subscribe = () => {
-    client.current.subscribe(`/sub/chat/1`, (body) => {
+    client.current.subscribe("/sub/chat/" + roomId, (body) => {
       const json_body = JSON.parse(body.body);
       console.log("body : ", json_body);
-      setChatList((_chat_list) => [..._chat_list, json_body]);
+      setChatList((_chat_list) => [..._chat_list, json_body.message]);
     });
   };
 
@@ -102,54 +100,53 @@ const Chat = ({ logined, setLogined }) => {
 
     publish(chat);
   };
-
+  const onChatList = (data) => {
+    const datas = data.reverse();
+    setChatList(datas);
+  };
   const onCreateRoom = async () => {
     try {
-      const name = sessionStorage.getItem("userid");
-      const data = await axios({
-        url: `http://localhost:8083/chat`,
-        method: "POST",
-        data: { name },
+      const myName = sessionStorage.getItem("userid");
+      const yourName = sessionStorage.getItem("yourName");
+
+      const chattingRoom = {
+        roomId: roomId,
+        myName,
+        yourName,
+      };
+      //params로 받은 이미 존재하는 or 새로 생성된 채팅방 조회
+      const data1 = await axios({
+        url: `http://localhost:8083/room/${roomId}`,
+        method: "GET",
       });
-      console.log(data.data);
-      setRoomId(data.data.roomId);
+
+      // 없다면 URL의 랜덤한 ID로 채팅방 새로 생성.
+      if (data1 == "") {
+        const data = await axios({
+          url: `http://localhost:8083/chat`,
+          method: "POST",
+          data: chattingRoom,
+        });
+      } else {
+        // 있다면 채팅목록 GET
+
+        const data = await axios({
+          url: `http://localhost:8083/getMessage`,
+          method: "GET",
+          params: { roomId },
+        });
+        onChatList(data.data);
+        console.log(data.data);
+      }
     } catch (e) {
       console.log(e);
     }
   };
 
-  const onMessage = async (chat) => {
-    try {
-      const userid = sessionStorage.getItem("userid");
-      const chatting = {
-        messageType: "text",
-        roomId,
-        sender: userid,
-        chat,
-      };
-      const data = await axios({
-        url: `http://localhost:8083/chat/message`,
-        method: "POST",
-        data: { chatting },
-      });
-      console.log(data.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
   return (
     <div>
       <LoginedHeader setLogined={setLogined} />
       <div>
-        <div>
-          <button
-            onClick={() => {
-              onCreateRoom();
-            }}
-          >
-            방만들기
-          </button>
-        </div>
         <div
           style={{
             width: "1000px",
@@ -165,7 +162,27 @@ const Chat = ({ logined, setLogined }) => {
               height: "70%",
             }}
           >
-            채팅들
+            <ul
+              style={{
+                width: "100%",
+                height: "100%",
+                border: "1px red solid",
+              }}
+            >
+              {chatList.map((chat, index) => {
+                <li
+                  key={index}
+                  style={{
+                    border: "1px red solid",
+                    width: "100px",
+                    height: "50px",
+                  }}
+                >
+                  <span>하이</span>
+                  <span>{chat.message}</span>
+                </li>;
+              })}
+            </ul>
           </div>
 
           <input

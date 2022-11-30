@@ -5,7 +5,7 @@ import { authenticatedState } from "../recoil/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Header.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ArticleControl from "../routes/ArticleControl";
 import { BsWordpress } from "react-icons/bs";
 const LoginedHeader = ({ setLogined }) => {
@@ -20,16 +20,22 @@ const LoginedHeader = ({ setLogined }) => {
   const [search, setSearch] = useState("");
   const [searchList, setSearchList] = useState([]);
   const onSearchChange = (e) => {
-    setSearch(e.target.value.toLocaleLowerCase());
+    setSearch(e.target.value);
   };
 
-  //const onSearch = async(search) =>{
-  //try{
-  // const data = await axios({
-  // url: `http://localhost:8083`
-  //})
-  // }
-  //}
+  const params = useParams();
+
+  const onSearch = async () => {
+    try {
+      const data = await axios({
+        url: `http://localhost:8083/product/search?search=${keyword}`,
+        method: "GET",
+      });
+      setSearchList(data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <div
@@ -153,6 +159,13 @@ const LoginedHeader = ({ setLogined }) => {
             value={search}
             onChange={onSearchChange}
           />
+          <button
+            onClick={() => {
+              onSearch();
+            }}
+          >
+            찾기
+          </button>
         </div>
       </div>
     </div>

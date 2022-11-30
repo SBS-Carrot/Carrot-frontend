@@ -16,7 +16,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaCarrot } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
-
+import uuid from "react-uuid";
 const ProductPost = ({
   logined,
   setLogined,
@@ -40,6 +40,36 @@ const ProductPost = ({
     navigate(-1);
   };
 
+  const moveChat = async (myName, yourName) => {
+    if (myName === yourName) {
+      alert("자기 자신에게는 메세지를 보낼 수 없습니다.");
+      return;
+    }
+    //나와 상대방 사이의 채팅방 존재 유무 확인
+    const data = await axios({
+      url: `http://localhost:8083/getChattingRoom`,
+      method: "GET",
+      params: { myName, yourName },
+    });
+    const data1 = await axios({
+      url: `http://localhost:8083/getChattingRoom`,
+      method: "GET",
+      params: { myName: yourName, yourName: myName },
+    });
+
+    const existRoom = data.data.roomId;
+    const existRoom1 = data1.data.roomId;
+    //채팅방이 이미 존재한다면 (과거 메시지를 주고받았다면)
+    if (existRoom != "" && data.data != "" && existRoom1 != "") {
+      //그 방 번호로 이동
+      navigate(`/chat/${existRoom}`);
+    } else {
+      //채팅방이 없다면 (메시지를 처음주고 받는다면)
+      //uuid로 랜덤한 문자 생성 후 그 URL로 이동. (아직 채팅방생성X)
+      const roomNum = uuid();
+      navigate(`/chat/${roomNum}`);
+    }
+  };
   const productmove = () => {
     navigate(`/allproduct`);
   };
@@ -104,6 +134,7 @@ const ProductPost = ({
           method: "GET",
         });
         setArticleWriter(data.data);
+        sessionStorage.setItem("yourName", data.data.userid);
       } catch (e) {
         console.log(e);
       }
@@ -520,8 +551,14 @@ const ProductPost = ({
                 )}
               </button>
 
-              <a
-                href="#"
+              <button
+                onClick={() => {
+                  const myName = sessionStorage.getItem("userid");
+
+                  const yourName = articleWriter.userid;
+
+                  moveChat(myName, yourName);
+                }}
                 className="rounded p-2 font-bold flex justify-center"
                 style={{
                   width: "300px",
@@ -529,8 +566,8 @@ const ProductPost = ({
                   backgroundColor: "#fc9d39",
                 }}
               >
-                채팅하기{" "}
-              </a>
+                채팅하기
+              </button>
             </div>
           </section>
           <br />

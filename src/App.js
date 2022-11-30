@@ -27,8 +27,12 @@ import AllJobs from "./components/AllJobs";
 import AllRealty from "./components/AllRealty";
 import ChangePassword from "./routes/ChangePassword";
 import Board from "./routes/Board";
+
 import ProductEdit from "./components/ProductEdit";
 import BoardWrite from "./components/BoardWrite";
+
+import Chat from "./routes/Chat";
+
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
@@ -307,6 +311,10 @@ function App() {
         <Route
           path="/BoardWrite"
           element={<BoardWrite logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/chat/:roomId"
+          element={<Chat logined={logined} setLogined={setLogined} />}
         />
       </Routes>
     </Router>

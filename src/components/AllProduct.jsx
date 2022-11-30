@@ -59,7 +59,7 @@ const AllProduct = ({ logined, setLogined }) => {
     }
     navigate(`/productpost/${id}`);
   };
-
+  console.log(currentPosts);
   if (logined) {
     return (
       <div>

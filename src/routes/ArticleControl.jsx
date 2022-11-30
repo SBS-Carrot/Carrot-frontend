@@ -316,14 +316,15 @@ const ArticleControl = ({ logined, setLogined }) => {
                 </ul>
               )}
             </div>
-            <ProductPaging
-              totalCount={product.length}
-              page={Ppage}
-              postPerPage={PpostPerPage}
-              pageRangeDisplayed={5}
-              handlePageChange={PhandlePageChange}
-            />
-
+            {spreadProduct && (
+              <ProductPaging
+                totalCount={product.length}
+                page={Ppage}
+                postPerPage={PpostPerPage}
+                pageRangeDisplayed={5}
+                handlePageChange={PhandlePageChange}
+              />
+            )}
             <li>
               <button
                 onClick={() => {
@@ -446,13 +447,15 @@ const ArticleControl = ({ logined, setLogined }) => {
                   ))}
                 </ul>
               )}
-              <JobsPaging
-                totalCount={jobs.length}
-                page={Jpage}
-                postPerPage={JpostPerPage}
-                pageRangeDisplayed={5}
-                handlePageChange={JhandlePageChange}
-              />
+              {spreadJobs && (
+                <JobsPaging
+                  totalCount={jobs.length}
+                  page={Jpage}
+                  postPerPage={JpostPerPage}
+                  pageRangeDisplayed={5}
+                  handlePageChange={JhandlePageChange}
+                />
+              )}
             </div>
             <li>
               <button
@@ -780,13 +783,15 @@ const ArticleControl = ({ logined, setLogined }) => {
                 </ul>
               )}
             </div>
-            <RealtyPaging
-              totalCount={realty.length}
-              page={Rpage}
-              postPerPage={RpostPerPage}
-              pageRangeDisplayed={5}
-              handlePageChange={RhandlePageChange}
-            />
+            {spreadRealty && (
+              <RealtyPaging
+                totalCount={realty.length}
+                page={Rpage}
+                postPerPage={RpostPerPage}
+                pageRangeDisplayed={5}
+                handlePageChange={RhandlePageChange}
+              />
+            )}
           </ul>
         </div>
       </div>

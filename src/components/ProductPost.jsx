@@ -49,14 +49,21 @@ const ProductPost = ({
       method: "GET",
       params: { myName, yourName },
     });
+    const data1 = await axios({
+      url: `http://localhost:8083/getChattingRoom`,
+      method: "GET",
+      params: { myName: yourName, yourName: myName },
+    });
 
     const existRoom = data.data.roomId;
+    const existRoom1 = data1.data.roomId;
     //채팅방이 이미 존재한다면 (과거 메시지를 주고받았다면)
-    if (existRoom != "" && data.data != "") {
+    if (existRoom != "" && data.data != "" && existRoom1 != "") {
       //그 방 번호로 이동
       navigate(`/chat/${existRoom}`);
     } else {
-      //채팅방이 없다면 (메시지를 처음주고 받는다면) 새로 랜덤생성
+      //채팅방이 없다면 (메시지를 처음주고 받는다면)
+      //uuid로 랜덤한 문자 생성 후 그 URL로 이동. (아직 채팅방생성X)
       const roomNum = uuid();
       navigate(`/chat/${roomNum}`);
     }

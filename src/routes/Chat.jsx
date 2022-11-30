@@ -10,6 +10,9 @@ import * as StompJs from "@stomp/stompjs";
 import * as SockJS from "sockjs-client";
 import SockJsClient from "react-stomp";
 import axios from "axios";
+import { faCarrot } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import uuid from "react-uuid";
 // npm i @stomp/stompjs
 // npm i react-uuid
@@ -31,7 +34,7 @@ const Chat = ({ logined, setLogined }) => {
   const [chatList, setChatList] = useState([]);
   const [chat, setChat] = useState("");
   const { roomId } = useParams();
-
+  const [user2, setUser2] = useState("");
   const client = useRef({});
   useEffect(() => {
     connect();
@@ -101,8 +104,10 @@ const Chat = ({ logined, setLogined }) => {
     publish(chat);
   };
   const onChatList = (data) => {
-    const datas = data.reverse();
-    setChatList(datas);
+    setChatList(data);
+  };
+  const onUser2 = (data) => {
+    setUser2(data);
   };
   const onCreateRoom = async () => {
     try {
@@ -136,8 +141,13 @@ const Chat = ({ logined, setLogined }) => {
           params: { roomId },
         });
         onChatList(data.data);
-        console.log(data.data);
       }
+
+      const chatUser = await axios({
+        url: `http://localhost:8083/getUser/${yourName}`,
+        method: "GET",
+      });
+      onUser2(chatUser.data);
     } catch (e) {
       console.log(e);
     }
@@ -151,64 +161,137 @@ const Chat = ({ logined, setLogined }) => {
           style={{
             width: "1000px",
             margin: "0 auto",
-            height: "500px",
-            border: "1px black solid",
           }}
         >
           <div
             style={{
-              border: "1px black solid",
               width: "90%",
-              height: "70%",
+              margin: "0 auto",
             }}
           >
-            <ul
-              style={{
-                width: "100%",
-                height: "100%",
-                border: "1px red solid",
-              }}
-            >
-              {chatList.map((chat, index) => {
+            <ul>
+              {chatList.map((chat, index) => (
                 <li
                   key={index}
                   style={{
-                    border: "1px red solid",
-                    width: "100px",
-                    height: "50px",
+                    width: "100%",
                   }}
                 >
-                  <span>하이</span>
-                  <span>{chat.message}</span>
-                </li>;
-              })}
+                  {chat.sender == sessionStorage.getItem("userid") ? (
+                    <div
+                      style={{
+                        backgroundColor: "#ffa445",
+                        borderRadius: "20px",
+                        width: "45%",
+                        minHeight: "50px",
+                        marginTop: "10px",
+                        color: "white",
+                        transform: "translateX(100%)",
+                        textAlign: "center",
+                        padding: "20px",
+                      }}
+                    >
+                      <span style={{}}>{chat.message}</span>
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        position: "relative",
+                      }}
+                    >
+                      <div
+                        style={{
+                          borderRadius: "50%",
+
+                          position: "absolute",
+                        }}
+                      >
+                        {user2.profileImage == null ? (
+                          <FontAwesomeIcon
+                            icon={faCarrot}
+                            style={{
+                              fontSize: "2rem",
+                              color: "#ffa445",
+                              position: "absolute",
+
+                              left: "0%",
+                              top: "10%",
+                            }}
+                          />
+                        ) : (
+                          <img src={user2.profileImage} alt="" />
+                        )}
+                      </div>
+
+                      <div
+                        style={{
+                          borderRadius: "20px",
+                          width: "45%",
+                          minHeight: "50px",
+                          marginTop: "10px",
+                          marginLeft: "35px",
+                          backgroundColor: "#eeeeee",
+                          textAlign: "center",
+                          padding: "20px",
+                        }}
+                      >
+                        <div
+                          style={{
+                            marginLeft: "10px",
+                          }}
+                        >
+                          <span>{chat.message}</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
-
-          <input
-            type="text"
-            value={chat}
-            onChange={handleChange}
-            placeholder="메시지를 입력해 주세요"
+          <div
             style={{
-              width: "70%",
-              heiht: "30px",
-              border: "1px black solid",
-              borderRadius: "15px",
-              backgroundColor: "white",
-            }}
-          />
-          <button
-            onClick={() => {
-              handleSubmit(chat);
-            }}
-            style={{
-              padding: "5px",
-              border: "1px black solid",
+              margin: "10px auto",
+              display: "flex",
+              justifyContent: "center",
+              marginLeft: "-37px",
             }}
           >
-            전송
-          </button>
+            <input
+              type="text"
+              value={chat}
+              onChange={handleChange}
+              placeholder="메시지를 입력해 주세요"
+              style={{
+                width: "70%",
+                border: "1px #ffa445 solid",
+                borderRadius: "10px",
+                backgroundColor: "white",
+                padding: "10px",
+              }}
+              onKeyUp={(e) => {
+                console.log(e);
+                if (e.key == "Enter") {
+                  handleSubmit(chat);
+                }
+              }}
+            />
+
+            <button
+              onClick={() => {
+                handleSubmit(chat);
+              }}
+              style={{
+                padding: "5px 10px",
+                border: "1px #ffa445 solid",
+                marginLeft: "10px",
+                borderRadius: "10%",
+                color: "#ffa445",
+              }}
+            >
+              전송
+            </button>
+          </div>
         </div>
       </div>
       <Footer />

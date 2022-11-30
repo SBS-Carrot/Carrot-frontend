@@ -65,7 +65,7 @@ const Board = ({ logined, setLogined }) => {
               display: "inline",
             }}
           >
-            <div>dkdkdkdkdkdk</div>
+            <div></div>
           </div>
         </div>
         <Footer />

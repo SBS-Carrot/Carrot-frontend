@@ -13,7 +13,6 @@ import axios from "axios";
 import { faCarrot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import uuid from "react-uuid";
 // npm i @stomp/stompjs
 // npm i react-uuid
 // npm i ws
@@ -84,7 +83,7 @@ const Chat = ({ logined, setLogined }) => {
     client.current.subscribe("/sub/chat/" + roomId, (body) => {
       const json_body = JSON.parse(body.body);
       console.log("body : ", json_body);
-      setChatList((_chat_list) => [..._chat_list, json_body.message]);
+      setChatList((_chat_list) => [..._chat_list, json_body]);
     });
   };
 
@@ -134,7 +133,6 @@ const Chat = ({ logined, setLogined }) => {
         });
       } else {
         // 있다면 채팅목록 GET
-
         const data = await axios({
           url: `http://localhost:8083/getMessage`,
           method: "GET",
@@ -142,7 +140,6 @@ const Chat = ({ logined, setLogined }) => {
         });
         onChatList(data.data);
       }
-
       const chatUser = await axios({
         url: `http://localhost:8083/getUser/${yourName}`,
         method: "GET",
@@ -161,6 +158,7 @@ const Chat = ({ logined, setLogined }) => {
           style={{
             width: "1000px",
             margin: "0 auto",
+            minHeight: "50vh",
           }}
         >
           <div
@@ -270,7 +268,6 @@ const Chat = ({ logined, setLogined }) => {
                 padding: "10px",
               }}
               onKeyUp={(e) => {
-                console.log(e);
                 if (e.key == "Enter") {
                   handleSubmit(chat);
                 }

@@ -10,7 +10,16 @@ import { useEffect } from "react";
 import axios from "axios";
 const Home = ({ logined, setLogined }) => {
   const [user, setUser] = useState(sessionStorage.getItem("user") || "");
+  //https://velog.io/@green9930/%EC%8B%A4%EC%A0%84-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-React%EC%99%80-SSE
+  //https://velog.io/@max9106/Spring-SSE-Server-Sent-Events%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EC%95%8C%EB%A6%BC
+  const eventSource = new EventSource("http://localhost:8083/sse");
+  eventSource.onmessage = (event) => {
+    console.log(event.data);
+  };
 
+  eventSource.onerror = (error) => {
+    eventSource.close();
+  };
   useEffect(() => {
     if (logined) {
       const getData = async () => {

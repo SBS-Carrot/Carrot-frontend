@@ -5,15 +5,10 @@ import Footer from "../layouts/Footer";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Stomp from "stompjs";
 import * as StompJs from "@stomp/stompjs";
-import * as SockJS from "sockjs-client";
-import SockJsClient from "react-stomp";
 import axios from "axios";
 import { faCarrot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import uuid from "react-uuid";
 // npm i @stomp/stompjs
 // npm i react-uuid
 // npm i ws

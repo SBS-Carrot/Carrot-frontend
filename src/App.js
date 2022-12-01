@@ -32,6 +32,7 @@ import ProductEdit from "./components/ProductEdit";
 import BoardWrite from "./components/BoardWrite";
 
 import Chat from "./routes/Chat";
+import BoardPost from "./components/BoardPost";
 
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
@@ -315,6 +316,11 @@ function App() {
         <Route
           path="/chat/:roomId"
           element={<Chat logined={logined} setLogined={setLogined} />}
+        />
+
+        <Route
+          path="/boardpost"
+          element={<BoardPost logined={logined} setLogined={setLogined} />}
         />
       </Routes>
     </Router>

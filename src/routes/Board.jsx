@@ -3,11 +3,38 @@ import Footer from "../layouts/Footer";
 import LoginedBoardHeader from "../layouts/LoginedBoardHeader";
 import BoardHeader from "../layouts/BoardHeader";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 const Board = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const moveWrite = () => {
     navigate("/boardWrite");
   };
+
+  //동네질문
+  //동네 카페
+  //나의 동네 생활
+  const [spreadLife, setSpreadLife] = useState(false);
+  const onSpreadLife = () => {
+    setSpreadLife(!spreadLife);
+  };
+  const [life, setLife] = useState([]);
+  const [currentlife, setCurrentLife] = useState([]);
+
+  const onLife = (data) => {
+    const datas = data.reverse();
+    setLife((prev) => datas);
+  };
+
+  const moveBoard = (id) => {
+    navigate(`/boardpost/${id}`);
+  };
+
+  //데이터 불러오기
+  // useEffect(()=>{
+  //   const getData =
+  // })
+
   if (logined) {
     return (
       <div>
@@ -34,7 +61,7 @@ const Board = ({ logined, setLogined }) => {
                 border: "1px red solid",
               }}
             >
-              동네 카페
+              우리동네질문
             </button>
             <button
               style={{
@@ -42,8 +69,24 @@ const Board = ({ logined, setLogined }) => {
                 border: "1px red solid",
               }}
             >
-              우리동네질문
+              동네 카페
             </button>
+            <button
+              style={{
+                width: "100%",
+                border: "1px red solid",
+              }}
+              onClick={() => {
+                onSpreadLife();
+              }}
+            >
+              나의 동네생활
+            </button>
+            {spreadLife && (
+              <ul>
+                <li></li>
+              </ul>
+            )}
             <button
               onClick={() => {
                 moveWrite();

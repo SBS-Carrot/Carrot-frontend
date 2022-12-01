@@ -39,26 +39,11 @@ const BoardWrite = ({ logined, setLogined }) => {
   const onChange = (e) => {
     setContent(e.target.files[0]);
   };
-  const onPriceChange = (str) => {
-    const comma = (str) => {
-      str = String(str);
-      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
-    };
-    const uncomma = (str) => {
-      str = String(str);
-      return str.replace(/[^\d]+/g, "");
-    };
-    return comma(uncomma(str));
-  };
+
   const onContentChange = (e) => {
     setContentValue(e.target.value);
   };
-  const onSubjectChange = (e) => {
-    if (e.target.value.length > 20) {
-      return;
-    }
-    setSubjectValue(e.target.value);
-  };
+
   const onCategoryChange = (e) => {
     setCategoryValue(e.target.value);
   };
@@ -140,28 +125,20 @@ const BoardWrite = ({ logined, setLogined }) => {
     padding: "7px",
   };
 
-  const onSubmit = async (
-    subjectValue,
-    contentValue,
-    category,
-    priceValue,
-    dealAddress
-  ) => {
+  const onSubmit = async (contentValue, category, dealAddress) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/createProduct`,
+        url: `http://localhost:8083/createBoard`,
         method: "POST",
         data: {
-          productCategory: category,
-          productPrice: priceValue,
-          productSubject: subjectValue,
+          boardCategory: category,
           productContent: contentValue,
           productDealAddress: dealAddress,
           productUserid: sessionStorage.getItem("userid"),
         },
       });
       onCompleteChange();
-      setId(data.data.productId);
+      setId(data.data.boardId);
     } catch (e) {
       console.log(e);
     }
@@ -455,7 +432,7 @@ const BoardWrite = ({ logined, setLogined }) => {
               }}
             >
               <a
-                href={`/productpost/${id}`}
+                href={`/boardpost/${id}`}
                 style={{
                   textAlign: "center",
                   width: "100%",

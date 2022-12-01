@@ -9,18 +9,9 @@ import * as StompJs from "@stomp/stompjs";
 import axios from "axios";
 import { faCarrot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-<<<<<<< HEAD
-// npm i @stomp/stompjs
-// npm i react-uuid
-// npm i ws
-// npm i sockjs-client
-// 위 4개 해보고 안되면 밑에꺼
-// npm i react-stomp
-// npm i stompjs
-=======
 
 // https://gilssang97.tistory.com/69
->>>>>>> d41f2153f15afb72e74a5a6e9ffd2b07ab7f2a15
+
 const Chat = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const notChattingUser = () => {

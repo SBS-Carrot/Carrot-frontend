@@ -16,7 +16,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaCarrot } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
-import uuid from "react-uuid";
 
 const BoardPost = ({
   logined,
@@ -85,10 +84,72 @@ const BoardPost = ({
     setBoard((prev) => data);
   };
   useEffect(() => {
+    const onSubmit = async (num) => {
+      let abcd = "";
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/board/${num}`,
+          method: "GET",
+        });
+        abcd = data.data.boardUserid;
+        onBoard(data.data);
+      } catch {
+        console.log("에러");
+        window.alert("존재하지 않는 게시글입니다.");
+        moveBack();
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${abcd}`,
+          method: "GET",
+        });
+        setBoardWriter(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+      //   try {
+      //     const data = await axios({
+      //       url: `http://localhost:8083/getRealtyWithImage/${num}`,
+      //       method: "GET",
+      //     });
+
+      //     setImgs(data.data.images);
+      //   } catch (e) {
+      //     console.log(e);
+      //   }
+
+      //   try {
+      //     const data = await axios({
+      //       url: `http://localhost:8083/likeRealtyCheck/${num}`,
+      //       method: "GET",
+      //       params: {
+      //         realtyId: num,
+      //         userid: sessionStorage.getItem("userid"),
+      //       },
+      //     });
+      //     onLikes(data.data);
+      //   } catch (e) {
+      //     console.log(e);
+      //   }
+
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getUser/${userid}`,
+          method: "GET",
+        });
+        setUser(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    onSubmit(num);
+  }, []);
+
+  useEffect(() => {
     const onLikeRe = async (num) => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/product/${num}`,
+          url: `http://localhost:8083/board/${num}`,
           method: "GET",
         });
         onBoard(data.data);
@@ -296,15 +357,7 @@ const BoardPost = ({
                   justifyContent: "space-between",
                 }}
               >
-                <div
-                  className="font-bold flex"
-                  style={{
-                    fontSize: "1.25rem",
-                  }}
-                >
-                  {board.productSubject}
-                </div>
-                {board.productUserid === userid ? (
+                {board.boardUserid === userid ? (
                   <span>
                     <span
                       className=""
@@ -329,7 +382,7 @@ const BoardPost = ({
                             left: "-22px",
                           }}
                         >
-                          <a href={`/productedit/${num}`}>수정</a>
+                          <a href={`/boardedit/${num}`}>수정</a>
                           <button
                             onClick={() => {
                               onDeleteToggle();
@@ -395,7 +448,7 @@ const BoardPost = ({
                     color: "gray",
                   }}
                 >
-                  {board.productCategory}
+                  {board.boardCategory}
                 </div>
                 <div
                   className="text-sm"
@@ -403,33 +456,25 @@ const BoardPost = ({
                     color: "gray",
                   }}
                 >
-                  {board.productCreateTime}
+                  {board.CreateTime}
                 </div>
-              </div>
-              <div
-                className="font-bold"
-                style={{
-                  fontSize: "1.25rem",
-                }}
-              >
-                {board.productPrice}원
               </div>
             </div>
             <br />
             <div>
-              <div>{board.productContent}</div>
+              <div>{board.boardContent}</div>
               <div
                 className="flex text-sm gap-2 my-5"
                 style={{
                   color: "gray",
                 }}
               >
-                <span>관심</span>
-                <div>{board.productLike}</div>
+                <span>공감하기</span>
+                <div>{board.boardAgree}</div>
                 <span>채팅</span>
-                <div>{board.productChatting}</div>
+                <div>{board.boardChattingNum}</div>
                 <span>조회</span>
-                <div>{board.productView}</div>
+                <div>{board.boardView}</div>
               </div>
             </div>
           </section>
@@ -479,360 +524,7 @@ const BoardPost = ({
               borderBottom: "1px #e4e4e4 solid",
             }}
           ></div>
-          <section>
-            <div>
-              <div className="py-9 flex justify-between">
-                <div
-                  className="font-bold"
-                  style={{
-                    fontSize: "1.1rem",
-                  }}
-                >
-                  당근마켓 인기중고
-                </div>
-                <div
-                  className=""
-                  style={{
-                    color: "#FF7F3F",
-                  }}
-                >
-                  <a href="#">더 구경하기</a>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <ul
-                    className="grid grid-cols-3"
-                    style={{
-                      maxWidth: "1000px",
-                      margin: "0 auto",
-                    }}
-                  >
-                    <li
-                      style={{
-                        paddingBottom: "30px",
-                      }}
-                    >
-                      <a href="http://localhost:3000/articles/1">
-                        <div
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "200px",
-                              height: "200px",
-                              borderRadius: "15px",
-                              outline: "gray 1px solid",
-                            }}
-                          >
-                            <img
-                              className="object-fill"
-                              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/83cbd5362a585918a9b4a7354984ecbfb20208da27522d9b39579099b2cfe1f9.webp?q=95&s=1440x1440&t=inside"
-                              alt=""
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                display: "block",
-                                borderRadius: "15px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "200px",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflowX: "hidden",
-                            }}
-                          >
-                            <span>
-                              롯데 자이언츠 이대호 은퇴경기 티켓 팔아요
-                            </span>
-                          </div>
-                          <div
-                            style={{
-                              fontWeight: "bolder",
-                              padding: "5px 0",
-                            }}
-                          >
-                            <span>33,000원</span>
-                          </div>
-                          <div
-                            style={{
-                              fontSize: "0.8rem",
-                            }}
-                          >
-                            <span>부산 진구 부전동</span>
-                          </div>
-                          <div
-                            style={{
-                              fontSize: "0.8rem",
-                              color: "gray",
-                            }}
-                          >
-                            <span>관심 5</span>
-                            <span> º </span>
-                            <span>채팅 42</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="http://localhost:3000/articles/2">
-                        <div
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "200px",
-                              height: "200px",
-                              borderRadius: "15px",
-                              outline: "gray 1px solid",
-                            }}
-                          >
-                            <img
-                              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-                              alt=""
-                              style={{
-                                borderRadius: "15px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "200px",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflowX: "hidden",
-                            }}
-                          >
-                            <span>
-                              롯데 자이언츠 이대호 은퇴경기 티켓 팔아요
-                            </span>
-                          </div>
-                          <div>
-                            <span>33,000원</span>
-                          </div>
-                          <div>
-                            <span>부산 진구 부전동</span>
-                          </div>
-                          <div>
-                            <span>관심 5</span>
-                            <span> º </span>
-                            <span>채팅 42</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>{" "}
-                    <li>
-                      <a href="http://localhost:3000/articles/3">
-                        <div
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "200px",
-                              height: "200px",
-                              borderRadius: "15px",
-                              outline: "gray 1px solid",
-                            }}
-                          >
-                            <img
-                              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-                              alt=""
-                              style={{
-                                borderRadius: "15px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "200px",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflowX: "hidden",
-                            }}
-                          >
-                            <span>
-                              롯데 자이언츠 이대호 은퇴경기 티켓 팔아요
-                            </span>
-                          </div>
-                          <div>
-                            <span>33,000원</span>
-                          </div>
-                          <div>
-                            <span>부산 진구 부전동</span>
-                          </div>
-                          <div>
-                            <span>관심 5</span>
-                            <span> º </span>
-                            <span>채팅 42</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>{" "}
-                    <li>
-                      <a href="#">
-                        <div
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "200px",
-                              height: "200px",
-                              borderRadius: "15px",
-                              outline: "gray 1px solid",
-                            }}
-                          >
-                            <img
-                              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-                              alt=""
-                              style={{
-                                borderRadius: "15px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "200px",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflowX: "hidden",
-                            }}
-                          >
-                            <span>
-                              롯데 자이언츠 이대호 은퇴경기 티켓 팔아요
-                            </span>
-                          </div>
-                          <div>
-                            <span>33,000원</span>
-                          </div>
-                          <div>
-                            <span>부산 진구 부전동</span>
-                          </div>
-                          <div>
-                            <span>관심 5</span>
-                            <span> º </span>
-                            <span>채팅 42</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>{" "}
-                    <li>
-                      <a href="#">
-                        <div
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "200px",
-                              height: "200px",
-                              borderRadius: "15px",
-                              outline: "gray 1px solid",
-                            }}
-                          >
-                            <img
-                              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-                              alt=""
-                              style={{
-                                borderRadius: "15px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "200px",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflowX: "hidden",
-                            }}
-                          >
-                            <span>
-                              롯데 자이언츠 이대호 은퇴경기 티켓 팔아요
-                            </span>
-                          </div>
-                          <div>
-                            <span>33,000원</span>
-                          </div>
-                          <div>
-                            <span>부산 진구 부전동</span>
-                          </div>
-                          <div>
-                            <span>관심 5</span>
-                            <span> º </span>
-                            <span>채팅 42</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>{" "}
-                    <li>
-                      <a href="#">
-                        <div
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "200px",
-                              height: "200px",
-                              borderRadius: "15px",
-                              outline: "gray 1px solid",
-                            }}
-                          >
-                            <img
-                              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-                              alt=""
-                              style={{
-                                borderRadius: "15px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "200px",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflowX: "hidden",
-                            }}
-                          >
-                            <span>
-                              롯데 자이언츠 이대호 은퇴경기 티켓 팔아요
-                            </span>
-                          </div>
-                          <div>
-                            <span>33,000원</span>
-                          </div>
-                          <div>
-                            <span>부산 진구 부전동</span>
-                          </div>
-                          <div>
-                            <span>관심 5</span>
-                            <span> º </span>
-                            <span>채팅 42</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <br />
-            </div>
-          </section>
         </div>
-
-        <Footer />
       </div>
     );
   } else {

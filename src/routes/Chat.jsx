@@ -9,6 +9,7 @@ import * as StompJs from "@stomp/stompjs";
 import axios from "axios";
 import { faCarrot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+<<<<<<< HEAD
 // npm i @stomp/stompjs
 // npm i react-uuid
 // npm i ws
@@ -16,8 +17,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // 위 4개 해보고 안되면 밑에꺼
 // npm i react-stomp
 // npm i stompjs
+=======
+
+// https://gilssang97.tistory.com/69
+>>>>>>> d41f2153f15afb72e74a5a6e9ffd2b07ab7f2a15
 const Chat = ({ logined, setLogined }) => {
   const navigate = useNavigate();
+  const notChattingUser = () => {
+    navigate("/");
+    alert("채팅 당사자만 입장할 수 있습니다.");
+  };
   const moveBack = () => {
     alert("로그인 후 사용할 수 있는 기능입니다.");
     navigate(-1);
@@ -78,8 +87,8 @@ const Chat = ({ logined, setLogined }) => {
   const subscribe = () => {
     client.current.subscribe("/sub/chat/" + roomId, (body) => {
       const json_body = JSON.parse(body.body);
-      console.log("body : ", json_body);
-      setChatList((_chat_list) => [..._chat_list, json_body.message]);
+
+      setChatList((_chat_list) => [..._chat_list, json_body]);
     });
   };
 
@@ -106,38 +115,49 @@ const Chat = ({ logined, setLogined }) => {
   };
   const onCreateRoom = async () => {
     try {
-      const myName = sessionStorage.getItem("userid");
-      const yourName = sessionStorage.getItem("yourName");
-
-      const chattingRoom = {
-        roomId: roomId,
-        myName,
-        yourName,
-      };
       //params로 받은 이미 존재하는 or 새로 생성된 채팅방 조회
       const data1 = await axios({
-        url: `http://localhost:8083/room/${roomId}`,
+        url: `http://localhost:8083/room/` + roomId,
         method: "GET",
       });
 
-      // 없다면 URL의 랜덤한 ID로 채팅방 새로 생성.
-      if (data1 == "") {
-        const data = await axios({
-          url: `http://localhost:8083/chat`,
-          method: "POST",
-          data: chattingRoom,
-        });
-      } else {
-        // 있다면 채팅목록 GET
+      const myName = sessionStorage.getItem("userid");
+      const yourName = sessionStorage.getItem("yourName");
+      if (myName === data1.data.myName) {
+        sessionStorage.removeItem("yourName");
+        sessionStorage.setItem("yourName", data1.data.yourName);
+      } else if (myName === data1.data.yourName) {
+        sessionStorage.removeItem("yourName");
+        sessionStorage.setItem("yourName", data1.data.myName);
+      } else if (myName != data1.data.myName && myName != data1.data.yourName) {
+        notChattingUser();
+      }
 
+      const mName = sessionStorage.getItem("userid");
+      const yName = sessionStorage.getItem("yourName");
+
+      const chattingRoom = {
+        roomId: roomId,
+        myName: mName,
+        yourName: yName,
+      };
+      // 있다면 채팅목록 GET
+      if (data1.data != "") {
         const data = await axios({
           url: `http://localhost:8083/getMessage`,
           method: "GET",
           params: { roomId },
         });
-        onChatList(data.data);
-      }
 
+        onChatList(data.data);
+      } else {
+        // 없다면 URL의 ID로 채팅방 새로 생성.
+        const data = await axios({
+          url: `http://localhost:8083/chat`,
+          method: "POST",
+          data: chattingRoom,
+        });
+      }
       const chatUser = await axios({
         url: `http://localhost:8083/getUser/${yourName}`,
         method: "GET",
@@ -156,6 +176,7 @@ const Chat = ({ logined, setLogined }) => {
           style={{
             width: "1000px",
             margin: "0 auto",
+            minHeight: "50vh",
           }}
         >
           <div
@@ -214,7 +235,25 @@ const Chat = ({ logined, setLogined }) => {
                             }}
                           />
                         ) : (
-                          <img src={user2.profileImage} alt="" />
+                          <div
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              borderRadius: "50%",
+                            }}
+                          >
+                            <img
+                              src={user2.profileImage}
+                              alt=""
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                display: "block",
+                                borderRadius: "50%",
+                                objectFit: "fill",
+                              }}
+                            />
+                          </div>
                         )}
                       </div>
 
@@ -265,7 +304,6 @@ const Chat = ({ logined, setLogined }) => {
                 padding: "10px",
               }}
               onKeyUp={(e) => {
-                console.log(e);
                 if (e.key == "Enter") {
                   handleSubmit(chat);
                 }

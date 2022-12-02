@@ -107,16 +107,17 @@ const BoardPost = ({
       } catch (e) {
         console.log(e);
       }
-      //   try {
-      //     const data = await axios({
-      //       url: `http://localhost:8083/getRealtyWithImage/${num}`,
-      //       method: "GET",
-      //     });
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getBoardWithImage/${num}`,
+          method: "GET",
+        });
 
-      //     setImgs(data.data.images);
-      //   } catch (e) {
-      //     console.log(e);
-      //   }
+        setImgs(data.data.images);
+        console.log(data.data);
+      } catch (e) {
+        console.log(e);
+      }
 
       //   try {
       //     const data = await axios({

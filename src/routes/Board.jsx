@@ -8,6 +8,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import BoardPaging from "../components/BoardPaging";
+import {
+  MdOutlineLocalCafe,
+  MdOutlineQuestionAnswer,
+  MdOutlineModeEditOutline,
+  MdOutlineHome,
+} from "react-icons/md";
 
 const Board = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -16,11 +22,25 @@ const Board = ({ logined, setLogined }) => {
   };
 
   //동네질문
+  const [spreadQue, setSpreadQue] = useState(false);
+  const onSpreadQue = () => {
+    setSpreadQue(true);
+    setSpreadCafe(false);
+    setSpreadLife(false);
+  };
   //동네 카페
+  const [spreadCafe, setSpreadCafe] = useState(false);
+  const onSpreadCafe = () => {
+    setSpreadQue(false);
+    setSpreadCafe(true);
+    setSpreadLife(false);
+  };
   //나의 동네 생활
   const [spreadLife, setSpreadLife] = useState(false);
   const onSpreadLife = () => {
-    setSpreadLife(!spreadLife);
+    setSpreadQue(false);
+    setSpreadCafe(false);
+    setSpreadLife(true);
   };
   //
   const [Bpage, setBPage] = useState(1);
@@ -29,7 +49,7 @@ const Board = ({ logined, setLogined }) => {
   const BhandlePageChange = (page) => {
     setBPage(page);
   };
-  const [BpostPerPage] = useState(4); //한 화면에 4개 표시
+  const [BpostPerPage] = useState(8); //한 화면에 8개 표시
   const BindexOfLastPost = Bpage * BpostPerPage;
   const BindexOfFirstPost = BindexOfLastPost - BpostPerPage;
 
@@ -59,7 +79,8 @@ const Board = ({ logined, setLogined }) => {
           method: "POST",
         });
         onLife(data.data);
-        setLifes(data.data.slice(0, 4));
+        setLifes(data.data.slice(0, 8));
+        //console.log(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -76,53 +97,83 @@ const Board = ({ logined, setLogined }) => {
           style={{
             width: "800px",
             margin: "0 auto",
-            border: "1px red solid",
+
             position: "relative",
           }}
         >
           <div
             style={{
-              width: "120px",
+              width: "150px",
               position: "absolute",
-              left: "-120px",
+              left: "-170px",
             }}
           >
             <button
+              className="flex  items-start"
               style={{
                 width: "100%",
-                border: "1px red solid",
+              }}
+              onClick={() => {
+                onSpreadQue();
               }}
             >
-              우리동네질문
+              <span className="mt-1 mr-1">
+                <MdOutlineQuestionAnswer />
+              </span>
+              {spreadQue == false ? (
+                "우리동네질문"
+              ) : (
+                <div className="font-bold">우리동네질문</div>
+              )}
             </button>
             <button
+              className="flex items-start"
               style={{
                 width: "100%",
-                border: "1px red solid",
+              }}
+              onClick={() => {
+                onSpreadCafe();
               }}
             >
-              동네 카페
+              <span className="mt-1 mr-1">
+                <MdOutlineLocalCafe />
+              </span>
+              {spreadCafe == false ? (
+                "동네 카페"
+              ) : (
+                <div className="font-bold">동네 카페</div>
+              )}
             </button>
             <button
+              className="flex items-start"
               style={{
                 width: "100%",
-                border: "1px red solid",
               }}
               onClick={() => {
                 onSpreadLife();
               }}
             >
-              나의 동네생활
+              <span className="mt-1 mr-1">
+                <MdOutlineHome />
+              </span>
+              {spreadLife == false ? (
+                "나의 동네생활"
+              ) : (
+                <div className="font-bold">나의 동네생활</div>
+              )}
             </button>
             <button
+              className="flex items-start"
               onClick={() => {
                 moveWrite();
               }}
               style={{
                 width: "100%",
-                border: "1px red solid",
               }}
             >
+              <span className="mt-1 mr-1">
+                <MdOutlineModeEditOutline />
+              </span>
               게시판 글쓰기
             </button>
           </div>
@@ -138,82 +189,93 @@ const Board = ({ logined, setLogined }) => {
               }}
             >
               {spreadLife && (
-                <ul className="grid grid-cols-2">
-                  {lifes.map((life, index) => (
-                    <li key={index}>
-                      <button
-                        onClick={() => {
-                          moveBoard(life.boardId);
-                        }}
-                      >
-                        <div
-                          className="flex"
-                          style={{
-                            height: "120px",
+                <div>
+                  <div>동네 질문</div>
+                  <div>동네 카페</div>
+
+                  <ul className="grid grid-cols-2">
+                    {lifes.map((life, index) => (
+                      <li className="mb-3" key={index}>
+                        <button
+                          onClick={() => {
+                            moveBoard(life.boardId);
                           }}
                         >
                           <div
+                            className="flex"
                             style={{
-                              width: "120px",
                               height: "120px",
-
-                              borderRadius: "10px",
                             }}
                           >
-                            {life.profileImage != null ? (
-                              <img
-                                src={life.profileImage}
-                                alt=""
-                                style={{
-                                  borderRadius: "15px",
-                                  width: "100%",
-                                  height: "100%",
-                                  objectFit: "fill",
-                                  display: "block",
-                                }}
-                              />
-                            ) : (
-                              <FaCarrot
-                                style={{
-                                  color: "#fc9d39",
-                                  fontSize: "7rem",
-                                  transform: "translate(1.5%,1.5%)",
-                                  border: "0.1px #fc9d39 solid",
-                                  borderRadius: "50%",
-                                }}
-                              />
-                            )}
-                          </div>
-                          <div
-                            className=""
-                            style={{
-                              textAlign: "left",
-                              marginLeft: "10px",
-                            }}
-                          >
-                            <span
-                              style={{
-                                textAlign: "left",
-                              }}
-                            >
-                              {life.boardCategory}{" "}
-                            </span>
-
                             <div
-                              className="text-sm"
                               style={{
-                                color: "#73777B",
-                                textAlign: "left",
+                                width: "120px",
+                                height: "120px",
+
+                                borderRadius: "10px",
                               }}
                             >
-                              <div>{life.boardContent}</div>
+                              {life.profileImage != null ? (
+                                <img
+                                  src={life.profileImage}
+                                  alt=""
+                                  style={{
+                                    borderRadius: "15px",
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "fill",
+                                    display: "block",
+                                  }}
+                                />
+                              ) : (
+                                <FaCarrot
+                                  style={{
+                                    color: "#fc9d39",
+                                    fontSize: "7rem",
+                                    transform: "translate(1.5%,1.5%)",
+                                    border: "0.1px #fc9d39 solid",
+                                    borderRadius: "50%",
+                                  }}
+                                />
+                              )}
+                            </div>
+                            <div
+                              className=""
+                              style={{
+                                textAlign: "left",
+                                marginLeft: "10px",
+                              }}
+                            >
+                              <span
+                                style={{
+                                  textAlign: "left",
+                                }}
+                              >
+                                {life.boardContent}
+                              </span>
+
+                              <div
+                                className="text-sm"
+                                style={{
+                                  color: "#73777B",
+                                  textAlign: "left",
+                                }}
+                              >
+                                <div>{life.boardCategory} </div>
+                              </div>
+                              <div className="text-sm">
+                                <span className="mr-2">
+                                  공감 {life.boardAgree}
+                                </span>
+                                <span>댓글 {life.boardChattingNum}</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
             </div>
             {spreadLife && (
@@ -227,15 +289,12 @@ const Board = ({ logined, setLogined }) => {
             )}
           </div>
         </div>
-        <Footer />
       </div>
     );
   } else {
     return (
       <div>
         <BoardHeader />
-
-        <Footer />
       </div>
     );
   }

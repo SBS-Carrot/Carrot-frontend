@@ -27,12 +27,13 @@ import AllJobs from "./components/AllJobs";
 import AllRealty from "./components/AllRealty";
 import ChangePassword from "./routes/ChangePassword";
 import Board from "./routes/Board";
-
+import See from "./routes/See";
 import ProductEdit from "./components/ProductEdit";
 import BoardWrite from "./components/BoardWrite";
 
 import Chat from "./routes/Chat";
 import BoardPost from "./components/BoardPost";
+import JobsApply from "./components/JobsApply";
 
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
@@ -321,6 +322,11 @@ function App() {
         <Route
           path="/boardpost"
           element={<BoardPost logined={logined} setLogined={setLogined} />}
+        />
+        <Route path="/see" element={<See />} />
+        <Route
+          path="/JobsApply/:num"
+          element={<JobsApply logined={logined} setLogined={setLogined} />}
         />
       </Routes>
     </Router>

@@ -38,6 +38,7 @@ const Jobspost = ({
   onEditToggle,
 }) => {
   const { num } = useParams();
+
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);
@@ -597,7 +598,7 @@ const Jobspost = ({
               </button>
 
               <a
-                href="#"
+                href={/JobsApply/ + num}
                 className="rounded p-2 font-bold flex justify-center"
                 style={{
                   width: "300px",

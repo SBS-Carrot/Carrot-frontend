@@ -8,12 +8,16 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import BoardPaging from "../components/BoardPaging";
+import BoardQPaging from "../components/BoardQPaging";
 import {
   MdOutlineLocalCafe,
   MdOutlineQuestionAnswer,
   MdOutlineModeEditOutline,
   MdOutlineHome,
 } from "react-icons/md";
+//스크롤
+//https://medium.com/@_diana_lee/react-infinite-scroll-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-fbd51a8a099f
+//https://velog.io/@yunsungyang-omc/React-%EB%AC%B4%ED%95%9C-%EC%8A%A4%ED%81%AC%EB%A1%A4-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-used-by-Intersection-Observer-1
 
 const Board = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -42,32 +46,57 @@ const Board = ({ logined, setLogined }) => {
     setSpreadCafe(false);
     setSpreadLife(true);
   };
-  //
+  //동네 카페
   const [Bpage, setBPage] = useState(1);
-  const [lifes, setLifes] = useState([]); //보여줄 게시글
+  const [lifes, setLifes] = useState([]); //전체 게시글
 
   const BhandlePageChange = (page) => {
     setBPage(page);
   };
-  const [BpostPerPage] = useState(8); //한 화면에 8개 표시
+  const [BpostPerPage] = useState(6); //한 화면에 8개 표시
   const BindexOfLastPost = Bpage * BpostPerPage;
   const BindexOfFirstPost = BindexOfLastPost - BpostPerPage;
 
   useEffect(() => {
-    setLifes(currentlife.slice(BindexOfFirstPost, BindexOfLastPost));
+    setCurrentLife(lifes.slice(BindexOfFirstPost, BindexOfLastPost));
   }, [BindexOfFirstPost, BindexOfLastPost, Bpage]);
 
-  //
-  const [currentlife, setCurrentLife] = useState([]); //전체 게시글
+  const [currentlife, setCurrentLife] = useState([]); //보여줄 게시글
 
-  const onLife = (data) => {
-    const datas = data.reverse();
-    setCurrentLife((prev) => datas);
+  const onLife = (list) => {
+    const newList = list.filter((index) => {
+      return index.boardCategory == "동네 카페" ? true : false;
+    });
+    setLifes(newList);
+    setCurrentLife(newList.reverse().slice(0, 6));
   };
-
+  const onQLifes = (list) => {
+    const newList = list.filter((index) => {
+      return index.boardCategory == "동네 질문" ? true : false;
+    });
+    setQLifes(newList);
+    setCurrentQLife(newList.reverse().slice(0, 6));
+  };
   const moveBoard = (id) => {
     navigate(`/boardpost/${id}`);
   };
+
+  //동네질문
+  const [BQpage, setBQPage] = useState(1);
+  const [Qlifes, setQLifes] = useState([]); //전체 게시글
+
+  const BQhandlePageChange = (page) => {
+    setBQPage(page);
+  };
+  const [BQpostPerPage] = useState(6); //한 화면에 8개 표시
+  const BQindexOfLastPost = BQpage * BQpostPerPage;
+  const BQindexOfFirstPost = BQindexOfLastPost - BQpostPerPage;
+
+  useEffect(() => {
+    setCurrentQLife(Qlifes.slice(BQindexOfFirstPost, BQindexOfLastPost));
+  }, [BQindexOfFirstPost, BQindexOfLastPost, BQpage]);
+
+  const [currentQlife, setCurrentQLife] = useState([]); //보여줄 게시글
 
   //데이터 불러오기
   useEffect(() => {
@@ -79,8 +108,7 @@ const Board = ({ logined, setLogined }) => {
           method: "POST",
         });
         onLife(data.data);
-        setLifes(data.data.slice(0, 8));
-        //console.log(data.data);
+        onQLifes(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -191,87 +219,194 @@ const Board = ({ logined, setLogined }) => {
               {spreadLife && (
                 <div>
                   <div>동네 질문</div>
-                  <div>동네 카페</div>
-
                   <ul className="grid grid-cols-2">
-                    {lifes.map((life, index) => (
+                    {currentQlife.map((Qlife, index) => (
                       <li className="mb-3" key={index}>
-                        <button
-                          onClick={() => {
-                            moveBoard(life.boardId);
-                          }}
-                        >
-                          <div
-                            className="flex"
-                            style={{
-                              height: "120px",
+                        {Qlife.boardCategory == "동네 질문" && (
+                          <button
+                            onClick={() => {
+                              moveBoard(Qlife.boardId);
                             }}
                           >
                             <div
+                              className="flex"
                               style={{
-                                width: "120px",
                                 height: "120px",
-
-                                borderRadius: "10px",
                               }}
                             >
-                              {life.profileImage != null ? (
-                                <img
-                                  src={life.profileImage}
-                                  alt=""
-                                  style={{
-                                    borderRadius: "15px",
-                                    width: "100%",
-                                    height: "100%",
-                                    objectFit: "fill",
-                                    display: "block",
-                                  }}
-                                />
-                              ) : (
-                                <FaCarrot
-                                  style={{
-                                    color: "#fc9d39",
-                                    fontSize: "7rem",
-                                    transform: "translate(1.5%,1.5%)",
-                                    border: "0.1px #fc9d39 solid",
-                                    borderRadius: "50%",
-                                  }}
-                                />
-                              )}
-                            </div>
-                            <div
-                              className=""
-                              style={{
-                                textAlign: "left",
-                                marginLeft: "10px",
-                              }}
-                            >
-                              <span
-                                style={{
-                                  textAlign: "left",
-                                }}
-                              >
-                                {life.boardContent}
-                              </span>
-
                               <div
-                                className="text-sm"
                                 style={{
-                                  color: "#73777B",
-                                  textAlign: "left",
+                                  width: "120px",
+                                  height: "120px",
+                                  borderRadius: "10px",
                                 }}
                               >
-                                <div>{life.boardCategory} </div>
+                                {Qlife.profileImage != null ? (
+                                  <img
+                                    src={Qlife.profileImage}
+                                    alt=""
+                                    style={{
+                                      borderRadius: "15px",
+                                      width: "100%",
+                                      height: "100%",
+                                      objectFit: "fill",
+                                      display: "block",
+                                    }}
+                                  />
+                                ) : (
+                                  <FaCarrot
+                                    style={{
+                                      color: "#fc9d39",
+                                      fontSize: "7rem",
+                                      transform: "translate(1.5%,1.5%)",
+                                      border: "0.1px #fc9d39 solid",
+                                      borderRadius: "50%",
+                                    }}
+                                  />
+                                )}
                               </div>
-                              <div className="text-sm">
-                                <span className="mr-2">
-                                  공감 {life.boardAgree}
-                                </span>
-                                <span>댓글 {life.boardChattingNum}</span>
+                              <div
+                                className=""
+                                style={{
+                                  textAlign: "left",
+                                  marginLeft: "10px",
+                                }}
+                              >
+                                <div
+                                  className="ellipsis_2"
+                                  style={{
+                                    maxWidth: "260px",
+                                    maxHeight: "50px",
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      textAlign: "left",
+                                    }}
+                                  >
+                                    {Qlife.boardContent}
+                                  </span>
+                                </div>
+                                <div
+                                  className="text-sm"
+                                  style={{
+                                    color: "#73777B",
+                                    textAlign: "left",
+                                  }}
+                                >
+                                  <div>{Qlife.boardCategory} </div>
+                                </div>
+                                <div className="text-sm">
+                                  <span className="mr-2">
+                                    공감 {Qlife.boardAgree}
+                                  </span>
+                                  <span>댓글 {Qlife.boardChattingNum}</span>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </button>
+                          </button>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                  {spreadLife && (
+                    <BoardQPaging
+                      totalCount={Qlifes.length}
+                      page={BQpage}
+                      postPerPage={BQpostPerPage}
+                      pageRangeDisplayed={5}
+                      handlePageChange={BQhandlePageChange}
+                    />
+                  )}
+                  <div>동네 카페</div>
+                  <ul className="grid grid-cols-2">
+                    {currentlife.map((life, index) => (
+                      <li className="mb-3" key={index}>
+                        {life.boardCategory == "동네 카페" && (
+                          <button
+                            onClick={() => {
+                              moveBoard(life.boardId);
+                            }}
+                          >
+                            <div
+                              className="flex"
+                              style={{
+                                height: "120px",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  width: "120px",
+                                  height: "120px",
+
+                                  borderRadius: "10px",
+                                }}
+                              >
+                                {life.profileImage != null ? (
+                                  <img
+                                    src={life.profileImage}
+                                    alt=""
+                                    style={{
+                                      borderRadius: "15px",
+                                      width: "100%",
+                                      height: "100%",
+                                      objectFit: "fill",
+                                      display: "block",
+                                    }}
+                                  />
+                                ) : (
+                                  <FaCarrot
+                                    style={{
+                                      color: "#fc9d39",
+                                      fontSize: "7rem",
+                                      transform: "translate(1.5%,1.5%)",
+                                      border: "0.1px #fc9d39 solid",
+                                      borderRadius: "50%",
+                                    }}
+                                  />
+                                )}
+                              </div>
+                              <div
+                                className=""
+                                style={{
+                                  textAlign: "left",
+                                  marginLeft: "10px",
+                                }}
+                              >
+                                <div
+                                  className="ellipsis_2"
+                                  style={{
+                                    maxWidth: "260px",
+                                    maxHeight: "50px",
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      textAlign: "left",
+                                    }}
+                                  >
+                                    {life.boardContent}
+                                  </span>
+                                </div>
+                                <div
+                                  className="text-sm"
+                                  style={{
+                                    color: "#73777B",
+                                    textAlign: "left",
+                                  }}
+                                >
+                                  <div>{life.boardCategory} </div>
+                                </div>
+                                <div className="text-sm">
+                                  <span className="mr-2">
+                                    공감 {life.boardAgree}
+                                  </span>
+                                  <span>댓글 {life.boardChattingNum}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </button>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -280,7 +415,7 @@ const Board = ({ logined, setLogined }) => {
             </div>
             {spreadLife && (
               <BoardPaging
-                totalCount={currentlife.length}
+                totalCount={lifes.length}
                 page={Bpage}
                 postPerPage={BpostPerPage}
                 pageRangeDisplayed={5}

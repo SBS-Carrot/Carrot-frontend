@@ -1,4 +1,4 @@
-import LoginedHeader from "../layouts/LoginedHeader";
+import LoginedBoardHeader from "../layouts/LoginedBoardHeader";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import "../styles/ProductPost.css";
@@ -114,7 +114,7 @@ const BoardPost = ({
         });
 
         setImgs(data.data.images);
-        console.log(data.data);
+        //console.log(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -175,7 +175,7 @@ const BoardPost = ({
   if (logined) {
     return (
       <div>
-        <LoginedHeader setLogined={setLogined} />
+        <LoginedBoardHeader setLogined={setLogined} />
         <div
           style={{
             width: "700px",
@@ -351,114 +351,115 @@ const BoardPost = ({
             }}
           ></div>
           <section>
-            <div className="mt-6 ">
-              <div
-                className="flex"
-                style={{
-                  justifyContent: "space-between",
-                }}
-              >
-                {board.boardUserid === userid ? (
-                  <span>
+            <div className="mt-4">
+              <div className="flex">
+                <div
+                  className="flex"
+                  style={{
+                    justifyContent: "space-between",
+                    width: "700px",
+                  }}
+                >
+                  <div className="mb-1">
                     <span
-                      className=""
+                      className="rounded"
                       style={{
-                        position: "relative",
+                        border: "1px gray solid",
+                        padding: "2px",
                       }}
                     >
-                      <button
-                        onClick={() => {
-                          onMenuToggle();
+                      {board.boardCategory}
+                    </span>
+                  </div>
+                  <div>
+                    {board.boardUserid === userid ? (
+                      <span
+                        style={{
+                          position: "relative",
                         }}
                       >
-                        <FiMoreHorizontal />
-                      </button>
-                      {menuToggle && (
-                        <div
-                          className="flex flex-col items-center"
-                          style={{
-                            position: "absolute",
-                            width: "50px",
-                            height: "50px",
-                            left: "-22px",
+                        <button
+                          onClick={() => {
+                            onMenuToggle();
                           }}
                         >
-                          <a href={`/boardedit/${num}`}>수정</a>
-                          <button
-                            onClick={() => {
-                              onDeleteToggle();
+                          <FiMoreHorizontal />
+                        </button>
+                        {menuToggle && (
+                          <div
+                            className="flex flex-col items-center"
+                            style={{
+                              position: "absolute",
+                              width: "50px",
+                              height: "50px",
+                              left: "-22px",
                             }}
                           >
-                            삭제
-                          </button>
-                        </div>
-                      )}
-                    </span>
-                  </span>
-                ) : (
-                  ""
+                            <a href={`/boardedit/${num}`}>수정</a>
+                            <button
+                              onClick={() => {
+                                onDeleteToggle();
+                              }}
+                            >
+                              삭제
+                            </button>
+                          </div>
+                        )}
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                {deleteToggle && (
+                  <div
+                    className="p-2 rounded-md"
+                    style={{
+                      width: "250px",
+                      height: "80px",
+                      border: "1px gray solid",
+                      position: "absolute",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
+                  >
+                    <div className="flex justify-center">
+                      게시물을 삭제하시겠어요?
+                    </div>
+                    <div className="flex justify-center gap-4 mt-3">
+                      <button
+                        className=" rounded-md font-bold"
+                        style={{
+                          padding: "5px",
+                          color: "red",
+                        }}
+                        onClick={() => {
+                          onRemove(num);
+                          alert("삭제되었습니다.");
+                          setMenuToggle();
+                          onDeleteToggle(false);
+                        }}
+                      >
+                        삭제
+                      </button>
+                      <button
+                        onClick={() => {
+                          onDeleteToggle(false);
+                        }}
+                      >
+                        취소
+                      </button>
+                    </div>
+                  </div>
                 )}
               </div>
-
-              {deleteToggle && (
-                <div
-                  className="p-2 rounded-md"
-                  style={{
-                    width: "250px",
-                    height: "80px",
-                    border: "1px gray solid",
-                    position: "absolute",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                  }}
-                >
-                  <div className="flex justify-center">
-                    게시물을 삭제하시겠어요?
-                  </div>
-                  <div className="flex justify-center gap-4 mt-3">
-                    <button
-                      className=" rounded-md font-bold"
-                      style={{
-                        padding: "5px",
-                        color: "red",
-                      }}
-                      onClick={() => {
-                        onRemove(num);
-                        alert("삭제되었습니다.");
-                        setMenuToggle();
-                        onDeleteToggle(false);
-                      }}
-                    >
-                      삭제
-                    </button>
-                    <button
-                      onClick={() => {
-                        onDeleteToggle(false);
-                      }}
-                    >
-                      취소
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              <div className="flex gap-2">
-                <div
-                  className="text-sm"
-                  style={{
-                    color: "gray",
-                  }}
-                >
-                  {board.boardCategory}
-                </div>
-                <div
-                  className="text-sm"
-                  style={{
-                    color: "gray",
-                  }}
-                >
-                  {board.CreateTime}
-                </div>
+              <div
+                className="text-sm"
+                style={{
+                  color: "gray",
+                }}
+              >
+                {board.createDate}
               </div>
             </div>
             <br />
@@ -514,7 +515,7 @@ const BoardPost = ({
                   backgroundColor: "#fc9d39",
                 }}
               >
-                채팅하기
+                댓글 쓰기
               </button>
             </div>
           </section>
@@ -702,14 +703,6 @@ const BoardPost = ({
           ></div>
           <section>
             <div className="mt-6">
-              <div
-                className="font-bold"
-                style={{
-                  fontSize: "1.25rem",
-                }}
-              >
-                {board.productSubject}
-              </div>
               <div className="flex gap-2">
                 <div
                   className="text-sm"

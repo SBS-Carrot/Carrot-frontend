@@ -97,10 +97,10 @@ const Board = ({ logined, setLogined }) => {
   }, [BQindexOfFirstPost, BQindexOfLastPost, BQpage]);
 
   const [currentQlife, setCurrentQLife] = useState([]); //보여줄 게시글
+  const userid = sessionStorage.getItem("userid");
 
   //데이터 불러오기
   useEffect(() => {
-    const userid = sessionStorage.getItem("userid");
     const getData = async () => {
       try {
         const data = await axios({
@@ -115,7 +115,23 @@ const Board = ({ logined, setLogined }) => {
     };
     getData();
   }, []);
+  const [getCafe, setGetCafe] = useState([]);
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data1 = await axios({
+          url: `http://localhost:8083/board`,
+          method: "GET",
+        });
+        setGetCafe(data1.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getData();
+  }, []);
+  console.log(getCafe);
   if (logined) {
     return (
       <div>
@@ -129,6 +145,65 @@ const Board = ({ logined, setLogined }) => {
             position: "relative",
           }}
         >
+          {spreadCafe && (
+            <div>
+              <div className="pt-2">
+                <div
+                  style={{
+                    width: "700px",
+                  }}
+                >
+                  <ul>
+                    {getCafe.map((cafe, index) => (
+                      <li key={index} style={{}}>
+                        <div>
+                          <div
+                            className=" pt-5 mb-2"
+                            style={{
+                              border: "1px rgb(209, 209, 209) solid",
+                            }}
+                          >
+                            <div className="pb-3">
+                              <span
+                                className="rounded-lg p-1"
+                                style={{
+                                  backgroundColor: "rgb(209, 209, 209)",
+                                }}
+                              >
+                                동네 카페
+                              </span>
+                            </div>
+                            <div
+                              style={{
+                                height: "40px",
+                              }}
+                            >
+                              {cafe.boardContent}
+                            </div>
+                            <div
+                              className="flex justify-between"
+                              style={{
+                                color: "gray",
+                              }}
+                            >
+                              <span>{cafe.boardUserid}</span>
+                              <span>{cafe.createDate}</span>
+                            </div>
+                            <hr />
+                            <div>
+                              <span>공감하기</span>
+                              <span>댓글</span>
+                              {cafe.boardAgree}
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
           <div
             style={{
               width: "150px",

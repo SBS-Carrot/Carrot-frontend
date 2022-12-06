@@ -35,55 +35,6 @@ import BoardPost from "./components/BoardPost";
 import JobsApply from "./components/JobsApply";
 
 function App() {
-  const [listening, setListening] = useState(false);
-  const [datas, setDatas] = useState([]);
-  const [data, setData] = useState([]);
-  let eventSource = undefined;
-
-  const onDatas = (target) => {
-    setDatas(target);
-  };
-  //알림예시 항해99 프론트 https://github.com/HangHae99-FinalProject/FinalProject-React/blob/master/src/components/Alert.js
-  //알림예시 항해99 백 https://github.com/HangHae99-FinalProject/FinalProject-Spring/blob/master/src/main/java/com/hanghae99/finalproject/sse/service/NotificationService.java
-
-  useEffect(() => {
-    if (!listening) {
-      eventSource = new EventSource("http://localhost:8083/sse");
-
-      eventSource.onopen = (event) => {
-        console.log("connection opened");
-      };
-
-      eventSource.onmessage = (event) => {
-        data.push(event.data);
-        console.log(data);
-      };
-      onDatas(data);
-      //   eventSource.addEventListener("Progress", (event) => {
-      //     const result = JSON.parse(event.data);
-      //     console.log("received:", result);
-      //   });
-
-      eventSource.onerror = (event) => {
-        console.log(event.target);
-        if (event.target.readyState === EventSource.CLOSED) {
-          console.log("SSE closed (" + event.target.readyState + ")");
-        }
-        eventSource.close();
-      };
-
-      setListening(true);
-    }
-    return () => {
-      eventSource.close();
-      console.log("event closed");
-    };
-  }, []);
-
-  useEffect(() => {
-    console.log("useEffect");
-    setDatas(data);
-  }, [data]);
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
   const [jobsLiked, setJobsLiked] = useState(false);

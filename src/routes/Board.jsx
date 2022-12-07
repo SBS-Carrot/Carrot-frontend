@@ -1,5 +1,4 @@
 import React from "react";
-import Footer from "../layouts/Footer";
 import LoginedBoardHeader from "../layouts/LoginedBoardHeader";
 import BoardHeader from "../layouts/BoardHeader";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +14,10 @@ import {
   MdOutlineModeEditOutline,
   MdOutlineHome,
 } from "react-icons/md";
+import { SlEmotsmile } from "react-icons/sl";
+import { AiFillLike } from "react-icons/ai";
+import { FiMessageCircle } from "react-icons/fi";
+
 //스크롤
 //https://medium.com/@_diana_lee/react-infinite-scroll-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-fbd51a8a099f
 //https://velog.io/@yunsungyang-omc/React-%EB%AC%B4%ED%95%9C-%EC%8A%A4%ED%81%AC%EB%A1%A4-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-used-by-Intersection-Observer-1
@@ -156,13 +159,13 @@ const Board = ({ logined, setLogined }) => {
                   <ul>
                     {getCafe.map((cafe, index) => (
                       <li key={index} style={{}}>
-                        <div>
-                          <div
-                            className=" pt-5 mb-2"
-                            style={{
-                              border: "1px rgb(209, 209, 209) solid",
-                            }}
-                          >
+                        <div
+                          className=" pt-2 mb-2"
+                          style={{
+                            border: "1px rgb(209, 209, 209) solid",
+                          }}
+                        >
+                          <div className="p-3">
                             <div className="pb-3">
                               <span
                                 className="rounded-lg p-1"
@@ -189,10 +192,43 @@ const Board = ({ logined, setLogined }) => {
                               <span>{cafe.boardUserid}</span>
                               <span>{cafe.createDate}</span>
                             </div>
-                            <hr />
-                            <div>
-                              <span>공감하기</span>
-                              <span>댓글</span>
+                          </div>
+                          <hr />
+                          <div
+                            className="flex gap-2 p-2"
+                            // style={{
+                            //   border: "1px red solid",
+                            // }}
+                          >
+                            <span className="flex items-center">
+                              <SlEmotsmile />
+                            </span>
+                            공감하기
+                            <span
+                              className="flex items-center"
+                              style={{
+                                fontSize: "1.2rem",
+                              }}
+                            >
+                              <FiMessageCircle />
+                            </span>
+                            댓글쓰기
+                            <div
+                              className="flex items-center gap-1"
+                              // style={{
+                              //   border: "1px red solid",
+                              // }}
+                            >
+                              <span
+                                className="rounded-full"
+                                style={{
+                                  color: "white",
+                                  padding: "2px",
+                                  backgroundColor: "orange",
+                                }}
+                              >
+                                <AiFillLike />
+                              </span>
                               {cafe.boardAgree}
                             </div>
                           </div>

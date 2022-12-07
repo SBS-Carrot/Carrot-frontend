@@ -33,8 +33,9 @@ const Board = ({ logined, setLogined }) => {
   };
 
   //스크롤
+
   const [page, setPage] = useState(1);
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(false); //로딩 스피너
   const preventRef = useRef(true); //중복 실행 방지
   const obsRef = useRef(null); //observer Element
   const endRef = useRef(false); //모든 글 로드 확인
@@ -42,6 +43,8 @@ const Board = ({ logined, setLogined }) => {
   useEffect(() => {
     const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
     if (obsRef.current) observer.observe(obsRef.current);
+
+    console.log("dd", observer);
     return () => {
       observer.disconnect();
     };
@@ -58,7 +61,7 @@ const Board = ({ logined, setLogined }) => {
   };
 
   useEffect(() => {
-    if (page !== 1) getPost();
+    getPost();
   }, [page]);
 
   const getPost = useCallback(async () => {
@@ -70,15 +73,14 @@ const Board = ({ logined, setLogined }) => {
       url: `http://localhost:8083/board`,
     });
     if (res.data) {
-      if (res.data) {
-        //마지막 페이지일 경우
-        endRef.current = true;
+      if (res.data.lengh) {
+        setLifes((prev) => [...prev, ...res.data.lifes]); //리스트 배열에 추가
+        preventRef.current = true;
       }
-      //setList((prev) => [...prev, ...res.data.list]); //리스트 배열에 추가
-      preventRef.current = true;
     } else {
       console.log(res);
     }
+    console.log("res", res);
     setLoad(false); //로딩 종료
   }, [page]);
 
@@ -106,6 +108,66 @@ const Board = ({ logined, setLogined }) => {
   //동네 카페
   const [Bpage, setBPage] = useState(1);
   const [lifes, setLifes] = useState([]); //전체 게시글
+
+  //스크롤
+  // const [offset, setOffset] = useState(0);
+  // // offset 이후 순서의 데이터부터 8개씩 데이터를 받아올 것임
+  // const [target, setTarget] = useState(null); // 관찰대상 target
+  // const [isLoaded, setIsLoaded] = useState(false); // Load 중인가를 판별하는 boolean
+  // // 요청이 여러번 가는 것을 방지하기 위해서
+  // const [stop, setStop] = useState(false); // 마지막 데이터까지 다 불러온 경우 더이상 요청을 보내지 않기 위해서
+  // // 마지막 부분까지 가버릴 때 계속 요청을 보내는 것 방지
+
+  // useEffect(() => {
+  //   let observer;
+  //   if (target && !stop) {
+  //     // callback 함수로 onIntersect를 지정
+  //     observer = new IntersectionObserver(onIntersect, {
+  //       threshold: 0.5,
+  //     });
+  //     observer.observe(target);
+  //   }
+  //   return () => observer && observer.disconnect();
+  // }, [target, isLoaded]);
+
+  // // isLoaded가 변할 때 실행
+  // useEffect(() => {
+  //   // isLoaded가 true일 때 + 마지막 페이지가 아닌 경우 = 요청보내기
+  //   if (isLoaded && !stop) {
+  //     axios.get(`http://localhost:8083/board`).then((res) => {
+  //       // 받아온 데이터를 보여줄 전체 리스트에 concat으로 넣어준다
+  //       setGetCafe((getCafe) => getCafe.concat(res.data));
+  //       // 다음 요청할 데이터 offset 정보
+  //       setOffset((offset) => offset + res.data.length);
+  //       // 다음 요청 전까지 요청 그만 보내도록 false로 변경
+  //       setIsLoaded(false);
+
+  //       if (res.data.length < 8) {
+  //         // 전체 데이터를 다 불러온 경우(불러온 값이 12개 보다 적다면 -> 매번 12개씩 불러오기로 했으므로 해당 값보다 작으면 마지막 페이지) 아예 로드를 중지
+  //         setStop(true);
+  //       }
+  //       console.log("Res", res);
+  //     });
+  //   }
+  // }, [isLoaded]);
+
+  // const getMoreItem = () => {
+  //   // 데이터를 받아오도록 true 로 변경
+  //   setIsLoaded(true);
+  // };
+
+  // // callback
+  // const onIntersect = async ([entry], observer) => {
+  //   // entry 요소가 교차되거나 Load중이 아니면
+  //   if (entry.isIntersecting && !isLoaded) {
+  //     // 관찰은 일단 멈추고
+  //     observer.unobserve(entry.target);
+  //     // 데이터 불러오기
+  //     getMoreItem();
+  //     // 불러온 후 다시 관찰 실행
+  //     // observer.observe(entry.target);
+  //   }
+  // };
 
   const BhandlePageChange = (page) => {
     setBPage(page);
@@ -189,6 +251,7 @@ const Board = ({ logined, setLogined }) => {
     getData();
   }, []);
   console.log(getCafe);
+
   if (logined) {
     return (
       <div>
@@ -387,6 +450,7 @@ const Board = ({ logined, setLogined }) => {
                                   {cafe.boardAgree}
                                 </div>
                               </div>
+                              {/* <div ref={setTarget}></div> */}
                             </div>
                           </li>
                         ))}

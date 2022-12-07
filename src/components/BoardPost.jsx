@@ -16,6 +16,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaCarrot } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { SlEmotsmile } from "react-icons/sl";
+import { AiFillLike, AiOutlineEnter } from "react-icons/ai";
+import { FiMessageCircle, FiSend } from "react-icons/fi";
 
 const BoardPost = ({
   logined,
@@ -182,89 +185,7 @@ const BoardPost = ({
             margin: "0 auto",
           }}
         >
-          <div className="mt-5 relative">
-            <div>
-              {imgs[0] != undefined ? (
-                <div>
-                  <Slider {...settings}>
-                    {imgs[0] == undefined ? (
-                      ""
-                    ) : (
-                      <div>
-                        <img src={imgs[0]} alt="" />
-                      </div>
-                    )}
-                    {imgs[1] == undefined ? (
-                      ""
-                    ) : (
-                      <div>
-                        <img src={imgs[1]} alt="" />
-                      </div>
-                    )}{" "}
-                    {imgs[2] == undefined ? (
-                      ""
-                    ) : (
-                      <div>
-                        <img src={imgs[2]} alt="" />
-                      </div>
-                    )}{" "}
-                    {imgs[3] == undefined ? (
-                      ""
-                    ) : (
-                      <div>
-                        <img src={imgs[3]} alt="" />
-                      </div>
-                    )}{" "}
-                    {imgs[4] == undefined ? (
-                      ""
-                    ) : (
-                      <div>
-                        <img src={imgs[4]} alt="" />
-                      </div>
-                    )}{" "}
-                    {imgs[5] == undefined ? (
-                      ""
-                    ) : (
-                      <div>
-                        <img src={imgs[5]} alt="" />
-                      </div>
-                    )}{" "}
-                    {imgs[6] == undefined ? (
-                      ""
-                    ) : (
-                      <div>
-                        <img src={imgs[6]} alt="" />
-                      </div>
-                    )}{" "}
-                    {imgs[7] == undefined ? (
-                      ""
-                    ) : (
-                      <div>
-                        <img src={imgs[7]} alt="" />
-                      </div>
-                    )}{" "}
-                    {imgs[8] == undefined ? (
-                      ""
-                    ) : (
-                      <div>
-                        <img src={imgs[8]} alt="" />
-                      </div>
-                    )}{" "}
-                    {imgs[9] == undefined ? (
-                      ""
-                    ) : (
-                      <div>
-                        <img src={imgs[9]} alt="" />
-                      </div>
-                    )}
-                  </Slider>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-          <section className="mt-6 flex justify-end gap-3">
+          <section className="mt-3 flex justify-end gap-3">
             <div
               className="avatar flex justify-center items-center"
               style={{
@@ -287,6 +208,7 @@ const BoardPost = ({
                 )}
               </div>
             </div>
+
             <div
               className="flex justify-center flex-col"
               style={{
@@ -305,43 +227,7 @@ const BoardPost = ({
               style={{
                 width: "200px",
               }}
-            >
-              <div className="flex gap-2">
-                <div>
-                  <div
-                    className="font-bold flex justify-end p-1 "
-                    style={{
-                      color: "green",
-                    }}
-                  >
-                    {user.temp}
-                  </div>
-                  <progress
-                    className="flex progress progress-success w-32"
-                    value="40"
-                    max="100"
-                  ></progress>
-                </div>
-                <div
-                  className="flex"
-                  style={{
-                    color: "green",
-                    fontSize: "1.75rem",
-                  }}
-                >
-                  <BsFillEmojiSmileFill />
-                </div>
-              </div>
-
-              <div
-                className="text-sm flex justify-end"
-                style={{
-                  color: "gray",
-                }}
-              >
-                매너온도
-              </div>
-            </div>
+            ></div>
           </section>
           <br />
           <div
@@ -351,8 +237,8 @@ const BoardPost = ({
             }}
           ></div>
           <section>
-            <div className="mt-4">
-              <div className="flex">
+            <div className="mt-3">
+              <div className="flex mb-1">
                 <div
                   className="flex"
                   style={{
@@ -360,16 +246,16 @@ const BoardPost = ({
                     width: "700px",
                   }}
                 >
-                  <div className="mb-1">
-                    <span
+                  <div>
+                    <div
                       className="rounded"
                       style={{
-                        border: "1px gray solid",
                         padding: "2px",
+                        backgroundColor: "rgb(209, 209, 209)",
                       }}
                     >
                       {board.boardCategory}
-                    </span>
+                    </div>
                   </div>
                   <div>
                     {board.boardUserid === userid ? (
@@ -465,24 +351,186 @@ const BoardPost = ({
             <br />
             <div>
               <div>{board.boardContent}</div>
-              <div
-                className="flex text-sm gap-2 my-5"
-                style={{
-                  color: "gray",
-                }}
-              >
-                <span>공감하기</span>
-                <div>{board.boardAgree}</div>
-                <span>채팅</span>
-                <div>{board.boardChattingNum}</div>
-                <span>조회</span>
-                <div>{board.boardView}</div>
+            </div>
+            <div className="mt-5 relative">
+              <div>
+                {imgs[0] != undefined ? (
+                  <div>
+                    <Slider {...settings}>
+                      {imgs[0] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[0]} alt="" />
+                        </div>
+                      )}
+                      {imgs[1] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[1]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[2] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[2]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[3] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[3]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[4] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[4]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[5] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[5]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[6] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[6]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[7] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[7]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[8] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[8]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[9] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[9]} alt="" />
+                        </div>
+                      )}
+                    </Slider>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
+            <div
+              className="flex text-sm gap-2 my-5"
+              style={{
+                color: "gray",
+              }}
+            >
+              <span>조회</span>
+              <div>{board.boardView}</div>
+            </div>
           </section>
-          <br />
+          <hr />
           <section>
-            <div className="py-2 flex gap-5 justify-end" style={{}}>
+            <div className="flex p-2 justify-between">
+              <div className="flex gap-2">
+                <button
+                  className="flex items-center gap-1"
+                  style={{
+                    color: "#ff8200",
+                  }}
+                >
+                  <span>
+                    <SlEmotsmile />
+                  </span>
+                  <span>공감하기</span>
+                </button>
+                <button className="flex items-center gap-1">
+                  <span
+                    style={{
+                      fontSize: "1.2rem",
+                    }}
+                  >
+                    <FiMessageCircle />
+                  </span>
+                  {board.boardChattingNum > 0 ? (
+                    <div>
+                      <span>댓글</span>
+                      <span> {board.boardChattingNum}</span>
+                    </div>
+                  ) : (
+                    <span> 댓글쓰기</span>
+                  )}
+                </button>
+              </div>
+              <div className="flex items-center gap-1">
+                <span
+                  className="rounded-full"
+                  style={{
+                    color: "white",
+                    padding: "2px",
+                    backgroundColor: "orange",
+                  }}
+                >
+                  <AiFillLike />
+                </span>
+                {board.boardAgree}
+              </div>
+            </div>
+            <hr />
+            <div>
+              {board.boardChattingNum > 0 ? (
+                <span>
+                  <span> {board.boardComment}</span>
+                </span>
+              ) : (
+                <div
+                  style={{
+                    textAlign: "center",
+                    padding: "30px",
+                    color: "gray",
+                  }}
+                >
+                  <div>아직 댓글이 없어요.</div>
+                  <div>가장 먼저 댓글을 남겨보세요.</div>
+                </div>
+              )}
+              <div className="flex mb-8">
+                <input
+                  className="rounded-full"
+                  type="text"
+                  placeholder="댓글을 입력해주세요."
+                  style={{
+                    backgroundColor: "#e5e5e5",
+                    width: "700px",
+                    padding: "4px",
+                  }}
+                />
+                <button
+                  className="flex items-center"
+                  style={{
+                    fontSize: "1.1rem",
+                  }}
+                >
+                  <AiOutlineEnter />
+                </button>
+              </div>
+            </div>
+            {/* <div className="py-2 flex gap-5 justify-end" style={{}}>
               <button
                 style={{
                   fontSize: "1.5rem",
@@ -517,15 +565,14 @@ const BoardPost = ({
               >
                 댓글 쓰기
               </button>
-            </div>
+            </div> */}
           </section>
-          <br />
-          <div
+          {/* <div
             style={{
               width: "700px",
               borderBottom: "1px #e4e4e4 solid",
             }}
-          ></div>
+          ></div> */}
         </div>
       </div>
     );

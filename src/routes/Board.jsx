@@ -4,7 +4,7 @@ import BoardHeader from "../layouts/BoardHeader";
 import { useNavigate } from "react-router-dom";
 import { FaCarrot } from "react-icons/fa";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import BoardPaging from "../components/BoardPaging";
 import BoardQPaging from "../components/BoardQPaging";
@@ -27,6 +27,60 @@ const Board = ({ logined, setLogined }) => {
   const moveWrite = () => {
     navigate("/boardWrite");
   };
+
+  const movePost = (id) => {
+    navigate(`/boardpost/${id}`);
+  };
+
+  //스크롤
+  const [page, setPage] = useState(1);
+  const [load, setLoad] = useState(false);
+  const preventRef = useRef(true); //중복 실행 방지
+  const obsRef = useRef(null); //observer Element
+  const endRef = useRef(false); //모든 글 로드 확인
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
+    if (obsRef.current) observer.observe(obsRef.current);
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const obsHandler = (entries) => {
+    //옵저버 콜백함수
+    const target = entries[0];
+    if (!endRef.current && target.isIntersecting && preventRef.current) {
+      //옵저버 중복 실행 방지
+      preventRef.current = false; //옵저버 중복 실행 방지
+      setPage((prev) => prev + 1); //페이지 값 증가
+    }
+  };
+
+  useEffect(() => {
+    if (page !== 1) getPost();
+  }, [page]);
+
+  const getPost = useCallback(async () => {
+    //글 불러오기
+    setLoad(true); //로딩 시작
+
+    const res = await axios({
+      method: "GET",
+      url: `http://localhost:8083/board`,
+    });
+    if (res.data) {
+      if (res.data) {
+        //마지막 페이지일 경우
+        endRef.current = true;
+      }
+      //setList((prev) => [...prev, ...res.data.list]); //리스트 배열에 추가
+      preventRef.current = true;
+    } else {
+      console.log(res);
+    }
+    setLoad(false); //로딩 종료
+  }, [page]);
 
   //동네질문
   const [spreadQue, setSpreadQue] = useState(false);
@@ -127,7 +181,7 @@ const Board = ({ logined, setLogined }) => {
           url: `http://localhost:8083/board`,
           method: "GET",
         });
-        setGetCafe(data1.data);
+        setGetCafe(data1.data.reverse());
       } catch (e) {
         console.log(e);
       }
@@ -148,98 +202,6 @@ const Board = ({ logined, setLogined }) => {
             position: "relative",
           }}
         >
-          {spreadCafe && (
-            <div>
-              <div className="pt-2">
-                <div
-                  style={{
-                    width: "700px",
-                  }}
-                >
-                  <ul>
-                    {getCafe.map((cafe, index) => (
-                      <li key={index} style={{}}>
-                        <div
-                          className=" pt-2 mb-2"
-                          style={{
-                            border: "1px rgb(209, 209, 209) solid",
-                          }}
-                        >
-                          <div className="p-3">
-                            <div className="pb-3">
-                              <span
-                                className="rounded-lg p-1"
-                                style={{
-                                  backgroundColor: "rgb(209, 209, 209)",
-                                }}
-                              >
-                                동네 카페
-                              </span>
-                            </div>
-                            <div
-                              style={{
-                                height: "40px",
-                              }}
-                            >
-                              {cafe.boardContent}
-                            </div>
-                            <div
-                              className="flex justify-between"
-                              style={{
-                                color: "gray",
-                              }}
-                            >
-                              <span>{cafe.boardUserid}</span>
-                              <span>{cafe.createDate}</span>
-                            </div>
-                          </div>
-                          <hr />
-                          <div
-                            className="flex gap-2 p-2"
-                            // style={{
-                            //   border: "1px red solid",
-                            // }}
-                          >
-                            <span className="flex items-center">
-                              <SlEmotsmile />
-                            </span>
-                            공감하기
-                            <span
-                              className="flex items-center"
-                              style={{
-                                fontSize: "1.2rem",
-                              }}
-                            >
-                              <FiMessageCircle />
-                            </span>
-                            댓글쓰기
-                            <div
-                              className="flex items-center gap-1"
-                              // style={{
-                              //   border: "1px red solid",
-                              // }}
-                            >
-                              <span
-                                className="rounded-full"
-                                style={{
-                                  color: "white",
-                                  padding: "2px",
-                                  backgroundColor: "orange",
-                                }}
-                              >
-                                <AiFillLike />
-                              </span>
-                              {cafe.boardAgree}
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          )}
           <div
             style={{
               width: "150px",
@@ -327,6 +289,112 @@ const Board = ({ logined, setLogined }) => {
                 width: "100%",
               }}
             >
+              {spreadCafe && (
+                <div>
+                  <div className="pt-2">
+                    <div
+                      style={{
+                        margin: "0 auto",
+                        width: "700px",
+                      }}
+                    >
+                      <ul>
+                        {getCafe.map((cafe, index) => (
+                          <li key={index} ref={obsRef}>
+                            <div
+                              className=" pt-2 mb-2"
+                              style={{
+                                border: "1px rgb(209, 209, 209) solid",
+                              }}
+                            >
+                              <div className="p-3">
+                                <div className="pb-3">
+                                  <span
+                                    className="rounded-lg p-1"
+                                    style={{
+                                      backgroundColor: "rgb(209, 209, 209)",
+                                    }}
+                                  >
+                                    동네 카페
+                                  </span>
+                                </div>
+
+                                <button
+                                  onClick={() => {
+                                    movePost(cafe.boardId);
+                                  }}
+                                  style={{
+                                    minHeight: "40px",
+                                  }}
+                                >
+                                  {" "}
+                                  <span>{cafe.boardContent}</span>
+                                </button>
+
+                                <div
+                                  className="mt-1 flex justify-between"
+                                  style={{
+                                    color: "gray",
+                                  }}
+                                >
+                                  <span>{cafe.boardUserid}</span>
+                                  <span>{cafe.createDate}</span>
+                                </div>
+                              </div>
+                              <hr />
+                              <div className="flex p-2 justify-between">
+                                <div className="flex gap-2">
+                                  <button className="flex items-center gap-1">
+                                    <span>
+                                      <SlEmotsmile />
+                                    </span>
+                                    <span>공감하기</span>
+                                  </button>
+                                  <button
+                                    className="flex items-center gap-1"
+                                    onClick={() => {
+                                      movePost(cafe.boardId);
+                                    }}
+                                  >
+                                    <span
+                                      style={{
+                                        fontSize: "1.2rem",
+                                      }}
+                                    >
+                                      <FiMessageCircle />
+                                    </span>
+                                    {cafe.boardChattingNum > 0 ? (
+                                      <div>
+                                        <span>댓글</span>
+                                        <span> {cafe.boardChattingNum}</span>
+                                      </div>
+                                    ) : (
+                                      <span> 댓글쓰기</span>
+                                    )}
+                                  </button>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <span
+                                    className="rounded-full"
+                                    style={{
+                                      color: "white",
+                                      padding: "2px",
+                                      backgroundColor: "orange",
+                                    }}
+                                  >
+                                    <AiFillLike />
+                                  </span>
+                                  {cafe.boardAgree}
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
               {spreadLife && (
                 <div>
                   <div>동네 질문</div>

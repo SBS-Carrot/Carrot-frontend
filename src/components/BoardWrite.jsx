@@ -27,18 +27,18 @@ const BoardWrite = ({ logined, setLogined }) => {
   const [contentValue, setContentValue] = useState("");
   const [completeToggle, setCompleteToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
-  const [content, setContent] = useState("");
+
   const [uploadedImg, setUploadedImg] = useState([]);
   const [boardAddress, setDealAddress] = useState("");
   const onDealAddress = (e) => {
     setDealAddress(e.target.value);
   };
   const [id, setId] = useState("");
-  const onChange = (e) => {
-    setContent(e.target.files[0]);
-  };
 
   const onContentChange = (e) => {
+    if (e.target.value.length > 200) {
+      return;
+    }
     setContentValue(e.target.value);
   };
 

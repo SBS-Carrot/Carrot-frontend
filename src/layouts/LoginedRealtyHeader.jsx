@@ -92,8 +92,8 @@ const LoginedRealtyHeader = ({ setLogined }) => {
               borderRadius: "5px",
             }}
             onClick={() => {
-              sessionStorage.clear();
               setLogined(false);
+              sessionStorage.clear();
               window.location.reload();
             }}
           >

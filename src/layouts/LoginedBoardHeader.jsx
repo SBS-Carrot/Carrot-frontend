@@ -75,16 +75,20 @@ const LoginedBoardHeader = ({ setLogined }) => {
           </div>
         </div>
         <div className="flex-grow justify-center items-center flex" style={{}}>
-          <a
-            href="http://localhost:3000/login"
+          <button
             style={{
               outline: "1px #bcbcbc solid",
-              padding: "5px 10px",
+              padding: "5px 5px",
               borderRadius: "5px",
+            }}
+            onClick={() => {
+              sessionStorage.clear();
+              setLogined(false);
+              window.location.replace("");
             }}
           >
             로그아웃
-          </a>
+          </button>
         </div>
         <div
           style={{

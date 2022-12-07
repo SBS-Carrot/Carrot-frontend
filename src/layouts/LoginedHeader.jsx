@@ -5,9 +5,7 @@ import { authenticatedState } from "../recoil/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Header.css";
-import { useNavigate, useParams } from "react-router-dom";
-import ArticleControl from "../routes/ArticleControl";
-import { BsWordpress } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 const LoginedHeader = ({ setLogined }) => {
   const navigate = useNavigate();
   const onHomepage = () => {
@@ -15,24 +13,6 @@ const LoginedHeader = ({ setLogined }) => {
   };
   const onMyPage = () => {
     navigate("/mypage");
-  };
-
-  const [search, setSearch] = useState("");
-  const [searchList, setSearchList] = useState([]);
-  const onSearchChange = (e) => {
-    setSearch(e.target.value);
-  };
-
-  const onSearch = async () => {
-    try {
-      const data = await axios({
-        url: `http://localhost:8083/product/search`,
-        method: "GET",
-      });
-      setSearchList(data.data);
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   return (
@@ -48,7 +28,7 @@ const LoginedHeader = ({ setLogined }) => {
     >
       <div
         style={{
-          width: "1200px",
+          width: "1100px",
           height: "100%",
           justifyContent: "space-between",
           margin: "0 auto",
@@ -144,10 +124,8 @@ const LoginedHeader = ({ setLogined }) => {
               fontSize: "1.5rem",
             }}
           />
-
           <input
             type="text"
-            name="keyword"
             placeholder="물품이나 동네를 검색해 보세요"
             style={{
               width: "300px",
@@ -155,16 +133,7 @@ const LoginedHeader = ({ setLogined }) => {
               padding: "5px 10px",
               borderRadius: "10px",
             }}
-            value={search}
-            onChange={onSearchChange}
           />
-          <button
-            onClick={() => {
-              onSearch();
-            }}
-          >
-            찾기
-          </button>
         </div>
       </div>
     </div>

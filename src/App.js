@@ -29,11 +29,10 @@ import ChangePassword from "./routes/ChangePassword";
 import Board from "./routes/Board";
 import ProductEdit from "./components/ProductEdit";
 import BoardWrite from "./components/BoardWrite";
-
 import Chat from "./routes/Chat";
 import BoardPost from "./components/BoardPost";
 import JobsApply from "./components/JobsApply";
-
+import Alert from "./components/Alert";
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
@@ -60,29 +59,6 @@ function App() {
       setLogined(false);
     }
   }, []);
-  const onLogin = async (idValue, pwValue) => {
-    try {
-      const data = await axios({
-        url: `http://localhost:8083/loginUser`,
-        method: "POST",
-        data: {
-          userid: idValue,
-          password: pwValue,
-        },
-      });
-      if (data.data == false) {
-        alert("로그인 정보가 일치하지 않습니다.");
-      } else {
-        const logined = data.data.substring(0, 4);
-        const userid = data.data.substring(4);
-        sessionStorage.setItem("isLogined", logined);
-        sessionStorage.setItem("userid", userid);
-        setLogined(sessionStorage.getItem("isLogined"));
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const onLike = async (articleid, userid) => {
     try {
@@ -165,6 +141,7 @@ function App() {
 
   return (
     <Router>
+      <Alert />
       <Routes>
         <Route
           path="/"
@@ -196,10 +173,7 @@ function App() {
         />
         <Route path="/join" element={<Join />} />
 
-        <Route
-          path="/login"
-          element={<Login onLogin={onLogin} logined={logined} />}
-        />
+        <Route path="/login" element={<Login logined={logined} />} />
         <Route
           path="/mypage"
           element={<MyPage logined={logined} setLogined={setLogined} />}
@@ -326,6 +300,7 @@ function App() {
           path="/JobsApply/:num"
           element={<JobsApply logined={logined} setLogined={setLogined} />}
         />
+        <Route path="/alert" element={<Alert />} />
       </Routes>
     </Router>
   );

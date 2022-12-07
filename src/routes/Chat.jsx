@@ -23,7 +23,7 @@ const Chat = ({ logined, setLogined }) => {
   if (!logined) {
     moveBack();
   }
-
+  const userid = sessionStorage.getItem("userid");
   const [chatList, setChatList] = useState([]);
   const [chat, setChat] = useState("");
   const { roomId } = useParams();
@@ -69,8 +69,6 @@ const Chat = ({ logined, setLogined }) => {
         "auth-token": "spring-chat-auth-token",
       },
     });
-
-    setChat("");
   };
 
   const subscribe = () => {
@@ -89,12 +87,38 @@ const Chat = ({ logined, setLogined }) => {
     // 채팅 입력 시 state에 값 설정
     setChat(event.target.value);
   };
+  const getData = (chat) => {
+    const url = "localhost:3000/chat/" + roomId;
 
+    const notificationRequestDto = {
+      content: chat,
+      url,
+      notificationType: "CHAT",
+      userid,
+    };
+
+    try {
+      axios({
+        url: "http://localhost:8083/addChatNotification",
+        method: "POST",
+        data: {
+          content: chat,
+          url,
+          notificationType: "CHAT",
+          userid,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const handleSubmit = (chat) => {
     // 보내기 버튼 눌렀을 때 publish
     // event.preventDefault();
 
     publish(chat);
+    getData(chat);
+    setChat("");
   };
   const onChatList = (data) => {
     setChatList(data);

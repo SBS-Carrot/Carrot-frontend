@@ -11,23 +11,30 @@ const Alert = () => {
   const [notificationCnt, setNotificationCnt] = useState();
   const [listening, setListening] = useState(false);
 
-  // const EventSource = EventSourcePolyfill || NativeEventSource;
-
   //알림예시 항해99 프론트 https://github.com/HangHae99-FinalProject/FinalProject-React/blob/master/src/components/Alert.js
   //알림예시 항해99 백 https://github.com/HangHae99-FinalProject/FinalProject-Spring/blob/master/src/main/java/com/hanghae99/finalproject/sse/service/NotificationService.java
+
   const userid = sessionStorage.getItem("userid");
   useEffect(() => {
+    const eventSource = new EventSourcePolyfill(
+      `http://localhost:8083/sse/${userid}`,
+      {
+        withCredentials: true,
+      }
+    );
     if (!listening) {
-      const eventSource = new EventSource(`http://localhost:8083/sse`);
-
       eventSource.onopen = (event) => {
         console.log("connection opened");
       };
 
+      eventSource.addEventListener("get", (e) => {
+        console.log(JSON.parse(e.data));
+      });
+
       eventSource.onmessage = (e) => {
-        console.log(e);
-        if (e.type === "message" && e.data.startsWith("{")) {
-          setNotification((prev) => [JSON.parse(e.data)]);
+        console.log("onmessage : ", [e.data]);
+        if (e.type === "message") {
+          setNotification([e.data]);
           setAlertOpen(true);
         }
       };
@@ -38,7 +45,7 @@ const Alert = () => {
       //   });
 
       eventSource.onerror = (event) => {
-        console.log(event.target);
+        console.log("error : ", event);
         if (event.target.readyState === EventSource.CLOSED) {
           console.log("SSE closed (" + event.target.readyState + ")");
         }
@@ -47,27 +54,27 @@ const Alert = () => {
 
       setListening(true);
     }
-    // return () => {
-    //   eventSource.close();
-    //   console.log("event closed");
-    // };
-  });
+    return () => {
+      eventSource.close();
+      console.log("event closed");
+    };
+  }, []);
 
   useEffect(
     () => {
       if (logined) {
         const getData = async () => {
-          try {
-            const data = await axios({
-              url: "http://localhost:8083/notifications",
-              METHOD: "GET",
-              params: { userid },
-            });
-            console.log(data.data);
-            setNotification(data.data);
-          } catch (e) {
-            console.log(e);
-          }
+          // try {
+          //   const data = await axios({
+          //     url: "http://localhost:8083/notifications",
+          //     METHOD: "GET",
+          //     params: { userid },
+          //   });
+          //   console.log(data.data);
+          //   setNotification(data.data);
+          // } catch (e) {
+          //   console.log(e);
+          // }
           try {
             const data = await axios({
               url: "http://localhost:8083/notifications/count",
@@ -197,7 +204,7 @@ const Alert = () => {
                       //     : "notificationsMsg"
                       // }
                       >
-                        {notice.content}
+                        {notice}
                       </span>
 
                       <div className="line" />

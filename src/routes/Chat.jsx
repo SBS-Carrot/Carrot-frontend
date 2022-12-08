@@ -89,13 +89,7 @@ const Chat = ({ logined, setLogined }) => {
   };
   const getData = (chat) => {
     const url = "localhost:3000/chat/" + roomId;
-
-    const notificationRequestDto = {
-      content: chat,
-      url,
-      notificationType: "CHAT",
-      userid,
-    };
+    const yourid = sessionStorage.getItem("yourName");
 
     try {
       axios({
@@ -106,6 +100,7 @@ const Chat = ({ logined, setLogined }) => {
           url,
           notificationType: "CHAT",
           userid,
+          sender: yourid,
         },
       });
     } catch (e) {
@@ -116,8 +111,8 @@ const Chat = ({ logined, setLogined }) => {
     // 보내기 버튼 눌렀을 때 publish
     // event.preventDefault();
 
-    publish(chat);
     getData(chat);
+    publish(chat);
     setChat("");
   };
   const onChatList = (data) => {

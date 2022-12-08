@@ -16,11 +16,7 @@ import {
 } from "react-icons/md";
 import { SlEmotsmile } from "react-icons/sl";
 import { AiFillLike } from "react-icons/ai";
-import { FiMessageCircle } from "react-icons/fi";
-
-//스크롤
-//https://medium.com/@_diana_lee/react-infinite-scroll-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-fbd51a8a099f
-//https://velog.io/@yunsungyang-omc/React-%EB%AC%B4%ED%95%9C-%EC%8A%A4%ED%81%AC%EB%A1%A4-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-used-by-Intersection-Observer-1
+import { FiMessageCircle, FiCheckCircle } from "react-icons/fi";
 
 const Board = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -32,60 +28,8 @@ const Board = ({ logined, setLogined }) => {
     navigate(`/boardpost/${id}`);
   };
 
-  //스크롤
-
-  const [page, setPage] = useState(1);
-  const [load, setLoad] = useState(false); //로딩 스피너
-  const preventRef = useRef(true); //중복 실행 방지
-  const obsRef = useRef(null); //observer Element
-  const endRef = useRef(false); //모든 글 로드 확인
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(obsHandler, { threshold: 0.5 });
-    if (obsRef.current) observer.observe(obsRef.current);
-
-    console.log("dd", observer);
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  const obsHandler = (entries) => {
-    //옵저버 콜백함수
-    const target = entries[0];
-    if (!endRef.current && target.isIntersecting && preventRef.current) {
-      //옵저버 중복 실행 방지
-      preventRef.current = false; //옵저버 중복 실행 방지
-      setPage((prev) => prev + 1); //페이지 값 증가
-    }
-  };
-
-  useEffect(() => {
-    getPost();
-  }, [page]);
-
-  const getPost = useCallback(async () => {
-    //글 불러오기
-    setLoad(true); //로딩 시작
-
-    const res = await axios({
-      method: "GET",
-      url: `http://localhost:8083/board`,
-    });
-    if (res.data) {
-      if (res.data.lengh) {
-        setLifes((prev) => [...prev, ...res.data.lifes]); //리스트 배열에 추가
-        preventRef.current = true;
-      }
-    } else {
-      console.log(res);
-    }
-    console.log("res", res);
-    setLoad(false); //로딩 종료
-  }, [page]);
-
   //동네질문
-  const [spreadQue, setSpreadQue] = useState(false);
+  const [spreadQue, setSpreadQue] = useState(true);
   const onSpreadQue = () => {
     setSpreadQue(true);
     setSpreadCafe(false);
@@ -108,66 +52,67 @@ const Board = ({ logined, setLogined }) => {
   //동네 카페
   const [Bpage, setBPage] = useState(1);
   const [lifes, setLifes] = useState([]); //전체 게시글
+  const [getCafe, setGetCafe] = useState([]);
+  const [getQue, setGetQue] = useState([]);
 
   //스크롤
-  // const [offset, setOffset] = useState(0);
-  // // offset 이후 순서의 데이터부터 8개씩 데이터를 받아올 것임
-  // const [target, setTarget] = useState(null); // 관찰대상 target
-  // const [isLoaded, setIsLoaded] = useState(false); // Load 중인가를 판별하는 boolean
-  // // 요청이 여러번 가는 것을 방지하기 위해서
-  // const [stop, setStop] = useState(false); // 마지막 데이터까지 다 불러온 경우 더이상 요청을 보내지 않기 위해서
-  // // 마지막 부분까지 가버릴 때 계속 요청을 보내는 것 방지
+  const [target, setTarget] = useState(null); // 관찰대상 target
+  const [isLoaded, setIsLoaded] = useState(false); // Load 중인가를 판별하는 boolean
+  // 요청이 여러번 가는 것을 방지하기 위해서
+  const [stop, setStop] = useState(false); // 마지막 데이터까지 다 불러온 경우 더이상 요청을 보내지 않기 위해서
+  // 마지막 부분까지 가버릴 때 계속 요청을 보내는 것 방지
+  const [num, setNum] = useState(7);
+  useEffect(() => {
+    let observer;
+    if (target && !stop) {
+      // callback 함수로 onIntersect를 지정
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.5,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target, isLoaded]);
 
-  // useEffect(() => {
-  //   let observer;
-  //   if (target && !stop) {
-  //     // callback 함수로 onIntersect를 지정
-  //     observer = new IntersectionObserver(onIntersect, {
-  //       threshold: 0.5,
-  //     });
-  //     observer.observe(target);
-  //   }
-  //   return () => observer && observer.disconnect();
-  // }, [target, isLoaded]);
+  // isLoaded가 변할 때 실행
+  useEffect(() => {
+    // isLoaded가 true일 때 + 마지막 페이지가 아닌 경우 = 요청보내기
+    if (isLoaded && !stop) {
+      //api 카페만 몇개 불러오는지에 대한 주소 새로 만들어야함.
+      //초기값 7개 , 스크롤 내릴 때마다 그 다음 7개에 대한 인덱스만 가져와야함
+      axios.get(`http://localhost:8083/boards?num=${num}`).then((res) => {
+        // 받아온 데이터를 보여줄 전체 리스트에 concat으로 넣어준다
+        setGetCafe((getCafe) => getCafe.concat(res.data));
+        setNum(num + 7);
+        // 다음 요청 전까지 요청 그만 보내도록 false로 변경
+        setIsLoaded(false);
 
-  // // isLoaded가 변할 때 실행
-  // useEffect(() => {
-  //   // isLoaded가 true일 때 + 마지막 페이지가 아닌 경우 = 요청보내기
-  //   if (isLoaded && !stop) {
-  //     axios.get(`http://localhost:8083/board`).then((res) => {
-  //       // 받아온 데이터를 보여줄 전체 리스트에 concat으로 넣어준다
-  //       setGetCafe((getCafe) => getCafe.concat(res.data));
-  //       // 다음 요청할 데이터 offset 정보
-  //       setOffset((offset) => offset + res.data.length);
-  //       // 다음 요청 전까지 요청 그만 보내도록 false로 변경
-  //       setIsLoaded(false);
+        if (res.data.length == 0) {
+          // 전체 데이터를 다 불러온 경우(불러온 값이 12개 보다 적다면 -> 매번 12개씩 불러오기로 했으므로 해당 값보다 작으면 마지막 페이지) 아예 로드를 중지
+          setStop(true);
+        }
+        console.log("Res", res);
+      });
+    }
+  }, [isLoaded]);
 
-  //       if (res.data.length < 8) {
-  //         // 전체 데이터를 다 불러온 경우(불러온 값이 12개 보다 적다면 -> 매번 12개씩 불러오기로 했으므로 해당 값보다 작으면 마지막 페이지) 아예 로드를 중지
-  //         setStop(true);
-  //       }
-  //       console.log("Res", res);
-  //     });
-  //   }
-  // }, [isLoaded]);
+  const getMoreItem = () => {
+    // 데이터를 받아오도록 true 로 변경
+    setIsLoaded(true);
+  };
 
-  // const getMoreItem = () => {
-  //   // 데이터를 받아오도록 true 로 변경
-  //   setIsLoaded(true);
-  // };
-
-  // // callback
-  // const onIntersect = async ([entry], observer) => {
-  //   // entry 요소가 교차되거나 Load중이 아니면
-  //   if (entry.isIntersecting && !isLoaded) {
-  //     // 관찰은 일단 멈추고
-  //     observer.unobserve(entry.target);
-  //     // 데이터 불러오기
-  //     getMoreItem();
-  //     // 불러온 후 다시 관찰 실행
-  //     // observer.observe(entry.target);
-  //   }
-  // };
+  // callback
+  const onIntersect = async ([entry], observer) => {
+    // entry 요소가 교차되거나 Load중이 아니면
+    if (entry.isIntersecting && !isLoaded) {
+      // 관찰은 일단 멈추고
+      observer.unobserve(entry.target);
+      // 데이터 불러오기
+      getMoreItem();
+      // 불러온 후 다시 관찰 실행
+      observer.observe(entry.target);
+    }
+  };
 
   const BhandlePageChange = (page) => {
     setBPage(page);
@@ -234,7 +179,6 @@ const Board = ({ logined, setLogined }) => {
     };
     getData();
   }, []);
-  const [getCafe, setGetCafe] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -243,14 +187,28 @@ const Board = ({ logined, setLogined }) => {
           url: `http://localhost:8083/board`,
           method: "GET",
         });
-        setGetCafe(data1.data.reverse());
+
+        onCafe(data1.data);
+        onQue(data1.data);
       } catch (e) {
         console.log(e);
       }
     };
     getData();
   }, []);
-  console.log(getCafe);
+
+  const onCafe = (list) => {
+    const newList = list.filter((index) => {
+      return index.boardCategory == "동네 카페" ? true : false;
+    });
+    setGetCafe(newList.slice(0, 7));
+  };
+  const onQue = (list) => {
+    const newList = list.filter((index) => {
+      return index.boardCategory == "동네 질문" ? true : false;
+    });
+    setGetQue(newList);
+  };
 
   if (logined) {
     return (
@@ -352,6 +310,123 @@ const Board = ({ logined, setLogined }) => {
                 width: "100%",
               }}
             >
+              {spreadQue && (
+                <div className="pt-2">
+                  <div
+                    style={{
+                      margin: "0 auto",
+                      width: "700px",
+                    }}
+                  >
+                    <ul>
+                      {getQue.map((que, index) => (
+                        <li key={index}>
+                          <div
+                            className=" pt-2 mb-2"
+                            style={{
+                              border: "1px rgb(209, 209, 209) solid",
+                            }}
+                          >
+                            <div className="p-3">
+                              <div className="pb-3">
+                                <span
+                                  className="rounded-lg p-1"
+                                  style={{
+                                    backgroundColor: "rgb(209, 209, 209)",
+                                  }}
+                                >
+                                  {que.boardCategory}
+                                </span>
+                              </div>
+
+                              <div
+                                className="flex gap-1"
+                                onClick={() => {
+                                  movePost(que.boardId);
+                                }}
+                                style={{
+                                  minHeight: "40px",
+                                  cursor: "pointer",
+                                }}
+                              >
+                                {" "}
+                                <span
+                                  className="font-bold"
+                                  style={{
+                                    color: "orange",
+                                  }}
+                                >
+                                  Q
+                                </span>
+                                <div>{que.boardContent}</div>
+                              </div>
+
+                              <div
+                                className="mt-1 flex justify-between"
+                                style={{
+                                  color: "gray",
+                                }}
+                              >
+                                <span>{que.boardUserid}</span>
+                                <span>{que.createDate}</span>
+                              </div>
+                            </div>
+                            <hr />
+                            <div className="flex p-2 justify-between">
+                              <div className="flex gap-2">
+                                <button className="flex items-center gap-1">
+                                  <span>
+                                    <FiCheckCircle />
+                                  </span>
+                                  <span>궁금해요</span>
+                                </button>
+                                <button
+                                  className="flex items-center gap-1"
+                                  onClick={() => {
+                                    movePost(que.boardId);
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      fontSize: "1.2rem",
+                                    }}
+                                  >
+                                    <FiMessageCircle />
+                                  </span>
+                                  {que.boardChattingNum > 0 ? (
+                                    <div>
+                                      <span>댓글</span>
+                                      <span> {que.boardChattingNum}</span>
+                                    </div>
+                                  ) : (
+                                    <span> 댓글쓰기</span>
+                                  )}
+                                </button>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <span
+                                  className="rounded-full"
+                                  style={{
+                                    color: "white",
+                                    padding: "2px",
+                                    backgroundColor: "orange",
+                                  }}
+                                >
+                                  <AiFillLike />
+                                </span>
+                                {que.boardAgree}
+                              </div>
+                            </div>
+                            {/* <div ref={setTarget}></div> */}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {/* 동네 카페 */}
               {spreadCafe && (
                 <div>
                   <div className="pt-2">
@@ -363,7 +438,7 @@ const Board = ({ logined, setLogined }) => {
                     >
                       <ul>
                         {getCafe.map((cafe, index) => (
-                          <li key={index} ref={obsRef}>
+                          <li key={index}>
                             <div
                               className=" pt-2 mb-2"
                               style={{
@@ -378,21 +453,22 @@ const Board = ({ logined, setLogined }) => {
                                       backgroundColor: "rgb(209, 209, 209)",
                                     }}
                                   >
-                                    동네 카페
+                                    {cafe.boardCategory}
                                   </span>
                                 </div>
 
-                                <button
+                                <div
                                   onClick={() => {
                                     movePost(cafe.boardId);
                                   }}
                                   style={{
                                     minHeight: "40px",
+                                    cursor: "pointer",
                                   }}
                                 >
                                   {" "}
-                                  <span>{cafe.boardContent}</span>
-                                </button>
+                                  <div>{cafe.boardContent}</div>
+                                </div>
 
                                 <div
                                   className="mt-1 flex justify-between"
@@ -450,7 +526,7 @@ const Board = ({ logined, setLogined }) => {
                                   {cafe.boardAgree}
                                 </div>
                               </div>
-                              {/* <div ref={setTarget}></div> */}
+                              <div ref={setTarget}></div>
                             </div>
                           </li>
                         ))}
@@ -459,6 +535,7 @@ const Board = ({ logined, setLogined }) => {
                   </div>
                 </div>
               )}
+              {/* 나의 동네 생활 */}
               {spreadLife && (
                 <div>
                   <div>동네 질문</div>

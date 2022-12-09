@@ -19,6 +19,7 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import { SlEmotsmile } from "react-icons/sl";
 import { AiFillLike, AiOutlineEnter } from "react-icons/ai";
 import { FiMessageCircle, FiSend } from "react-icons/fi";
+import { CardText } from "reactstrap";
 
 const BoardPost = ({
   logined,
@@ -38,6 +39,14 @@ const BoardPost = ({
   const { num } = useParams();
   const [userid, setUserid] = useState(sessionStorage.getItem("userid"));
   const [boardWriter, setBoardWriter] = useState("");
+
+  //댓글
+  const [replies, setReplis] = useState([]);
+  const [replyValue, setReplyValue] = useState("");
+  const onReplyChange = (e) => {
+    setReplyValue(e.target.value);
+  };
+
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);
@@ -86,6 +95,27 @@ const BoardPost = ({
   const onBoard = (data) => {
     setBoard((prev) => data);
   };
+  const [replytoggle, setReplyToggle] = useState(false);
+
+  const submitReply = async () => {
+    try {
+      const userid = sessionStorage.getItem("userid");
+
+      const data = await axios({
+        url: `http://localhost:8083/boardCreateReply/${num}`,
+        method: "POST",
+        data: {
+          boardReply: replyValue,
+          replyUserid: userid,
+        },
+      });
+      console.log(data.data);
+      setReplyToggle(data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     const onSubmit = async (num) => {
       let abcd = "";
@@ -142,6 +172,15 @@ const BoardPost = ({
           method: "GET",
         });
         setUser(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/getBoardReply/${num}`,
+          method: "GET",
+        });
+        setReplis(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -495,7 +534,49 @@ const BoardPost = ({
             <div>
               {board.boardChattingNum > 0 ? (
                 <span>
-                  <span> {board.boardComment}</span>
+                  <ul>
+                    {replies.map((reply, index) => {
+                      <li key={index}>
+                        <div
+                          className="avatar flex justify-center items-center"
+                          style={{
+                            width: "3.5rem",
+                          }}
+                        >
+                          <div>
+                            <div className="w-12 rounded-full">
+                              {reply.profileImage != null ? (
+                                <img src={reply.profileImage} />
+                              ) : (
+                                <FaCarrot
+                                  style={{
+                                    color: "#fc9d39",
+                                    fontSize: "3rem",
+                                    transform: "translate(0%,0%)",
+                                    border: "0.1px #fc9d39 solid",
+                                    borderRadius: "50%",
+                                  }}
+                                />
+                              )}
+                            </div>
+                          </div>
+                          <div
+                            className="flex justify-center flex-col"
+                            style={{
+                              width: "500px",
+                            }}
+                          >
+                            <div className="font-bold ">
+                              {reply.nickname == "닉네임 없음"
+                                ? reply.username
+                                : user.nickname}
+                            </div>
+                            <div className="text-sm">{user.address}</div>
+                          </div>
+                        </div>
+                      </li>;
+                    })}
+                  </ul>
                 </span>
               ) : (
                 <div
@@ -513,6 +594,8 @@ const BoardPost = ({
                 <input
                   className="rounded-full"
                   type="text"
+                  value={replyValue}
+                  onChange={onReplyChange}
                   placeholder="댓글을 입력해주세요."
                   style={{
                     backgroundColor: "#e5e5e5",
@@ -521,6 +604,9 @@ const BoardPost = ({
                   }}
                 />
                 <button
+                  onClick={() => {
+                    submitReply(replyValue);
+                  }}
                   className="flex items-center"
                   style={{
                     fontSize: "1.1rem",

@@ -99,8 +99,8 @@ const Chat = ({ logined, setLogined }) => {
           content: chat,
           url,
           notificationType: "CHAT",
-          userid,
-          sender: yourid,
+          userid: yourid,
+          sender: userid,
         },
       });
     } catch (e) {

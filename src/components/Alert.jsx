@@ -16,19 +16,33 @@ const Alert = () => {
 
   const userid = sessionStorage.getItem("userid");
   useEffect(() => {
-    const eventSource = new EventSourcePolyfill(
-      `http://localhost:8083/sse/${userid}`,
-      {
-        withCredentials: true,
-      }
-    );
+    const eventSource = new EventSource(`http://localhost:8083/sse/${userid}`, {
+      // headers: {
+      //   "Content-Type": "text/event-stream",
+      //   "Cache-Control": "no-cache",
+      //   Connection: "keep-alive",
+      //   // "X-Accel-Buffering": "no",
+      // },
+      // heartbeatTimeout: 120000,
+      withCredentials: true,
+    });
     if (!listening) {
       eventSource.onopen = (event) => {
         console.log("connection opened");
       };
 
+      eventSource.addEventListener("sse", (e) => {
+        console.log("sse");
+      });
+
       eventSource.addEventListener("get", (e) => {
-        console.log(JSON.parse(e.data));
+        console.log("get");
+        setNotification(JSON.parse(e.data));
+      });
+
+      eventSource.addEventListener("new", (e) => {
+        console.log("new");
+        // setNotification(...notification, JSON.parse(e.data));
       });
 
       eventSource.onmessage = (e) => {
@@ -39,13 +53,7 @@ const Alert = () => {
         }
       };
 
-      //   eventSource.addEventListener("Progress", (event) => {
-      //     const result = JSON.parse(event.data);
-      //     console.log("received:", result);
-      //   });
-
       eventSource.onerror = (event) => {
-        console.log("error : ", event);
         if (event.target.readyState === EventSource.CLOSED) {
           console.log("SSE closed (" + event.target.readyState + ")");
         }
@@ -75,16 +83,16 @@ const Alert = () => {
           // } catch (e) {
           //   console.log(e);
           // }
-          try {
-            const data = await axios({
-              url: "http://localhost:8083/notifications/count",
-              METHOD: "GET",
-              params: { userid },
-            });
-            setNotificationCnt(data.data);
-          } catch (e) {
-            console.log(e);
-          }
+          // try {
+          //   const data = await axios({
+          //     url: "http://localhost:8083/notifications/count",
+          //     METHOD: "GET",
+          //     params: { userid },
+          //   });
+          //   setNotificationCnt(data.data);
+          // } catch (e) {
+          //   console.log(e);
+          // }
         };
         getData();
       }
@@ -204,7 +212,7 @@ const Alert = () => {
                       //     : "notificationsMsg"
                       // }
                       >
-                        {notice}
+                        {notice.content}
                       </span>
 
                       <div className="line" />

@@ -3,7 +3,7 @@
 // S3에 이미지 업로드 구현하기 (백엔드)
 // https://velog.io/@modsiw/Spring-Spring-Boot-gradle-S3-React.js-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%97%85%EB%A1%9C%EB%93%9C-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-1-%EB%B0%B1%EC%97%94%EB%93%9C-%EA%B5%AC%ED%98%84
 import { useState } from "react";
-import LoginedHeader from "../layouts/LoginedHeader";
+import LoginedBoardHeader from "../layouts/LoginedBoardHeader";
 import axios from "axios";
 import { useEffect } from "react";
 import { MdAddAPhoto } from "react-icons/md";
@@ -24,23 +24,21 @@ const BoardWrite = ({ logined, setLogined }) => {
     }
   }, []);
   const [category, setCategoryValue] = useState("");
-  const [priceValue, setPriceValue] = useState("");
   const [contentValue, setContentValue] = useState("");
-  const [subjectValue, setSubjectValue] = useState("");
   const [completeToggle, setCompleteToggle] = useState(false);
   const [showImages, setShowImages] = useState([]);
-  const [content, setContent] = useState("");
+
   const [uploadedImg, setUploadedImg] = useState([]);
-  const [dealAddress, setDealAddress] = useState("");
+  const [boardAddress, setDealAddress] = useState("");
   const onDealAddress = (e) => {
     setDealAddress(e.target.value);
   };
   const [id, setId] = useState("");
-  const onChange = (e) => {
-    setContent(e.target.files[0]);
-  };
 
   const onContentChange = (e) => {
+    if (e.target.value.length > 200) {
+      return;
+    }
     setContentValue(e.target.value);
   };
 
@@ -87,7 +85,7 @@ const BoardWrite = ({ logined, setLogined }) => {
     //미리보기 삭제
     setShowImages(showImages.filter((_, index) => index !== id));
   };
-  const [address, setAddress] = useState(""); // 주소
+
   const [addressDetail, setAddressDetail] = useState(""); // 상세주소
 
   const [isOpenPost, setIsOpenPost] = useState(false);
@@ -112,8 +110,6 @@ const BoardWrite = ({ logined, setLogined }) => {
     }
     setAddressDetail(fullAddr);
     setIsOpenPost(false);
-    const dong = fullAddr.split(" ");
-    setAddress(dong[2]);
   };
 
   const postCodeStyle = {
@@ -125,19 +121,20 @@ const BoardWrite = ({ logined, setLogined }) => {
     padding: "7px",
   };
 
-  const onSubmit = async (contentValue, category, dealAddress) => {
+  const onSubmit = async (contentValue, category, boardAddress) => {
     try {
       const data = await axios({
         url: `http://localhost:8083/createBoard`,
         method: "POST",
         data: {
           boardCategory: category,
-          productContent: contentValue,
-          productDealAddress: dealAddress,
-          productUserid: sessionStorage.getItem("userid"),
+          boardContent: contentValue,
+          boardAddress: boardAddress,
+          boardUserid: sessionStorage.getItem("userid"),
         },
       });
       onCompleteChange();
+
       setId(data.data.boardId);
     } catch (e) {
       console.log(e);
@@ -145,27 +142,23 @@ const BoardWrite = ({ logined, setLogined }) => {
   };
 
   const onSubmits = async (
-    subjectValue,
     contentValue,
     category,
-    priceValue,
     uploadedImg,
-    dealAddress
+    boardAddress
   ) => {
     try {
       const formData = new FormData();
-      const productDto = {
-        productCategory: category,
-        productPrice: priceValue,
-        productSubject: subjectValue,
-        productContent: contentValue,
-        productDealAddress: dealAddress,
-        productUserid: sessionStorage.getItem("userid"),
+      const boardDto = {
+        boardCategory: category,
+        boardContent: contentValue,
+        boardAddress: boardAddress,
+        boardUserid: sessionStorage.getItem("userid"),
       };
       // https://velog.io/@hhhminme/Axios%EC%97%90%EC%84%9C-Post-%EC%8B%9C-Contenttypeapplicationoctet-streamnotsupported-%ED%95%B8%EB%93%A4%EB%A7%81415-%EC%97%90%EB%9F%AC
-      const json = JSON.stringify(productDto);
+      const json = JSON.stringify(boardDto);
       const blob = new Blob([json], { type: "application/json" });
-      formData.append("productDto", blob);
+      formData.append("boardDto", blob);
       uploadedImg.reverse();
       for (let i = 0; i < uploadedImg.length; i++) {
         formData.append("file", uploadedImg[i]);
@@ -174,11 +167,11 @@ const BoardWrite = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/createProductImages`,
+        url: `http://localhost:8083/createBoardImages`,
         method: "POST",
         data: formData,
       });
-      setId(data2.data.productId);
+      setId(data2.data.boardId);
       onCompleteChange();
     } catch (e) {
       console.log(e);
@@ -187,7 +180,7 @@ const BoardWrite = ({ logined, setLogined }) => {
   };
   return (
     <div>
-      <LoginedHeader setLogined={setLogined} />
+      <LoginedBoardHeader setLogined={setLogined} />
       <div
         className="pt-5"
         style={{
@@ -248,8 +241,8 @@ const BoardWrite = ({ logined, setLogined }) => {
               }}
             >
               <option value="게시글의 주제">게시글의 주제</option>
-              <option value="디지털기기">동네 질문</option>
-              <option value="생활가전">동네 카페</option>
+              <option value="동네 질문">동네 질문</option>
+              <option value="동네 카페">동네 카페</option>
             </select>
           </div>
 
@@ -384,22 +377,9 @@ const BoardWrite = ({ logined, setLogined }) => {
             <button
               onClick={() => {
                 if (uploadedImg.length == 0) {
-                  onSubmit(
-                    subjectValue,
-                    contentValue,
-                    category,
-                    priceValue,
-                    dealAddress
-                  );
+                  onSubmit(contentValue, category, boardAddress);
                 } else {
-                  onSubmits(
-                    subjectValue,
-                    contentValue,
-                    category,
-                    priceValue,
-                    uploadedImg,
-                    dealAddress
-                  );
+                  onSubmits(contentValue, category, uploadedImg, boardAddress);
                 }
               }}
               style={{

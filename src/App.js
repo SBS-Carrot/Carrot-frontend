@@ -139,6 +139,17 @@ function App() {
     }
   };
 
+  const onRemoveBoard = async (id) => {
+    try {
+      await axios({
+        url: `http://localhost:8083/boardDelete/${id}`,
+        method: "POST",
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Router>
       <Routes>
@@ -292,8 +303,24 @@ function App() {
         />
 
         <Route
-          path="/boardpost"
-          element={<BoardPost logined={logined} setLogined={setLogined} />}
+          path="/boardpost/:num"
+          element={
+            <BoardPost
+              logined={logined}
+              setLogined={setLogined}
+              setRealtyLiked={setRealtyLiked}
+              realtyLiked={realtyLiked}
+              onRealtyLike={onRealtyLike}
+              menuToggle={menuToggle}
+              onMenuToggle={onMenuToggle}
+              setMenuToggle={setMenuToggle}
+              deleteToggle={deleteToggle}
+              onDeleteToggle={onDeleteToggle}
+              onRemoveBoard={onRemoveBoard}
+              editToggle={editToggle}
+              onEditToggle={onEditToggle}
+            />
+          }
         />
         <Route
           path="/JobsApply/:num"

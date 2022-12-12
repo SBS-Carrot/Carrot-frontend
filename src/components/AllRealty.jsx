@@ -65,6 +65,17 @@ const AllRealty = ({ logined, setLogined }) => {
       <div>
         <LoginedRealtyHeader setLogined={setLogined} />
         <section>
+          {/* <div
+            style={{
+              backgroundColor: "skyblue",
+            }}
+          >
+            <div
+              style={{
+                height: "300px",
+              }}
+            ></div>
+          </div> */}
           <div
             style={{
               width: "800px",

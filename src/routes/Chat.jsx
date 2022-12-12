@@ -9,13 +9,7 @@ import * as StompJs from "@stomp/stompjs";
 import axios from "axios";
 import { faCarrot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-<<<<<<< HEAD
 // https://gilssang97.tistory.com/69
-=======
-
-// https://gilssang97.tistory.com/69
-
->>>>>>> 48f17ad04cf75d510afba368c9b6639e420c0f1f
 const Chat = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const notChattingUser = () => {

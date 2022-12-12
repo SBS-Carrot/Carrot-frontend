@@ -5,10 +5,11 @@ import { authenticatedState } from "../recoil/auth";
 import { NativeEventSource, EventSourcePolyfill } from "event-source-polyfill";
 import { AiOutlineBell } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-const Alert = () => {
+
+const Alert = ({}) => {
+  const userid = sessionStorage.getItem("userid");
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [notification, setNotification] = useState([]);
-  const [alertOpen, setAlertOpen] = useState(false);
   const [is_open, setIs_open] = useState(false);
   const [notificationCnt, setNotificationCnt] = useState();
   const [listening, setListening] = useState(false);
@@ -19,110 +20,95 @@ const Alert = () => {
   const navigate = useNavigate();
 
   const moveURL = (data) => {
-    navigate(`http://${data}`);
+    navigate(`${data}`);
   };
   //알림예시 항해99 프론트 https://github.com/HangHae99-FinalProject/FinalProject-React/blob/master/src/components/Alert.js
   //알림예시 항해99 백 https://github.com/HangHae99-FinalProject/FinalProject-Spring/blob/master/src/main/java/com/hanghae99/finalproject/sse/service/NotificationService.java
-
-  const userid = sessionStorage.getItem("userid");
   useEffect(() => {
-    const eventSource = new EventSource(`http://localhost:8083/sse/${userid}`, {
-      // headers: {
-      //   "Content-Type": "text/event-stream",
-      //   "Cache-Control": "no-cache",
-      //   Connection: "keep-alive",
-      //   // "X-Accel-Buffering": "no",
-      // },
-      // heartbeatTimeout: 120000,
-      withCredentials: true,
-    });
-    if (!listening) {
-      eventSource.onopen = (event) => {
-        console.log("connection opened");
-      };
-
-      eventSource.addEventListener("sse", (e) => {
-        console.log("sse");
-      });
-
-      eventSource.addEventListener("get", (e) => {
-        console.log("get", e.data);
-        setNotification(JSON.parse(e.data));
-      });
-
-      eventSource.addEventListener("new", (e) => {
-        console.log("new");
-        // setNotification(...notification, JSON.parse(e.data));
-      });
-
-      eventSource.onmessage = (e) => {
-        console.log("onmessage : ", [e.data]);
-        if (e.type === "message") {
-          setNotification([e.data]);
-          setAlertOpen(true);
+    if (logined) {
+      const eventSource = new EventSource(
+        `http://localhost:8083/sse/${userid}`,
+        {
+          // headers: {
+          //   "Content-Type": "text/event-stream",
+          //   "Cache-Control": "no-cache",
+          //   Connection: "keep-alive",
+          //   // "X-Accel-Buffering": "no",
+          // },
+          // heartbeatTimeout: 120000,
+          withCredentials: true,
         }
-      };
-
-      eventSource.onerror = (event) => {
-        if (event.target.readyState === EventSource.CLOSED) {
-          console.log("SSE closed (" + event.target.readyState + ")");
-        }
-        eventSource.close();
-      };
-
-      setListening(true);
-    }
-    return () => {
-      eventSource.close();
-      console.log("event closed");
-    };
-  }, []);
-
-  useEffect(
-    () => {
-      if (logined) {
-        const getData = async () => {
-          // try {
-          //   const data = await axios({
-          //     url: "http://localhost:8083/notifications",
-          //     METHOD: "GET",
-          //     params: { userid },
-          //   });
-          //   console.log(data.data);
-          //   setNotification(data.data);
-          // } catch (e) {
-          //   console.log(e);
-          // }
-          // try {
-          //   const data = await axios({
-          //     url: "http://localhost:8083/notifications/count",
-          //     METHOD: "GET",
-          //     params: { userid },
-          //   });
-          //   setNotificationCnt(data.data);
-          // } catch (e) {
-          //   console.log(e);
-          // }
+      );
+      if (!listening) {
+        eventSource.onopen = (event) => {
+          console.log("connection opened");
         };
-        getData();
+
+        eventSource.addEventListener("sse", (e) => {
+          console.log("sse");
+        });
+
+        eventSource.addEventListener("get", (e) => {
+          let data = JSON.parse(e.data);
+          console.log(data);
+          setNotification(data);
+        });
+
+        eventSource.addEventListener("new", (e) => {
+          console.log("new");
+          // setNotification(...notification, JSON.parse(e.data));
+        });
+
+        eventSource.onmessage = (e) => {
+          console.log("onmessage : ", [e.data]);
+          if (e.type === "message") {
+            setNotification([e.data]);
+          }
+        };
+
+        eventSource.onerror = (event) => {
+          if (event.target.readyState === EventSource.CLOSED) {
+            console.log("SSE closed (" + event.target.readyState + ")");
+          }
+          eventSource.close();
+        };
+
+        setListening(true);
       }
-    },
-    [
-      // alertOpen, logined
-    ]
-  );
-  const readNotification = async (notificationId) => {
+      return () => {
+        eventSource.close();
+        console.log("event closed");
+      };
+    }
+  }, [logined, notification._read]);
+
+  useEffect(() => {
+    if (logined) {
+      const getData = async () => {
+        try {
+          const data = await axios({
+            url: "http://localhost:8083/notifications/count",
+            METHOD: "GET",
+            params: { userid },
+          });
+
+          setNotificationCnt(data.data);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      getData();
+    }
+  }, [alertToggle, logined]);
+  const readNotification = (notificationId) => {
     try {
-      const data = await axios({
+      axios({
         url: `http://localhost:8083/notification/read/${notificationId}`,
-        METHOD: "POST",
-        params: { userid },
+        METHOD: "Get",
       });
-      console.log(data.data);
     } catch (e) {
       console.log(e);
     }
-    setIs_open(false);
   };
 
   const handelDeleteMessage = async (notificationId, status) => {
@@ -156,8 +142,6 @@ const Alert = () => {
     if (reason === "clickaway") {
       return;
     }
-
-    setAlertOpen(false);
   };
 
   //   if (pathName.pathname === "/") {
@@ -175,9 +159,20 @@ const Alert = () => {
   if (!logined) {
     return null;
   }
+
   return (
-    <div>
-      <div>
+    <div
+      style={{
+        margin: "0 auto",
+        width: "1000px",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "end",
+        }}
+      >
         {logined ? (
           <div
             style={{
@@ -185,7 +180,7 @@ const Alert = () => {
               maxHeight: "600px",
               position: "absolute",
               top: "10%",
-              border: "1px red solid",
+              paddingLeft: "380px",
             }}
           >
             <button
@@ -195,30 +190,53 @@ const Alert = () => {
             >
               <AiOutlineBell
                 style={{
-                  fontSize: "3rem",
+                  fontSize: "4rem",
+                  position: "relative",
                 }}
               />
+              {notificationCnt > 0 ? (
+                <div
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "50%",
+                    backgroundColor: "#fc9d39",
+                    color: "white",
+                    position: "absolute",
+                    top: "-10px",
+                    right: "1px",
+                    fontSize: "1.2rem",
+                  }}
+                >
+                  {notificationCnt}
+                </div>
+              ) : (
+                ""
+              )}
             </button>
             {alertToggle == true ? (
-              <div className="slide-fwd-left">
+              <div
+                className="slide-fwd-left"
+                style={{
+                  marginLeft: "-330px",
+                }}
+              >
                 <div className="listBox">
                   {notification.length === 0 ? (
                     <div>
                       <div>
-                        <p className="noMessage">아직 알림이 없어요!</p>
+                        <span>아직 알림이 없어요!</span>
                       </div>
-                      <img
-                        src="
-                  https://velog.velcdn.com/images/tty5799/post/d04c4b94-f56d-40e0-8a5e-ab090dc68e7f/image.svg"
-                        alt="noImage"
-                        className="noImage"
-                      />
                     </div>
                   ) : (
                     <ul
                       style={{
                         width: "400px",
                         maxHeight: "600px",
+                        backgroundColor: "white",
+                        border: "1px #fc9d39 solid",
+                        borderRadius: "10px",
+                        overflow: "auto",
                       }}
                     >
                       {notification.map((notice, index) => (
@@ -226,6 +244,7 @@ const Alert = () => {
                           key={index}
                           style={{
                             width: "100%",
+                            paddingBottom: "10px",
                           }}
                         >
                           <button
@@ -233,31 +252,74 @@ const Alert = () => {
                               width: "100%",
                             }}
                             onClick={() => {
-                              moveURL(`http://${notice.url}`);
+                              readNotification(notice.id);
+                              setAlertToggle(false);
+                              moveURL(notice.url);
                             }}
                           >
-                            <span>{index + 1}.</span>
-                            <span> {notice.sender}님께서 </span>
-                            {notice.type == "CHAT" ? (
-                              <span>메세지를 보냈어요</span>
-                            ) : (
-                              ""
-                            )}
-                            <div
-                              style={{
-                                width: "100%",
-                                maxHeight: "50px",
-                                border: "1px red solid",
-                              }}
-                            >
-                              <span
+                            {notice._read == true ? (
+                              //읽은 메세지들
+                              <div
                                 style={{
-                                  textAlign: "start",
+                                  color: "gray",
                                 }}
                               >
-                                {notice.content}
-                              </span>
-                            </div>
+                                <span>{index + 1}.</span>
+                                <span> {notice.sender}님께서 </span>
+                                {notice.type == "CHAT" ? (
+                                  <span>메세지를 보냈어요</span>
+                                ) : (
+                                  ""
+                                )}
+                                <div
+                                  style={{
+                                    overflow: "hidden",
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      textAlign: "start",
+                                    }}
+                                  >
+                                    "{notice.content}"
+                                  </span>
+                                </div>
+                              </div>
+                            ) : (
+                              //아직 안읽은 메세지들
+                              <div>
+                                <span
+                                  style={{
+                                    color: "red",
+                                    fontSize: "2rem",
+                                    position: "absolute",
+                                    left: "20%",
+                                  }}
+                                >
+                                  ˚
+                                </span>
+                                <span>{index + 1}.</span>
+                                <span> {notice.sender}님께서 </span>
+                                {notice.type == "CHAT" ? (
+                                  <span>메세지를 보냈어요</span>
+                                ) : (
+                                  ""
+                                )}
+                                <div
+                                  style={{
+                                    overflow: "hidden",
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      textAlign: "start",
+                                    }}
+                                  >
+                                    "{notice.content}"
+                                  </span>
+                                </div>
+                              </div>
+                            )}
                           </button>
                           <div className="line" />
                         </li>

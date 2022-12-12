@@ -88,9 +88,9 @@ const Chat = ({ logined, setLogined }) => {
     setChat(event.target.value);
   };
   const getData = (chat) => {
-    const url = "localhost:3000/chat/" + roomId;
+    const url = "/chat/" + roomId;
     const yourid = sessionStorage.getItem("yourName");
-
+    console.log(url);
     try {
       axios({
         url: "http://localhost:8083/addChatNotification",
@@ -131,6 +131,7 @@ const Chat = ({ logined, setLogined }) => {
 
       const myName = sessionStorage.getItem("userid");
       const yourName = sessionStorage.getItem("yourName");
+
       if (myName === data1.data.myName) {
         sessionStorage.removeItem("yourName");
         sessionStorage.setItem("yourName", data1.data.yourName);

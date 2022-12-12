@@ -33,12 +33,12 @@ import Chat from "./routes/Chat";
 import BoardPost from "./components/BoardPost";
 import JobsApply from "./components/JobsApply";
 import Alert from "./components/Alert";
+
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
   const [jobsLiked, setJobsLiked] = useState(false);
   const [realtyLiked, setRealtyLiked] = useState(false);
-
   const [menuToggle, setMenuToggle] = useState(false);
   const onMenuToggle = () => {
     setMenuToggle(!menuToggle);
@@ -141,7 +141,6 @@ function App() {
 
   return (
     <Router>
-      <Alert />
       <Routes>
         <Route
           path="/"
@@ -300,8 +299,8 @@ function App() {
           path="/JobsApply/:num"
           element={<JobsApply logined={logined} setLogined={setLogined} />}
         />
-        <Route path="/alert" element={<Alert />} />
       </Routes>
+      <Alert />
     </Router>
   );
 }

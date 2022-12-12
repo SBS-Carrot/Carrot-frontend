@@ -123,6 +123,7 @@ const AllProduct = ({ logined, setLogined }) => {
             >
               중고거래 모든 매물보기
             </h1>
+
             <div
               style={{
                 position: "relative",
@@ -180,6 +181,15 @@ const AllProduct = ({ logined, setLogined }) => {
               }}
             >
               <a href="/hot_articles">＞ 인기매물 보러가기</a>
+            </h2>
+            <h2
+              style={{
+                textAlign: "end",
+                paddingRight: "0px",
+                fontSize: "0.9rem",
+              }}
+            >
+              지역 카테고리 기능은 대전광역시로 제한했습니다. (검색은 전국 가능)
             </h2>
           </div>
           <div

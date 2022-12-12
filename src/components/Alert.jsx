@@ -176,11 +176,10 @@ const Alert = ({}) => {
         {logined ? (
           <div
             style={{
-              width: "400px",
+              width: "10px",
               maxHeight: "600px",
               position: "absolute",
               top: "10%",
-              paddingLeft: "380px",
             }}
           >
             <button

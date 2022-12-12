@@ -24,8 +24,22 @@ const Board = ({ logined, setLogined }) => {
     navigate("/boardWrite");
   };
 
-  const movePost = (id) => {
-    navigate(`/boardpost/${id}`);
+  const movePost = async (id, writer) => {
+    console.log("w", writer);
+    console.log(sessionStorage.getItem("userid"));
+    try {
+      if (sessionStorage.getItem("userid") == writer) {
+        navigate(`/boardpost/${id}`);
+      } else {
+        await axios({
+          url: `http://localhost:8083/boardView/${id}`,
+          method: "POST",
+        });
+        navigate(`/boardpost/${id}`);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   //동네질문
@@ -459,7 +473,7 @@ const Board = ({ logined, setLogined }) => {
 
                                 <div
                                   onClick={() => {
-                                    movePost(cafe.boardId);
+                                    movePost(cafe.boardId, cafe.boardUserid);
                                   }}
                                   style={{
                                     minHeight: "40px",
@@ -492,7 +506,7 @@ const Board = ({ logined, setLogined }) => {
                                   <button
                                     className="flex items-center gap-1"
                                     onClick={() => {
-                                      movePost(cafe.boardId);
+                                      movePost(cafe.boardId, cafe.boardUserid);
                                     }}
                                   >
                                     <span

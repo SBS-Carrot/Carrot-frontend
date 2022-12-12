@@ -53,7 +53,6 @@ const BoardPost = ({
   };
 
   const [board, setBoard] = useState("");
-
   const [images, setImages] = useState([]);
   const onLikes = (data) => {
     setLiked(data);
@@ -95,7 +94,6 @@ const BoardPost = ({
   const onBoard = (data) => {
     setBoard((prev) => data);
   };
-  const [replytoggle, setReplyToggle] = useState(false);
 
   const submitReply = async () => {
     try {
@@ -110,7 +108,9 @@ const BoardPost = ({
         },
       });
       console.log(data.data);
-      setReplyToggle(data.data);
+      if (data.data) {
+        window.location.reload(); //새로고침
+      }
     } catch (e) {
       console.log(e);
     }
@@ -181,6 +181,7 @@ const BoardPost = ({
           method: "GET",
         });
         setReplis(data.data);
+        //console.log(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -196,6 +197,7 @@ const BoardPost = ({
           method: "GET",
         });
         onBoard(data.data);
+        console.log(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -257,9 +259,9 @@ const BoardPost = ({
               <div className="font-bold ">
                 {boardWriter.nickname == "닉네임 없음"
                   ? boardWriter.username
-                  : user.nickname}
+                  : boardWriter.nickname}
               </div>
-              <div className="text-sm">{user.address}</div>
+              <div className="text-sm">{boardWriter.address}</div>
             </div>
 
             <div
@@ -489,9 +491,9 @@ const BoardPost = ({
               <div className="flex gap-2">
                 <button
                   className="flex items-center gap-1"
-                  style={{
-                    color: "#ff8200",
-                  }}
+                  // style={{
+                  //   color: "#ff8200",
+                  // }}
                 >
                   <span>
                     <SlEmotsmile />
@@ -533,51 +535,73 @@ const BoardPost = ({
             <hr />
             <div>
               {board.boardChattingNum > 0 ? (
-                <span>
-                  <ul>
-                    {replies.map((reply, index) => {
-                      <li key={index}>
+                <ul>
+                  {replies.map((reply, index) => (
+                    <li key={index}>
+                      <div className="flex mt-2">
                         <div
-                          className="avatar flex justify-center items-center"
+                          className="avatar items-start"
                           style={{
                             width: "3.5rem",
                           }}
                         >
-                          <div>
-                            <div className="w-12 rounded-full">
-                              {reply.profileImage != null ? (
-                                <img src={reply.profileImage} />
-                              ) : (
-                                <FaCarrot
-                                  style={{
-                                    color: "#fc9d39",
-                                    fontSize: "3rem",
-                                    transform: "translate(0%,0%)",
-                                    border: "0.1px #fc9d39 solid",
-                                    borderRadius: "50%",
-                                  }}
-                                />
-                              )}
-                            </div>
-                          </div>
-                          <div
-                            className="flex justify-center flex-col"
-                            style={{
-                              width: "500px",
-                            }}
-                          >
-                            <div className="font-bold ">
-                              {reply.nickname == "닉네임 없음"
-                                ? reply.username
-                                : user.nickname}
-                            </div>
-                            <div className="text-sm">{user.address}</div>
+                          <div className="w-12 rounded-full">
+                            {reply.profileImage != null ? (
+                              <img src={reply.profileImage} />
+                            ) : (
+                              <FaCarrot
+                                style={{
+                                  color: "#fc9d39",
+                                  fontSize: "3rem",
+                                  transform: "translate(0%,0%)",
+                                  border: "0.1px #fc9d39 solid",
+                                  borderRadius: "50%",
+                                }}
+                              />
+                            )}
                           </div>
                         </div>
-                      </li>;
-                    })}
-                  </ul>
-                </span>
+                        <div
+                          className="flex justify-center flex-col"
+                          style={{
+                            width: "500px",
+                          }}
+                        >
+                          <div className="flex gap-1 items-center">
+                            <div className="font-bold ">
+                              {reply.nickname == "닉네임 없음"
+                                ? user.userid
+                                : reply.replyNickname}
+                            </div>
+                            {user.nickname == reply.replyNickname && (
+                              <div
+                                className="flex justify-center"
+                                style={{
+                                  border: "1px gray solid",
+                                  width: "44px",
+                                  height: "17px",
+                                  color: "gray",
+                                  fontSize: "0.72rem",
+                                }}
+                              >
+                                작성자
+                              </div>
+                            )}
+                          </div>
+                          <div
+                            style={{
+                              fontSize: "0.7rem",
+                              color: "gray",
+                            }}
+                          >
+                            {reply.replyUserAddress}
+                          </div>
+                          <div>{reply.boardReply}</div>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               ) : (
                 <div
                   style={{
@@ -601,6 +625,11 @@ const BoardPost = ({
                     backgroundColor: "#e5e5e5",
                     width: "700px",
                     padding: "4px",
+                  }}
+                  onKeyUp={(e) => {
+                    if (e.key == "Enter") {
+                      submitReply(replyValue);
+                    }
                   }}
                 />
                 <button

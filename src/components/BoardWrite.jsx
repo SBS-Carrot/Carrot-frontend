@@ -85,7 +85,7 @@ const BoardWrite = ({ logined, setLogined }) => {
     //미리보기 삭제
     setShowImages(showImages.filter((_, index) => index !== id));
   };
-  const [address, setAddress] = useState(""); // 주소
+
   const [addressDetail, setAddressDetail] = useState(""); // 상세주소
 
   const [isOpenPost, setIsOpenPost] = useState(false);
@@ -110,8 +110,6 @@ const BoardWrite = ({ logined, setLogined }) => {
     }
     setAddressDetail(fullAddr);
     setIsOpenPost(false);
-    const dong = fullAddr.split(" ");
-    setAddress(dong[2]);
   };
 
   const postCodeStyle = {

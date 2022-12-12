@@ -12,10 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // https://gilssang97.tistory.com/69
 const Chat = ({ logined, setLogined }) => {
   const navigate = useNavigate();
-  const notChattingUser = () => {
-    navigate("/");
-    alert("채팅 당사자만 입장할 수 있습니다.");
-  };
+
   const moveBack = () => {
     alert("로그인 후 사용할 수 있는 기능입니다.");
     navigate(-1);
@@ -145,11 +142,6 @@ const Chat = ({ logined, setLogined }) => {
       const mName = sessionStorage.getItem("userid");
       const yName = sessionStorage.getItem("yourName");
 
-      const chattingRoom = {
-        roomId: roomId,
-        myName: mName,
-        yourName: yName,
-      };
       // 있다면 채팅목록 GET
       if (data1.data != "") {
         const data = await axios({
@@ -159,13 +151,6 @@ const Chat = ({ logined, setLogined }) => {
         });
 
         onChatList(data.data);
-      } else {
-        // 없다면 URL의 ID로 채팅방 새로 생성.
-        const data = await axios({
-          url: `http://localhost:8083/chat`,
-          method: "POST",
-          data: chattingRoom,
-        });
       }
       const chatUser = await axios({
         url: `http://localhost:8083/getUser/${yourName}`,
@@ -176,7 +161,10 @@ const Chat = ({ logined, setLogined }) => {
       console.log(e);
     }
   };
-
+  const notChattingUser = () => {
+    navigate("/");
+    alert("채팅 당사자만 입장할 수 있습니다.");
+  };
   return (
     <div>
       <LoginedHeader setLogined={setLogined} />

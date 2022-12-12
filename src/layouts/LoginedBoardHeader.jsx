@@ -5,8 +5,12 @@ import { authenticatedState } from "../recoil/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 const LoginedBoardHeader = ({ setLogined }) => {
+  const navigate = useNavigate();
+  const onMyPage = () => {
+    navigate("/mypage");
+  };
   return (
     <div
       style={{
@@ -74,7 +78,7 @@ const LoginedBoardHeader = ({ setLogined }) => {
             <a href="http://localhost:3000/board">동네게시판</a>
           </div>
         </div>
-        <div className="flex-grow justify-center items-center flex" style={{}}>
+        <div className="flex-grow justify-center items-center flex gap-7">
           <button
             style={{
               outline: "1px #bcbcbc solid",
@@ -88,6 +92,18 @@ const LoginedBoardHeader = ({ setLogined }) => {
             }}
           >
             로그아웃
+          </button>
+          <button
+            style={{
+              outline: "1px #bcbcbc solid",
+              padding: "5px 10px",
+              borderRadius: "5px",
+            }}
+            onClick={() => {
+              onMyPage();
+            }}
+          >
+            마이 페이지
           </button>
         </div>
         <div

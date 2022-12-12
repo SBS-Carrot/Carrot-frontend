@@ -179,7 +179,7 @@ const Alert = ({}) => {
               width: "10px",
               maxHeight: "600px",
               position: "absolute",
-              top: "10%",
+              top: "12%",
             }}
           >
             <button

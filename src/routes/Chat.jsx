@@ -1,7 +1,5 @@
 import React from "react";
-import Header from "../layouts/Header";
 import LoginedHeader from "../layouts/LoginedHeader";
-import Footer from "../layouts/Footer";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -171,9 +169,13 @@ const Chat = ({ logined, setLogined }) => {
       <div>
         <div
           style={{
-            width: "1000px",
+            width: "900px",
             margin: "0 auto",
-            minHeight: "50vh",
+            height: "80vh",
+            position: "relative",
+            border: "1px solid #ffa445",
+            borderRadius: "20px",
+            overflow: "auto",
           }}
         >
           <div
@@ -188,6 +190,7 @@ const Chat = ({ logined, setLogined }) => {
                   key={index}
                   style={{
                     width: "100%",
+                    paddingLeft: "20px",
                   }}
                 >
                   {chat.sender == sessionStorage.getItem("userid") ? (
@@ -260,7 +263,7 @@ const Chat = ({ logined, setLogined }) => {
                           width: "45%",
                           minHeight: "50px",
                           marginTop: "10px",
-                          marginLeft: "35px",
+                          marginLeft: "25px",
                           backgroundColor: "#eeeeee",
                           textAlign: "center",
                           padding: "20px",
@@ -280,51 +283,50 @@ const Chat = ({ logined, setLogined }) => {
               ))}
             </ul>
           </div>
-          <div
+        </div>
+        <div
+          style={{
+            width: "900px",
+            margin: "0 auto",
+          }}
+        >
+          <input
+            type="text"
+            value={chat}
+            onChange={handleChange}
+            placeholder="메시지를 입력해 주세요"
             style={{
-              margin: "10px auto",
-              display: "flex",
-              justifyContent: "center",
-              marginLeft: "-37px",
+              width: "830px",
+              border: "1px #ffa445 solid",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              padding: "10px",
+              display: "inline",
+              marginTop: "15px",
+            }}
+            onKeyUp={(e) => {
+              if (e.key == "Enter") {
+                handleSubmit(chat);
+              }
+            }}
+          />
+
+          <button
+            onClick={() => {
+              handleSubmit(chat);
+            }}
+            style={{
+              padding: "5px 10px",
+              border: "1px #ffa445 solid",
+              marginLeft: "10px",
+              borderRadius: "10%",
+              color: "#ffa445",
             }}
           >
-            <input
-              type="text"
-              value={chat}
-              onChange={handleChange}
-              placeholder="메시지를 입력해 주세요"
-              style={{
-                width: "70%",
-                border: "1px #ffa445 solid",
-                borderRadius: "10px",
-                backgroundColor: "white",
-                padding: "10px",
-              }}
-              onKeyUp={(e) => {
-                if (e.key == "Enter") {
-                  handleSubmit(chat);
-                }
-              }}
-            />
-
-            <button
-              onClick={() => {
-                handleSubmit(chat);
-              }}
-              style={{
-                padding: "5px 10px",
-                border: "1px #ffa445 solid",
-                marginLeft: "10px",
-                borderRadius: "10%",
-                color: "#ffa445",
-              }}
-            >
-              전송
-            </button>
-          </div>
+            전송
+          </button>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

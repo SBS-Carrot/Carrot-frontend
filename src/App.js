@@ -34,9 +34,10 @@ import BoardPost from "./components/BoardPost";
 import JobsApply from "./components/JobsApply";
 import Alert from "./components/Alert";
 // 병훈
-// 채팅 알바, 직거래 적용하기
+// 유저 좌클릭 후 채팅창 하기
 // 알바 지원 -> 알림 울리기
 // 통합 검색창 만들기
+// 알림 삭제기능
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);

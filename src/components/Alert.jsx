@@ -217,7 +217,14 @@ const Alert = ({}) => {
               <div
                 className="slide-fwd-left"
                 style={{
-                  marginLeft: "-330px",
+                  border: "1px solid #ffa445",
+                  borderRadius: "15px",
+                  width: "180px",
+                  textAlign: "center",
+                  padding: "10px",
+                  marginLeft: "-180px",
+                  marginTop: "-60px",
+                  backgroundColor: "white",
                 }}
               >
                 <div className="listBox">

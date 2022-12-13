@@ -95,8 +95,19 @@ const Footer = () => {
             </a>
           </li>
         </ul>
-        <div style={{}}>
-          <span className="font-bold flex">당근마켓 앱 다운로드</span>
+        <div
+          style={{
+            paddingTop: "15px",
+          }}
+        >
+          <span
+            className="font-bold flex"
+            style={{
+              paddingBottom: "15px",
+            }}
+          >
+            당근마켓 앱 다운로드
+          </span>
           <div className="flex gap-8">
             <a
               href="#"

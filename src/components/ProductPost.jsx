@@ -67,7 +67,7 @@ const ProductPost = ({
       navigate(`/chat/${existRoom}`);
     } else {
       //채팅방이 없다면 (메시지를 처음주고 받는다면)
-      //uuid로 랜덤한 문자 생성 후 그 URL로 이동. (아직 채팅방생성X)
+      //uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
 
       const roomNum = uuid();
       const chattingRoom = {

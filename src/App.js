@@ -31,13 +31,13 @@ import ProductEdit from "./components/ProductEdit";
 import BoardWrite from "./components/BoardWrite";
 import Chat from "./routes/Chat";
 import BoardPost from "./components/BoardPost";
-import JobsApply from "./components/JobsApply";
+import JobsApplyWrite from "./components/JobsApplyWrite";
 import Alert from "./components/Alert";
+import JobsApplyView from "./components/JobsApplyView";
 // 병훈
-// 유저 좌클릭 후 채팅창 하기
 // 알바 지원 -> 알림 울리기
 // 통합 검색창 만들기
-// 알림 삭제기능
+// 내 채팅창 목록 만들기
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
@@ -327,8 +327,12 @@ function App() {
           }
         />
         <Route
-          path="/JobsApply/:num"
-          element={<JobsApply logined={logined} setLogined={setLogined} />}
+          path="/JobsApplyWrite/:num"
+          element={<JobsApplyWrite logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="JobsApplyView/:num"
+          element={<JobsApplyView logined={logined} setLogined={setLogined} />}
         />
       </Routes>
       <Alert />

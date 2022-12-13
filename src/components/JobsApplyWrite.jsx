@@ -55,6 +55,9 @@ const JobsApply = ({ logined, setLogined }) => {
 
   const [id, setId] = useState("");
   const onIntroduceChange = (e) => {
+    if (e.target.value.length > 199) {
+      return;
+    }
     setIntroduce(e.target.value);
   };
   const onPhoneChange = (str) => {
@@ -90,6 +93,7 @@ const JobsApply = ({ logined, setLogined }) => {
         gender,
         year,
         introduce,
+        userid,
       };
       const data = await axios({
         url: `http://localhost:8083/applyJobs/${num}`,
@@ -97,7 +101,24 @@ const JobsApply = ({ logined, setLogined }) => {
         data: applyJobsDto,
       });
       onCompleteChange();
-      setId(data.data.productId);
+      //알림
+      const url = "/jobsApplyView/" + num;
+      const data1 = await axios({
+        url: `http://localhost:8083/Jobs/${num}`,
+        method: "get",
+      });
+      const yourid = data1.data.jobUserid;
+      axios({
+        url: "http://localhost:8083/addApplyNotification",
+        method: "POST",
+        data: {
+          content: "",
+          url,
+          notificationType: "APPLY",
+          userid: yourid,
+          sender: userid,
+        },
+      });
     } catch (e) {
       console.log(e);
     }
@@ -202,13 +223,13 @@ const JobsApply = ({ logined, setLogined }) => {
               <textarea
                 cols="30"
                 rows="10"
-                placeholder="본인이 일했던 경험과 할 수 있는 업무에 대해 소개해 주세요"
+                placeholder="본인이 일했던 경험과 할 수 있는 업무에 대해 소개해 주세요. (200자 이내)"
                 value={introduce}
                 onChange={onIntroduceChange}
                 style={{
                   border: "1px #d5d5d5 solid",
                   width: "100%",
-                  height: "120px",
+                  height: "130px",
                   paddingLeft: "5px",
                   maxHeight: "200px",
                 }}

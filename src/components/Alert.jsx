@@ -80,7 +80,7 @@ const Alert = ({}) => {
         console.log("event closed");
       };
     }
-  }, [logined, notification._read]);
+  }, [logined, notification._read, notificationCnt]);
 
   useEffect(() => {
     if (logined) {
@@ -93,13 +93,14 @@ const Alert = ({}) => {
           });
 
           setNotificationCnt(data.data);
+          setListening(false);
         } catch (e) {
           console.log(e);
         }
       };
       getData();
     }
-  }, [alertToggle, logined]);
+  }, [alertToggle, logined, notification]);
   const readNotification = (notificationId) => {
     try {
       axios({
@@ -111,54 +112,37 @@ const Alert = ({}) => {
     }
   };
 
-  const handelDeleteMessage = async (notificationId, status) => {
-    setNotification(notification.filter((a, idx) => a.id !== notificationId));
+  const handleDeleteNotification = async (notificationId) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/notification/delete/${notificationId}`,
-        METHOD: "DELETE",
-        params: { userid },
+        url: `http://localhost:8083/notifications/delete/${notificationId}`,
+        method: "delete",
+        data: userid,
       });
       console.log(data.data);
+      setNotification(data.data);
     } catch (e) {
       console.log(e);
     }
-
-    if (notificationCnt && status === false) {
-      setNotificationCnt(notificationCnt - 1);
-      return;
-    }
-    if (!notificationCnt) {
-      setNotificationCnt();
-      return;
-    }
   };
 
-  const handelOpenBtn = () => {
-    setLogined(!logined);
-  };
-
-  const handleAlertClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
+  const allDeleteNotification = async () => {
+    if (window.confirm("모든 알림을 삭제하시겠습니까?")) {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/notification/delete`,
+          method: "Delete",
+          params: { userid },
+        });
+        if (data.data.msg == "알림 목록 전체삭제 성공") {
+          window.alert("모든 알림이 삭제되었습니다.");
+          window.location.reload();
+        }
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
-
-  //   if (pathName.pathname === "/") {
-  //     return null;
-  //   }
-  //   if (pathName.pathname === "/user/kakao/login") {
-  //     return null;
-  //   }
-  // if (pathName.pathname === "/signup") {
-  //   return null;
-  // }
-  // if (pathName.pathname === "/login") {
-  //   return null;
-  // }
-  if (!logined) {
-    return null;
-  }
 
   return (
     <div
@@ -199,7 +183,7 @@ const Alert = ({}) => {
                     width: "30px",
                     height: "30px",
                     borderRadius: "50%",
-                    backgroundColor: "#fc9d39",
+                    backgroundColor: "#e96464",
                     color: "white",
                     position: "absolute",
                     top: "-10px",
@@ -214,22 +198,21 @@ const Alert = ({}) => {
               )}
             </button>
             {alertToggle == true ? (
-              <div
-                className="slide-fwd-left"
-                style={{
-                  border: "1px solid #ffa445",
-                  borderRadius: "15px",
-                  width: "180px",
-                  textAlign: "center",
-                  padding: "10px",
-                  marginLeft: "-180px",
-                  marginTop: "-60px",
-                  backgroundColor: "white",
-                }}
-              >
+              <div className="slide-fwd-left">
                 <div className="listBox">
                   {notification.length === 0 ? (
-                    <div>
+                    <div
+                      style={{
+                        border: "1px solid #ffa445",
+                        borderRadius: "15px",
+                        width: "180px",
+                        textAlign: "center",
+                        padding: "10px",
+                        marginLeft: "-180px",
+                        marginTop: "-60px",
+                        backgroundColor: "white",
+                      }}
+                    >
                       <div>
                         <span>아직 알림이 없어요!</span>
                       </div>
@@ -237,14 +220,28 @@ const Alert = ({}) => {
                   ) : (
                     <ul
                       style={{
-                        width: "400px",
+                        width: "500px",
                         maxHeight: "600px",
                         backgroundColor: "white",
                         border: "1px #fc9d39 solid",
                         borderRadius: "10px",
                         overflow: "auto",
+                        marginLeft: "-440px",
+                        textAlign: "center",
                       }}
                     >
+                      <button
+                        onClick={() => {
+                          allDeleteNotification();
+                        }}
+                        style={{
+                          padding: "5px 10px",
+                          border: "1px #fc9d39 solid",
+                          marginTop: "5px",
+                        }}
+                      >
+                        알림 전체 삭제
+                      </button>
                       {notification.map((notice, index) => (
                         <li
                           key={index}
@@ -253,21 +250,23 @@ const Alert = ({}) => {
                             paddingBottom: "10px",
                           }}
                         >
-                          <button
-                            style={{
-                              width: "100%",
-                            }}
-                            onClick={() => {
-                              readNotification(notice.id);
-                              setAlertToggle(false);
-                              moveURL(notice.url);
-                            }}
-                          >
-                            {notice._read == true ? (
-                              //읽은 메세지들
-                              <div
+                          {notice._read == true ? (
+                            //읽은 메세지들
+                            <div
+                              style={{
+                                color: "gray",
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <button
                                 style={{
-                                  color: "gray",
+                                  width: "90%",
+                                }}
+                                onClick={() => {
+                                  readNotification(notice.id);
+                                  setAlertToggle(false);
+                                  moveURL(notice.url);
                                 }}
                               >
                                 <span>{index + 1}.</span>
@@ -277,6 +276,7 @@ const Alert = ({}) => {
                                 ) : (
                                   ""
                                 )}
+
                                 <div
                                   style={{
                                     overflow: "hidden",
@@ -290,27 +290,56 @@ const Alert = ({}) => {
                                     "{notice.content}"
                                   </span>
                                 </div>
-                              </div>
-                            ) : (
-                              //아직 안읽은 메세지들
-                              <div>
+                              </button>
+                              <button
+                                style={{
+                                  borderRadius: "50%",
+                                  width: "20px",
+                                  marginLeft: "5px",
+                                }}
+                                onClick={() => {
+                                  handleDeleteNotification(notice.id);
+                                }}
+                              >
+                                X
+                              </button>
+                            </div>
+                          ) : (
+                            //아직 안읽은 메세지들
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <button
+                                style={{
+                                  width: "90%",
+                                }}
+                                onClick={() => {
+                                  readNotification(notice.id);
+                                  setAlertToggle(false);
+                                  moveURL(notice.url);
+                                }}
+                              >
                                 <span
                                   style={{
                                     color: "red",
                                     fontSize: "2rem",
                                     position: "absolute",
-                                    left: "20%",
+                                    transform: "translateX(-250%)",
                                   }}
                                 >
                                   ˚
                                 </span>
-                                <span>{index + 1}.</span>
-                                <span> {notice.sender}님께서 </span>
+                                <span>{index + 1}. </span>
+                                <span>{notice.sender}님께서</span>
                                 {notice.type == "CHAT" ? (
                                   <span>메세지를 보냈어요</span>
                                 ) : (
                                   ""
                                 )}
+
                                 <div
                                   style={{
                                     overflow: "hidden",
@@ -324,10 +353,21 @@ const Alert = ({}) => {
                                     "{notice.content}"
                                   </span>
                                 </div>
-                              </div>
-                            )}
-                          </button>
-                          <div className="line" />
+                              </button>
+                              <button
+                                style={{
+                                  borderRadius: "50%",
+                                  width: "20px",
+                                  marginLeft: "5px",
+                                }}
+                                onClick={() => {
+                                  handleDeleteNotification(notice.id);
+                                }}
+                              >
+                                X
+                              </button>
+                            </div>
+                          )}
                         </li>
                       ))}
                     </ul>

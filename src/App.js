@@ -34,6 +34,7 @@ import BoardPost from "./components/BoardPost";
 import JobsApply from "./components/JobsApply";
 import Alert from "./components/Alert";
 import RealtySearch from "./components/RealtySearch";
+import JobsSearch from "./components/JobsSearch";
 // 병훈
 // 채팅 알바, 직거래 적용하기
 // 채팅 오류 수정하기
@@ -263,6 +264,11 @@ function App() {
         <Route
           path="/jobsWrite"
           element={<JobsWrite logined={logined} setLogined={setLogined} />}
+        />
+
+        <Route
+          path="/jobssearch/:search"
+          element={<JobsSearch logined={logined} setLogined={setLogined} />}
         />
         <Route
           path="/allrealty"

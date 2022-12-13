@@ -197,7 +197,7 @@ const BoardPost = ({
           method: "GET",
         });
         onBoard(data.data);
-        console.log(data.data);
+        console.log("댓글", data.data);
       } catch (e) {
         console.log(e);
       }

@@ -99,6 +99,7 @@ const Realtypost = ({
         });
         abcd = data.data.realtyUserid;
         onArticle(data.data);
+        console.log(data.data);
       } catch {
         console.log("에러");
         window.alert("존재하지 않는 게시글입니다.");
@@ -503,6 +504,7 @@ const Realtypost = ({
                 {article.realtyDealing === "전세" ? (
                   <div>
                     {article.realtyDealing} {article.realtySalePrice}
+                    {article.realtyD}
                   </div>
                 ) : (
                   ""
@@ -553,34 +555,69 @@ const Realtypost = ({
                 width: "120px",
               }}
             >
-              <li className="flex gap-4">
-                <span className="text-gray-400">면적</span>
-              </li>
-
-              <li className="flex gap-4">
-                <span className="text-gray-400">방/욕실 수</span>
-              </li>
-              <li className="flex gap-4">
-                <span className="text-gray-400">층</span>
-              </li>
-              <li className="flex gap-4">
-                <span className="text-gray-400">대출가능여부</span>
-              </li>
-              <li className="flex gap-4">
-                <span className="text-gray-400">입주 가능일</span>
-              </li>
-              <li className="flex gap-4">
-                <span className="text-gray-400">반려동물</span>
-              </li>
-              <li className="flex gap-4">
-                <span className="text-gray-400">주차</span>
-              </li>
-              <li className="flex gap-4">
-                <span className="text-gray-400">엘리베이터</span>
-              </li>
-              <li className="flex gap-4">
-                <span className="text-gray-400">내부 시설</span>
-              </li>
+              {article.realtySpace && article.realtyArea == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <span className="text-gray-400">면적</span>
+                </li>
+              )}
+              {article.realtyRoom && article.realtyBath == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <span className="text-gray-400">방/욕실 수</span>
+                </li>
+              )}
+              {article.realtyFloor && article.realtyWhole == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <span className="text-gray-400">층</span>
+                </li>
+              )}
+              {article.realtyLoan == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <span className="text-gray-400">대출가능여부</span>
+                </li>
+              )}
+              {article.realtyMove == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <span className="text-gray-400">입주 가능일</span>
+                </li>
+              )}
+              {article.realtyPet == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <span className="text-gray-400">반려동물</span>
+                </li>
+              )}
+              {article.realtyParking == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <span className="text-gray-400">주차</span>
+                </li>
+              )}
+              {article.realtyElevator == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <span className="text-gray-400">엘리베이터</span>
+                </li>
+              )}
+              {article.realtyInside == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <span className="text-gray-400">내부 시설</span>
+                </li>
+              )}
             </ul>
             <ul
               className="flex flex-col gap-4 mb-11 "
@@ -588,40 +625,75 @@ const Realtypost = ({
                 fontSize: "1.1rem",
               }}
             >
-              <li className="flex gap-4 font-bold">
-                <div>
-                  {article.realtySpace}평 · 전용 {article.realtyArea}㎡
-                </div>
-              </li>
-
-              <li className="flex gap-4 font-bold">
-                <div>
-                  방 {article.realtyRoom}개 / 욕실 {article.realtyBath}개
-                </div>
-              </li>
-              <li className="flex gap-4 font-bold">
-                <div>
-                  {article.realtyFloor}층 / {article.realtyWhole}층{" "}
-                </div>
-              </li>
-              <li className="flex gap-4">
-                <div>{article.realtyLoan}</div>
-              </li>
-              <li className="flex gap-4">
-                <div>{article.realtyMove}</div>
-              </li>
-              <li className="flex gap-4">
-                <div>{article.realtyPet}</div>
-              </li>
-              <li className="flex gap-4">
-                <div>{article.realtyParking}</div>
-              </li>
-              <li className="flex gap-4">
-                <div>{article.realtyElevator}</div>
-              </li>
-              <li className="flex gap-4">
-                <div>{article.realtyInside}</div>
-              </li>
+              {article.realtySpace && article.realtyArea == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4 font-bold">
+                  <div>
+                    {article.realtySpace}평 · 전용 {article.realtyArea}㎡
+                  </div>
+                </li>
+              )}
+              {article.realtyRoom && article.realtyBath == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4 font-bold">
+                  <div>
+                    방 {article.realtyRoom}개 / 욕실 {article.realtyBath}개
+                  </div>
+                </li>
+              )}
+              {article.realtyFloor && article.realtyWhole == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4 font-bold">
+                  <div>
+                    {article.realtyFloor}층 / {article.realtyWhole}층{" "}
+                  </div>
+                </li>
+              )}
+              {article.realtyLoan == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <div>{article.realtyLoan}</div>
+                </li>
+              )}
+              {article.realtyMove == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <div>{article.realtyMove}</div>
+                </li>
+              )}
+              {article.realtyPet == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <div>{article.realtyPet}</div>
+                </li>
+              )}
+              {article.realtyParking == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <div>{article.realtyParking}</div>
+                </li>
+              )}
+              {article.realtyElevator == "" ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <div>{article.realtyElevator}</div>
+                </li>
+              )}
+              {article.realtyInside == null ? (
+                ""
+              ) : (
+                <li className="flex gap-4">
+                  <div>{article.realtyInside}</div>
+                </li>
+              )}
             </ul>
           </section>
           <section>
@@ -633,7 +705,19 @@ const Realtypost = ({
             >
               소개
             </div>
-            <div className="mb-10">{article.realtyContent}</div>
+            <div className="mb-10">
+              {article.realtyContent}
+              {article.realtyDepositChange == "" ? (
+                ""
+              ) : (
+                <div> 보증금 조정 가능: {article.realtyDepositChange}</div>
+              )}
+              {article.realtyShortTerm == "" ? (
+                ""
+              ) : (
+                <div> 단기임대 설명: {article.realtyShortTerm}</div>
+              )}
+            </div>
           </section>
           <div
             className="flex gap-4 align-center font-bold mt-2 pb-11"

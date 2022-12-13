@@ -18,6 +18,19 @@ const AllJobs = ({ logined, setLogined }) => {
   const { num } = useParams();
   const [Jobs, setJobs] = useState([]);
   const { Router } = useParams();
+
+  //검색
+
+  const [search, setSearch] = useState("");
+  const onSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const moveSearch = async (data) => {
+    navigate(`/jobssearch/${data}`);
+  };
+
+  //페이징
   const handlePageChange = (page) => {
     setPage(page);
   };
@@ -124,18 +137,18 @@ const AllJobs = ({ logined, setLogined }) => {
               <input
                 type="text"
                 placeholder="동네를 검색해보세요."
-                //value={search}
-                //onChange={onSearch}
+                value={search}
+                onChange={onSearch}
                 style={{
                   border: "1px #d5d5d5 solid",
                   width: "265px",
                   height: "30px",
                 }}
-                // onKeyUp={(e) => {
-                //   if (e.key == "Enter") {
-                //     moveSearch(search);
-                //   }
-                // }}
+                onKeyUp={(e) => {
+                  if (e.key == "Enter") {
+                    moveSearch(search);
+                  }
+                }}
               />
             </div>
           </div>

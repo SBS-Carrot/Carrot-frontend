@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import { BsDot } from "react-icons/bs";
 import { FaCarrot } from "react-icons/fa";
 import JobsPaging from "./JobsPaging";
+import { AiOutlineSearch } from "react-icons/ai";
+
 const AllJobs = ({ logined, setLogined }) => {
   const [page, setPage] = useState(1);
   const [currentPosts, setCurrentPosts] = useState([]);
@@ -111,14 +113,38 @@ const AllJobs = ({ logined, setLogined }) => {
             margin: "0 auto",
           }}
         >
+          <div className="mt-8 flex items-center gap-1 justify-end">
+            {" "}
+            <AiOutlineSearch
+              style={{
+                fontSize: "1.4rem",
+              }}
+            />
+            <div>
+              <input
+                type="text"
+                placeholder="동네를 검색해보세요."
+                //value={search}
+                //onChange={onSearch}
+                style={{
+                  border: "1px #d5d5d5 solid",
+                  width: "265px",
+                  height: "30px",
+                }}
+                // onKeyUp={(e) => {
+                //   if (e.key == "Enter") {
+                //     moveSearch(search);
+                //   }
+                // }}
+              />
+            </div>
+          </div>
           <div className="flex gap-24">
             <h1
               style={{
                 fontSize: "2rem",
                 fontWeight: "bolder",
-                paddingTop: "5rem",
                 paddingLeft: "5rem",
-
                 whiteSpace: "nowrap",
               }}
             >
@@ -129,13 +155,14 @@ const AllJobs = ({ logined, setLogined }) => {
               href={`/jobsWrite`}
               className="flex items-end justify-end "
               style={{
-                width: "60%",
+                width: "65%",
               }}
             >
               <a
                 href={`/jobsWrite`}
-                className="rounded-md p-2"
+                className="rounded-md"
                 style={{
+                  padding: "10px",
                   backgroundColor: "#fc9d39",
                   color: "white",
                 }}
@@ -159,7 +186,7 @@ const AllJobs = ({ logined, setLogined }) => {
           </h2>
           <ul
             style={{
-              paddingTop: "3rem",
+              paddingTop: "1rem",
               paddingLeft: "5rem",
             }}
             className="grid grid-cols-2 jobBox"

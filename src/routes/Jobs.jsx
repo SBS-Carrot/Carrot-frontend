@@ -116,7 +116,7 @@ const Jobs = ({ logined, setLogined }) => {
               style={{
                 fontSize: "2rem",
                 fontWeight: "bolder",
-                paddingTop: "5rem",
+                paddingTop: "2rem",
                 paddingLeft: "5rem",
               }}
             >
@@ -125,7 +125,7 @@ const Jobs = ({ logined, setLogined }) => {
           </div>
           <ul
             style={{
-              paddingTop: "3rem",
+              paddingTop: "1rem",
               paddingLeft: "5rem",
             }}
             className="grid grid-cols-2 jobBox"

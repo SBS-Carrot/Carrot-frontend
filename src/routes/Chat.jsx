@@ -10,6 +10,7 @@ import axios from "axios";
 import { faCarrot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // https://gilssang97.tistory.com/69
+
 const Chat = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const notChattingUser = () => {
@@ -90,7 +91,7 @@ const Chat = ({ logined, setLogined }) => {
   const getData = (chat) => {
     const url = "/chat/" + roomId;
     const yourid = sessionStorage.getItem("yourName");
-    console.log(url);
+
     try {
       axios({
         url: "http://localhost:8083/addChatNotification",

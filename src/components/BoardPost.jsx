@@ -181,7 +181,7 @@ const BoardPost = ({
           method: "GET",
         });
         setReplis(data.data);
-        //console.log(data.data);
+        console.log(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -573,7 +573,7 @@ const BoardPost = ({
                                 ? user.userid
                                 : reply.replyNickname}
                             </div>
-                            {user.nickname == reply.replyNickname && (
+                            {board.boardUserid == reply.replyUserid && (
                               <div
                                 className="flex justify-center"
                                 style={{

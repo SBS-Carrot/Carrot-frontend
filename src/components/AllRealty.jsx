@@ -11,11 +11,23 @@ import { useEffect } from "react";
 import { FaCarrot } from "react-icons/fa";
 import "../styles/Jobs.css";
 import RealtyPaging from "./RealtyPaging";
+import { AiOutlineSearch } from "react-icons/ai";
+
 const AllRealty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const [Realty, setRealty] = useState([]);
   const [page, setPage] = useState(1);
   const [currentPosts, setCurrentPosts] = useState([]);
+
+  const [search, setSearch] = useState("");
+  const moveSearch = async (data) => {
+    navigate(`/realtysearch/${data}`);
+  };
+
+  const onSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
   const handlePageChange = (page) => {
     setPage(page);
   };
@@ -82,12 +94,37 @@ const AllRealty = ({ logined, setLogined }) => {
               margin: "0 auto",
             }}
           >
-            <div className="flex gap-3">
+            <div className="mt-8 flex items-center gap-1">
+              {" "}
+              <AiOutlineSearch
+                style={{
+                  fontSize: "1.4rem",
+                }}
+              />
+              <div>
+                <input
+                  type="text"
+                  placeholder="동네를 검색해보세요."
+                  value={search}
+                  onChange={onSearch}
+                  style={{
+                    border: "1px #d5d5d5 solid",
+                    width: "265px",
+                    height: "30px",
+                  }}
+                  onKeyUp={(e) => {
+                    if (e.key == "Enter") {
+                      moveSearch(search);
+                    }
+                  }}
+                />
+              </div>
+            </div>
+            <div className="flex gap-3 mt-3">
               <div
                 className="font-bold"
                 style={{
                   fontSize: "1.5rem",
-                  paddingTop: "5%",
                 }}
               >
                 모든 부동산 직거래 게시글

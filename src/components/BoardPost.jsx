@@ -27,7 +27,7 @@ const BoardPost = ({
   onLike,
   liked,
   setLiked,
-  onRemove,
+  onRemoveBoard,
   deleteToggle,
   onDeleteToggle,
   menuToggle,
@@ -50,6 +50,10 @@ const BoardPost = ({
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);
+  };
+
+  const boardMove = () => {
+    navigate(`/board`);
   };
 
   const [board, setBoard] = useState("");
@@ -361,10 +365,11 @@ const BoardPost = ({
                           color: "red",
                         }}
                         onClick={() => {
-                          onRemove(num);
+                          onRemoveBoard(num);
                           alert("삭제되었습니다.");
                           setMenuToggle();
                           onDeleteToggle(false);
+                          boardMove();
                         }}
                       >
                         삭제

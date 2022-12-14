@@ -35,14 +35,6 @@ import JobsApply from "./components/JobsApply";
 import Alert from "./components/Alert";
 import RealtySearch from "./components/RealtySearch";
 import JobsSearch from "./components/JobsSearch";
-// 병훈
-// 채팅 알바, 직거래 적용하기
-// 채팅 오류 수정하기
-// 알바 지원 -> 알림 울리기
-// 채팅 버튼 가리는 거 수정하기(부동산)
-// 동네게시판 헤더에 마이페이지 추가
-// footer 버튼수정하기
-// 통합 검색창 만들기
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);

@@ -79,6 +79,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
     { id: 5, data: "가스렌지" },
     { id: 6, data: "옥탑" },
     { id: 7, data: "인덕션" },
+    { id: 8, data: "없음" },
   ];
   const onCheckInside = (checked, item) => {
     if (checked) {

@@ -586,16 +586,56 @@ const BoardPost = ({
                             </div>
                             {board.boardUserid == reply.replyUserid && (
                               <div
-                                className="flex justify-center"
+                                className="flex items-center"
                                 style={{
-                                  border: "1px gray solid",
-                                  width: "44px",
-                                  height: "17px",
-                                  color: "gray",
-                                  fontSize: "0.72rem",
+                                  border: "1px red solid",
                                 }}
                               >
-                                작성자
+                                <div
+                                  className="flex justify-center"
+                                  style={{
+                                    border: "1px gray solid",
+                                    width: "44px",
+                                    height: "17px",
+                                    color: "gray",
+                                    fontSize: "0.72rem",
+                                  }}
+                                >
+                                  작성자
+                                </div>
+                                <div>
+                                  <button
+                                    style={{
+                                      border: "1px red solid",
+                                    }}
+                                    onClick={() => {
+                                      onMenuToggle();
+                                    }}
+                                  >
+                                    <FiMoreHorizontal />
+                                  </button>
+
+                                  {menuToggle && (
+                                    <div
+                                      className="flex flex-col items-center"
+                                      style={{
+                                        position: "absolute",
+                                        width: "50px",
+                                        height: "50px",
+                                        left: "-22px",
+                                      }}
+                                    >
+                                      <a href={`/boardedit/${num}`}>수정</a>
+                                      <button
+                                        onClick={() => {
+                                          onDeleteToggle();
+                                        }}
+                                      >
+                                        삭제
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             )}
                           </div>

@@ -596,18 +596,31 @@ const Jobspost = ({
                   <FiHeart />
                 )}
               </button>
-
-              <a
-                href={/JobsApply/ + num}
-                className="rounded p-2 font-bold flex justify-center"
-                style={{
-                  width: "300px",
-                  color: "white",
-                  backgroundColor: "#fc9d39",
-                }}
-              >
-                지원하기
-              </a>
+              {sessionStorage.getItem("userid") == jobArticle.jobUserid ? (
+                <a
+                  href={/jobsApplyView/ + num}
+                  className="rounded p-2 font-bold flex justify-center"
+                  style={{
+                    width: "300px",
+                    color: "white",
+                    backgroundColor: "#fc9d39",
+                  }}
+                >
+                  지원자 보러가기
+                </a>
+              ) : (
+                <a
+                  href={/JobsApplyWrite/ + num}
+                  className="rounded p-2 font-bold flex justify-center"
+                  style={{
+                    width: "300px",
+                    color: "white",
+                    backgroundColor: "#fc9d39",
+                  }}
+                >
+                  지원하기
+                </a>
+              )}
             </div>
           </section>
 

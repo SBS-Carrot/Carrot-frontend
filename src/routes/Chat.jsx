@@ -1,7 +1,5 @@
 import React from "react";
-import Header from "../layouts/Header";
 import LoginedHeader from "../layouts/LoginedHeader";
-import Footer from "../layouts/Footer";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -13,10 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Chat = ({ logined, setLogined }) => {
   const navigate = useNavigate();
-  const notChattingUser = () => {
-    navigate("/");
-    alert("채팅 당사자만 입장할 수 있습니다.");
-  };
+
   const moveBack = () => {
     alert("로그인 후 사용할 수 있는 기능입니다.");
     navigate(-1);
@@ -91,7 +86,10 @@ const Chat = ({ logined, setLogined }) => {
   const getData = (chat) => {
     const url = "/chat/" + roomId;
     const yourid = sessionStorage.getItem("yourName");
+<<<<<<< HEAD
 
+=======
+>>>>>>> 81ca670bea1462cb9441a4d01375a6dd9d3c3c19
     try {
       axios({
         url: "http://localhost:8083/addChatNotification",
@@ -146,11 +144,6 @@ const Chat = ({ logined, setLogined }) => {
       const mName = sessionStorage.getItem("userid");
       const yName = sessionStorage.getItem("yourName");
 
-      const chattingRoom = {
-        roomId: roomId,
-        myName: mName,
-        yourName: yName,
-      };
       // 있다면 채팅목록 GET
       if (data1.data != "") {
         const data = await axios({
@@ -160,13 +153,6 @@ const Chat = ({ logined, setLogined }) => {
         });
 
         onChatList(data.data);
-      } else {
-        // 없다면 URL의 ID로 채팅방 새로 생성.
-        const data = await axios({
-          url: `http://localhost:8083/chat`,
-          method: "POST",
-          data: chattingRoom,
-        });
       }
       const chatUser = await axios({
         url: `http://localhost:8083/getUser/${yourName}`,
@@ -177,16 +163,24 @@ const Chat = ({ logined, setLogined }) => {
       console.log(e);
     }
   };
-
+  const notChattingUser = () => {
+    navigate("/");
+    alert("채팅 당사자만 입장할 수 있습니다.");
+  };
   return (
     <div>
       <LoginedHeader setLogined={setLogined} />
       <div>
         <div
           style={{
-            width: "1000px",
+            width: "900px",
             margin: "0 auto",
-            minHeight: "50vh",
+            height: "80vh",
+            position: "relative",
+            border: "1px solid #ffa445",
+            borderRadius: "20px",
+            overflow: "auto",
+            paddingBottom: "10px",
           }}
         >
           <div
@@ -201,6 +195,7 @@ const Chat = ({ logined, setLogined }) => {
                   key={index}
                   style={{
                     width: "100%",
+                    paddingLeft: "20px",
                   }}
                 >
                   {chat.sender == sessionStorage.getItem("userid") ? (
@@ -273,7 +268,7 @@ const Chat = ({ logined, setLogined }) => {
                           width: "45%",
                           minHeight: "50px",
                           marginTop: "10px",
-                          marginLeft: "35px",
+                          marginLeft: "25px",
                           backgroundColor: "#eeeeee",
                           textAlign: "center",
                           padding: "20px",
@@ -293,51 +288,50 @@ const Chat = ({ logined, setLogined }) => {
               ))}
             </ul>
           </div>
-          <div
+        </div>
+        <div
+          style={{
+            width: "900px",
+            margin: "0 auto",
+          }}
+        >
+          <input
+            type="text"
+            value={chat}
+            onChange={handleChange}
+            placeholder="메시지를 입력해 주세요"
             style={{
-              margin: "10px auto",
-              display: "flex",
-              justifyContent: "center",
-              marginLeft: "-37px",
+              width: "830px",
+              border: "1px #ffa445 solid",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              padding: "10px",
+              display: "inline",
+              marginTop: "15px",
+            }}
+            onKeyUp={(e) => {
+              if (e.key == "Enter") {
+                handleSubmit(chat);
+              }
+            }}
+          />
+
+          <button
+            onClick={() => {
+              handleSubmit(chat);
+            }}
+            style={{
+              padding: "5px 10px",
+              border: "1px #ffa445 solid",
+              marginLeft: "10px",
+              borderRadius: "10%",
+              color: "#ffa445",
             }}
           >
-            <input
-              type="text"
-              value={chat}
-              onChange={handleChange}
-              placeholder="메시지를 입력해 주세요"
-              style={{
-                width: "70%",
-                border: "1px #ffa445 solid",
-                borderRadius: "10px",
-                backgroundColor: "white",
-                padding: "10px",
-              }}
-              onKeyUp={(e) => {
-                if (e.key == "Enter") {
-                  handleSubmit(chat);
-                }
-              }}
-            />
-
-            <button
-              onClick={() => {
-                handleSubmit(chat);
-              }}
-              style={{
-                padding: "5px 10px",
-                border: "1px #ffa445 solid",
-                marginLeft: "10px",
-                borderRadius: "10%",
-                color: "#ffa445",
-              }}
-            >
-              전송
-            </button>
-          </div>
+            전송
+          </button>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

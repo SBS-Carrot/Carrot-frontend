@@ -6,7 +6,9 @@ const Security = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(
+    sessionStorage.getItem("pwCheck") || false
+  );
   const [changePassword, setChangePassword] = useState(false);
   const onChangePassword = () => {
     navigate("/changepassword");
@@ -51,6 +53,7 @@ const Security = ({ logined, setLogined }) => {
       data: userDto,
     });
     if (data.data) {
+      sessionStorage.setItem("pwCheck", true);
       setChecked(data.data);
     } else {
       alert("비밀번호가 일치하지 않습니다.");
@@ -93,6 +96,9 @@ const Security = ({ logined, setLogined }) => {
             <li>
               <a href="/articleControl">게시글 관리</a>
             </li>
+            <li>
+              <a href="/ChatList">채팅방 목록</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -123,6 +129,11 @@ const Security = ({ logined, setLogined }) => {
                 height: "50px",
                 border: "1px #fc9d39 solid",
                 borderRadius: "15px",
+              }}
+              onKeyUp={(e) => {
+                if (e.key == "Enter") {
+                  pwCheck(password);
+                }
               }}
             />
             <button

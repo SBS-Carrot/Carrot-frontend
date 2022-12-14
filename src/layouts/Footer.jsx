@@ -14,15 +14,27 @@ const Footer = () => {
     >
       <hr />
       <footer
-        className="footer p-10  text-base-content"
+        className="p-10 flex gap-12"
         style={{
-          width: "800px",
+          width: "850px",
           height: "250px",
           margin: "0 auto",
         }}
       >
-        <div className=" flex gap-12">
-          <div className="flex justify-center flex-col gap-10">
+        <ul
+          style={{
+            width: "390px",
+            display: "flex",
+          }}
+        >
+          <li
+            className="flex "
+            style={{
+              width: "130px",
+              flexDirection: "column",
+              justifyContent: "space-around",
+            }}
+          >
             <a href="#" className=" link-hover">
               중고거래
             </a>
@@ -32,30 +44,68 @@ const Footer = () => {
             <a href="#" className=" link-hover">
               당근알바
             </a>
-          </div>
-          <div className="flex justify-center flex-col gap-10">
-            <a href="#" className=" link-hover">
-              당근비즈니스
+          </li>
+          <li
+            className="flex "
+            style={{
+              flexDirection: "column",
+              width: "130px",
+              justifyContent: "space-around",
+            }}
+          >
+            <a
+              href="#"
+              className=" link-hover"
+              style={{
+                marginTop: "-8px",
+              }}
+            >
+              당근 비즈니스
             </a>
-            <a href="#" className=" link-hover">
+            <a
+              href="#"
+              className=" link-hover"
+              style={{
+                marginTop: "-15px",
+              }}
+            >
               채팅하기
             </a>
-          </div>
-          <div className="flex justify-center flex-col gap-10">
+            <a href="#" className=" link-hover">
+              {null}
+            </a>
+          </li>
+          <li
+            className="flex"
+            style={{
+              flexDirection: "column",
+              width: "130px",
+              justifyContent: "space-around",
+            }}
+          >
             <a href="#" className=" link-hover">
               자주 묻는 질문
             </a>
+
             <a href="#" className=" link-hover">
               회사 소개
             </a>
             <a href="#" className=" link-hover">
               인재 채용
             </a>
-          </div>
-        </div>
-
-        <div>
-          <span className="font-bold flex justify-center">
+          </li>
+        </ul>
+        <div
+          style={{
+            paddingTop: "15px",
+          }}
+        >
+          <span
+            className="font-bold flex"
+            style={{
+              paddingBottom: "15px",
+            }}
+          >
             당근마켓 앱 다운로드
           </span>
           <div className="flex gap-8">

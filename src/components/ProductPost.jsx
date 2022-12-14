@@ -68,7 +68,8 @@ const ProductPost = ({
     } else {
       //채팅방이 없다면 (메시지를 처음주고 받는다면)
       //uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
-
+      // const myURL;
+      // const yourURL;
       const roomNum = uuid();
       const chattingRoom = {
         roomId: roomNum,
@@ -84,6 +85,7 @@ const ProductPost = ({
       navigate(`/chat/${roomNum}`);
     }
   };
+
   const productmove = () => {
     navigate(`/allproduct`);
   };
@@ -207,7 +209,8 @@ const ProductPost = ({
     };
     onLikeRe(num);
   }, [liked]);
-
+  sessionStorage.setItem("myURL", user.profileImage);
+  sessionStorage.setItem("yourURL", articleWriter.profileImage);
   var settings = {
     dots: true,
     infinite: true,
@@ -571,6 +574,7 @@ const ProductPost = ({
 
                   const yourName = articleWriter.userid;
 
+                  sessionStorage.setItem("yourName", articleWriter.userid);
                   moveChat(myName, yourName);
                 }}
                 className="rounded p-2 font-bold flex justify-center"

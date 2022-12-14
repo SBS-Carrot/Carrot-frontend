@@ -40,6 +40,7 @@ import ChatList from "./routes/ChatList";
 // 병훈
 // 통합 검색창 만들기
 // 내 채팅창 목록 만들기
+// 인기 검색어
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);

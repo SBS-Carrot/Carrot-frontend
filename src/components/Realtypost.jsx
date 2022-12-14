@@ -143,7 +143,6 @@ const Realtypost = ({
         });
         abcd = data.data.realtyUserid;
         onArticle(data.data);
-        console.log(data.data);
       } catch {
         console.log("에러");
         window.alert("존재하지 않는 게시글입니다.");

@@ -266,6 +266,10 @@ const Alert = ({}) => {
                                 onClick={() => {
                                   readNotification(notice.id);
                                   setAlertToggle(false);
+                                  sessionStorage.setItem(
+                                    "sender",
+                                    notice.sender
+                                  );
                                   moveURL(notice.url);
                                 }}
                               >
@@ -335,6 +339,10 @@ const Alert = ({}) => {
                                 onClick={() => {
                                   readNotification(notice.id);
                                   setAlertToggle(false);
+                                  sessionStorage.setItem(
+                                    "sender",
+                                    notice.sender
+                                  );
                                   moveURL(notice.url);
                                 }}
                               >

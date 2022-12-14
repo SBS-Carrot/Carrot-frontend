@@ -126,7 +126,11 @@ const Chat = ({ logined, setLogined }) => {
 
       const myName = sessionStorage.getItem("userid");
       const yourName = sessionStorage.getItem("yourName");
+      const sender = sessionStorage.getItem("sender");
 
+      if (yourName == undefined || yourName == null) {
+        console.log("A");
+      }
       if (myName === data1.data.myName) {
         sessionStorage.removeItem("yourName");
         sessionStorage.setItem("yourName", data1.data.yourName);
@@ -159,6 +163,7 @@ const Chat = ({ logined, setLogined }) => {
       console.log(e);
     }
   };
+
   const notChattingUser = () => {
     navigate("/");
     alert("채팅 당사자만 입장할 수 있습니다.");

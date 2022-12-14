@@ -1465,7 +1465,9 @@ const RealtyWrite = ({ logined, setLogined }) => {
       >
         <button
           onClick={() => {
-            if (showImages.length == 0) {
+            if (who == "") {
+              alert("세입자, 집주인을 선택해주세요");
+            } else if (showImages.length == 0) {
               onSubmit(
                 who,
                 loan,

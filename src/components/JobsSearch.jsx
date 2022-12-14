@@ -52,6 +52,7 @@ const JobsSearch = ({ logined, setLogined }) => {
         method: "GET",
       });
       setSearch2(job);
+
       onJobsSearch(data.data);
       setCurrentPosts(data.data.slice(0, 6));
     } catch (e) {
@@ -120,7 +121,7 @@ const JobsSearch = ({ logined, setLogined }) => {
         </div>
 
         <div className="flex gap-24">
-          {search == search1 ? (
+          {search == search2 ? (
             <h1
               style={{
                 fontSize: "2rem",

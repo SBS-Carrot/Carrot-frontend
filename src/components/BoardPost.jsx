@@ -480,6 +480,12 @@ const BoardPost = ({
                 )}
               </div>
             </div>
+            {board.boardAddress == "" ? (
+              ""
+            ) : (
+              <div> 장소: {board.boardAddress}</div>
+            )}
+
             <div
               className="flex text-sm gap-2 my-5"
               style={{
@@ -669,30 +675,8 @@ const BoardPost = ({
                   <FiHeart />
                 )}
               </button>
-
-              <button
-                onClick={() => {
-                  const myName = sessionStorage.getItem("userid");
-
-                  const yourName = boardWriter.userid;
-                }}
-                className="rounded p-2 font-bold flex justify-center"
-                style={{
-                  width: "300px",
-                  color: "white",
-                  backgroundColor: "#fc9d39",
-                }}
-              >
-                댓글 쓰기
-              </button>
             </div> */}
           </section>
-          {/* <div
-            style={{
-              width: "700px",
-              borderBottom: "1px #e4e4e4 solid",
-            }}
-          ></div> */}
         </div>
       </div>
     );

@@ -35,11 +35,15 @@ import JobsApplyWrite from "./components/JobsApplyWrite";
 import Alert from "./components/Alert";
 import RealtySearch from "./components/RealtySearch";
 import JobsSearch from "./components/JobsSearch";
+import JobsApply from "./components/JobsApplyWrite";
 import JobsApplyView from "./components/JobsApplyView";
 import ChatList from "./routes/ChatList";
 // 병훈
 // 통합 검색창 만들기
 // 내 채팅창 목록 만들기
+import JobsEdit from "./components/JobsEdit";
+import BoardEdit from "./components/BoardEdit";
+
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
@@ -263,6 +267,11 @@ function App() {
           }
         />
         <Route
+          path="/jobsedit/:num"
+          element={<JobsEdit logined={logined} setLogined={setLogined} />}
+        />
+
+        <Route
           path="/jobsWrite"
           element={<JobsWrite logined={logined} setLogined={setLogined} />}
         />
@@ -347,6 +356,15 @@ function App() {
         <Route
           path="JobsApplyView/:num"
           element={<JobsApplyView logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/boardedit/:num"
+          element={<BoardEdit logined={logined} setLogined={setLogined} />}
+        />
+
+        <Route
+          path="/JobsApply/:num"
+          element={<JobsApply logined={logined} setLogined={setLogined} />}
         />
       </Routes>
       <Alert />

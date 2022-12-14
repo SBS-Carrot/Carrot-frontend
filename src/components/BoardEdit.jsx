@@ -7,12 +7,13 @@ import LoginedBoardHeader from "../layouts/LoginedBoardHeader";
 import axios from "axios";
 import { useEffect } from "react";
 import { MdAddAPhoto } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 import WriteMap from "./WriteMap";
 import { BiMap } from "react-icons/bi";
 
-const BoardWrite = ({ logined, setLogined }) => {
+const BoardEdit = ({ logined, setLogined }) => {
+  const { num } = useParams();
   const navigate = useNavigate();
   const moveBack = () => {
     navigate(-1);
@@ -85,7 +86,7 @@ const BoardWrite = ({ logined, setLogined }) => {
     setShowImages(showImages.filter((_, index) => index !== id));
   };
 
-  const [addressDetail, setAddressDetail] = useState(""); // 상세주소로 받음!!
+  const [addressDetail, setAddressDetail] = useState(""); // 상세주소
 
   const [isOpenPost, setIsOpenPost] = useState(false);
 
@@ -119,11 +120,37 @@ const BoardWrite = ({ logined, setLogined }) => {
     height: "500px",
     padding: "7px",
   };
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/board/${num}`,
+          method: "GET",
+        });
+        setContentValue(data.data.boardContent);
+        setCategoryValue(data.data.boardCategory);
+        setAddressDetail(data.data.boardAddress);
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        const data1 = await axios({
+          url: `http://localhost:8083/getBoardWithImage/${num}`,
+          method: "GET",
+        });
+        console.log(data1.data);
+        setShowImages(data1.data.images);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getData();
+  }, []);
 
-  const onSubmit = async (contentValue, category, addressDetail) => {
+  const onBoardEdit = async (contentValue, category, addressDetail) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/createBoard`,
+        url: `http://localhost:8083/boardedit/${num}`,
         method: "POST",
         data: {
           boardCategory: category,
@@ -133,7 +160,6 @@ const BoardWrite = ({ logined, setLogined }) => {
         },
       });
       onCompleteChange();
-
       setId(data.data.boardId);
     } catch (e) {
       console.log(e);
@@ -376,7 +402,7 @@ const BoardWrite = ({ logined, setLogined }) => {
             <button
               onClick={() => {
                 if (uploadedImg.length == 0) {
-                  onSubmit(contentValue, category, addressDetail);
+                  onBoardEdit(contentValue, category, addressDetail);
                 } else {
                   onSubmits(contentValue, category, uploadedImg, addressDetail);
                 }
@@ -411,7 +437,7 @@ const BoardWrite = ({ logined, setLogined }) => {
               }}
             >
               <a
-                href={`/boardpost/${id}`}
+                href={`/boardpost/${num}`}
                 style={{
                   textAlign: "center",
                   width: "100%",
@@ -446,4 +472,4 @@ const BoardWrite = ({ logined, setLogined }) => {
   );
 };
 
-export default BoardWrite;
+export default BoardEdit;

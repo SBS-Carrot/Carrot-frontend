@@ -401,13 +401,8 @@ const Jobspost = ({
                             left: "-22px",
                           }}
                         >
-                          <button
-                          // onClick={() => {
-                          //   onEditToggle();
-                          // }}
-                          >
-                            수정
-                          </button>
+                          <a href={`/jobsedit/${num}`}>수정</a>
+
                           <button
                             onClick={() => {
                               onDeleteToggle();
@@ -418,6 +413,7 @@ const Jobspost = ({
                         </div>
                       )}{" "}
                     </span>
+
                     {deleteToggle && (
                       <div
                         className="p-2 rounded-md"

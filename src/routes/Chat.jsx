@@ -86,10 +86,6 @@ const Chat = ({ logined, setLogined }) => {
   const getData = (chat) => {
     const url = "/chat/" + roomId;
     const yourid = sessionStorage.getItem("yourName");
-<<<<<<< HEAD
-
-=======
->>>>>>> 81ca670bea1462cb9441a4d01375a6dd9d3c3c19
     try {
       axios({
         url: "http://localhost:8083/addChatNotification",

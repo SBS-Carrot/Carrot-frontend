@@ -33,16 +33,13 @@ import Chat from "./routes/Chat";
 import BoardPost from "./components/BoardPost";
 import JobsApplyWrite from "./components/JobsApplyWrite";
 import Alert from "./components/Alert";
-<<<<<<< HEAD
 import RealtySearch from "./components/RealtySearch";
 import JobsSearch from "./components/JobsSearch";
-=======
 import JobsApplyView from "./components/JobsApplyView";
 import ChatList from "./routes/ChatList";
 // 병훈
 // 통합 검색창 만들기
 // 내 채팅창 목록 만들기
->>>>>>> 81ca670bea1462cb9441a4d01375a6dd9d3c3c19
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);

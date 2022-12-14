@@ -67,59 +67,59 @@ const Board = ({ logined, setLogined }) => {
   const [getCafe, setGetCafe] = useState([]);
   const [getQue, setGetQue] = useState([]);
 
-  //스크롤 질문
-  // const [Qtarget, setQTarget] = useState(null); // 관찰대상 target
-  // const [QisLoaded, setQIsLoaded] = useState(false); // Load 중인가를 판별하는 boolean
-  // // 요청이 여러번 가는 것을 방지하기 위해서
-  // const [Qstop, setQStop] = useState(false); // 마지막 데이터까지 다 불러온 경우 더이상 요청을 보내지 않기 위해서
-  // // 마지막 부분까지 가버릴 때 계속 요청을 보내는 것 방지
-  // const [qnum, setQNum] = useState(1);
+  // 스크롤 질문
+  const [Qtarget, setQTarget] = useState(null); // 관찰대상 target
+  const [QisLoaded, setQIsLoaded] = useState(false); // Load 중인가를 판별하는 boolean
+  // 요청이 여러번 가는 것을 방지하기 위해서
+  const [Qstop, setQStop] = useState(false); // 마지막 데이터까지 다 불러온 경우 더이상 요청을 보내지 않기 위해서
+  // 마지막 부분까지 가버릴 때 계속 요청을 보내는 것 방지
+  const [qnum, setQNum] = useState(1);
 
-  // useEffect(() => {
-  //   let observer;
-  //   if (Qtarget && !Qstop) {
-  //     // callback 함수로 onIntersect를 지정
-  //     observer = new IntersectionObserver(onQIntersect, {
-  //       threshold: 0.5,
-  //     });
-  //     observer.observe(Qtarget);
-  //   }
-  //   return () => observer && observer.disconnect();
-  // }, [Qtarget, QisLoaded]);
+  let observer;
+  useEffect(() => {
+    if (Qtarget && !Qstop) {
+      // callback 함수로 onIntersect를 지정
+      observer = new IntersectionObserver(onQIntersect, {
+        threshold: 0.5,
+      });
+      observer.observe(Qtarget);
+    }
+    return () => observer && observer.disconnect();
+  }, [Qtarget, QisLoaded]);
 
-  // // isLoaded가 변할 때 실행
-  // useEffect(() => {
-  //   if (QisLoaded && !Qstop) {
-  //     axios.get(`http://localhost:8083/Qboards?Qnum=${qnum}`).then((res) => {
-  //       setGetQue((getQue) => getQue.concat(res.data));
-  //       setQNum(num + 1);
-  //       setQIsLoaded(false);
+  // isLoaded가 변할 때 실행
+  useEffect(() => {
+    if (QisLoaded && !Qstop) {
+      axios.get(`http://localhost:8083/qboards?qnum=${qnum}`).then((res) => {
+        setGetQue((getQue) => getQue.concat(res.data));
+        setQNum(qnum + 1);
+        setQIsLoaded(false);
 
-  //       if (res.data.length == 0) {
-  //         setQStop(true);
-  //       }
-  //       console.log("QRes", res);
-  //     });
-  //   }
-  // }, [QisLoaded]);
+        if (res.data.length == 0) {
+          setQStop(true);
+        }
+        console.log("QRes", res);
+      });
+    }
+  }, [QisLoaded]);
 
-  // const getQMoreItem = () => {
-  //   // 데이터를 받아오도록 true 로 변경
-  //   setQIsLoaded(true);
-  // };
+  const getQMoreItem = () => {
+    // 데이터를 받아오도록 true 로 변경
+    setQIsLoaded(true);
+  };
 
-  // // callback
-  // const onQIntersect = async ([entry], observer) => {
-  //   // entry 요소가 교차되거나 Load중이 아니면
-  //   if (entry.isIntersecting && !QisLoaded) {
-  //     // 관찰은 일단 멈추고
-  //     observer.unobserve(entry.Qtarget);
-  //     // 데이터 불러오기
-  //     getQMoreItem();
-  //     // 불러온 후 다시 관찰 실행
-  //     observer.observe(entry.Qtarget);
-  //   }
-  // };
+  // callback
+  const onQIntersect = async ([entry], observer) => {
+    // entry 요소가 교차되거나 Load중이 아니면
+    if (entry.isIntersecting && !QisLoaded) {
+      // 관찰은 일단 멈추고
+      observer.unobserve(entry.target);
+      // 데이터 불러오기
+      getQMoreItem();
+      // 불러온 후 다시 관찰 실행
+      observer.observe(entry.target);
+    }
+  };
   //스크롤 카페
   const [target, setTarget] = useState(null); // 관찰대상 target
   const [isLoaded, setIsLoaded] = useState(false); // Load 중인가를 판별하는 boolean
@@ -128,7 +128,6 @@ const Board = ({ logined, setLogined }) => {
   // 마지막 부분까지 가버릴 때 계속 요청을 보내는 것 방지
   const [num, setNum] = useState(1);
   useEffect(() => {
-    let observer;
     if (target && !stop) {
       // callback 함수로 onIntersect를 지정
       observer = new IntersectionObserver(onIntersect, {
@@ -274,7 +273,7 @@ const Board = ({ logined, setLogined }) => {
     const newList = list.filter((index) => {
       return index.boardCategory == "동네 질문" ? true : false;
     });
-    setGetQue(newList.reverse());
+    setGetQue(newList.reverse().slice(0, 7));
   };
 
   if (logined) {
@@ -484,7 +483,7 @@ const Board = ({ logined, setLogined }) => {
                                 {que.boardAgree}
                               </div>
                             </div>
-                            {/* <div  ref={setQTarget}/> */}
+                            <div ref={setQTarget} />
                           </div>
                         </li>
                       ))}

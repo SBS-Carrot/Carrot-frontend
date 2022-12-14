@@ -272,24 +272,40 @@ const Alert = ({}) => {
                                 <span>{index + 1}.</span>
                                 <span> {notice.sender}님께서 </span>
                                 {notice.type == "CHAT" ? (
-                                  <span>메세지를 보냈어요</span>
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <span>메세지를 보냈어요</span>
+                                    <div
+                                      style={{
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      <span
+                                        style={{
+                                          textAlign: "start",
+                                        }}
+                                      >
+                                        "{notice.content}"
+                                      </span>
+                                    </div>
+                                  </div>
                                 ) : (
                                   ""
                                 )}
-
-                                <div
-                                  style={{
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  <span
+                                {notice.type == "APPLY" ? (
+                                  <div
                                     style={{
-                                      textAlign: "start",
+                                      display: "inline",
                                     }}
                                   >
-                                    "{notice.content}"
-                                  </span>
-                                </div>
+                                    <span> 알바를 지원하셨어요</span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </button>
                               <button
                                 style={{
@@ -335,24 +351,40 @@ const Alert = ({}) => {
                                 <span>{index + 1}. </span>
                                 <span>{notice.sender}님께서</span>
                                 {notice.type == "CHAT" ? (
-                                  <span>메세지를 보냈어요</span>
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <span>메세지를 보냈어요</span>
+                                    <div
+                                      style={{
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      <span
+                                        style={{
+                                          textAlign: "start",
+                                        }}
+                                      >
+                                        "{notice.content}"
+                                      </span>
+                                    </div>
+                                  </div>
                                 ) : (
                                   ""
                                 )}
-
-                                <div
-                                  style={{
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  <span
+                                {notice.type == "APPLY" ? (
+                                  <div
                                     style={{
-                                      textAlign: "start",
+                                      display: "inline",
                                     }}
                                   >
-                                    "{notice.content}"
-                                  </span>
-                                </div>
+                                    <span> 알바를 지원하셨어요</span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </button>
                               <button
                                 style={{

@@ -34,8 +34,8 @@ import BoardPost from "./components/BoardPost";
 import JobsApplyWrite from "./components/JobsApplyWrite";
 import Alert from "./components/Alert";
 import JobsApplyView from "./components/JobsApplyView";
+import ChatList from "./routes/ChatList";
 // 병훈
-// 알바 지원 -> 알림 울리기
 // 통합 검색창 만들기
 // 내 채팅창 목록 만들기
 function App() {
@@ -199,6 +199,10 @@ function App() {
         <Route
           path="/articleControl"
           element={<ArticleControl logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/chatList"
+          element={<ChatList logined={logined} setLogined={setLogined} />}
         />
         <Route
           path="/allProduct"

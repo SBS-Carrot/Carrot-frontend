@@ -48,7 +48,7 @@ const JobsApplyView = ({ logined, setLogined }) => {
           params: { num },
         });
         onApply(data.data);
-        setCurrentPosts(data.data.slice(0, 4));
+        setCurrentPosts(data.data.reverse().slice(0, 4));
       } catch (e) {
         console.log(e);
       }

@@ -195,6 +195,9 @@ const ArticleControl = ({ logined, setLogined }) => {
             >
               <a href="/articleControl">게시글 관리</a>
             </li>
+            <li>
+              <a href="/ChatList">채팅방 목록</a>
+            </li>
           </ul>
         </div>
         <div>

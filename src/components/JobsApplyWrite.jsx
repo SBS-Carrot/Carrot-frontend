@@ -87,6 +87,15 @@ const JobsApply = ({ logined, setLogined }) => {
 
   const onSubmit = async (name, phoneValue, gender, year, introduce) => {
     try {
+      const applyCheck = await axios({
+        url: `http://localhost:8083/checkApply/${num}`,
+        method: "GET",
+        params: { userid },
+      });
+      if (applyCheck.data) {
+        alert("이미 지원하셨습니다.");
+        return;
+      }
       const applyJobsDto = {
         name,
         phoneValue,
@@ -108,16 +117,17 @@ const JobsApply = ({ logined, setLogined }) => {
         method: "get",
       });
       const yourid = data1.data.jobUserid;
-      axios({
+      const notificationRequestDto = {
+        content: "알바 지원",
+        url,
+        notificationType: "APPLY",
+        userid: yourid,
+        sender: userid,
+      };
+      const data2 = axios({
         url: "http://localhost:8083/addApplyNotification",
         method: "POST",
-        data: {
-          content: "",
-          url,
-          notificationType: "APPLY",
-          userid: yourid,
-          sender: userid,
-        },
+        data: notificationRequestDto,
       });
     } catch (e) {
       console.log(e);

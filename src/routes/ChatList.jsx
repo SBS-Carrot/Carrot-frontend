@@ -8,6 +8,9 @@ const ChatList = ({ logined, setLogined }) => {
   const moveHome = () => {
     navigate("/");
   };
+  const moveChatRoom = (url) => {
+    navigate(`/chat/${url}`);
+  };
   if (!logined) {
     alert("로그인 후 사용할 수 있는 기능입니다.");
     moveHome();
@@ -88,14 +91,51 @@ const ChatList = ({ logined, setLogined }) => {
           >
             {chatList.map((room, index) => (
               <li key={index}>
-                <div
-                  style={{
-                    display: "flex",
+                <button
+                  onClick={() => {
+                    moveChatRoom(room.roomId);
                   }}
                 >
-                  <div>
-                    {sessionStorage.getItem("userid") == room.myName ? (
-                      room.yourURL == null ? (
+                  <div
+                    style={{
+                      display: "flex",
+                    }}
+                  >
+                    <div>
+                      {sessionStorage.getItem("userid") == room.myName ? (
+                        room.yourURL == null ? (
+                          <div>
+                            <FaCarrot
+                              style={{
+                                color: "#fc9d39",
+                                fontSize: "3rem",
+                                transform: "translate(0%,0%)",
+                                border: "0.1px #fc9d39 solid",
+                                borderRadius: "50%",
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div
+                            style={{
+                              width: "50px",
+                              height: "50px",
+                            }}
+                          >
+                            <img
+                              src={room.yourURL}
+                              alt=""
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                display: "block",
+                                objectFit: "fill",
+                                borderRadius: "50%",
+                              }}
+                            />
+                          </div>
+                        )
+                      ) : room.myURL == null ? (
                         <div>
                           <FaCarrot
                             style={{
@@ -115,7 +155,7 @@ const ChatList = ({ logined, setLogined }) => {
                           }}
                         >
                           <img
-                            src={room.yourURL}
+                            src={room.myURL}
                             alt=""
                             style={{
                               width: "100%",
@@ -126,48 +166,17 @@ const ChatList = ({ logined, setLogined }) => {
                             }}
                           />
                         </div>
-                      )
-                    ) : room.myURL == null ? (
-                      <div>
-                        <FaCarrot
-                          style={{
-                            color: "#fc9d39",
-                            fontSize: "3rem",
-                            transform: "translate(0%,0%)",
-                            border: "0.1px #fc9d39 solid",
-                            borderRadius: "50%",
-                          }}
-                        />
-                      </div>
-                    ) : (
-                      <div
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                        }}
-                      >
-                        <img
-                          src={room.myURL}
-                          alt=""
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            display: "block",
-                            objectFit: "fill",
-                            borderRadius: "50%",
-                          }}
-                        />
-                      </div>
-                    )}
+                      )}
+                    </div>
+                    <div>
+                      {sessionStorage.getItem("userid") == room.myName ? (
+                        <div>"{room.yourName}"님</div>
+                      ) : (
+                        <div>"{room.myName}"님</div>
+                      )}
+                    </div>
                   </div>
-                  <div>
-                    {sessionStorage.getItem("userid") == room.myName ? (
-                      <div>"{room.yourName}"님</div>
-                    ) : (
-                      <div>"{room.myName}"님</div>
-                    )}
-                  </div>
-                </div>
+                </button>
               </li>
             ))}
           </ul>

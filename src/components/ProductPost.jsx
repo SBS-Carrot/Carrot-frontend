@@ -56,7 +56,14 @@ const ProductPost = ({
       method: "GET",
       params: { myName: yourName, yourName: myName },
     });
+    // type과 id를 비교해서 다르면 다른채팅방으로 보내야함.
+    // const data2 = await axios({
+    //   url: `http://localhost:8083/room/` + roomId,
+    //   method: "GET",
+    // });
 
+    sessionStorage.setItem("articleId", num);
+    sessionStorage.setItem("type", "product");
     const existRoom = data.data.roomId;
     const existRoom1 = data1.data.roomId;
 
@@ -68,13 +75,22 @@ const ProductPost = ({
     } else {
       //채팅방이 없다면 (메시지를 처음주고 받는다면)
       //uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
-      // const myURL;
-      // const yourURL;
+      const data1 = await axios({
+        url: `http://localhost:8083/getUser/${userid}`,
+        method: "Get",
+      });
+      const myURL = data1.data.profileImage;
+      const yourURL = articleWriter.profileImage;
+
       const roomNum = uuid();
       const chattingRoom = {
         roomId: roomNum,
         myName,
         yourName,
+        myURL,
+        yourURL,
+        type: "product",
+        articleId: num,
       };
       const data = await axios({
         url: `http://localhost:8083/chat`,

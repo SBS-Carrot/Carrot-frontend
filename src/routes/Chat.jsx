@@ -29,7 +29,21 @@ const Chat = ({ logined, setLogined }) => {
     connect();
     return () => disconnect();
   }, []);
-
+  const [product, setProduct] = useState("");
+  const [realty, setRealty] = useState("");
+  const [type, setType] = useState("");
+  const [id, setId] = useState("");
+  let now = new Date();
+  const year = now.getFullYear();
+  const todayMonth = now.getMonth() + 1;
+  const todayDate = now.getDate();
+  const week = ["일", "월", "화", "수", "목", "금", "토"];
+  let dayOfWeek = week[now.getDay()];
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  const [chatYear, setChatYear] = useState("");
+  const [chatMonth, setChatMonth] = useState("");
+  const [chatDate, setChatDate] = useState("");
   const connect = () => {
     client.current = new StompJs.Client({
       brokerURL: "ws://localhost:8083/wss/chat", // 웹소켓 서버 직접 접속
@@ -50,6 +64,17 @@ const Chat = ({ logined, setLogined }) => {
     client.current.activate();
   };
 
+  const onPriceChange = (str) => {
+    const comma = (str) => {
+      str = String(str);
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    };
+    const uncomma = (str) => {
+      str = String(str);
+      return str.replace(/[^\d]+/g, "");
+    };
+    return comma(uncomma(str));
+  };
   const publish = (chat) => {
     if (!client.current.connected) return;
 
@@ -123,14 +148,14 @@ const Chat = ({ logined, setLogined }) => {
         url: `http://localhost:8083/room/` + roomId,
         method: "GET",
       });
-
+      setType(data1.data.type);
+      setId(data1.data.articleId);
       const myName = sessionStorage.getItem("userid");
-      const yourName = sessionStorage.getItem("yourName");
-      const sender = sessionStorage.getItem("sender");
-
-      if (yourName == undefined || yourName == null) {
-        console.log("A");
-      }
+      console.log(data1.data);
+      const articleId = sessionStorage.getItem("articleId");
+      const type = sessionStorage.getItem("type");
+      console.log(articleId);
+      console.log(type);
       if (myName === data1.data.myName) {
         sessionStorage.removeItem("yourName");
         sessionStorage.setItem("yourName", data1.data.yourName);
@@ -141,9 +166,7 @@ const Chat = ({ logined, setLogined }) => {
         notChattingUser();
       }
 
-      const mName = sessionStorage.getItem("userid");
-      const yName = sessionStorage.getItem("yourName");
-
+      const yourName = sessionStorage.getItem("yourName");
       // 있다면 채팅목록 GET
       if (data1.data != "") {
         const data = await axios({
@@ -159,6 +182,29 @@ const Chat = ({ logined, setLogined }) => {
         method: "GET",
       });
       onUser2(chatUser.data);
+
+      if (data1.data.type == "product") {
+        try {
+          const data = await axios({
+            url: `http://localhost:8083/product/${data1.data.articleId}`,
+            method: "get",
+          });
+          setProduct(data.data);
+        } catch (e) {
+          console.log(e);
+        }
+      } else if (data1.data.type == "realty") {
+        try {
+          const data = await axios({
+            url: `http://localhost:8083/realty/${data1.data.articleId}`,
+            method: "get",
+          });
+          console.log(data.data);
+          setRealty(data.data);
+        } catch (e) {
+          console.log(e);
+        }
+      }
     } catch (e) {
       console.log(e);
     }
@@ -184,6 +230,68 @@ const Chat = ({ logined, setLogined }) => {
             paddingBottom: "10px",
           }}
         >
+          {type == "product" ? (
+            <div
+              style={{
+                borderBottom: "1px #ffa445 solid",
+                margin: "0 auto",
+                width: "500px",
+                display: "flex",
+              }}
+            >
+              {product.profileImage != null ? (
+                <div
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                  }}
+                >
+                  <img
+                    src={product.profileImage}
+                    alt=""
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "fill",
+                    }}
+                  />
+                </div>
+              ) : (
+                <div
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faCarrot}
+                    style={{
+                      fontSize: "5rem",
+                      color: "#ffa445",
+                      paddingLeft: "10px",
+                      paddingTop: "5px",
+                    }}
+                  />
+                </div>
+              )}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <h1>
+                  {product.productSubject} / {product.productCategory}
+                </h1>
+                <div>가격 : {onPriceChange(product.productPrice)}원</div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          {type == "realty" ? <div>realty</div> : ""}
           <div
             style={{
               width: "90%",

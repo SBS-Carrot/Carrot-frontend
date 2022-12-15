@@ -140,6 +140,7 @@ const ArticleControl = ({ logined, setLogined }) => {
           url: `http://localhost:8083/getProducts/${userid}`,
           method: "post",
         });
+
         onProduct(data.data);
         setCurrentProducts(data.data.slice(0, 8));
       } catch (e) {

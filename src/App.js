@@ -54,6 +54,16 @@ function App() {
     setMenuToggle(!menuToggle);
   };
 
+  const [replyToggle, setReplyToggle] = useState(false);
+  const onReplyMenuToggle = () => {
+    setReplyToggle(!replyToggle);
+  };
+
+  const [replyDelete, setReplyDelete] = useState(false);
+  const onReplyDeleteT = () => {
+    setReplyDelete(replyDelete);
+  };
+
   const [deleteToggle, setDeleteTogge] = useState(false);
   const onDeleteToggle = () => {
     setDeleteTogge(!deleteToggle);
@@ -160,6 +170,16 @@ function App() {
     }
   };
 
+  const onRemoveReply = async (id) => {
+    try {
+      await axios({
+        url: `http://localhost:8083/replyDelete/${id}`,
+        method: "POST",
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Router>
       <Routes>
@@ -340,9 +360,15 @@ function App() {
               onRealtyLike={onRealtyLike}
               menuToggle={menuToggle}
               onMenuToggle={onMenuToggle}
+              replyToggle={replyToggle}
+              onReplyMenuToggle={onReplyMenuToggle}
+              setReplyToggle={setReplyToggle}
               setMenuToggle={setMenuToggle}
               deleteToggle={deleteToggle}
               onDeleteToggle={onDeleteToggle}
+              replyDelete={replyDelete}
+              onReplyDeleteT={onReplyDeleteT}
+              onRemoveReply={onRemoveReply}
               onRemoveBoard={onRemoveBoard}
               editToggle={editToggle}
               onEditToggle={onEditToggle}

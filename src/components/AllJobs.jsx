@@ -20,7 +20,6 @@ const AllJobs = ({ logined, setLogined }) => {
   const { Router } = useParams();
 
   //검색
-
   const [search, setSearch] = useState("");
   const onSearch = (e) => {
     setSearch(e.target.value);

@@ -15,10 +15,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaCarrot } from "react-icons/fa";
-import { FiMoreHorizontal } from "react-icons/fi";
 import { SlEmotsmile } from "react-icons/sl";
 import { AiFillLike, AiOutlineEnter } from "react-icons/ai";
-import { FiMessageCircle, FiSend } from "react-icons/fi";
+import { FiMessageCircle, FiMoreHorizontal } from "react-icons/fi";
 import { CardText } from "reactstrap";
 
 const BoardPost = ({
@@ -29,10 +28,16 @@ const BoardPost = ({
   setLiked,
   onRemoveBoard,
   deleteToggle,
+  replyDelete,
   onDeleteToggle,
+  onReplyDeleteT,
   menuToggle,
   onMenuToggle,
+  replyToggle,
+  setReplyToggle,
+  onReplyMenuToggle,
   setMenuToggle,
+
   editToggle,
   onEditToggle,
 }) => {
@@ -303,13 +308,16 @@ const BoardPost = ({
                     </div>
                   </div>
                   <div>
-                    {board.boardUserid === userid ? (
+                    {board.boardUserid === sessionStorage.getItem("userid") ? (
                       <span
                         style={{
                           position: "relative",
                         }}
                       >
                         <button
+                          style={{
+                            fontSize: "1.1rem",
+                          }}
                           onClick={() => {
                             onMenuToggle();
                           }}
@@ -575,70 +583,117 @@ const BoardPost = ({
                         <div
                           className="flex justify-center flex-col"
                           style={{
-                            width: "500px",
+                            width: "100%",
                           }}
                         >
-                          <div className="flex gap-1 items-center">
-                            <div className="font-bold ">
-                              {reply.nickname == "닉네임 없음"
-                                ? user.userid
-                                : reply.replyNickname}
-                            </div>
-                            {board.boardUserid == reply.replyUserid && (
-                              <div
-                                className="flex items-center"
-                                style={{
-                                  border: "1px red solid",
-                                }}
-                              >
-                                <div
-                                  className="flex justify-center"
-                                  style={{
-                                    border: "1px gray solid",
-                                    width: "44px",
-                                    height: "17px",
-                                    color: "gray",
-                                    fontSize: "0.72rem",
-                                  }}
-                                >
-                                  작성자
-                                </div>
-                                <div>
-                                  <button
+                          <div className="flex gap-1 justify-between">
+                            <div className="flex">
+                              <div className="font-bold ">
+                                {reply.nickname == "닉네임 없음"
+                                  ? user.userid
+                                  : reply.replyNickname}
+                              </div>
+                              {board.boardUserid == reply.replyUserid && (
+                                <div className="flex items-center">
+                                  <div
+                                    className="flex justify-center"
                                     style={{
-                                      border: "1px red solid",
-                                    }}
-                                    onClick={() => {
-                                      onMenuToggle();
+                                      border: "1px gray solid",
+                                      width: "44px",
+                                      height: "17px",
+                                      color: "gray",
+                                      fontSize: "0.72rem",
                                     }}
                                   >
-                                    <FiMoreHorizontal />
-                                  </button>
+                                    작성자
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                            {sessionStorage.getItem("userid") ==
+                            reply.replyUserid ? (
+                              <div
+                                style={{
+                                  position: "relative",
+                                }}
+                              >
+                                <button
+                                  style={{
+                                    //    border: "1px red solid",
+                                    fontSize: "1.1rem",
+                                  }}
+                                  onClick={() => {
+                                    onReplyMenuToggle();
+                                  }}
+                                >
+                                  <FiMoreHorizontal />
+                                </button>
 
-                                  {menuToggle && (
-                                    <div
-                                      className="flex flex-col items-center"
-                                      style={{
-                                        position: "absolute",
-                                        width: "50px",
-                                        height: "50px",
-                                        left: "-22px",
+                                {replyToggle && (
+                                  <div
+                                    className="flex flex-col items-center"
+                                    style={{
+                                      position: "absolute",
+                                      width: "80px",
+                                      height: "50px",
+                                      left: "-50px",
+                                      color: "red",
+                                    }}
+                                  >
+                                    <button
+                                      onClick={() => {
+                                        onReplyDeleteT();
                                       }}
                                     >
-                                      <a href={`/boardedit/${num}`}>수정</a>
-                                      <button
-                                        onClick={() => {
-                                          onDeleteToggle();
-                                        }}
-                                      >
-                                        삭제
-                                      </button>
-                                    </div>
-                                  )}
-                                </div>
+                                      댓글삭제
+                                    </button>
+                                  </div>
+                                )}
                               </div>
+                            ) : (
+                              ""
                             )}
                           </div>
+                          {replyDelete && (
+                            <div
+                              className="p-2 rounded-md"
+                              style={{
+                                width: "250px",
+                                height: "80px",
+                                border: "1px gray solid",
+                                position: "absolute",
+                                left: "50%",
+                                transform: "translateX(-50%)",
+                              }}
+                            >
+                              <div className="flex justify-center">
+                                게시물을 삭제하시겠어요?
+                              </div>
+                              <div className="flex justify-center gap-4 mt-3">
+                                <button
+                                  className=" rounded-md font-bold"
+                                  style={{
+                                    padding: "5px",
+                                    color: "red",
+                                  }}
+                                  onClick={() => {
+                                    alert("삭제되었습니다.");
+                                    setReplyToggle();
+                                    onReplyDeleteT(false);
+                                  }}
+                                >
+                                  삭제
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    onDeleteToggle(false);
+                                  }}
+                                >
+                                  취소
+                                </button>
+                              </div>
+                            </div>
+                          )}
                           <div
                             style={{
                               fontSize: "0.7rem",

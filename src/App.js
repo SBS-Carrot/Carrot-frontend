@@ -61,7 +61,7 @@ function App() {
 
   const [replyDelete, setReplyDelete] = useState(false);
   const onReplyDeleteT = () => {
-    setReplyDelete(replyDelete);
+    setReplyDelete(!replyDelete);
   };
 
   const [deleteToggle, setDeleteTogge] = useState(false);
@@ -170,10 +170,10 @@ function App() {
     }
   };
 
-  const onRemoveReply = async (id) => {
+  const onRemoveReply = async (replyId) => {
     try {
       await axios({
-        url: `http://localhost:8083/replyDelete/${id}`,
+        url: `http://localhost:8083/replyDelete/${replyId}`,
         method: "POST",
       });
     } catch (e) {

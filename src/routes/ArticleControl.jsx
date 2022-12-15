@@ -7,6 +7,15 @@ import { FaCarrot } from "react-icons/fa";
 import RealtyPaging from "../components/RealtyPaging";
 import ProductPaging from "../components/ProductPaging";
 import JobsPaging from "../components/JobsPaging";
+import {
+  ImSad,
+  ImSad2,
+  ImSmile,
+  ImSmile2,
+  ImHappy,
+  ImHappy2,
+} from "react-icons/im";
+
 const ArticleControl = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const moveBack = () => {
@@ -87,6 +96,12 @@ const ArticleControl = ({ logined, setLogined }) => {
       console.log(e);
     }
     navigate(`/productpost/${id}`);
+  };
+
+  const [dealToggle, setDealToggle] = useState(false);
+
+  const onDealToggle = () => {
+    setDealToggle(!dealToggle);
   };
 
   //여기부터 Jobs
@@ -240,7 +255,6 @@ const ArticleControl = ({ logined, setLogined }) => {
                               width: "150px",
                               height: "150px",
                               borderRadius: "15px",
-
                               marginBottom: "10px",
                             }}
                           >
@@ -303,7 +317,7 @@ const ArticleControl = ({ logined, setLogined }) => {
                           <div
                             className="flex"
                             style={{
-                              paddingBottom: "3rem",
+                              paddingBottom: "1rem",
                               fontSize: "0.8rem",
                               color: "gray",
                             }}
@@ -314,6 +328,84 @@ const ArticleControl = ({ logined, setLogined }) => {
                           </div>
                         </div>
                       </button>
+                      <div
+                        className="font-bold p-1"
+                        style={{
+                          width: "140px",
+                          border: "1px #cccccc solid",
+                          textAlign: "center",
+                          marginLeft: "10px",
+                        }}
+                      >
+                        {product.productDeal == "판매중" ? (
+                          <div>
+                            <button
+                              style={{}}
+                              onClick={() => {
+                                //후기 작성
+                                onDealToggle();
+                              }}
+                            >
+                              거래완료로 변경
+                            </button>
+                          </div>
+                        ) : (
+                          <div>
+                            <div>거래완료</div>
+                          </div>
+                        )}
+                      </div>
+                      {dealToggle && (
+                        <div
+                          style={{
+                            border: "1px #cccccc solid",
+                            position: "absolute",
+                          }}
+                        >
+                          <div className="font-bold">거래 후기 보내기</div>
+                          <div className="flex gap-2">
+                            {product.profileImage != null ? (
+                              <img
+                                src={product.profileImage}
+                                alt=""
+                                style={{
+                                  borderRadius: "15px",
+                                  width: "70px",
+                                  height: "70px",
+                                  objectFit: "fill",
+                                  display: "block",
+                                }}
+                              />
+                            ) : (
+                              <FaCarrot
+                                style={{
+                                  color: "#fc9d39",
+                                  fontSize: "10rem",
+                                  width: "70px",
+                                  height: "70px",
+                                  transform: "translate(-5% ,-5%)",
+                                  border: "0.1px #fc9d39 solid",
+                                  borderRadius: "50%",
+                                }}
+                              />
+                            )}
+                            <span>거래한 상품</span>
+                          </div>
+
+                          {/* <div>
+                            <ImSad />
+                            <ImSad2 />
+                          </div>
+                          <div>
+                            <ImSmile />
+                            <ImSmile2 />
+                          </div>
+                          <div>
+                            <ImHappy />
+                            <ImHappy2 />
+                          </div> */}
+                        </div>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -781,6 +873,33 @@ const ArticleControl = ({ logined, setLogined }) => {
                           </div>
                         </div>
                       </button>
+                      <div
+                        className="font-bold p-1 mt-2"
+                        style={{
+                          width: "200px",
+                          border: "1px #cccccc solid",
+                          textAlign: "center",
+                          marginLeft: "125px",
+                        }}
+                      >
+                        {realty.realtyDeal == "판매중" ? (
+                          <div>
+                            <button
+                              style={{}}
+                              onClick={() => {
+                                //후기 작성
+                                onDealToggle();
+                              }}
+                            >
+                              거래완료로 변경
+                            </button>
+                          </div>
+                        ) : (
+                          <div>
+                            <div>거래완료</div>
+                          </div>
+                        )}
+                      </div>
                     </li>
                   ))}
                 </ul>

@@ -14,7 +14,7 @@ import { FiHeart } from "react-icons/fi";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaCarrot } from "react-icons/fa";
+import { FaCarrot, FaRegPaperPlane } from "react-icons/fa";
 import { SlEmotsmile } from "react-icons/sl";
 import { AiFillLike, AiOutlineEnter } from "react-icons/ai";
 import { FiMessageCircle, FiMoreHorizontal } from "react-icons/fi";
@@ -36,15 +36,15 @@ const BoardPost = ({
   replyToggle,
   setReplyToggle,
   onReplyMenuToggle,
+  onRemoveReply,
   setMenuToggle,
-
   editToggle,
   onEditToggle,
 }) => {
   const { num } = useParams();
   const [userid, setUserid] = useState(sessionStorage.getItem("userid"));
   const [boardWriter, setBoardWriter] = useState("");
-
+  const [replyNum, setReplyNum] = useState("");
   //댓글
   const [replies, setReplis] = useState([]);
   const [replyValue, setReplyValue] = useState("");
@@ -619,17 +619,17 @@ const BoardPost = ({
                               >
                                 <button
                                   style={{
-                                    //    border: "1px red solid",
                                     fontSize: "1.1rem",
                                   }}
                                   onClick={() => {
                                     onReplyMenuToggle();
+                                    setReplyNum(reply.id);
                                   }}
                                 >
                                   <FiMoreHorizontal />
                                 </button>
 
-                                {replyToggle && (
+                                {replyToggle && reply.id == replyNum ? (
                                   <div
                                     className="flex flex-col items-center"
                                     style={{
@@ -648,13 +648,15 @@ const BoardPost = ({
                                       댓글삭제
                                     </button>
                                   </div>
+                                ) : (
+                                  ""
                                 )}
                               </div>
                             ) : (
                               ""
                             )}
                           </div>
-                          {replyDelete && (
+                          {replyDelete && reply.id == replyNum ? (
                             <div
                               className="p-2 rounded-md"
                               style={{
@@ -664,10 +666,11 @@ const BoardPost = ({
                                 position: "absolute",
                                 left: "50%",
                                 transform: "translateX(-50%)",
+                                backgroundColor: "white",
                               }}
                             >
                               <div className="flex justify-center">
-                                게시물을 삭제하시겠어요?
+                                댓글을 삭제하시겠어요?
                               </div>
                               <div className="flex justify-center gap-4 mt-3">
                                 <button
@@ -677,22 +680,24 @@ const BoardPost = ({
                                     color: "red",
                                   }}
                                   onClick={() => {
+                                    onRemoveReply(reply.id);
                                     alert("삭제되었습니다.");
-                                    setReplyToggle();
-                                    onReplyDeleteT(false);
+                                    window.location.reload();
                                   }}
                                 >
                                   삭제
                                 </button>
                                 <button
                                   onClick={() => {
-                                    onDeleteToggle(false);
+                                    onReplyDeleteT(false);
                                   }}
                                 >
                                   취소
                                 </button>
                               </div>
                             </div>
+                          ) : (
+                            ""
                           )}
                           <div
                             style={{

@@ -20,7 +20,7 @@ const JobsEdit = ({ logined, setLogined }) => {
     }
   }, []);
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("시급");
+  const [category, setCategory] = useState("");
   const [priceValue, setPriceValue] = useState("");
   const [contentValue, setContentValue] = useState("");
   const [subjectValue, setSubjectValue] = useState("");

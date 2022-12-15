@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { FaCarrot } from "react-icons/fa";
+import { FiArrowRight } from "react-icons/fi";
+
 import RealtyPaging from "../components/RealtyPaging";
 import ProductPaging from "../components/ProductPaging";
 import JobsPaging from "../components/JobsPaging";
@@ -69,6 +71,7 @@ const ArticleControl = ({ logined, setLogined }) => {
     setRealty((prev) => datas);
   };
   //여기부터 Product
+  const [pnum, setPnum] = useState("");
   const [Ppage, setPPage] = useState(1);
   const [currentProducts, setCurrentProducts] = useState([]);
   const [product, setProduct] = useState([]);
@@ -156,6 +159,7 @@ const ArticleControl = ({ logined, setLogined }) => {
           method: "post",
         });
         onProduct(data.data);
+        // console.log(data.data);
         setCurrentProducts(data.data.slice(0, 8));
       } catch (e) {
         console.log(e);
@@ -344,6 +348,7 @@ const ArticleControl = ({ logined, setLogined }) => {
                               onClick={() => {
                                 //후기 작성
                                 onDealToggle();
+                                setPnum(product.productId);
                               }}
                             >
                               거래완료로 변경
@@ -355,23 +360,35 @@ const ArticleControl = ({ logined, setLogined }) => {
                           </div>
                         )}
                       </div>
-                      {dealToggle && (
+                      {dealToggle && product.productId == pnum ? (
                         <div
                           style={{
                             border: "1px #cccccc solid",
                             position: "absolute",
+                            backgroundColor: "white",
                           }}
                         >
-                          <div className="font-bold">거래 후기 보내기</div>
-                          <div className="flex gap-2">
+                          <div className="font-bold flex gap-2 m-2">
+                            <span className="flex items-center">
+                              {" "}
+                              <FiArrowRight />
+                            </span>
+                            거래 후기 남기기
+                          </div>
+                          <div
+                            className="flex gap-2 p-2"
+                            style={{
+                              backgroundColor: "#eeeeee",
+                            }}
+                          >
                             {product.profileImage != null ? (
                               <img
                                 src={product.profileImage}
                                 alt=""
                                 style={{
                                   borderRadius: "15px",
-                                  width: "70px",
-                                  height: "70px",
+                                  width: "60px",
+                                  height: "60px",
                                   objectFit: "fill",
                                   display: "block",
                                 }}
@@ -389,22 +406,74 @@ const ArticleControl = ({ logined, setLogined }) => {
                                 }}
                               />
                             )}
-                            <span>거래한 상품</span>
+                            <div className="flex flex-col justify-center">
+                              <span
+                                style={{
+                                  color: "gray",
+                                }}
+                              >
+                                거래한 상품
+                              </span>
+                              <div>{product.productSubject}</div>
+                            </div>
                           </div>
 
-                          {/* <div>
-                            <ImSad />
-                            <ImSad2 />
+                          <div className="flex justify-center font-bold p-4">
+                            "구매자"님과 거래가 어떠셨나요?
                           </div>
-                          <div>
-                            <ImSmile />
-                            <ImSmile2 />
+                          <div
+                            className="flex gap-5 justify-between p-3"
+                            style={{
+                              fontSize: "2rem",
+                            }}
+                          >
+                            <button className="flex flex-col items-center gap-1">
+                              {" "}
+                              <ImSad
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">별로예요</span>
+                            </button>
+                            <button className="flex flex-col items-center gap-1">
+                              <ImSmile
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">좋아요!</span>
+                            </button>
+                            <button className="flex flex-col items-center gap-1">
+                              <ImHappy
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">최고예요!</span>
+                            </button>
                           </div>
-                          <div>
-                            <ImHappy />
-                            <ImHappy2 />
-                          </div> */}
+                          <div
+                            className=" flex justify-center m-2"
+                            style={{
+                              backgroundColor: "#fc9d39",
+                              color: "white",
+                              borderRadius: "5px",
+                            }}
+                          >
+                            <button
+                              className="font-bold p-2"
+                              style={{
+                                width: "100%",
+                              }}
+                              onClick={() => {}}
+                            >
+                              거래 후기 작성 완료
+                            </button>
+                          </div>
                         </div>
+                      ) : (
+                        ""
                       )}
                     </li>
                   ))}

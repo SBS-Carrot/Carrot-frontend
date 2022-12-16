@@ -89,6 +89,7 @@ const ArticleControl = ({ logined, setLogined }) => {
     const datas = data.reverse();
     setProduct((prev) => datas);
   };
+
   const moveProduct = async (id) => {
     try {
       await axios({
@@ -104,7 +105,57 @@ const ArticleControl = ({ logined, setLogined }) => {
   const [dealToggle, setDealToggle] = useState(false);
 
   const onDealToggle = () => {
+    setProductReview("");
+    setPSadToggle(false);
+    setSmileToggle(false);
+    setHappyToggel(false);
     setDealToggle(!dealToggle);
+  };
+
+  //productReview - id, productId, 구매자, 평가체크, deal = "거래완료" -> 온도 변경
+  const [productReview, setProductReview] = useState("");
+
+  const onProductReview = async (articleid) => {
+    try {
+      // buyUserId: sessionStorage.getItem("buyUserId"),
+
+      const data = await axios({
+        url: `http://localhost:8083/productReview`,
+        method: "POST",
+        data: {
+          productId: articleid,
+          productReview: reviewCheck,
+          buyUserId: "user12",
+          sellUserId: sessionStorage.getItem("userid"),
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const [reviewCheck, setReviewCheck] = useState("");
+
+  const [psadToggle, setPSadToggle] = useState(false);
+  const [psmileToggle, setSmileToggle] = useState(false);
+  const [phappyToggle, setHappyToggel] = useState(false);
+
+  const onSad = () => {
+    setPSadToggle(true);
+    setSmileToggle(false);
+    setHappyToggel(false);
+    setReviewCheck("별로예요");
+  };
+  const onSmile = () => {
+    setPSadToggle(false);
+    setSmileToggle(true);
+    setHappyToggel(false);
+    setReviewCheck("좋아요");
+  };
+  const onHappy = () => {
+    setPSadToggle(false);
+    setSmileToggle(false);
+    setHappyToggel(true);
+    setReviewCheck("최고예요");
   };
 
   //여기부터 Jobs
@@ -339,6 +390,7 @@ const ArticleControl = ({ logined, setLogined }) => {
                           border: "1px #cccccc solid",
                           textAlign: "center",
                           marginLeft: "10px",
+                          position: "relative",
                         }}
                       >
                         {product.productDeal == "판매중" ? (
@@ -346,7 +398,6 @@ const ArticleControl = ({ logined, setLogined }) => {
                             <button
                               style={{}}
                               onClick={() => {
-                                //후기 작성
                                 onDealToggle();
                                 setPnum(product.productId);
                               }}
@@ -364,8 +415,8 @@ const ArticleControl = ({ logined, setLogined }) => {
                         <div
                           style={{
                             border: "1px #cccccc solid",
-                            position: "absolute",
                             backgroundColor: "white",
+                            position: "absolute",
                           }}
                         >
                           <div className="font-bold flex gap-2 m-2">
@@ -427,32 +478,99 @@ const ArticleControl = ({ logined, setLogined }) => {
                               fontSize: "2rem",
                             }}
                           >
-                            <button className="flex flex-col items-center gap-1">
-                              {" "}
-                              <ImSad
-                                style={{
-                                  fontSize: "3.2rem",
-                                }}
-                              />
-                              <span className="text-base">별로예요</span>
+                            <button
+                              onClick={() => {
+                                onSad();
+                              }}
+                            >
+                              {psadToggle == true ? (
+                                <div
+                                  className="flex flex-col items-center "
+                                  style={{
+                                    color: "#fc9d39",
+                                  }}
+                                >
+                                  <ImSad2
+                                    style={{
+                                      fontSize: "3.2rem",
+                                    }}
+                                  />
+                                  <span className="text-base">별로예요</span>
+                                </div>
+                              ) : (
+                                <div className="flex flex-col items-center ">
+                                  <ImSad
+                                    style={{
+                                      fontSize: "3.2rem",
+                                    }}
+                                  />
+                                  <span className="text-base">별로예요</span>
+                                </div>
+                              )}
                             </button>
-                            <button className="flex flex-col items-center gap-1">
-                              <ImSmile
-                                style={{
-                                  fontSize: "3.2rem",
-                                }}
-                              />
-                              <span className="text-base">좋아요!</span>
+                            <button
+                              onClick={() => {
+                                onSmile();
+                              }}
+                            >
+                              {psmileToggle == true ? (
+                                <div
+                                  className="flex flex-col items-center "
+                                  style={{
+                                    color: "#fc9d39",
+                                  }}
+                                >
+                                  <ImSmile2
+                                    style={{
+                                      fontSize: "3.2rem",
+                                    }}
+                                  />
+                                  <span className="text-base">좋아요!</span>
+                                </div>
+                              ) : (
+                                <div className="flex flex-col items-center ">
+                                  <ImSmile
+                                    style={{
+                                      fontSize: "3.2rem",
+                                    }}
+                                  />
+                                  <span className="text-base">좋아요!</span>
+                                </div>
+                              )}
                             </button>
-                            <button className="flex flex-col items-center gap-1">
-                              <ImHappy
-                                style={{
-                                  fontSize: "3.2rem",
-                                }}
-                              />
-                              <span className="text-base">최고예요!</span>
+                            <button
+                              className="flex flex-col items-center gap-1"
+                              onClick={() => {
+                                onHappy();
+                              }}
+                            >
+                              {phappyToggle == true ? (
+                                <div
+                                  className="flex flex-col items-center gap-1"
+                                  style={{
+                                    color: "#fc9d39",
+                                  }}
+                                >
+                                  <ImHappy2
+                                    style={{
+                                      fontSize: "3.2rem",
+                                    }}
+                                  />
+                                  <span className="text-base">최고예요!</span>
+                                </div>
+                              ) : (
+                                <div className="flex flex-col items-center gap-1">
+                                  <ImHappy
+                                    style={{
+                                      fontSize: "3.2rem",
+                                    }}
+                                  />
+                                  <span className="text-base">최고예요!</span>
+                                </div>
+                              )}
                             </button>
                           </div>
+
                           <div
                             className=" flex justify-center m-2"
                             style={{
@@ -466,7 +584,9 @@ const ArticleControl = ({ logined, setLogined }) => {
                               style={{
                                 width: "100%",
                               }}
-                              onClick={() => {}}
+                              onClick={() => {
+                                onProductReview(pnum);
+                              }}
                             >
                               거래 후기 작성 완료
                             </button>

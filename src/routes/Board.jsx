@@ -98,7 +98,6 @@ const Board = ({ logined, setLogined }) => {
         if (res.data.length == 0) {
           setQStop(true);
         }
-        console.log("QRes", res);
       });
     }
   }, [QisLoaded]);
@@ -156,7 +155,6 @@ const Board = ({ logined, setLogined }) => {
           // 전체 데이터를 다 불러온 경우(불러온 값이 12개 보다 적다면 -> 매번 12개씩 불러오기로 했으므로 해당 값보다 작으면 마지막 페이지) 아예 로드를 중지
           setStop(true);
         }
-        console.log("Res", res);
       });
     }
   }, [isLoaded]);

@@ -151,11 +151,7 @@ const Chat = ({ logined, setLogined }) => {
       setType(data1.data.type);
       setId(data1.data.articleId);
       const myName = sessionStorage.getItem("userid");
-      console.log(data1.data);
-      const articleId = sessionStorage.getItem("articleId");
-      const type = sessionStorage.getItem("type");
-      console.log(articleId);
-      console.log(type);
+
       if (myName === data1.data.myName) {
         sessionStorage.removeItem("yourName");
         sessionStorage.setItem("yourName", data1.data.yourName);
@@ -199,7 +195,6 @@ const Chat = ({ logined, setLogined }) => {
             url: `http://localhost:8083/realty/${data1.data.articleId}`,
             method: "get",
           });
-          console.log(data.data);
           setRealty(data.data);
         } catch (e) {
           console.log(e);
@@ -291,7 +286,104 @@ const Chat = ({ logined, setLogined }) => {
           ) : (
             ""
           )}
-          {type == "realty" ? <div>realty</div> : ""}
+          {type == "realty" ? (
+            <div
+              style={{
+                borderBottom: "1px #ffa445 solid",
+                margin: "0 auto",
+                width: "500px",
+                display: "flex",
+              }}
+            >
+              {realty.profileImage != null ? (
+                <div
+                  style={{
+                    width: "150px",
+                    height: "120px",
+                  }}
+                >
+                  <img
+                    src={realty.profileImage}
+                    alt=""
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "fill",
+                    }}
+                  />
+                </div>
+              ) : (
+                <div
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faCarrot}
+                    style={{
+                      fontSize: "5rem",
+                      color: "#ffa445",
+                      paddingLeft: "10px",
+                      paddingTop: "5px",
+                    }}
+                  />
+                </div>
+              )}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <h1>{realty.realtyAddress}</h1>
+                <div>
+                  {realty.realtyDealing === "매매" ? (
+                    <div>
+                      {realty.realtyDealing} {realty.realtySalePrice}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {realty.realtyDealing === "전세" ? (
+                    <div>
+                      {realty.realtyDealing} {realty.realtySalePrice}
+                      {realty.realtyD}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {realty.realtyDealing === "월세" ? (
+                    <div>
+                      {realty.realtyDealing} {realty.realtyDeposit} /{" "}
+                      {realty.realtyMonthly}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {realty.realtyDealing === "단기" ? (
+                    <div>
+                      {realty.realtyDealing} {realty.realtyDeposit} /{" "}
+                      {realty.realtyMonthly}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <h1>
+                  평수 {realty.realtySpace}평, 방 {realty.realtyRoom}개 / 욕실{" "}
+                  {realty.realtyBath}개
+                </h1>
+                <h1>
+                  높이 총 {realty.realtyWhole}층 / {realty.realtyFloor}층
+                </h1>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
           <div
             style={{
               width: "90%",

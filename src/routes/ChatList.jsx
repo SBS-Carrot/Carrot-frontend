@@ -85,12 +85,23 @@ const ChatList = ({ logined, setLogined }) => {
           <ul
             style={{
               width: "100%",
-              border: "1px red solid",
+              border: "1px #bcbcbc solid",
               height: "100%",
+              marginTop: "10px",
+              borderRadius: "10px",
+              paddingLeft: "10px",
+              paddingTop: "10px",
             }}
           >
             {chatList.map((room, index) => (
-              <li key={index}>
+              <li
+                key={index}
+                style={{
+                  border: "1px #bcbcbc solid",
+                  borderRadius: "10px",
+                  marginBottom: "5px",
+                }}
+              >
                 <button
                   onClick={() => {
                     moveChatRoom(room.roomId);
@@ -168,12 +179,51 @@ const ChatList = ({ logined, setLogined }) => {
                         </div>
                       )}
                     </div>
-                    <div>
+                    <div style={{}}>
                       {sessionStorage.getItem("userid") == room.myName ? (
                         <div>"{room.yourName}"님</div>
                       ) : (
                         <div>"{room.myName}"님</div>
                       )}
+                      <div
+                        style={{
+                          marginLeft: "10px",
+                          width: "200px",
+                        }}
+                      >
+                        {room.type == "product" ? (
+                          <div>채팅 유형 : 중고 거래</div>
+                        ) : (
+                          ""
+                        )}
+                        {room.type == "realty" ? (
+                          <div>채팅 유형 : 부동산 거래</div>
+                        ) : (
+                          ""
+                        )}
+                        {room.type == "board" ? (
+                          <div>채팅 유형 : 동네 질문</div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div
+                        className="ellipsis_1"
+                        style={{
+                          paddingLeft: "15px",
+                          maxWidth: "300px",
+                        }}
+                      >
+                        마지막 채팅 : {room.lastMessage}
+                      </div>
                     </div>
                   </div>
                 </button>

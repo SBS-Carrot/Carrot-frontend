@@ -42,6 +42,7 @@ const ProductPost = ({
   };
 
   const moveChat = async (myName, yourName) => {
+    const is_exist_room = null;
     if (myName === yourName) {
       alert("자기 자신에게는 메세지를 보낼 수 없습니다.");
       return;
@@ -52,50 +53,15 @@ const ProductPost = ({
       method: "GET",
       params: { myName, yourName },
     });
+    // 채팅방이 여러개라 오류남.
     const data1 = await axios({
       url: `http://localhost:8083/getChattingRoom`,
       method: "GET",
       params: { myName: yourName, yourName: myName },
     });
-
     sessionStorage.setItem("articleId", num);
     sessionStorage.setItem("type", "product");
-    const existRoom = data.data.roomId;
-    const existRoom1 = data1.data.roomId;
-    // type과 id를 비교해서 상품이 다르면 다른채팅방으로 보내야함.
-    if (existRoom != "") {
-      const data2 = await axios({
-        url: `http://localhost:8083/getRoomByType/` + existRoom,
-        method: "POST",
-        data: {
-          myName,
-          yourName,
-          articleId: num,
-          type: "product",
-        },
-      });
-      if (data2.data == "") {
-        console.log("여기");
-        setMakeNewRoom(true);
-      }
-    } else if (existRoom1 != "") {
-      const data3 = await axios({
-        url: `http://localhost:8083/getRoomByType/` + existRoom1,
-        method: "POST",
-        data: {
-          myName,
-          yourName,
-          articleId: num,
-          type: "product",
-        },
-      });
-      if (data3.data == "") {
-        console.log("저기");
-        setMakeNewRoom1(true);
-      }
-    }
-
-    if (existRoom == "" && data.data == "" && existRoom1 == "") {
+    if (data.data.length == 0) {
       // 채팅방이 없다면 (메시지를 처음주고 받는다면)
       // uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
       const data1 = await axios({
@@ -119,60 +85,130 @@ const ProductPost = ({
         method: "POST",
         data: chattingRoom,
       });
-      console.log("C");
-      // navigate(`/chat/${roomNum}`);
-    } else if (makeNewRoom) {
-      const data1 = await axios({
-        url: `http://localhost:8083/getUser/${userid}`,
-        method: "Get",
-      });
-      const myURL = data1.data.profileImage;
-      const yourURL = articleWriter.profileImage;
-      const roomNum = uuid();
-      const chattingRoom = {
-        roomId: roomNum,
-        myName,
-        yourName,
-        myURL,
-        yourURL,
-        type: "product",
-        articleId: num,
-      };
-      axios({
-        url: `http://localhost:8083/chat`,
-        method: "POST",
-        data: chattingRoom,
-      });
-      console.log("B");
-      // navigate(`/chat/${roomNum}`);
-    } else if (makeNewRoom1) {
-      const data1 = await axios({
-        url: `http://localhost:8083/getUser/${userid}`,
-        method: "Get",
-      });
-      const myURL = data1.data.profileImage;
-      const yourURL = articleWriter.profileImage;
-      const roomNum = uuid();
-      const chattingRoom = {
-        roomId: roomNum,
-        myName,
-        yourName,
-        myURL,
-        yourURL,
-        type: "product",
-        articleId: num,
-      };
-      axios({
-        url: `http://localhost:8083/chat`,
-        method: "POST",
-        data: chattingRoom,
-      });
-      console.log("E");
-      // navigate(`/chat/${roomNum}`);
-    } else {
-      //그 방 번호로 이동
-      console.log("A");
-      // navigate(`/chat/${existRoom}`);
+
+      navigate(`/chat/${roomNum}`);
+      return;
+    }
+    for (let i = 0; i < data.data.length; i++) {
+      if (
+        (data.data[i].roomId == "" || data.data[i].roomId == undefined) &&
+        (data1.data[i].roomId == "" || data1.data[i].roomId == undefined)
+      ) {
+        // 채팅방이 없다면 (메시지를 처음주고 받는다면)
+        // uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
+        const data1 = await axios({
+          url: `http://localhost:8083/getUser/${userid}`,
+          method: "Get",
+        });
+        const myURL = data1.data.profileImage;
+        const yourURL = articleWriter.profileImage;
+        const roomNum = uuid();
+        const chattingRoom = {
+          roomId: roomNum,
+          myName,
+          yourName,
+          myURL,
+          yourURL,
+          type: "product",
+          articleId: num,
+        };
+        axios({
+          url: `http://localhost:8083/chat`,
+          method: "POST",
+          data: chattingRoom,
+        });
+
+        navigate(`/chat/${roomNum}`);
+        return;
+      }
+      //이미 존재한다면 type과 id를 비교해서
+      // 상품이 같다면 그방으로, 다르면 다른채팅방으로 보내야함.
+      else if (data.data[i].roomId != "") {
+        const data2 = await axios({
+          url: `http://localhost:8083/getRoomByType/` + data.data[i].roomId,
+          method: "POST",
+          data: {
+            myName,
+            yourName,
+            articleId: num,
+            type: "product",
+          },
+        });
+        if (data2.data == "") {
+          //type과 id 비교시 없으므로 새로운 채팅방 개설.
+
+          const data1 = await axios({
+            url: `http://localhost:8083/getUser/${userid}`,
+            method: "Get",
+          });
+          const myURL = data1.data.profileImage;
+          const yourURL = articleWriter.profileImage;
+          const roomNum = uuid();
+          const chattingRoom = {
+            roomId: roomNum,
+            myName,
+            yourName,
+            myURL,
+            yourURL,
+            type: "product",
+            articleId: num,
+          };
+          axios({
+            url: `http://localhost:8083/chat`,
+            method: "POST",
+            data: chattingRoom,
+          });
+
+          navigate(`/chat/${roomNum}`);
+          return;
+        } else {
+          //이미 있으므로 이미 있는방으로 보낼 것.
+          navigate(`/chat/${data2.data.roomId}`);
+          return;
+        }
+      } else if (data1.data[i].roomId != "") {
+        const data3 = await axios({
+          url: `http://localhost:8083/getRoomByType/` + data1.data[i].roomId,
+          method: "POST",
+          data: {
+            myName,
+            yourName,
+            articleId: num,
+            type: "product",
+          },
+        });
+        if (data3.data == "") {
+          //type과 id 비교시 없으므로 새로운 채팅방 개설.
+          const data1 = await axios({
+            url: `http://localhost:8083/getUser/${userid}`,
+            method: "Get",
+          });
+          const myURL = data1.data.profileImage;
+          const yourURL = articleWriter.profileImage;
+          const roomNum = uuid();
+          const chattingRoom = {
+            roomId: roomNum,
+            myName,
+            yourName,
+            myURL,
+            yourURL,
+            type: "product",
+            articleId: num,
+          };
+          axios({
+            url: `http://localhost:8083/chat`,
+            method: "POST",
+            data: chattingRoom,
+          });
+
+          navigate(`/chat/${roomNum}`);
+          return;
+        } else {
+          //이미 있으므로 이미 있는방으로 보낼 것.
+          navigate(`/chat/${data3.data.roomId}`);
+          return;
+        }
+      }
     }
   };
 

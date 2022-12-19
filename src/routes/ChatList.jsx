@@ -222,7 +222,7 @@ const ChatList = ({ logined, setLogined }) => {
                           maxWidth: "300px",
                         }}
                       >
-                        마지막 채팅 : {room.lastMessage}
+                        {room.lastMessage}
                       </div>
                     </div>
                   </div>

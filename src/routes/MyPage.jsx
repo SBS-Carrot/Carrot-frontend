@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import LoginedHeader from "../layouts/LoginedHeader";
-import { MdAddAPhoto } from "react-icons/md";
+import { MdAddAPhoto, MdPeopleOutline } from "react-icons/md";
 import { FaCarrot } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { TbTemperatureCelsius } from "react-icons/tb";
+
 const MyPage = ({ logined, setLogined }) => {
   const [user, setUser] = useState("");
   const [uploadedImg, setUploadedImg] = useState([]);
@@ -77,6 +79,7 @@ const MyPage = ({ logined, setLogined }) => {
           method: "GET",
         });
         setUser(data.data);
+
         if (data.data.profileImage != null) {
           setImageSrc(data.data.profileImage);
         }
@@ -169,6 +172,7 @@ const MyPage = ({ logined, setLogined }) => {
       console.log(e);
     }
   };
+
   return (
     <div>
       <LoginedHeader setLogined={setLogined} />
@@ -210,8 +214,141 @@ const MyPage = ({ logined, setLogined }) => {
             </li>
           </ul>
         </div>
-        <div style={{}}>
-          <div className="mt-10">
+        <div>
+          <div>
+            <div className="mt-5 w-96">
+              <div className="flex font-bold items-center justify-between">
+                <span
+                  style={{
+                    fontSize: "1.1rem",
+                  }}
+                >
+                  {" "}
+                  매너온도
+                </span>
+                <div className="flex items-center">
+                  {" "}
+                  {user.temp}{" "}
+                  <TbTemperatureCelsius
+                    style={{
+                      fontSize: "1.2rem",
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                {/* 20이하 검정색 */}
+                {user.temp <= "20" ? (
+                  <progress
+                    className="progress  w-96"
+                    value={user.temp}
+                    max="100"
+                  ></progress>
+                ) : (
+                  ""
+                )}
+                {/* 21~32 남색 */}
+                {user.temp > "20" && user.temp <= "32" ? (
+                  <progress
+                    className="progress progress-primary  w-96"
+                    value={user.temp}
+                    max="100"
+                  ></progress>
+                ) : (
+                  ""
+                )}
+                {/* 33~39 파랑 */}
+                {user.temp > "32" && user.temp < "40" ? (
+                  <progress
+                    className="progress progress-info w-96"
+                    value={user.temp}
+                    max="100"
+                  ></progress>
+                ) : (
+                  ""
+                )}
+                {/* 40~49 초록 */}
+                {user.temp > "40" && user.temp < "50" ? (
+                  <progress
+                    className="progress progress-success w-96 "
+                    value={user.temp}
+                    max="100"
+                  ></progress>
+                ) : (
+                  ""
+                )}{" "}
+                {/* 50~59 노랑 */}
+                {user.temp >= "50" && user.temp < "60" ? (
+                  <progress
+                    className="progress progress-warning w-96"
+                    value={user.temp}
+                    max="100"
+                  ></progress>
+                ) : (
+                  ""
+                )}{" "}
+                {/* 60 이상 */}
+                {user.temp >= "60" ? (
+                  <progress
+                    className="progress progress-error  w-96"
+                    value={user.temp}
+                    max="100"
+                  ></progress>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="mt-5">
+            <div
+              className="font-bold"
+              style={{
+                fontSize: "1.1rem",
+              }}
+            >
+              받은 매너 평가
+            </div>
+            <div>
+              <span className="flex items-center gap-2 mb-2">
+                <MdPeopleOutline className="text-lg" /> 0
+                <span
+                  style={{
+                    backgroundColor: "#e7e7e7",
+                    padding: "2px",
+                  }}
+                >
+                  {" "}
+                  별로예요
+                </span>
+              </span>
+              <span className="flex items-center gap-2 mb-2">
+                <MdPeopleOutline className="text-lg" /> 0{" "}
+                <span
+                  style={{
+                    backgroundColor: "#e7e7e7",
+                    padding: "2px",
+                  }}
+                >
+                  {" "}
+                  좋아요!
+                </span>
+              </span>
+              <span className="flex items-center gap-2">
+                <MdPeopleOutline className="text-lg" /> 0{" "}
+                <span
+                  style={{
+                    backgroundColor: "#e7e7e7",
+                    padding: "2px",
+                  }}
+                >
+                  {" "}
+                  최고예요!!
+                </span>
+              </span>
+            </div>
+          </div>
+          <div className="mt-7">
             <h2
               style={{
                 fontSize: "1.2rem",

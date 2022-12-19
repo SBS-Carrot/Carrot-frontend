@@ -25,7 +25,6 @@ const ChatList = ({ logined, setLogined }) => {
           method: "get",
           params: { userid },
         });
-        console.log(data.data);
         setChatList(data.data);
       } catch (e) {
         console.log(e);
@@ -91,6 +90,7 @@ const ChatList = ({ logined, setLogined }) => {
               borderRadius: "10px",
               paddingLeft: "10px",
               paddingTop: "10px",
+              paddingRight: "10px",
             }}
           >
             {chatList.map((room, index) => (

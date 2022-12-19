@@ -17,6 +17,7 @@ import {
   ImHappy,
   ImHappy2,
 } from "react-icons/im";
+import { AiOutlineCheck } from "react-icons/ai";
 
 const ArticleControl = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -27,9 +28,36 @@ const ArticleControl = ({ logined, setLogined }) => {
   if (!logined) {
     moveBack();
   }
-  const [spreadProduct, setSpreadProduct] = useState(false);
+
+  const [spreadProduct, setSpreadProduct] = useState(
+    sessionStorage.getItem("myRealty") || false
+  );
   const [spreadJobs, setSpreadJobs] = useState(false);
   const [spreadRealty, setSpreadRealty] = useState(false);
+  const [choicePBuyer, setChoicePBuyer] = useState(false);
+  const [pChatList, setPChatList] = useState([]);
+  const [isPChecked, setIsPChecked] = useState(false);
+  const [pChatNum, setPChatNum] = useState("");
+  const onPChatNum = (index, name) => {
+    setPChatNum(index);
+    console.log(name);
+  };
+  const onPCheck = () => {
+    setIsPChecked(true);
+  };
+  const onChoicePBuyer = async () => {
+    setChoicePBuyer(!choicePBuyer);
+    const data = await axios({
+      url: `http://localhost:8083/getRoomByProductId/${pnum}`,
+      method: "get",
+    });
+    setPChatList(data.data);
+    console.log(data.data);
+  };
+
+  if (sessionStorage.getItem("myRealty")) {
+    setRealtyDealToggle(true);
+  }
   const onSpreadProduct = () => {
     setSpreadProduct(!spreadProduct);
   };
@@ -164,6 +192,7 @@ const ArticleControl = ({ logined, setLogined }) => {
     setSmileToggle(false);
     setHappyToggel(false);
     setDealToggle(!dealToggle);
+    setChoicePBuyer(false);
   };
 
   //productReview
@@ -172,7 +201,17 @@ const ArticleControl = ({ logined, setLogined }) => {
   const onProductReview = async (articleid) => {
     try {
       // buyUserId: sessionStorage.getItem("buyUserId"),
-
+      if (reviewCheck == "") {
+        alert("후기를 선택해주세요");
+        return;
+      }
+      if (
+        sessionStorage.getItem("buyer") == undefined ||
+        sessionStorage.getItem("buyer") == null
+      ) {
+        alert("구매자를 선택해 주세요");
+        return;
+      }
       const data = await axios({
         url: `http://localhost:8083/productReview`,
         method: "POST",
@@ -183,6 +222,7 @@ const ArticleControl = ({ logined, setLogined }) => {
           sellUserId: sessionStorage.getItem("userid"),
         },
       });
+      window.location.reload();
     } catch (e) {
       console.log(e);
     }
@@ -476,6 +516,7 @@ const ArticleControl = ({ logined, setLogined }) => {
                             border: "1px #cccccc solid",
                             backgroundColor: "white",
                             position: "absolute",
+                            zIndex: "9",
                           }}
                         >
                           <div className="font-bold flex gap-2 m-2">
@@ -527,10 +568,153 @@ const ArticleControl = ({ logined, setLogined }) => {
                               <div>{product.productSubject}</div>
                             </div>
                           </div>
+                          {sessionStorage.getItem("buyer") == undefined ||
+                          sessionStorage.getItem("buyer") == null ? (
+                            // 구매자 선택창
+                            <div className="flex justify-center font-bold p-4">
+                              <button
+                                onClick={() => {
+                                  onChoicePBuyer();
+                                }}
+                              >
+                                구매자를 선택해주세요!
+                              </button>
+                            </div>
+                          ) : (
+                            // 구매자 바로 불러오기
+                            <div className="flex justify-center font-bold p-4">
+                              "{sessionStorage.getItem("buyer")}"님과 거래가
+                              어떠셨나요?
+                            </div>
+                          )}
+                          {choicePBuyer && (
+                            <div>
+                              {/* 해당 id와 관련된 채팅리스트유저  */}
+                              <ul
+                                style={{
+                                  border: "1px #eeeeee solid",
+                                  position: "absolute",
+                                  top: "0%",
+                                  left: "100%",
+                                  width: "250px",
+                                  height: "332px",
+                                  backgroundColor: "white",
+                                  overflow: "auto",
+                                }}
+                              >
+                                {pChatList.map((chat, index) => (
+                                  <li key={index}>
+                                    {chat.myName ==
+                                    sessionStorage.getItem("userid") ? (
+                                      <div>
+                                        <div
+                                          style={{
+                                            width: "50px",
+                                            height: "50px",
+                                            borderRadius: "50%",
+                                          }}
+                                        >
+                                          <img
+                                            src={chat.yourURL}
+                                            alt=""
+                                            style={{
+                                              width: "100%",
+                                              height: "100%",
+                                              display: "block",
+                                              objectFit: "fill",
+                                              borderRadius: "50%",
+                                            }}
+                                          />
+                                        </div>
+                                        <div>
+                                          <div>{chat.yourName}</div>
+                                          <div>{chat.lastMessage}</div>
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <div
+                                        style={{
+                                          marginLeft: "3px",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "50px",
+                                            height: "50px",
+                                            borderRadius: "50%",
+                                          }}
+                                        >
+                                          <img
+                                            src={chat.myURL}
+                                            alt=""
+                                            style={{
+                                              width: "100%",
+                                              height: "100%",
+                                              display: "block",
+                                              objectFit: "fill",
+                                              borderRadius: "50%",
+                                            }}
+                                          />
+                                        </div>
+                                        <div className="flex">
+                                          <div>{chat.myName}</div>
+                                          <div
+                                            className="ellipsis_1"
+                                            style={{
+                                              transform: "translateY(-110%)",
+                                              maxWidth: "140px",
+                                              height: "30px",
+                                              whiteSpace: "nowrap",
+                                            }}
+                                          >
+                                            {chat.lastMessage}
+                                          </div>
+                                          {isPChecked && pChatNum == index ? (
+                                            <button
+                                              onClick={() => {
+                                                onPCheck();
+                                                onPChatNum(index, chat.myName);
+                                              }}
+                                              style={{
+                                                width: "30px",
+                                                height: "30px",
+                                                border: "1px #eeeeee solid",
+                                                borderRadius: "50%",
+                                                transform:
+                                                  "translate(15%,-110%)",
+                                              }}
+                                            >
+                                              <AiOutlineCheck
+                                                style={{
+                                                  marginLeft: "6px",
+                                                }}
+                                              />
+                                            </button>
+                                          ) : (
+                                            <button
+                                              onClick={() => {
+                                                onPCheck();
+                                                onPChatNum(index, "");
+                                              }}
+                                              style={{
+                                                width: "30px",
+                                                height: "30px",
+                                                border: "1px #eeeeee solid",
+                                                borderRadius: "50%",
+                                                transform:
+                                                  "translate(15%,-110%)",
+                                              }}
+                                            ></button>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
 
-                          <div className="flex justify-center font-bold p-4">
-                            "구매자"님과 거래가 어떠셨나요?
-                          </div>
                           <div
                             className="flex gap-5 justify-between p-3"
                             style={{
@@ -646,7 +830,6 @@ const ArticleControl = ({ logined, setLogined }) => {
                               onClick={() => {
                                 onProductReview(pnum);
                                 onDealToggle(false);
-                                window.location.reload();
                               }}
                             >
                               거래 후기 작성 완료

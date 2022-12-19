@@ -22,7 +22,6 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
   padding-bottom: 10px;
 }
 .ellipsis_2 {
@@ -31,6 +30,5 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
   padding-bottom: 10px;
 }

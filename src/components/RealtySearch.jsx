@@ -121,7 +121,7 @@ const RealtySearch = ({ logined, setLogined }) => {
           </div>
         </div>
         <div className="flex gap-3 mt-3">
-          {search == search1 ? (
+          {search == search2 ? (
             <div
               className="font-bold"
               style={{

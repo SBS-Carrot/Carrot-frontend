@@ -263,6 +263,7 @@ const ArticleControl = ({ logined, setLogined }) => {
           url: `http://localhost:8083/getProducts/${userid}`,
           method: "post",
         });
+
         onProduct(data.data);
         // console.log(data.data);
         setCurrentProducts(data.data.slice(0, 8));

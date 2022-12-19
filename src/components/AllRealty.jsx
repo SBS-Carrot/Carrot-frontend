@@ -61,6 +61,7 @@ const AllRealty = ({ logined, setLogined }) => {
         });
         onRealty(data.data);
         setCurrentPosts(data.data.slice(0, 10));
+        console.log(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -228,9 +229,59 @@ const AllRealty = ({ logined, setLogined }) => {
                               <span>{realty.realtyCategory}</span>
                               <span
                                 style={{
-                                  paddingRight: "5px",
+                                  paddingRight: "3px",
                                 }}
                               >
+                                {realty.realtyDealing === "전세" &&
+                                realty.realtySalePrice.length >= 7 ? (
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <div
+                                      style={{
+                                        display: "inline",
+                                      }}
+                                    >
+                                      <span
+                                        style={{
+                                          width: "25px",
+                                          whiteSpace: "nowrap",
+                                          display: "inline-flex",
+                                          overflow: "hidden",
+                                          justifyContent: "end",
+                                          marginLeft: "3px",
+                                        }}
+                                      >
+                                        {realty.realtySalePrice.charAt(0)}
+                                        {realty.realtySalePrice.charAt(1)}
+                                        {realty.realtySalePrice.charAt(2)}
+                                      </span>
+                                      <span>억</span>
+                                      {realty.realtySalePrice.substring(3) !=
+                                      0 ? (
+                                        <span
+                                          style={{
+                                            width: "55px",
+                                            whiteSpace: "nowrap",
+                                            display: "inline-flex",
+                                            overflow: "hidden",
+                                            textAlign: "end",
+                                            marginLeft: "10px",
+                                          }}
+                                        >
+                                          {realty.realtySalePrice.substring(2)}
+                                          만
+                                        </span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                                 {realty.realtyDealing === "전세" &&
                                 realty.realtySalePrice.length == 6 ? (
                                   <div
@@ -245,11 +296,9 @@ const AllRealty = ({ logined, setLogined }) => {
                                     >
                                       <span
                                         style={{
-                                          width: "20px",
+                                          width: "30px",
                                           whiteSpace: "nowrap",
-                                          display: "inline-flex",
-                                          overflow: "hidden",
-                                          justifyContent: "end",
+                                          marginLeft: "5px",
                                         }}
                                       >
                                         {realty.realtySalePrice.charAt(0)}
@@ -262,8 +311,7 @@ const AllRealty = ({ logined, setLogined }) => {
                                           style={{
                                             width: "55px",
                                             whiteSpace: "nowrap",
-                                            display: "inline-flex",
-                                            overflow: "hidden",
+
                                             textAlign: "end",
                                             marginLeft: "10px",
                                           }}
@@ -385,7 +433,7 @@ const AllRealty = ({ logined, setLogined }) => {
                                     >
                                       <span
                                         style={{
-                                          width: "30px",
+                                          width: "15px",
                                           whiteSpace: "nowrap",
                                           display: "inline-flex",
                                           overflow: "hidden",
@@ -515,7 +563,7 @@ const AllRealty = ({ logined, setLogined }) => {
                                     display: "inline",
                                   }}
                                 >
-                                  {realty.realtyDealing} &nbsp;
+                                  {realty.realtyDealing}
                                   <div
                                     style={{
                                       display: "inline",
@@ -603,6 +651,55 @@ const AllRealty = ({ logined, setLogined }) => {
                               ) : (
                                 ""
                               )}
+                              {realty.realtyDealing === "전세" &&
+                              realty.realtySalePrice.length >= 7 ? (
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
+                                  {realty.realtyDealing} &nbsp;
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <span
+                                      style={{
+                                        width: "25px",
+                                        whiteSpace: "nowrap",
+                                        display: "inline-flex",
+                                        overflow: "hidden",
+                                        justifyContent: "end",
+                                      }}
+                                    >
+                                      {realty.realtySalePrice.charAt(0)}
+                                      {realty.realtySalePrice.charAt(1)}
+                                      {realty.realtySalePrice.charAt(2)}
+                                    </span>
+                                    <span>억</span>
+                                    {realty.realtySalePrice.substring(3) !=
+                                    0 ? (
+                                      <span
+                                        style={{
+                                          width: "55px",
+                                          whiteSpace: "nowrap",
+                                          display: "inline-flex",
+                                          overflow: "hidden",
+                                          textAlign: "end",
+                                          marginLeft: "10px",
+                                        }}
+                                      >
+                                        {realty.realtySalePrice.substring(2)}만
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                </div>
+                              ) : (
+                                ""
+                              )}
                               {realty.realtyDealing === "매매" &&
                               realty.realtySalePrice.length == 5 ? (
                                 <div
@@ -610,7 +707,7 @@ const AllRealty = ({ logined, setLogined }) => {
                                     display: "inline",
                                   }}
                                 >
-                                  {realty.realtyDealing} &nbsp;
+                                  {realty.realtyDealing}
                                   <div
                                     style={{
                                       display: "inline",
@@ -828,7 +925,7 @@ const AllRealty = ({ logined, setLogined }) => {
                                 textAlign: "left",
                               }}
                             >
-                              {realty.realtyCategory}{" "}
+                              {realty.realtyCategory}
                             </span>
                             <span>
                               {realty.realtyDealing == "월세" ? (

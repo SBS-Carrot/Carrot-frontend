@@ -21,6 +21,7 @@ const Alert = ({}) => {
 
   const moveURL = (data) => {
     navigate(`${data}`);
+    window.location.reload();
   };
   //알림예시 항해99 프론트 https://github.com/HangHae99-FinalProject/FinalProject-React/blob/master/src/components/Alert.js
   //알림예시 항해99 백 https://github.com/HangHae99-FinalProject/FinalProject-Spring/blob/master/src/main/java/com/hanghae99/finalproject/sse/service/NotificationService.java
@@ -266,6 +267,10 @@ const Alert = ({}) => {
                                 onClick={() => {
                                   readNotification(notice.id);
                                   setAlertToggle(false);
+                                  sessionStorage.setItem(
+                                    "sender",
+                                    notice.sender
+                                  );
                                   moveURL(notice.url);
                                 }}
                               >
@@ -335,6 +340,10 @@ const Alert = ({}) => {
                                 onClick={() => {
                                   readNotification(notice.id);
                                   setAlertToggle(false);
+                                  sessionStorage.setItem(
+                                    "sender",
+                                    notice.sender
+                                  );
                                   moveURL(notice.url);
                                 }}
                               >
@@ -356,7 +365,7 @@ const Alert = ({}) => {
                                       display: "inline",
                                     }}
                                   >
-                                    <span>메세지를 보냈어요</span>
+                                    <span>&nbsp;메세지를&nbsp;보냈어요</span>
                                     <div
                                       style={{
                                         overflow: "hidden",

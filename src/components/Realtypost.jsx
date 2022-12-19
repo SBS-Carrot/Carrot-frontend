@@ -79,11 +79,21 @@ const Realtypost = ({
       //채팅방이 없다면 (메시지를 처음주고 받는다면)
       //uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
 
+      const data1 = await axios({
+        url: `http://localhost:8083/getUser/${userid}`,
+        method: "Get",
+      });
+      const myURL = data1.data.profileImage;
+      const yourURL = articleWriter.profileImage;
       const roomNum = uuid();
       const chattingRoom = {
         roomId: roomNum,
         myName,
         yourName,
+        myURL,
+        yourURL,
+        type: "realty",
+        articleId: num,
       };
       const data = await axios({
         url: `http://localhost:8083/chat`,
@@ -143,7 +153,6 @@ const Realtypost = ({
         });
         abcd = data.data.realtyUserid;
         onArticle(data.data);
-        console.log(data.data);
       } catch {
         console.log("에러");
         window.alert("존재하지 않는 게시글입니다.");

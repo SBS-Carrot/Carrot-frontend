@@ -250,7 +250,7 @@ const AllProduct = ({ logined, setLogined }) => {
                       <div
                         className="ellipsis_1"
                         style={{
-                          width: "200px",
+                          width: "150px",
                           height: "25px",
                           textAlign: "start",
                         }}

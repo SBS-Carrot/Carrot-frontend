@@ -63,6 +63,30 @@ const MyPage = ({ logined, setLogined }) => {
     }
   };
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/Preview`,
+          method: "GET",
+        });
+        console.log(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+
+      try {
+        const data1 = await axios({
+          url: `http://localhost:8083/Rreview`,
+          method: "GET",
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getData();
+  }, []);
+
   const onNicknameChange = (e) => {
     if (e.target.value.length > 10) {
       return;
@@ -311,7 +335,7 @@ const MyPage = ({ logined, setLogined }) => {
             </div>
             <div>
               <span className="flex items-center gap-2 mb-2">
-                <MdPeopleOutline className="text-lg" /> 0
+                <MdPeopleOutline className="text-lg" />0
                 <span
                   style={{
                     backgroundColor: "#e7e7e7",

@@ -70,6 +70,60 @@ const ArticleControl = ({ logined, setLogined }) => {
     const datas = data.reverse();
     setRealty((prev) => datas);
   };
+
+  const [rnum, setRnum] = useState("");
+  const [reatlyDealToggle, setRealtyDealToggle] = useState(false);
+
+  const onRealtyDealToggle = () => {
+    //   setRealtyReview("");
+    // setRSadToggle(false);
+    // setRSmileToggle(false);
+    // setRHappyToggle(false);
+    setRealtyDealToggle(!reatlyDealToggle);
+  };
+
+  const [realtyReviewCheck, seRealtyReviewCheck] = useState("");
+
+  // const onRealtyReview = async (articleid) => {
+  //   try {
+  //     const data = await axios({
+  //       url: `http://localhost:8083/ReatlyReview`,
+  //       method: "POST",
+  //       data: {
+  //         realtyId: articleid,
+  //         realtyReview: realtyReviewCheck,
+  //         buyUserId: "user12",
+  //         sellUserId: sessionStorage.getItem("userid"),
+  //       },
+  //     });
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+
+  // const [rsadToggle, setRSadToggle] = useState(false);
+  // const [rsmileToggle, setRSmileToggle] = useState(false);
+  // const [rhappyToggle, setRHappyToggle] = useState(false);
+
+  // const onRealtySad = () => {
+  //   setRSadToggle(true);
+  //   setRSmileToggle(false);
+  //   setRHappyToggle(false);
+  //   seRealtyReviewCheck("별로예요");
+  // };
+  // const onRealtySmile = () => {
+  //   setRSadToggle(false);
+  //   setRSmileToggle(true);
+  //   setRHappyToggle(false);
+  //   seRealtyReviewCheck("좋아요");
+  // };
+  // const onRealtyHappy = () => {
+  //   setRSadToggle(false);
+  //   setRSmileToggle(false);
+  //   setRHappyToggle(true);
+  //   seRealtyReviewCheck("최고예요");
+  // };
+
   //여기부터 Product
   const [pnum, setPnum] = useState("");
   const [Ppage, setPPage] = useState(1);
@@ -112,7 +166,7 @@ const ArticleControl = ({ logined, setLogined }) => {
     setDealToggle(!dealToggle);
   };
 
-  //productReview - id, productId, 구매자, 평가체크, deal = "거래완료" -> 온도 변경
+  //productReview
   const [productReview, setProductReview] = useState("");
 
   const onProductReview = async (articleid) => {
@@ -406,8 +460,12 @@ const ArticleControl = ({ logined, setLogined }) => {
                             </button>
                           </div>
                         ) : (
-                          <div>
-                            <div>거래완료</div>
+                          <div
+                            style={{
+                              color: "gray",
+                            }}
+                          >
+                            {product.productDeal}
                           </div>
                         )}
                       </div>
@@ -586,6 +644,8 @@ const ArticleControl = ({ logined, setLogined }) => {
                               }}
                               onClick={() => {
                                 onProductReview(pnum);
+                                onDealToggle(false);
+                                window.location.reload();
                               }}
                             >
                               거래 후기 작성 완료
@@ -1074,10 +1134,9 @@ const ArticleControl = ({ logined, setLogined }) => {
                         {realty.realtyDeal == "판매중" ? (
                           <div>
                             <button
-                              style={{}}
                               onClick={() => {
-                                //후기 작성
-                                onDealToggle();
+                                onRealtyDealToggle();
+                                //  setRnum(realty.realtyId);
                               }}
                             >
                               거래완료로 변경
@@ -1085,10 +1144,196 @@ const ArticleControl = ({ logined, setLogined }) => {
                           </div>
                         ) : (
                           <div>
-                            <div>거래완료</div>
+                            <div>{realty.realtyDeal} </div>
                           </div>
                         )}
                       </div>
+                      {reatlyDealToggle ? (
+                        <div
+                          style={{
+                            border: "1px #cccccc solid",
+                            backgroundColor: "white",
+                            position: "absolute",
+                          }}
+                        >
+                          <div className="font-bold flex gap-2 m-2">
+                            <span className="flex items-center">
+                              {" "}
+                              <FiArrowRight />
+                            </span>
+                            거래 후기 남기기
+                          </div>
+                          <div
+                            className="flex gap-2 p-2"
+                            style={{
+                              backgroundColor: "#eeeeee",
+                            }}
+                          >
+                            {realty.profileImage != null ? (
+                              <img
+                                src={realty.profileImage}
+                                alt=""
+                                style={{
+                                  borderRadius: "15px",
+                                  width: "60px",
+                                  height: "60px",
+                                  objectFit: "fill",
+                                  display: "block",
+                                }}
+                              />
+                            ) : (
+                              <FaCarrot
+                                style={{
+                                  color: "#fc9d39",
+                                  fontSize: "10rem",
+                                  width: "70px",
+                                  height: "70px",
+                                  transform: "translate(-5% ,-5%)",
+                                  border: "0.1px #fc9d39 solid",
+                                  borderRadius: "50%",
+                                }}
+                              />
+                            )}
+                            <div className="flex flex-col justify-center">
+                              <span
+                                style={{
+                                  color: "gray",
+                                }}
+                              >
+                                거래한 상품
+                              </span>
+                              <div>{realty.realtyCategory}</div>
+                            </div>
+                          </div>
+
+                          <div className="flex justify-center font-bold p-4">
+                            "구매자"님과 거래가 어떠셨나요?
+                          </div>
+                          <div
+                            className="flex gap-5 justify-between p-3"
+                            style={{
+                              fontSize: "2rem",
+                            }}
+                          >
+                            {/* <button
+                              onClick={() => {
+                                onRealtySad();
+                              }}
+                            >
+                              {rsadToggle == true ? (
+                                <div
+                                  className="flex flex-col items-center "
+                                  style={{
+                                    color: "#fc9d39",
+                                  }}
+                                >
+                                  <ImSad2
+                                    style={{
+                                      fontSize: "3.2rem",
+                                    }}
+                                  />
+                                  <span className="text-base">별로예요</span>
+                                </div>
+                              ) : (
+                                <div className="flex flex-col items-center ">
+                                  <ImSad
+                                    style={{
+                                      fontSize: "3.2rem",
+                                    }}
+                                  />
+                                  <span className="text-base">별로예요</span>
+                                </div>
+                              )}
+                            </button>
+                            <button
+                              onClick={() => {
+                                onRealtySmile();
+                              }}
+                            >
+                              {rsmileToggle == true ? (
+                                <div
+                                  className="flex flex-col items-center "
+                                  style={{
+                                    color: "#fc9d39",
+                                  }}
+                                >
+                                  <ImSmile2
+                                    style={{
+                                      fontSize: "3.2rem",
+                                    }}
+                                  />
+                                  <span className="text-base">좋아요!</span>
+                                </div>
+                              ) : (
+                                <div className="flex flex-col items-center ">
+                                  <ImSmile
+                                    style={{
+                                      fontSize: "3.2rem",
+                                    }}
+                                  />
+                                  <span className="text-base">좋아요!</span>
+                                </div>
+                              )}
+                            </button>
+                            <button
+                              className="flex flex-col items-center gap-1"
+                              onClick={() => {
+                                onRealtyHappy();
+                              }}
+                            >
+                              {rhappyToggle == true ? (
+                                <div
+                                  className="flex flex-col items-center gap-1"
+                                  style={{
+                                    color: "#fc9d39",
+                                  }}
+                                >
+                                  <ImHappy2
+                                    style={{
+                                      fontSize: "3.2rem",
+                                    }}
+                                  />
+                                  <span className="text-base">최고예요!</span>
+                                </div>
+                              ) : (
+                                <div className="flex flex-col items-center gap-1">
+                                  <ImHappy
+                                    style={{
+                                      fontSize: "3.2rem",
+                                    }}
+                                  />
+                                  <span className="text-base">최고예요!</span>
+                                </div>
+                              )}
+                            </button> */}
+                          </div>
+
+                          <div
+                            className=" flex justify-center m-2"
+                            style={{
+                              backgroundColor: "#fc9d39",
+                              color: "white",
+                              borderRadius: "5px",
+                            }}
+                          >
+                            <button
+                              className="font-bold p-2"
+                              style={{
+                                width: "100%",
+                              }}
+                              onClick={() => {
+                                // onRealtyReview(rnum);
+                                // onRealtyDealToggle(false);
+                                // window.location.reload();
+                              }}
+                            >
+                              거래 후기 작성 완료
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </li>
                   ))}
                 </ul>

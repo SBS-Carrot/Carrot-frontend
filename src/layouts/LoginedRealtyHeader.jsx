@@ -94,7 +94,6 @@ const LoginedRealtyHeader = ({ setLogined }) => {
             onClick={() => {
               setLogined(false);
               sessionStorage.clear();
-              window.location.reload();
             }}
           >
             로그아웃

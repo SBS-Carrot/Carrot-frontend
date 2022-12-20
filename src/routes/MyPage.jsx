@@ -4,7 +4,8 @@ import { MdAddAPhoto, MdPeopleOutline } from "react-icons/md";
 import { FaCarrot } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { TbTemperatureCelsius } from "react-icons/tb";
+
+import Temp from "./Temp";
 
 const MyPage = ({ logined, setLogined }) => {
   const [user, setUser] = useState("");
@@ -17,7 +18,7 @@ const MyPage = ({ logined, setLogined }) => {
   };
   const moveBack = () => {
     alert("로그인 후 사용할 수 있는 기능입니다.");
-    navigate(-1);
+    navigate("/");
   };
   if (!logined) {
     moveBack();
@@ -215,91 +216,8 @@ const MyPage = ({ logined, setLogined }) => {
           </ul>
         </div>
         <div>
-          <div>
-            <div className="mt-5 w-96">
-              <div className="flex font-bold items-center justify-between">
-                <span
-                  style={{
-                    fontSize: "1.1rem",
-                  }}
-                >
-                  {" "}
-                  매너온도
-                </span>
-                <div className="flex items-center">
-                  {" "}
-                  {user.temp}{" "}
-                  <TbTemperatureCelsius
-                    style={{
-                      fontSize: "1.2rem",
-                    }}
-                  />
-                </div>
-              </div>
-              <div>
-                {/* 20이하 검정색 */}
-                {user.temp <= "20" ? (
-                  <progress
-                    className="progress  w-96"
-                    value={user.temp}
-                    max="100"
-                  ></progress>
-                ) : (
-                  ""
-                )}
-                {/* 21~32 남색 */}
-                {user.temp > "20" && user.temp <= "32" ? (
-                  <progress
-                    className="progress progress-primary  w-96"
-                    value={user.temp}
-                    max="100"
-                  ></progress>
-                ) : (
-                  ""
-                )}
-                {/* 33~39 파랑 */}
-                {user.temp > "32" && user.temp < "40" ? (
-                  <progress
-                    className="progress progress-info w-96"
-                    value={user.temp}
-                    max="100"
-                  ></progress>
-                ) : (
-                  ""
-                )}
-                {/* 40~49 초록 */}
-                {user.temp > "40" && user.temp < "50" ? (
-                  <progress
-                    className="progress progress-success w-96 "
-                    value={user.temp}
-                    max="100"
-                  ></progress>
-                ) : (
-                  ""
-                )}{" "}
-                {/* 50~59 노랑 */}
-                {user.temp >= "50" && user.temp < "60" ? (
-                  <progress
-                    className="progress progress-warning w-96"
-                    value={user.temp}
-                    max="100"
-                  ></progress>
-                ) : (
-                  ""
-                )}{" "}
-                {/* 60 이상 */}
-                {user.temp >= "60" ? (
-                  <progress
-                    className="progress progress-error  w-96"
-                    value={user.temp}
-                    max="100"
-                  ></progress>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
-          </div>
+          <Temp temp={user.temp} page="MyPage" />
+          <Temp temp={user.temp} page="" />
           <div className="mt-5">
             <div
               className="font-bold"
@@ -311,7 +229,7 @@ const MyPage = ({ logined, setLogined }) => {
             </div>
             <div>
               <span className="flex items-center gap-2 mb-2">
-                <MdPeopleOutline className="text-lg" /> 0
+                <MdPeopleOutline className="text-lg" />0{" "}
                 <span
                   style={{
                     backgroundColor: "#e7e7e7",

@@ -94,7 +94,6 @@ const LoginedJobsHeader = ({ setLogined }) => {
             onClick={() => {
               sessionStorage.clear();
               setLogined(false);
-              window.location.reload();
             }}
           >
             로그아웃

@@ -29,6 +29,9 @@ const Chat = ({ logined, setLogined }) => {
   if (!logined) {
     moveBack();
   }
+  const moveReview = () => {
+    navigate("/ArticleControl");
+  };
   const userid = sessionStorage.getItem("userid");
   const [chatList, setChatList] = useState([]);
   const [chat, setChat] = useState("");
@@ -199,7 +202,7 @@ const Chat = ({ logined, setLogined }) => {
             url: `http://localhost:8083/product/${data1.data.articleId}`,
             method: "get",
           });
-
+          console.log(product);
           setProduct(data.data);
         } catch (e) {
           console.log(e);
@@ -239,25 +242,18 @@ const Chat = ({ logined, setLogined }) => {
   };
 
   const onProductReview = async (articleid) => {
+    console.log(sessionStorage.getItem("userid"));
     try {
-      if (sessionStorage.getItem("userid") == product.productUserid) {
-        console.log("seller", product.productUserid);
-        console.log("buyer", sessionStorage.setItem("yourName"));
-        navigate("/articleControl");
-      } else {
-        console.log("seller", product.productUserid);
-        console.log("buyer", sessionStorage.setItem("userid"));
-        // const data = await axios({
-        //   url: `http://localhost:8083/productBuyReview`,
-        //   method: "POST",
-        //   data: {
-        //     productId: articleid,
-        //     productReview: reviewCheck,
-        //     sellUserId: product.productUserid,
-        //     buyUserId: sessionStorage.getItem("userid"),
-        //   },
-        // });
-      }
+      const data = await axios({
+        url: `http://localhost:8083/productBuyReview`,
+        method: "POST",
+        data: {
+          productId: articleid,
+          productReview: reviewCheck,
+          sellUserId: product.productUserid,
+          buyUserId: sessionStorage.getItem("userid"),
+        },
+      });
     } catch (e) {
       console.log(e);
     }
@@ -291,16 +287,13 @@ const Chat = ({ logined, setLogined }) => {
           position: "relative",
         }}
       >
-        {}
-        {/* 판매자면 마이게시글로 이동하고, 구매자면 후기작성 창 나오게 */}
-        {/* 채팅창에서 이동할때 세션에 true저장해서 마이게시글 바로 토글 상태 */}
         {type == "product" ? (
           //중고거래일때
           product.productDeal == "거래 완료" ? (
             //중고거래 거래완료일때
             product.productBuyUserid == sessionStorage.getItem("userid") ||
             product.productBuyUserid == sessionStorage.getItem("yourName") ? (
-              //거래완료 당사자일때만 후기 창 팝업등장
+              //거래완료 구매자일때만 후기 창 팝업등장
               <div
                 style={{
                   position: "absolute",
@@ -333,7 +326,7 @@ const Chat = ({ logined, setLogined }) => {
                 </button>
                 <span>거래가 끝났나요?</span>
                 <br />
-                <span>후기를 작성해주세요!</span>) : ("")
+                <span>후기를 작성해주세요!</span>
                 {dealToggle && product.productId == pnum ? (
                   <div
                     style={{
@@ -397,105 +390,267 @@ const Chat = ({ logined, setLogined }) => {
                       "{sessionStorage.getItem("yourName")}"님과 거래가
                       어떠셨나요?
                     </div>
-                    <div
-                      className="flex gap-5 justify-between p-3"
-                      style={{
-                        fontSize: "2rem",
-                        width: "300px",
-                      }}
-                    >
-                      <button
-                        onClick={() => {
-                          onSad();
+
+                    <div>
+                      {/* 내가 구매자면 판매자에 대한 후기 남기기 */}
+                      <div
+                        className="flex gap-5 justify-between p-3"
+                        style={{
+                          fontSize: "2rem",
+                          width: "300px",
                         }}
                       >
-                        {psadToggle == true ? (
-                          <div
-                            className="flex flex-col items-center "
-                            style={{
-                              color: "#fc9d39",
-                            }}
-                          >
-                            <ImSad2
+                        <button
+                          onClick={() => {
+                            onSad();
+                          }}
+                        >
+                          {psadToggle == true ? (
+                            <div
+                              className="flex flex-col items-center "
                               style={{
-                                fontSize: "3.2rem",
+                                color: "#fc9d39",
                               }}
-                            />
-                            <span className="text-base">별로예요</span>
-                          </div>
-                        ) : (
-                          <div className="flex flex-col items-center ">
-                            <ImSad
+                            >
+                              <ImSad2
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">별로예요</span>
+                            </div>
+                          ) : (
+                            <div className="flex flex-col items-center ">
+                              <ImSad
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">별로예요</span>
+                            </div>
+                          )}
+                        </button>
+                        <button
+                          onClick={() => {
+                            onSmile();
+                          }}
+                        >
+                          {psmileToggle == true ? (
+                            <div
+                              className="flex flex-col items-center "
                               style={{
-                                fontSize: "3.2rem",
+                                color: "#fc9d39",
                               }}
-                            />
-                            <span className="text-base">별로예요</span>
-                          </div>
-                        )}
-                      </button>
-                      <button
-                        onClick={() => {
-                          onSmile();
+                            >
+                              <ImSmile2
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">좋아요!</span>
+                            </div>
+                          ) : (
+                            <div className="flex flex-col items-center ">
+                              <ImSmile
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">좋아요!</span>
+                            </div>
+                          )}
+                        </button>
+                        <button
+                          className="flex flex-col items-center gap-1"
+                          onClick={() => {
+                            onHappy();
+                          }}
+                        >
+                          {phappyToggle == true ? (
+                            <div
+                              className="flex flex-col items-center gap-1"
+                              style={{
+                                color: "#fc9d39",
+                              }}
+                            >
+                              <ImHappy2
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">최고예요!</span>
+                            </div>
+                          ) : (
+                            <div className="flex flex-col items-center gap-1">
+                              <ImHappy
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">최고예요!</span>
+                            </div>
+                          )}
+                        </button>
+                      </div>
+
+                      <div
+                        className=" flex justify-center m-2"
+                        style={{
+                          backgroundColor: "#fc9d39",
+                          color: "white",
+                          borderRadius: "5px",
                         }}
                       >
-                        {psmileToggle == true ? (
-                          <div
-                            className="flex flex-col items-center "
-                            style={{
-                              color: "#fc9d39",
-                            }}
-                          >
-                            <ImSmile2
-                              style={{
-                                fontSize: "3.2rem",
-                              }}
-                            />
-                            <span className="text-base">좋아요!</span>
-                          </div>
-                        ) : (
-                          <div className="flex flex-col items-center ">
-                            <ImSmile
-                              style={{
-                                fontSize: "3.2rem",
-                              }}
-                            />
-                            <span className="text-base">좋아요!</span>
-                          </div>
-                        )}
-                      </button>
-                      <button
-                        className="flex flex-col items-center gap-1"
-                        onClick={() => {
-                          onHappy();
-                        }}
-                      >
-                        {phappyToggle == true ? (
-                          <div
-                            className="flex flex-col items-center gap-1"
-                            style={{
-                              color: "#fc9d39",
-                            }}
-                          >
-                            <ImHappy2
-                              style={{
-                                fontSize: "3.2rem",
-                              }}
-                            />
-                            <span className="text-base">최고예요!</span>
-                          </div>
-                        ) : (
-                          <div className="flex flex-col items-center gap-1">
-                            <ImHappy
-                              style={{
-                                fontSize: "3.2rem",
-                              }}
-                            />
-                            <span className="text-base">최고예요!</span>
-                          </div>
-                        )}
-                      </button>
+                        <button
+                          className="font-bold p-2"
+                          style={{
+                            width: "100%",
+                          }}
+                          onClick={() => {
+                            onProductReview(pnum);
+                            onDealToggle(false);
+                            // window.location.reload();
+                          }}
+                        >
+                          거래 후기 작성 완료
+                        </button>
+                      </div>
                     </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {/* 거래완료 구매자일때 여기까지 */}
+              </div>
+            ) : product.productUserid == sessionStorage.getItem("userid") ? (
+              //거래완료 판매자일땐 이미 후기작성 완료 팝업창
+              <div
+                style={{
+                  position: "absolute",
+                  top: "250px",
+                  left: "900px",
+                  width: "160px",
+                  textAlign: "center",
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faHandshakeSimple}
+                  style={{
+                    fontSize: "3rem",
+                    color: "#ffa445",
+                    paddingTop: "5px",
+                    paddingLeft: "47px",
+                    display: "block",
+                  }}
+                />
+                <span>이미 후기를 작성하셨습니다.</span>
+              </div>
+            ) : (
+              //거래 당사자가 아니면 아무것도 안뜨게 빈칸.
+              ""
+              //중고거래 거래완료 여기까지
+            )
+          ) : product.productUserid == sessionStorage.getItem("userid") ? (
+            //중고거래 판매중일때 판매자는 후기버튼 누르면 바로 이동
+            <div
+              style={{
+                position: "absolute",
+                top: "250px",
+                left: "900px",
+                width: "160px",
+                textAlign: "center",
+              }}
+            >
+              <button
+                style={{
+                  display: "block",
+                  paddingTop: "5px",
+                  paddingLeft: "47px",
+                }}
+                onClick={() => {
+                  onDealToggle();
+                  setPnum(product.productId);
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faHandshakeSimple}
+                  style={{
+                    fontSize: "3rem",
+                    color: "#ffa445",
+
+                    display: "block",
+                  }}
+                />
+              </button>
+              <span>거래가 끝났나요?</span>
+              <br />
+              <span>후기를 작성해주세요!</span>
+              {dealToggle && product.productId == pnum ? (
+                <div
+                  style={{
+                    border: "1px #cccccc solid",
+                    backgroundColor: "white",
+                    position: "absolute",
+                    zIndex: "9",
+                    marginLeft: "-70px",
+                  }}
+                >
+                  <div className="font-bold flex gap-2 m-2">
+                    <span className="flex items-center">
+                      <FiArrowRight />
+                    </span>
+                    거래 후기 남기기
+                  </div>
+                  <div
+                    className="flex gap-2 p-2"
+                    style={{
+                      backgroundColor: "#eeeeee",
+                    }}
+                  >
+                    {product.profileImage != null ? (
+                      <img
+                        src={product.profileImage}
+                        alt=""
+                        style={{
+                          borderRadius: "15px",
+                          width: "60px",
+                          height: "60px",
+                          objectFit: "fill",
+                          display: "block",
+                        }}
+                      />
+                    ) : (
+                      <FaCarrot
+                        style={{
+                          color: "#fc9d39",
+                          fontSize: "10rem",
+                          width: "70px",
+                          height: "70px",
+                          transform: "translate(-5% ,-5%)",
+                          border: "0.1px #fc9d39 solid",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    )}
+                    <div className="flex flex-col justify-center">
+                      <span
+                        style={{
+                          color: "gray",
+                        }}
+                      >
+                        거래한 상품
+                      </span>
+                      <div>{product.productSubject}</div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-center font-bold p-4">
+                    "{sessionStorage.getItem("yourName")}"님과 거래가
+                    어떠셨나요?
+                  </div>
+
+                  <div>
+                    {/* 내가 구매자면 판매자에 대한 후기 남기기 */}
 
                     <div
                       className=" flex justify-center m-2"
@@ -503,6 +658,7 @@ const Chat = ({ logined, setLogined }) => {
                         backgroundColor: "#fc9d39",
                         color: "white",
                         borderRadius: "5px",
+                        width: "300px",
                       }}
                     >
                       <button
@@ -511,29 +667,35 @@ const Chat = ({ logined, setLogined }) => {
                           width: "100%",
                         }}
                         onClick={() => {
-                          onProductReview(pnum);
-                          onDealToggle(false);
-                          window.location.reload();
+                          sessionStorage.setItem(
+                            "buyer",
+                            sessionStorage.getItem("yourName")
+                          );
+                          sessionStorage.setItem(
+                            "seller",
+                            sessionStorage.getItem("userid")
+                          );
+                          sessionStorage.setItem("productId", pnum);
+                          sessionStorage.setItem("productToggle", true);
+                          moveReview();
                         }}
                       >
-                        거래 후기 작성 완료
+                        거래 후기 작성 하기
                       </button>
                     </div>
                   </div>
-                ) : (
-                  ""
-                )}
-              </div>
-            ) : (
-              ""
-            )
-          ) : (
-            //중고거래 판매중일때
-            <div>
-              <span></span>
+                </div>
+              ) : (
+                ""
+              )}
+              {/* 거래완료 구매자일때 여기까지 */}
             </div>
+          ) : (
+            //중고거래 판매중일때 판매자제외 아무것도 안뜸.
+            ""
           )
-        ) : //부동산 거래일때
+        ) : //중고거래 판매중일때 여기까지
+        //부동산 거래일때
         realty.realtyDeal == "판매중" ? (
           //부동산거래 판매중일때
           <div

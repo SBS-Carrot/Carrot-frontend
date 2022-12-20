@@ -30,7 +30,7 @@ const ArticleControl = ({ logined, setLogined }) => {
   }
 
   const [spreadProduct, setSpreadProduct] = useState(
-    sessionStorage.getItem("myRealty") || false
+    sessionStorage.getItem("productToggle") || false
   );
   const [spreadJobs, setSpreadJobs] = useState(false);
   const [spreadRealty, setSpreadRealty] = useState(false);
@@ -38,7 +38,10 @@ const ArticleControl = ({ logined, setLogined }) => {
   const [pChatList, setPChatList] = useState([]);
   const [isPChecked, setIsPChecked] = useState(false);
   const [pChatNum, setPChatNum] = useState("");
-  const [buyUserId, setBuyUserId] = useState("");
+  const [buyUserId, setBuyUserId] = useState(
+    sessionStorage.getItem("buyer") || ""
+  );
+
   const onPChatNum = (index) => {
     setPChatNum(index);
   };
@@ -52,7 +55,6 @@ const ArticleControl = ({ logined, setLogined }) => {
       method: "get",
     });
     setPChatList(data.data);
-    console.log(data.data);
   };
 
   if (sessionStorage.getItem("myRealty")) {
@@ -153,7 +155,7 @@ const ArticleControl = ({ logined, setLogined }) => {
   };
 
   //여기부터 Product
-  const [pnum, setPnum] = useState("");
+  const [pnum, setPnum] = useState(sessionStorage.getItem("productId") || "");
   const [Ppage, setPPage] = useState(1);
   const [currentProducts, setCurrentProducts] = useState([]);
   const [product, setProduct] = useState([]);
@@ -184,7 +186,9 @@ const ArticleControl = ({ logined, setLogined }) => {
     navigate(`/productpost/${id}`);
   };
 
-  const [dealToggle, setDealToggle] = useState(false);
+  const [dealToggle, setDealToggle] = useState(
+    sessionStorage.getItem("productToggle") || false
+  );
 
   const onDealToggle = () => {
     setPSadToggle(false);
@@ -220,6 +224,11 @@ const ArticleControl = ({ logined, setLogined }) => {
           sellUserId: sessionStorage.getItem("userid"),
         },
       });
+      sessionStorage.removeItem("buyer");
+      sessionStorage.removeItem("seller");
+      sessionStorage.removeItem("productId");
+      sessionStorage.removeItem("productToggle");
+      setBuyUserId("");
       window.location.reload();
     } catch (e) {
       console.log(e);
@@ -492,6 +501,8 @@ const ArticleControl = ({ logined, setLogined }) => {
                               onClick={() => {
                                 onDealToggle();
                                 setPnum(product.productId);
+                                sessionStorage.removeItem("buyer");
+                                setBuyUserId("");
                               }}
                             >
                               거래완료로 변경
@@ -572,6 +583,8 @@ const ArticleControl = ({ logined, setLogined }) => {
                               <button
                                 onClick={() => {
                                   onChoicePBuyer();
+                                  sessionStorage.removeItem("buyer");
+                                  setBuyUserId("");
                                 }}
                                 style={{
                                   border: "1px #cccccc solid",
@@ -595,9 +608,16 @@ const ArticleControl = ({ logined, setLogined }) => {
                             </div>
                           ) : (
                             // 구매자 바로 불러오기
-                            <div className="flex justify-center font-bold p-4">
-                              "{sessionStorage.getItem("buyer")}"님과 거래가
-                              어떠셨나요?
+                            <div
+                              className=""
+                              style={{
+                                fontWeight: "bolder",
+                                textAlign: "center",
+                              }}
+                            >
+                              "{sessionStorage.getItem("buyer")}"님과
+                              <br />
+                              거래가 어떠셨나요?
                             </div>
                           )}
                           {choicePBuyer && (
@@ -690,6 +710,10 @@ const ArticleControl = ({ logined, setLogined }) => {
                                               onPCheck();
                                               onPChatNum(index);
                                               setBuyUserId(chat.myName);
+                                              sessionStorage.setItem(
+                                                "buyer",
+                                                chat.myName
+                                              );
                                             }}
                                             style={{
                                               width: "30px",
@@ -712,6 +736,10 @@ const ArticleControl = ({ logined, setLogined }) => {
                                               onPCheck();
                                               onPChatNum(index);
                                               setBuyUserId(chat.myName);
+                                              sessionStorage.setItem(
+                                                "buyer",
+                                                chat.myName
+                                              );
                                             }}
                                             style={{
                                               width: "30px",
@@ -890,8 +918,8 @@ const ArticleControl = ({ logined, setLogined }) => {
                                 width: "100%",
                               }}
                               onClick={() => {
-                                onProductReview(pnum);
                                 onDealToggle(false);
+                                onProductReview(pnum);
                               }}
                             >
                               거래 후기 작성 완료

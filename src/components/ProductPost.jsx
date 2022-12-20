@@ -17,7 +17,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaCarrot } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
 import uuid from "react-uuid";
-import Temp from "../routes/Temp";
 const ProductPost = ({
   logined,
   setLogined,
@@ -483,13 +482,31 @@ const ProductPost = ({
                 width: "200px",
               }}
             >
-              <div
-                className="flex gap-2"
-                style={{
-                  marginLeft: "-10px",
-                }}
-              >
-                <Temp temp={user.temp} page="" />
+              <div className="flex gap-2">
+                <div>
+                  <div
+                    className="font-bold flex justify-end p-1 "
+                    style={{
+                      color: "green",
+                    }}
+                  >
+                    {user.temp}
+                  </div>
+                  <progress
+                    className="flex progress progress-success w-32"
+                    value="40"
+                    max="100"
+                  ></progress>
+                </div>
+                <div
+                  className="flex"
+                  style={{
+                    color: "green",
+                    fontSize: "1.75rem",
+                  }}
+                >
+                  <BsFillEmojiSmileFill />
+                </div>
               </div>
 
               <div

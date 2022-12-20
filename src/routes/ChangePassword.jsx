@@ -15,7 +15,7 @@ const ChangePassword = ({ logined, setLogined }) => {
   const [pw2Status, setPw2Status] = useState(false);
   const moveBack = () => {
     alert("로그인 후 사용할 수 있는 기능입니다.");
-    navigate(-1);
+    navigate("/");
   };
   if (!logined) {
     moveBack();

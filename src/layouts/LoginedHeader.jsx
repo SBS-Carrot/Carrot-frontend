@@ -92,7 +92,6 @@ const LoginedHeader = ({ setLogined }) => {
             onClick={() => {
               sessionStorage.clear();
               setLogined(false);
-              window.location.replace("");
             }}
           >
             로그아웃

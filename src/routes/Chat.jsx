@@ -24,7 +24,7 @@ const Chat = ({ logined, setLogined }) => {
 
   const moveBack = () => {
     alert("로그인 후 사용할 수 있는 기능입니다.");
-    navigate(-1);
+    navigate("/");
   };
   if (!logined) {
     moveBack();
@@ -170,6 +170,9 @@ const Chat = ({ logined, setLogined }) => {
         sessionStorage.removeItem("yourName");
         sessionStorage.setItem("yourName", data1.data.myName);
       } else if (myName != data1.data.myName && myName != data1.data.yourName) {
+        console.log(myName);
+        console.log(data1.data.myName);
+        console.log(data1.data.yourName);
         notChattingUser();
       }
 
@@ -196,7 +199,7 @@ const Chat = ({ logined, setLogined }) => {
             url: `http://localhost:8083/product/${data1.data.articleId}`,
             method: "get",
           });
-          console.log(data.data);
+
           setProduct(data.data);
         } catch (e) {
           console.log(e);
@@ -218,7 +221,7 @@ const Chat = ({ logined, setLogined }) => {
   };
 
   const notChattingUser = () => {
-    navigate("/");
+    // navigate("/");
     alert("채팅 당사자만 입장할 수 있습니다.");
   };
   const [productReview, setProductReview] = useState("");

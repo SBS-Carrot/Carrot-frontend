@@ -23,7 +23,7 @@ const ArticleControl = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const moveBack = () => {
     alert("로그인 후 사용할 수 있는 기능입니다.");
-    navigate(-1);
+    navigate("/");
   };
   if (!logined) {
     moveBack();
@@ -38,9 +38,9 @@ const ArticleControl = ({ logined, setLogined }) => {
   const [pChatList, setPChatList] = useState([]);
   const [isPChecked, setIsPChecked] = useState(false);
   const [pChatNum, setPChatNum] = useState("");
-  const onPChatNum = (index, name) => {
+  const [buyUserId, setBuyUserId] = useState("");
+  const onPChatNum = (index) => {
     setPChatNum(index);
-    console.log(name);
   };
   const onPCheck = () => {
     setIsPChecked(true);
@@ -218,7 +218,7 @@ const ArticleControl = ({ logined, setLogined }) => {
         data: {
           productId: articleid,
           productReview: reviewCheck,
-          buyUserId: "user12",
+          buyUserId,
           sellUserId: sessionStorage.getItem("userid"),
         },
       });
@@ -323,7 +323,6 @@ const ArticleControl = ({ logined, setLogined }) => {
     };
     getData();
   }, []);
-
   return (
     <div>
       <LoginedHeader setLogined={setLogined} />
@@ -571,13 +570,29 @@ const ArticleControl = ({ logined, setLogined }) => {
                           {sessionStorage.getItem("buyer") == undefined ||
                           sessionStorage.getItem("buyer") == null ? (
                             // 구매자 선택창
-                            <div className="flex justify-center font-bold p-4">
+                            <div className="flex justify-center font-bold p-3">
                               <button
                                 onClick={() => {
                                   onChoicePBuyer();
                                 }}
+                                style={{
+                                  border: "1px #cccccc solid",
+                                  padding: "5px 10px",
+                                  marginTop: "10px",
+                                  marginBottom: "-5px",
+                                }}
                               >
-                                구매자를 선택해주세요!
+                                <span
+                                  style={
+                                    {
+                                      // backgroundColor: "#cccccc",
+                                      // padding: "2px",
+                                    }
+                                  }
+                                >
+                                  구매자
+                                </span>
+                                를 선택해주세요!
                               </button>
                             </div>
                           ) : (
@@ -594,39 +609,71 @@ const ArticleControl = ({ logined, setLogined }) => {
                                 style={{
                                   border: "1px #eeeeee solid",
                                   position: "absolute",
-                                  top: "0%",
+                                  top: "-.3%",
                                   left: "100%",
                                   width: "250px",
-                                  height: "332px",
+                                  height: "333px",
                                   backgroundColor: "white",
                                   overflow: "auto",
                                 }}
                               >
+                                {pChatList.length == 0 ? (
+                                  <div style={{}}>"채팅 내역이 없습니다."</div>
+                                ) : (
+                                  ""
+                                )}
                                 {pChatList.map((chat, index) => (
-                                  <li key={index}>
+                                  <li
+                                    key={index}
+                                    style={{
+                                      border: "1px #eeeeee solid",
+                                    }}
+                                  >
                                     {chat.myName ==
                                     sessionStorage.getItem("userid") ? (
-                                      <div>
-                                        <div
-                                          style={{
-                                            width: "50px",
-                                            height: "50px",
-                                            borderRadius: "50%",
-                                          }}
-                                        >
-                                          <img
-                                            src={chat.yourURL}
-                                            alt=""
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                        }}
+                                      >
+                                        {chat.yourURL == null ? (
+                                          <FaCarrot
                                             style={{
-                                              width: "100%",
-                                              height: "100%",
-                                              display: "block",
-                                              objectFit: "fill",
+                                              color: "#fc9d39",
+                                              fontSize: "2.5rem",
+                                              transform: "translate(5% ,15%)",
+                                              border: "0.1px #fc9d39 solid",
                                               borderRadius: "50%",
                                             }}
                                           />
-                                        </div>
-                                        <div>
+                                        ) : (
+                                          <div
+                                            style={{
+                                              width: "50px",
+                                              height: "50px",
+                                              borderRadius: "50%",
+                                            }}
+                                          >
+                                            <img
+                                              src={chat.yourURL}
+                                              alt=""
+                                              style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                display: "block",
+                                                objectFit: "fill",
+                                                borderRadius: "50%",
+                                              }}
+                                            />
+                                          </div>
+                                        )}
+
+                                        <div
+                                          style={{
+                                            border: "1px gray solid",
+                                            width: "130px",
+                                          }}
+                                        >
                                           <div>{chat.yourName}</div>
                                           <div>{chat.lastMessage}</div>
                                         </div>
@@ -635,77 +682,95 @@ const ArticleControl = ({ logined, setLogined }) => {
                                       <div
                                         style={{
                                           marginLeft: "3px",
+                                          display: "flex",
                                         }}
                                       >
-                                        <div
-                                          style={{
-                                            width: "50px",
-                                            height: "50px",
-                                            borderRadius: "50%",
-                                          }}
-                                        >
-                                          <img
-                                            src={chat.myURL}
-                                            alt=""
+                                        {isPChecked && pChatNum == index ? (
+                                          //체크상태인 버튼
+                                          <button
+                                            onClick={() => {
+                                              onPCheck();
+                                              onPChatNum(index);
+                                              setBuyUserId(chat.myName);
+                                            }}
                                             style={{
-                                              width: "100%",
-                                              height: "100%",
-                                              display: "block",
-                                              objectFit: "fill",
+                                              width: "30px",
+                                              height: "30px",
+                                              border: "1px gray solid",
+                                              borderRadius: "50%",
+                                              marginTop: "10px",
+                                            }}
+                                          >
+                                            <AiOutlineCheck
+                                              style={{
+                                                marginLeft: "6px",
+                                              }}
+                                            />
+                                          </button>
+                                        ) : (
+                                          //체크상태가 아닌 버튼들
+                                          <button
+                                            onClick={() => {
+                                              onPCheck();
+                                              onPChatNum(index);
+                                              setBuyUserId(chat.myName);
+                                            }}
+                                            style={{
+                                              width: "30px",
+                                              height: "30px",
+                                              border: "1px gray solid",
+                                              borderRadius: "50%",
+                                              marginTop: "10px",
+                                            }}
+                                          ></button>
+                                        )}
+                                        {chat.myURL == null ? (
+                                          <FaCarrot
+                                            style={{
+                                              color: "#fc9d39",
+                                              fontSize: "2.5rem",
+                                              transform: "translate(5% ,15%)",
+                                              border: "0.1px #fc9d39 solid",
                                               borderRadius: "50%",
                                             }}
                                           />
-                                        </div>
-                                        <div className="flex">
+                                        ) : (
+                                          <div
+                                            style={{
+                                              width: "50px",
+                                              height: "50px",
+                                              borderRadius: "50%",
+                                            }}
+                                          >
+                                            <img
+                                              src={chat.myURL}
+                                              alt=""
+                                              style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                display: "block",
+                                                objectFit: "fill",
+                                                borderRadius: "50%",
+                                              }}
+                                            />
+                                          </div>
+                                        )}
+                                        <div
+                                          className=""
+                                          style={{
+                                            marginLeft: "3px",
+                                          }}
+                                        >
                                           <div>{chat.myName}</div>
                                           <div
                                             className="ellipsis_1"
                                             style={{
-                                              transform: "translateY(-110%)",
                                               maxWidth: "140px",
                                               height: "30px",
-                                              whiteSpace: "nowrap",
                                             }}
                                           >
                                             {chat.lastMessage}
                                           </div>
-                                          {isPChecked && pChatNum == index ? (
-                                            <button
-                                              onClick={() => {
-                                                onPCheck();
-                                                onPChatNum(index, chat.myName);
-                                              }}
-                                              style={{
-                                                width: "30px",
-                                                height: "30px",
-                                                border: "1px #eeeeee solid",
-                                                borderRadius: "50%",
-                                                transform:
-                                                  "translate(15%,-110%)",
-                                              }}
-                                            >
-                                              <AiOutlineCheck
-                                                style={{
-                                                  marginLeft: "6px",
-                                                }}
-                                              />
-                                            </button>
-                                          ) : (
-                                            <button
-                                              onClick={() => {
-                                                onPCheck();
-                                                onPChatNum(index, "");
-                                              }}
-                                              style={{
-                                                width: "30px",
-                                                height: "30px",
-                                                border: "1px #eeeeee solid",
-                                                borderRadius: "50%",
-                                                transform:
-                                                  "translate(15%,-110%)",
-                                              }}
-                                            ></button>
-                                          )}
                                         </div>
                                       </div>
                                     )}
@@ -714,7 +779,6 @@ const ArticleControl = ({ logined, setLogined }) => {
                               </ul>
                             </div>
                           )}
-
                           <div
                             className="flex gap-5 justify-between p-3"
                             style={{

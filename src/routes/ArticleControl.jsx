@@ -580,17 +580,7 @@ const ArticleControl = ({ logined, setLogined }) => {
                                   marginBottom: "-5px",
                                 }}
                               >
-                                <span
-                                  style={
-                                    {
-                                      // backgroundColor: "#cccccc",
-                                      // padding: "2px",
-                                    }
-                                  }
-                                >
-                                  구매자
-                                </span>
-                                를 선택해주세요!
+                                구매자를 선택해주세요!
                               </button>
                             </div>
                           ) : (

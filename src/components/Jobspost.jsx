@@ -21,6 +21,7 @@ import { FaCarrot } from "react-icons/fa";
 import { MdKeyboardCapslock } from "react-icons/md";
 import { FiMoreHorizontal } from "react-icons/fi";
 import ReadMap from "./ReadMap";
+import Temp from "../routes/Temp";
 import { data } from "autoprefixer";
 const Jobspost = ({
   logined,
@@ -54,6 +55,16 @@ const Jobspost = ({
   const [images, setImages] = useState([]);
   const onLikes = (data) => {
     setJobsLiked(data);
+  };
+  const [days, setDays] = useState("");
+
+  const onDays = (e) => {
+    for (let i = 0; i < e.length; i++) {
+      let char1 = e.charAt(i);
+      // if(char1 == "월"){
+      //   days.concat("월");
+      // }
+    }
   };
 
   const onArticle = (data) => {
@@ -163,6 +174,7 @@ const Jobspost = ({
           method: "GET",
         });
         onArticle(data.data);
+        onDays(data.data.jobDay);
       } catch (e) {
         console.log(e);
       }
@@ -304,10 +316,14 @@ const Jobspost = ({
               <div
                 className="flex justify-center flex-col"
                 style={{
-                  width: "470px",
+                  width: "250px",
                 }}
               >
-                <div className="font-bold ">{jobArticle.jobUserid}</div>
+                <div className="font-bold ">
+                  {articleWriter.nickname == "닉네임 없음"
+                    ? articleWriter.username
+                    : articleWriter.nickname}
+                </div>
                 <div className="text-sm">{articleWriter.address}</div>
               </div>
             </div>
@@ -316,32 +332,15 @@ const Jobspost = ({
                 width: "200px",
               }}
             >
-              <div className="flex gap-2">
-                <div>
-                  <div
-                    className="font-bold flex justify-end p-1 "
-                    style={{
-                      color: "green",
-                    }}
-                  >
-                    {articleWriter.temp}
-                  </div>
-                  <progress
-                    className="flex progress progress-success w-32"
-                    value="40"
-                    max="100"
-                  ></progress>
-                </div>
-                <div
-                  className="flex"
-                  style={{
-                    color: "green",
-                    fontSize: "1.75rem",
-                  }}
-                >
-                  <BsFillEmojiSmileFill />
-                </div>
+              <div
+                className="flex gap-2"
+                style={{
+                  marginLeft: "-10px",
+                }}
+              >
+                <Temp temp={articleWriter.temp} page="" />
               </div>
+
               <div
                 className="text-sm flex justify-end"
                 style={{
@@ -571,7 +570,7 @@ const Jobspost = ({
             <div
               className="py-2 flex gap-5 justify-end"
               style={{
-                width: "800px",
+                width: "700px",
               }}
             >
               <button
@@ -866,37 +865,16 @@ const Jobspost = ({
             >
               <div className="flex gap-2">
                 <div>
-                  <div
-                    className="font-bold flex justify-end p-1 "
-                    style={{
-                      color: "green",
-                    }}
-                  >
-                    {articleWriter.temp}
-                  </div>
-                  <progress
-                    className="flex progress progress-success w-32"
-                    value="40"
-                    max="100"
-                  ></progress>
+                  <Temp temp={articleWriter.temp} page="" />
                 </div>
                 <div
-                  className="flex"
+                  className="text-sm flex justify-end"
                   style={{
-                    color: "green",
-                    fontSize: "1.75rem",
+                    color: "gray",
                   }}
                 >
-                  <BsFillEmojiSmileFill />
+                  매너온도
                 </div>
-              </div>
-              <div
-                className="text-sm flex justify-end"
-                style={{
-                  color: "gray",
-                }}
-              >
-                매너온도
               </div>
             </div>
           </section>

@@ -57,7 +57,7 @@ const WriteMap = ({ searchPlace }) => {
       <div
         id="myMap"
         style={{
-          width: "800px",
+          width: "400px",
           height: "300px",
           border: "1px #d5d5d5 solid",
         }}

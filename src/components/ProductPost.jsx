@@ -473,9 +473,9 @@ const ProductPost = ({
               <div className="font-bold ">
                 {articleWriter.nickname == "닉네임 없음"
                   ? articleWriter.username
-                  : user.nickname}
+                  : articleWriter.nickname}
               </div>
-              <div className="text-sm">{user.address}</div>
+              <div className="text-sm">{articleWriter.address}</div>
             </div>
 
             <div
@@ -489,7 +489,7 @@ const ProductPost = ({
                   marginLeft: "-10px",
                 }}
               >
-                <Temp temp={user.temp} page="" />
+                <Temp temp={articleWriter.temp} page="" />
               </div>
 
               <div

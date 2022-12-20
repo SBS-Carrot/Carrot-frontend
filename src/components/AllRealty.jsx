@@ -78,17 +78,52 @@ const AllRealty = ({ logined, setLogined }) => {
       <div>
         <LoginedRealtyHeader setLogined={setLogined} />
         <section>
-          {/* <div
+          <div
             style={{
-              backgroundColor: "skyblue",
+              backgroundColor: "#cbeef8",
             }}
           >
             <div
+              className="flex justify-center"
               style={{
+                width: "1000px",
+                margin: "0 auto",
                 height: "300px",
               }}
-            ></div>
-          </div> */}
+            >
+              <div
+                className="flex justify-center flex-col gap-2"
+                style={{
+                  width: "350px",
+                }}
+              >
+                <div
+                  className="font-bold"
+                  style={{
+                    fontSize: "1.8rem",
+                  }}
+                >
+                  <span>복비없이 투명한</span>
+                  <div>부동산 직거래</div>
+                </div>
+                <div>
+                  <span>이웃이 살던 집, 당근마켓에서</span>
+                  <div>편하게 직거래해보세요.</div>
+                </div>
+              </div>
+              <div
+                className="flex items-center ml-3"
+                style={{
+                  width: "400px",
+                }}
+              >
+                <img
+                  src="https://www.daangn.com/_next/static/media/realty_hero_3x.5316d5c5.png"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
           <div
             style={{
               width: "800px",

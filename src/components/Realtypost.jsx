@@ -537,14 +537,24 @@ const Realtypost = ({
                 fontSize: "1.8rem",
               }}
             >
-              <div
-                className="font-bold"
-                style={{
-                  color: "#ffa445",
-                }}
-              >
-                {" "}
-                {article.realtyDeal}
+              <div className="font-bold">
+                {article.realtyDeal == "판매중" ? (
+                  <div
+                    style={{
+                      color: "#ffa445",
+                    }}
+                  >
+                    {article.realtyDeal}
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      color: "gray",
+                    }}
+                  >
+                    {article.realtyDeal}
+                  </div>
+                )}
               </div>
               <div className="font-bold">
                 {article.realtyDealing === "매매" ? (

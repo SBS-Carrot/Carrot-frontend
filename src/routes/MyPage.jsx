@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import LoginedHeader from "../layouts/LoginedHeader";
-import { MdAddAPhoto } from "react-icons/md";
+import { MdAddAPhoto, MdPeopleOutline } from "react-icons/md";
 import { FaCarrot } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import Temp from "./Temp";
+
 const MyPage = ({ logined, setLogined }) => {
   const [user, setUser] = useState("");
   const [uploadedImg, setUploadedImg] = useState([]);
@@ -77,6 +80,7 @@ const MyPage = ({ logined, setLogined }) => {
           method: "GET",
         });
         setUser(data.data);
+
         if (data.data.profileImage != null) {
           setImageSrc(data.data.profileImage);
         }
@@ -86,7 +90,6 @@ const MyPage = ({ logined, setLogined }) => {
     };
     onSubmit();
   }, []);
-
   const onSubmit1 = async (image, nickname) => {
     try {
       const formData = new FormData();
@@ -169,6 +172,7 @@ const MyPage = ({ logined, setLogined }) => {
       console.log(e);
     }
   };
+
   return (
     <div>
       <LoginedHeader setLogined={setLogined} />
@@ -210,8 +214,58 @@ const MyPage = ({ logined, setLogined }) => {
             </li>
           </ul>
         </div>
-        <div style={{}}>
-          <div className="mt-10">
+        <div>
+          <Temp temp={user.temp} page="MyPage" />
+
+          <div className="mt-5">
+            <div
+              className="font-bold"
+              style={{
+                fontSize: "1.1rem",
+              }}
+            >
+              받은 매너 평가
+            </div>
+            <div>
+              <span className="flex items-center gap-2 mb-2">
+                <MdPeopleOutline className="text-lg" />0{" "}
+                <span
+                  style={{
+                    backgroundColor: "#e7e7e7",
+                    padding: "2px",
+                  }}
+                >
+                  {" "}
+                  별로예요
+                </span>
+              </span>
+              <span className="flex items-center gap-2 mb-2">
+                <MdPeopleOutline className="text-lg" /> 0{" "}
+                <span
+                  style={{
+                    backgroundColor: "#e7e7e7",
+                    padding: "2px",
+                  }}
+                >
+                  {" "}
+                  좋아요!
+                </span>
+              </span>
+              <span className="flex items-center gap-2">
+                <MdPeopleOutline className="text-lg" /> 0{" "}
+                <span
+                  style={{
+                    backgroundColor: "#e7e7e7",
+                    padding: "2px",
+                  }}
+                >
+                  {" "}
+                  최고예요!!
+                </span>
+              </span>
+            </div>
+          </div>
+          <div className="mt-7">
             <h2
               style={{
                 fontSize: "1.2rem",

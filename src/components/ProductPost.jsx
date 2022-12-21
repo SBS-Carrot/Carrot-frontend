@@ -61,6 +61,7 @@ const ProductPost = ({
     });
     sessionStorage.setItem("articleId", num);
     sessionStorage.setItem("type", "product");
+    let testNum = uuid();
     if (data.data.length == 0) {
       // 채팅방이 없다면 (메시지를 처음주고 받는다면)
       // uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
@@ -161,7 +162,7 @@ const ProductPost = ({
           if (roomNum != undefined) {
             navigate(`/chat/${roomNum}`);
           } else {
-            alert("오류가 발생했습니다. 다시 시도해 주세요");
+            alert("오류가 Post에서 발생했습니다. 다시 시도해 주세요");
             window.location.reload();
           }
           return;
@@ -320,7 +321,6 @@ const ProductPost = ({
       }
     };
     onSubmit(num);
-    let testNum = uuid();
   }, []);
 
   const onArticle = (data) => {

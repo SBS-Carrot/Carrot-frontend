@@ -97,7 +97,7 @@ const Realtypost = ({
       if (roomNum != undefined) {
         navigate(`/chat/${roomNum}`);
       } else {
-        alert("에러가 발생했습니다. 다시 시도해 주세요");
+        alert("에러가 Post에서 발생했습니다. 다시 시도해 주세요");
         window.location.reload();
       }
       return;

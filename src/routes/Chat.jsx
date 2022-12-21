@@ -179,7 +179,7 @@ const Chat = ({ logined, setLogined }) => {
           data1.data.myName == undefined ||
           data1.data.yourName == undefined
         ) {
-          window.alert("에러가 발생했습니다. 다시 시도해주세요");
+          window.alert("에러가 Chat에서 발생했습니다. 다시 시도해주세요");
           navigate(-1);
           return;
         }
@@ -212,7 +212,7 @@ const Chat = ({ logined, setLogined }) => {
             url: `http://localhost:8083/product/${data1.data.articleId}`,
             method: "get",
           });
-          console.log(product);
+
           setProduct(data.data);
         } catch (e) {
           console.log(e);

@@ -202,7 +202,7 @@ const Chat = ({ logined, setLogined }) => {
             url: `http://localhost:8083/product/${data1.data.articleId}`,
             method: "get",
           });
-          console.log(product);
+          console.log(data.data);
           setProduct(data.data);
         } catch (e) {
           console.log(e);
@@ -254,6 +254,7 @@ const Chat = ({ logined, setLogined }) => {
           buyUserId: sessionStorage.getItem("userid"),
         },
       });
+      window.location.reload();
     } catch (e) {
       console.log(e);
     }

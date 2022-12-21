@@ -69,7 +69,7 @@ const Temp = ({ temp, page }) => {
             ) : (
               ""
             )}
-            {temp > "40" && temp < "50" ? (
+            {temp >= "40" && temp < "50" ? (
               <div
                 className="flex items-center"
                 style={{
@@ -156,7 +156,7 @@ const Temp = ({ temp, page }) => {
               ""
             )}
             {/* 40~49 초록 */}
-            {temp > "40" && temp < "50" ? (
+            {temp >= "40" && temp < "50" ? (
               <progress
                 className="progress progress-success w-96 "
                 value={temp}

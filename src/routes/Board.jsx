@@ -602,7 +602,13 @@ const Board = ({ logined, setLogined }) => {
               {/* 나의 동네 생활 */}
               {spreadLife && (
                 <div>
-                  <div>동네 질문</div>
+                  <div className="font-bold mb-2 flex">
+                    {" "}
+                    <span className="flex items-center">
+                      <AiOutlineCaretRight />
+                    </span>
+                    동네 질문
+                  </div>
                   <ul className="grid grid-cols-2">
                     {currentQlife.map((Qlife, index) => (
                       <li className="mb-3" key={index}>
@@ -704,7 +710,7 @@ const Board = ({ logined, setLogined }) => {
                   )}
                   <div className="font-bold mb-2 flex">
                     {" "}
-                    <span>
+                    <span className="flex items-center">
                       <AiOutlineCaretRight />
                     </span>
                     동네 카페

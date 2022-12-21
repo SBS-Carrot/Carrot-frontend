@@ -11,6 +11,7 @@ const MyPage = ({ logined, setLogined }) => {
   const [user, setUser] = useState("");
   const [uploadedImg, setUploadedImg] = useState([]);
   const [imageSrc, setImageSrc] = useState("");
+
   const [nickname, setNickname] = useState(user.nickname || "");
   const navigate = useNavigate();
   const onChangeComplete = () => {
@@ -70,6 +71,7 @@ const MyPage = ({ logined, setLogined }) => {
     }
     setNickname(e.target.value);
   };
+
   useEffect(() => {
     const onSubmit = async () => {
       try {
@@ -228,7 +230,8 @@ const MyPage = ({ logined, setLogined }) => {
             </div>
             <div>
               <span className="flex items-center gap-2 mb-2">
-                <MdPeopleOutline className="text-lg" />0{" "}
+                <MdPeopleOutline className="text-lg" />
+                {user.sadReview}
                 <span
                   style={{
                     backgroundColor: "#e7e7e7",
@@ -240,7 +243,8 @@ const MyPage = ({ logined, setLogined }) => {
                 </span>
               </span>
               <span className="flex items-center gap-2 mb-2">
-                <MdPeopleOutline className="text-lg" /> 0{" "}
+                <MdPeopleOutline className="text-lg" />
+                {user.smileReview}
                 <span
                   style={{
                     backgroundColor: "#e7e7e7",
@@ -252,7 +256,7 @@ const MyPage = ({ logined, setLogined }) => {
                 </span>
               </span>
               <span className="flex items-center gap-2">
-                <MdPeopleOutline className="text-lg" /> 0{" "}
+                <MdPeopleOutline className="text-lg" /> {user.happyReview}
                 <span
                   style={{
                     backgroundColor: "#e7e7e7",

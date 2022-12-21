@@ -33,29 +33,9 @@ const ArticleControl = ({ logined, setLogined }) => {
     sessionStorage.getItem("productToggle") || false
   );
   const [spreadJobs, setSpreadJobs] = useState(false);
-  const [spreadRealty, setSpreadRealty] = useState(false);
-  const [choicePBuyer, setChoicePBuyer] = useState(false);
-  const [pChatList, setPChatList] = useState([]);
-  const [isPChecked, setIsPChecked] = useState(false);
-  const [pChatNum, setPChatNum] = useState("");
-  const [buyUserId, setBuyUserId] = useState(
-    sessionStorage.getItem("buyer") || ""
+  const [spreadRealty, setSpreadRealty] = useState(
+    sessionStorage.getItem("realtyToggle") || false
   );
-
-  const onPChatNum = (index) => {
-    setPChatNum(index);
-  };
-  const onPCheck = () => {
-    setIsPChecked(true);
-  };
-  const onChoicePBuyer = async () => {
-    setChoicePBuyer(!choicePBuyer);
-    const data = await axios({
-      url: `http://localhost:8083/getRoomByProductId/${pnum}`,
-      method: "get",
-    });
-    setPChatList(data.data);
-  };
 
   if (sessionStorage.getItem("myRealty")) {
     setRealtyDealToggle(true);
@@ -79,7 +59,28 @@ const ArticleControl = ({ logined, setLogined }) => {
   const [RpostPerPage] = useState(4);
   const RindexOfLastPost = Rpage * RpostPerPage;
   const RindexOfFirstPost = RindexOfLastPost - RpostPerPage;
+  const [choiceRBuyer, setChoiceRBuyer] = useState(false);
+  const [rChatList, setRChatList] = useState([]);
+  const [isRChecked, setIsRChecked] = useState(false);
+  const [rChatNum, setRChatNum] = useState("");
+  const [realtyBuyUserId, setRealtyBuyUserId] = useState(
+    sessionStorage.getItem("realtyBuyer") || ""
+  );
 
+  const onRChatNum = (index) => {
+    setRChatNum(index);
+  };
+  const onRCheck = () => {
+    setIsRChecked(true);
+  };
+  const onChoiceRBuyer = async () => {
+    setChoiceRBuyer(!choiceRBuyer);
+    const data = await axios({
+      url: `http://localhost:8083/getRoomByRealtyId/${rnum}`,
+      method: "get",
+    });
+    setRChatList(data.data);
+  };
   useEffect(() => {
     setCurrentRealtys(realty.slice(RindexOfFirstPost, RindexOfLastPost));
   }, [RindexOfFirstPost, RindexOfLastPost, Rpage]);
@@ -101,31 +102,49 @@ const ArticleControl = ({ logined, setLogined }) => {
     setRealty((prev) => datas);
   };
 
-  const [rnum, setRnum] = useState("");
-  const [reatlyDealToggle, setRealtyDealToggle] = useState(false);
+  const [rnum, setRnum] = useState(sessionStorage.getItem("realtyId") || "");
+  const [realtyDealToggle, setRealtyDealToggle] = useState(
+    sessionStorage.getItem("realtyToggle") || false
+  );
 
   const onRealtyDealToggle = () => {
     setRSadToggle(false);
     setRSmileToggle(false);
     setRHappyToggle(false);
-    setRealtyDealToggle(!reatlyDealToggle);
+    setRealtyDealToggle(!realtyDealToggle);
   };
 
   const [realtyReviewCheck, seRealtyReviewCheck] = useState("");
 
   const onRealtyReview = async (articleid) => {
     try {
+      if (realtyReviewCheck == "") {
+        alert("후기를 선택해주세요");
+        return;
+      }
+      if (
+        sessionStorage.getItem("realtyBuyer") == undefined ||
+        sessionStorage.getItem("realtyBuyer") == null
+      ) {
+        alert("구매자를 선택해 주세요");
+        return;
+      }
       const data = await axios({
         url: `http://localhost:8083/realtyReview`,
         method: "POST",
         data: {
           realtyId: articleid,
           realtyReview: realtyReviewCheck,
-          buyUserId: "user12",
-          sellUserId: sessionStorage.getItem("userid"),
+          realtyBuyUserId,
+          realtySellUserId: sessionStorage.getItem("userid"),
         },
       });
       console.log(data.data);
+      sessionStorage.removeItem("realtyBuyer");
+      sessionStorage.removeItem("realtyId");
+      sessionStorage.removeItem("realtyToggle");
+      setRealtyBuyUserId("");
+      window.location.reload();
     } catch (e) {
       console.log(e);
     }
@@ -165,7 +184,28 @@ const ArticleControl = ({ logined, setLogined }) => {
   const [PpostPerPage] = useState(8);
   const PindexOfLastPost = Ppage * PpostPerPage;
   const PindexOfFirstPost = PindexOfLastPost - PpostPerPage;
+  const [choicePBuyer, setChoicePBuyer] = useState(false);
+  const [pChatList, setPChatList] = useState([]);
+  const [isPChecked, setIsPChecked] = useState(false);
+  const [pChatNum, setPChatNum] = useState("");
+  const [buyUserId, setBuyUserId] = useState(
+    sessionStorage.getItem("buyer") || ""
+  );
 
+  const onPChatNum = (index) => {
+    setPChatNum(index);
+  };
+  const onPCheck = () => {
+    setIsPChecked(true);
+  };
+  const onChoicePBuyer = async () => {
+    setChoicePBuyer(!choicePBuyer);
+    const data = await axios({
+      url: `http://localhost:8083/getRoomByProductId/${pnum}`,
+      method: "get",
+    });
+    setPChatList(data.data);
+  };
   useEffect(() => {
     setCurrentProducts(product.slice(PindexOfFirstPost, PindexOfLastPost));
   }, [PindexOfFirstPost, PindexOfLastPost, Ppage]);
@@ -214,6 +254,7 @@ const ArticleControl = ({ logined, setLogined }) => {
         alert("구매자를 선택해 주세요");
         return;
       }
+
       const data = await axios({
         url: `http://localhost:8083/productReview`,
         method: "POST",
@@ -225,7 +266,6 @@ const ArticleControl = ({ logined, setLogined }) => {
         },
       });
       sessionStorage.removeItem("buyer");
-      sessionStorage.removeItem("seller");
       sessionStorage.removeItem("productId");
       sessionStorage.removeItem("productToggle");
       setBuyUserId("");
@@ -234,6 +274,7 @@ const ArticleControl = ({ logined, setLogined }) => {
       console.log(e);
     }
   };
+
   const [reviewCheck, setReviewCheck] = useState("");
 
   const [psadToggle, setPSadToggle] = useState(false);
@@ -1690,7 +1731,7 @@ const ArticleControl = ({ logined, setLogined }) => {
                           position: "relative",
                         }}
                       >
-                        {realty.realtyDeal == "판매중" ? (
+                        {realty.isRealtyDeal == "판매중" ? (
                           <div>
                             <button
                               style={{
@@ -1699,6 +1740,8 @@ const ArticleControl = ({ logined, setLogined }) => {
                               onClick={() => {
                                 onRealtyDealToggle();
                                 setRnum(realty.realtyId);
+                                sessionStorage.removeItem("realtyBuyer");
+                                setChoiceRBuyer(false);
                               }}
                             >
                               거래완료로 변경
@@ -1710,11 +1753,11 @@ const ArticleControl = ({ logined, setLogined }) => {
                               color: "gray",
                             }}
                           >
-                            {realty.realtyDeal}
+                            {realty.isRealtyDeal}
                           </div>
                         )}
                       </div>
-                      {reatlyDealToggle && realty.realtyId == rnum ? (
+                      {realtyDealToggle && realty.realtyId == rnum ? (
                         <div
                           style={{
                             border: "1px #cccccc solid",
@@ -1777,11 +1820,227 @@ const ArticleControl = ({ logined, setLogined }) => {
                             </div>
                           </div>
 
-                          <div className="flex justify-center font-bold p-4">
-                            "구매자"님과 거래가 어떠셨나요?
-                          </div>
+                          {sessionStorage.getItem("realtyBuyer") == undefined ||
+                          sessionStorage.getItem("realtyBuyer") == null ? (
+                            // 구매자 선택창
+                            <div className="flex justify-center font-bold p-3">
+                              <button
+                                onClick={() => {
+                                  onChoiceRBuyer();
+                                  sessionStorage.removeItem("realtyBuyer");
+                                  setRealtyBuyUserId("");
+                                }}
+                                style={{
+                                  border: "1px #cccccc solid",
+                                  padding: "5px 10px",
+                                  marginTop: "10px",
+                                  marginBottom: "-5px",
+                                }}
+                              >
+                                구매자를 선택해주세요!
+                              </button>
+                            </div>
+                          ) : (
+                            // 구매자 바로 불러오기
+                            <div
+                              className=""
+                              style={{
+                                fontWeight: "bolder",
+                                textAlign: "center",
+                              }}
+                            >
+                              "{sessionStorage.getItem("realtyBuyer")}"님과
+                              <br />
+                              거래가 어떠셨나요?
+                            </div>
+                          )}
+                          {choiceRBuyer && (
+                            <div>
+                              {/* 해당 id와 관련된 채팅리스트유저  */}
+                              <ul
+                                style={{
+                                  border: "1px #eeeeee solid",
+                                  position: "absolute",
+                                  top: "-.3%",
+                                  left: "100%",
+                                  width: "250px",
+                                  height: "333px",
+                                  backgroundColor: "white",
+                                  overflow: "auto",
+                                }}
+                              >
+                                {rChatList.length == 0 ? (
+                                  <div style={{}}>"채팅 내역이 없습니다."</div>
+                                ) : (
+                                  ""
+                                )}
+                                {rChatList.map((chat, index) => (
+                                  <li
+                                    key={index}
+                                    style={{
+                                      border: "1px #eeeeee solid",
+                                    }}
+                                  >
+                                    {chat.myName ==
+                                    sessionStorage.getItem("userid") ? (
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                        }}
+                                      >
+                                        {chat.yourURL == null ? (
+                                          <FaCarrot
+                                            style={{
+                                              color: "#fc9d39",
+                                              fontSize: "2.5rem",
+                                              transform: "translate(5% ,15%)",
+                                              border: "0.1px #fc9d39 solid",
+                                              borderRadius: "50%",
+                                            }}
+                                          />
+                                        ) : (
+                                          <div
+                                            style={{
+                                              width: "50px",
+                                              height: "50px",
+                                              borderRadius: "50%",
+                                            }}
+                                          >
+                                            <img
+                                              src={chat.yourURL}
+                                              alt=""
+                                              style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                display: "block",
+                                                objectFit: "fill",
+                                                borderRadius: "50%",
+                                              }}
+                                            />
+                                          </div>
+                                        )}
+
+                                        <div
+                                          style={{
+                                            border: "1px gray solid",
+                                            width: "130px",
+                                          }}
+                                        >
+                                          <div>{chat.yourName}</div>
+                                          <div>{chat.lastMessage}</div>
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <div
+                                        style={{
+                                          marginLeft: "3px",
+                                          display: "flex",
+                                        }}
+                                      >
+                                        {isRChecked && rChatNum == index ? (
+                                          //체크상태인 버튼
+                                          <button
+                                            onClick={() => {
+                                              onRCheck();
+                                              onRChatNum(index);
+                                              setRealtyBuyUserId(chat.myName);
+                                              sessionStorage.setItem(
+                                                "realtyBuyer",
+                                                chat.myName
+                                              );
+                                            }}
+                                            style={{
+                                              width: "30px",
+                                              height: "30px",
+                                              border: "1px gray solid",
+                                              borderRadius: "50%",
+                                              marginTop: "10px",
+                                            }}
+                                          >
+                                            <AiOutlineCheck
+                                              style={{
+                                                marginLeft: "6px",
+                                              }}
+                                            />
+                                          </button>
+                                        ) : (
+                                          //체크상태가 아닌 버튼들
+                                          <button
+                                            onClick={() => {
+                                              onRCheck();
+                                              onRChatNum(index);
+                                              setRealtyBuyUserId(chat.myName);
+                                              sessionStorage.setItem(
+                                                "realtyBuyer",
+                                                chat.myName
+                                              );
+                                            }}
+                                            style={{
+                                              width: "30px",
+                                              height: "30px",
+                                              border: "1px gray solid",
+                                              borderRadius: "50%",
+                                              marginTop: "10px",
+                                            }}
+                                          ></button>
+                                        )}
+                                        {chat.myURL == null ? (
+                                          <FaCarrot
+                                            style={{
+                                              color: "#fc9d39",
+                                              fontSize: "2.5rem",
+                                              transform: "translate(5% ,15%)",
+                                              border: "0.1px #fc9d39 solid",
+                                              borderRadius: "50%",
+                                            }}
+                                          />
+                                        ) : (
+                                          <div
+                                            style={{
+                                              width: "50px",
+                                              height: "50px",
+                                              borderRadius: "50%",
+                                            }}
+                                          >
+                                            <img
+                                              src={chat.myURL}
+                                              alt=""
+                                              style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                display: "block",
+                                                objectFit: "fill",
+                                                borderRadius: "50%",
+                                              }}
+                                            />
+                                          </div>
+                                        )}
+                                        <div
+                                          className=""
+                                          style={{
+                                            marginLeft: "3px",
+                                          }}
+                                        >
+                                          <div>{chat.myName}</div>
+                                          <div
+                                            className="ellipsis_1"
+                                            style={{
+                                              maxWidth: "140px",
+                                              height: "30px",
+                                            }}
+                                          >
+                                            {chat.lastMessage}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
                           <div
-                            className="flex justify-around p-1"
+                            className="flex gap-5 justify-between p-3"
                             style={{
                               fontSize: "2rem",
                             }}
@@ -1793,7 +2052,7 @@ const ArticleControl = ({ logined, setLogined }) => {
                             >
                               {rsadToggle == true ? (
                                 <div
-                                  className="flex flex-col items-center"
+                                  className="flex flex-col items-center "
                                   style={{
                                     color: "#fc9d39",
                                   }}
@@ -1894,8 +2153,6 @@ const ArticleControl = ({ logined, setLogined }) => {
                               }}
                               onClick={() => {
                                 onRealtyReview(rnum);
-                                onRealtyDealToggle(false);
-                                window.location.reload();
                               }}
                             >
                               거래 후기 작성 완료

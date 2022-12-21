@@ -1731,7 +1731,7 @@ const ArticleControl = ({ logined, setLogined }) => {
                           position: "relative",
                         }}
                       >
-                        {realty.isRealtyDeal == "판매중" ? (
+                        {realty.realtyDeal == "판매중" ? (
                           <div>
                             <button
                               style={{
@@ -1753,7 +1753,7 @@ const ArticleControl = ({ logined, setLogined }) => {
                               color: "gray",
                             }}
                           >
-                            {realty.isRealtyDeal}
+                            {realty.realtyDeal}
                           </div>
                         )}
                       </div>

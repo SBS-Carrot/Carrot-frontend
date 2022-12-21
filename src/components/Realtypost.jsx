@@ -62,24 +62,17 @@ const Realtypost = ({
       method: "GET",
       params: { myName, yourName },
     });
+    // 채팅방이 여러개라 오류남.
     const data1 = await axios({
       url: `http://localhost:8083/getChattingRoom`,
       method: "GET",
       params: { myName: yourName, yourName: myName },
     });
-
-    const existRoom = data.data.roomId;
-    const existRoom1 = data1.data.roomId;
-
-    //채팅방이 이미 존재한다면 (과거 메시지를 주고받았다면)
-    if (existRoom != "" && data.data != "" && existRoom1 != "") {
-      //그 방 번호로 이동
-
-      navigate(`/chat/${existRoom}`);
-    } else {
-      //채팅방이 없다면 (메시지를 처음주고 받는다면)
-      //uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
-
+    sessionStorage.setItem("articleId", num);
+    sessionStorage.setItem("type", "realty");
+    if (data.data.length == 0) {
+      // 채팅방이 없다면 (메시지를 처음주고 받는다면)
+      // uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
       const data1 = await axios({
         url: `http://localhost:8083/getUser/${userid}`,
         method: "Get",
@@ -96,13 +89,139 @@ const Realtypost = ({
         type: "realty",
         articleId: num,
       };
-      const data = await axios({
+      axios({
         url: `http://localhost:8083/chat`,
         method: "POST",
         data: chattingRoom,
       });
+      if (roomNum != undefined) {
+        navigate(`/chat/${roomNum}`);
+      } else {
+        alert("에러가 Post에서 발생했습니다. 다시 시도해 주세요");
+        window.location.reload();
+      }
+      return;
+    }
+    for (let i = 0; i < data.data.length; i++) {
+      if (
+        (data.data[i].roomId == "" || data.data[i].roomId == undefined) &&
+        (data1.data[i].roomId == "" || data1.data[i].roomId == undefined)
+      ) {
+        // 채팅방이 없다면 (메시지를 처음주고 받는다면)
+        // uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
+        const data1 = await axios({
+          url: `http://localhost:8083/getUser/${userid}`,
+          method: "Get",
+        });
+        const myURL = data1.data.profileImage;
+        const yourURL = articleWriter.profileImage;
+        const roomNum = uuid();
+        const chattingRoom = {
+          roomId: roomNum,
+          myName,
+          yourName,
+          myURL,
+          yourURL,
+          type: "realty",
+          articleId: num,
+        };
+        axios({
+          url: `http://localhost:8083/chat`,
+          method: "POST",
+          data: chattingRoom,
+        });
 
-      navigate(`/chat/${roomNum}`);
+        navigate(`/chat/${roomNum}`);
+        return;
+      }
+      //이미 존재한다면 type과 id를 비교해서
+      // 상품이 같다면 그방으로, 다르면 다른채팅방으로 보내야함.
+      else if (data.data[i].roomId != "") {
+        const data2 = await axios({
+          url: `http://localhost:8083/getRoomByType/` + data.data[i].roomId,
+          method: "POST",
+          data: {
+            myName,
+            yourName,
+            articleId: num,
+            type: "realty",
+          },
+        });
+        if (data2.data == "") {
+          //type과 id 비교시 없으므로 새로운 채팅방 개설.
+
+          const data1 = await axios({
+            url: `http://localhost:8083/getUser/${userid}`,
+            method: "Get",
+          });
+          const myURL = data1.data.profileImage;
+          const yourURL = articleWriter.profileImage;
+          const roomNum = uuid();
+          const chattingRoom = {
+            roomId: roomNum,
+            myName,
+            yourName,
+            myURL,
+            yourURL,
+            type: "realty",
+            articleId: num,
+          };
+          axios({
+            url: `http://localhost:8083/chat`,
+            method: "POST",
+            data: chattingRoom,
+          });
+
+          navigate(`/chat/${roomNum}`);
+          return;
+        } else {
+          //이미 있으므로 이미 있는방으로 보낼 것.
+          navigate(`/chat/${data2.data.roomId}`);
+          return;
+        }
+      } else if (data1.data[i].roomId != "") {
+        const data3 = await axios({
+          url: `http://localhost:8083/getRoomByType/` + data1.data[i].roomId,
+          method: "POST",
+          data: {
+            myName,
+            yourName,
+            articleId: num,
+            type: "realty",
+          },
+        });
+        if (data3.data == "") {
+          //type과 id 비교시 없으므로 새로운 채팅방 개설.
+          const data1 = await axios({
+            url: `http://localhost:8083/getUser/${userid}`,
+            method: "Get",
+          });
+          const myURL = data1.data.profileImage;
+          const yourURL = articleWriter.profileImage;
+          const roomNum = uuid();
+          const chattingRoom = {
+            roomId: roomNum,
+            myName,
+            yourName,
+            myURL,
+            yourURL,
+            type: "realty",
+            articleId: num,
+          };
+          axios({
+            url: `http://localhost:8083/chat`,
+            method: "POST",
+            data: chattingRoom,
+          });
+
+          navigate(`/chat/${roomNum}`);
+          return;
+        } else {
+          //이미 있으므로 이미 있는방으로 보낼 것.
+          navigate(`/chat/${data3.data.roomId}`);
+          return;
+        }
+      }
     }
   };
   const realtymove = () => {
@@ -204,6 +323,7 @@ const Realtypost = ({
       }
     };
     onSubmit(num);
+    let testnum = uuid();
   }, []);
 
   useEffect(() => {

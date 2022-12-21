@@ -43,7 +43,6 @@ const ProductPost = ({
   };
 
   const moveChat = async (myName, yourName) => {
-    const is_exist_room = null;
     if (myName === yourName) {
       alert("자기 자신에게는 메세지를 보낼 수 없습니다.");
       return;
@@ -62,6 +61,7 @@ const ProductPost = ({
     });
     sessionStorage.setItem("articleId", num);
     sessionStorage.setItem("type", "product");
+    let testNum = uuid();
     if (data.data.length == 0) {
       // 채팅방이 없다면 (메시지를 처음주고 받는다면)
       // uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
@@ -159,8 +159,12 @@ const ProductPost = ({
             method: "POST",
             data: chattingRoom,
           });
-
-          navigate(`/chat/${roomNum}`);
+          if (roomNum != undefined) {
+            navigate(`/chat/${roomNum}`);
+          } else {
+            alert("오류가 Post에서 발생했습니다. 다시 시도해 주세요");
+            window.location.reload();
+          }
           return;
         } else {
           //이미 있으므로 이미 있는방으로 보낼 것.

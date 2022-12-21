@@ -1,5 +1,6 @@
 import React from "react";
 import LoginedHeader from "../layouts/LoginedHeader";
+import LoginedRealtyHeader from "../layouts/LoginedRealtyHeader";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -148,13 +149,13 @@ const Chat = ({ logined, setLogined }) => {
     publish(chat);
     setChat("");
   };
-  const [pnum, setPnum] = useState("");
   const onChatList = (data) => {
     setChatList(data);
   };
   const onUser2 = (data) => {
     setUser2(data);
   };
+
   const onCreateRoom = async () => {
     try {
       //params로 받은 이미 존재하는 or 새로 생성된 채팅방 조회
@@ -163,6 +164,7 @@ const Chat = ({ logined, setLogined }) => {
         method: "GET",
       });
       setType(data1.data.type);
+
       setId(data1.data.articleId);
       const myName = sessionStorage.getItem("userid");
 
@@ -173,6 +175,14 @@ const Chat = ({ logined, setLogined }) => {
         sessionStorage.removeItem("yourName");
         sessionStorage.setItem("yourName", data1.data.myName);
       } else if (myName != data1.data.myName && myName != data1.data.yourName) {
+        if (
+          data1.data.myName == undefined ||
+          data1.data.yourName == undefined
+        ) {
+          window.alert("에러가 Chat에서 발생했습니다. 다시 시도해주세요");
+          navigate(-1);
+          return;
+        }
         console.log(myName);
         console.log(data1.data.myName);
         console.log(data1.data.yourName);
@@ -202,7 +212,6 @@ const Chat = ({ logined, setLogined }) => {
             url: `http://localhost:8083/product/${data1.data.articleId}`,
             method: "get",
           });
-          console.log(data.data);
           setProduct(data.data);
         } catch (e) {
           console.log(e);
@@ -224,25 +233,42 @@ const Chat = ({ logined, setLogined }) => {
   };
 
   const notChattingUser = () => {
-    // navigate("/");
+    navigate(-1);
     alert("채팅 당사자만 입장할 수 있습니다.");
   };
-  const [productReview, setProductReview] = useState("");
+
+  const [pnum, setPnum] = useState("");
   const [reviewCheck, setReviewCheck] = useState("");
   const [psadToggle, setPSadToggle] = useState(false);
   const [psmileToggle, setSmileToggle] = useState(false);
-  const [phappyToggle, setHappyToggel] = useState(false);
+  const [phappyToggle, setHappyToggle] = useState(false);
   const [dealToggle, setDealToggle] = useState(false);
   const onDealToggle = () => {
-    setProductReview("");
     setPSadToggle(false);
     setSmileToggle(false);
-    setHappyToggel(false);
+    setHappyToggle(false);
     setDealToggle(!dealToggle);
+  };
+  const onSad = () => {
+    setPSadToggle(true);
+    setSmileToggle(false);
+    setHappyToggle(false);
+    setReviewCheck("별로예요");
+  };
+  const onSmile = () => {
+    setPSadToggle(false);
+    setSmileToggle(true);
+    setHappyToggle(false);
+    setReviewCheck("좋아요");
+  };
+  const onHappy = () => {
+    setPSadToggle(false);
+    setSmileToggle(false);
+    setHappyToggle(true);
+    setReviewCheck("최고예요");
   };
 
   const onProductReview = async (articleid) => {
-    console.log(sessionStorage.getItem("userid"));
     try {
       const data = await axios({
         url: `http://localhost:8083/productBuyReview`,
@@ -260,27 +286,65 @@ const Chat = ({ logined, setLogined }) => {
     }
   };
 
-  const onSad = () => {
-    setPSadToggle(true);
-    setSmileToggle(false);
-    setHappyToggel(false);
-    setReviewCheck("별로예요");
-  };
-  const onSmile = () => {
-    setPSadToggle(false);
-    setSmileToggle(true);
-    setHappyToggel(false);
-    setReviewCheck("좋아요");
-  };
-  const onHappy = () => {
+  //Realty
+  const [rnum, setRnum] = useState("");
+  const [realtyReviewCheck, setRealtyReviewCheck] = useState("");
+  const [rsadToggle, setRSadToggle] = useState(false);
+  const [rsmileToggle, setRSmileToggle] = useState(false);
+  const [rhappyToggle, setRHappyToggle] = useState(false);
+  const [realtyDealToggle, setRealtyDealToggle] = useState(false);
+  const onRealtyDealToggle = () => {
     setPSadToggle(false);
     setSmileToggle(false);
-    setHappyToggel(true);
-    setReviewCheck("최고예요");
+    setRHappyToggle(false);
+    setRealtyDealToggle(!realtyDealToggle);
   };
+
+  const onRealtyReview = async (articleid) => {
+    try {
+      const data = await axios({
+        url: `http://localhost:8083/realtyBuyReview`,
+        method: "POST",
+        data: {
+          realtyId: articleid,
+          realtyReview: realtyReviewCheck,
+          realtySellUserId: realty.realtyUserid,
+          realtyBuyUserId: sessionStorage.getItem("userid"),
+        },
+      });
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onRealtySad = () => {
+    setRSadToggle(true);
+    setRSmileToggle(false);
+    setRHappyToggle(false);
+    setRealtyReviewCheck("별로예요");
+  };
+  const onRealtySmile = () => {
+    setRSadToggle(false);
+    setRSmileToggle(true);
+    setRHappyToggle(false);
+    setRealtyReviewCheck("좋아요");
+  };
+  const onRealtyHappy = () => {
+    setRSadToggle(false);
+    setRSmileToggle(false);
+    setRHappyToggle(true);
+    setRealtyReviewCheck("최고예요");
+  };
+
   return (
     <div>
-      <LoginedHeader setLogined={setLogined} />
+      {type == "realty" ? (
+        <LoginedRealtyHeader setLogined={setLogined} />
+      ) : (
+        <LoginedHeader setLogined={setLogined} />
+      )}
+
       <div
         style={{
           width: "900px",
@@ -292,8 +356,7 @@ const Chat = ({ logined, setLogined }) => {
           //중고거래일때
           product.productDeal == "거래 완료" ? (
             //중고거래 거래완료일때
-            product.productBuyUserid == sessionStorage.getItem("userid") ||
-            product.productBuyUserid == sessionStorage.getItem("yourName") ? (
+            product.productBuyUserid == sessionStorage.getItem("userid") ? (
               //거래완료 구매자일때만 후기 창 팝업등장
               product.reviewFinished == true ? (
                 //구매자가 이미 후기를 남겼을경우
@@ -700,10 +763,6 @@ const Chat = ({ logined, setLogined }) => {
                             "buyer",
                             sessionStorage.getItem("yourName")
                           );
-                          sessionStorage.setItem(
-                            "seller",
-                            sessionStorage.getItem("userid")
-                          );
                           sessionStorage.setItem("productId", pnum);
                           sessionStorage.setItem("productToggle", true);
                           moveReview();
@@ -724,24 +783,434 @@ const Chat = ({ logined, setLogined }) => {
             ""
           )
         ) : //중고거래 판매중일때 여기까지
-        //부동산 거래일때
-        realty.realtyDeal == "판매중" ? (
-          //부동산거래 판매중일때
+        //지금부터 부동산 거래일때
+
+        realty.isRealtyDeal == "거래 완료" ? (
+          //부동산 거래완료일때
+          realty.realtyBuyUserid == sessionStorage.getItem("userid") ? (
+            //거래완료 구매자일때만 후기 창 팝업등장
+            realty.reviewFinished == true ? (
+              //구매자가 이미 후기를 남겼을경우
+              <div
+                style={{
+                  position: "absolute",
+                  top: "250px",
+                  left: "900px",
+                  width: "160px",
+                  textAlign: "center",
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faHandshakeSimple}
+                  style={{
+                    fontSize: "3rem",
+                    color: "#ffa445",
+                    marginLeft: "45px",
+                    display: "block",
+                  }}
+                />
+
+                <span>이미 후기를</span>
+                <br />
+                <span>작성하셨습니다.</span>
+              </div>
+            ) : (
+              //구매자가 아직 후기를 남기기 전
+
+              <div
+                style={{
+                  position: "absolute",
+                  top: "250px",
+                  left: "900px",
+                  width: "160px",
+                  textAlign: "center",
+                }}
+              >
+                <button
+                  style={{
+                    display: "block",
+                    paddingTop: "5px",
+                    paddingLeft: "47px",
+                  }}
+                  onClick={() => {
+                    onRealtyDealToggle();
+                    setRnum(realty.realtyId);
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faHandshakeSimple}
+                    style={{
+                      fontSize: "3rem",
+                      color: "#ffa445",
+
+                      display: "block",
+                    }}
+                  />
+                </button>
+                <span>거래가 끝났나요?</span>
+                <br />
+                <span>후기를 작성해주세요!</span>
+                {realtyDealToggle && realty.realtyId == rnum ? (
+                  <div
+                    style={{
+                      border: "1px #cccccc solid",
+                      backgroundColor: "white",
+                      position: "absolute",
+                      zIndex: "9",
+                      marginLeft: "-70px",
+                    }}
+                  >
+                    <div className="font-bold flex gap-2 m-2">
+                      <span className="flex items-center">
+                        <FiArrowRight />
+                      </span>
+                      거래 후기 남기기
+                    </div>
+                    <div
+                      className="flex gap-2 p-2"
+                      style={{
+                        backgroundColor: "#eeeeee",
+                      }}
+                    >
+                      {realty.profileImage != null ? (
+                        <img
+                          src={realty.profileImage}
+                          alt=""
+                          style={{
+                            borderRadius: "15px",
+                            width: "60px",
+                            height: "60px",
+                            objectFit: "fill",
+                            display: "block",
+                          }}
+                        />
+                      ) : (
+                        <FaCarrot
+                          style={{
+                            color: "#fc9d39",
+                            fontSize: "10rem",
+                            width: "70px",
+                            height: "70px",
+                            transform: "translate(-5% ,-5%)",
+                            border: "0.1px #fc9d39 solid",
+                            borderRadius: "50%",
+                          }}
+                        />
+                      )}
+                      <div className="flex flex-col justify-center">
+                        <span
+                          style={{
+                            color: "gray",
+                          }}
+                        >
+                          거래한 상품
+                        </span>
+                        <div>{realty.realtyAddress}</div>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-center font-bold p-4">
+                      "{sessionStorage.getItem("yourName")}"님과 거래가
+                      어떠셨나요?
+                    </div>
+
+                    <div>
+                      {/* 내가 구매자면 판매자에 대한 후기 남기기 */}
+                      <div
+                        className="flex gap-5 justify-between p-3"
+                        style={{
+                          fontSize: "2rem",
+                          width: "300px",
+                        }}
+                      >
+                        <button
+                          onClick={() => {
+                            onRealtySad();
+                          }}
+                        >
+                          {rsadToggle == true ? (
+                            <div
+                              className="flex flex-col items-center "
+                              style={{
+                                color: "#fc9d39",
+                              }}
+                            >
+                              <ImSad2
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">별로예요</span>
+                            </div>
+                          ) : (
+                            <div className="flex flex-col items-center ">
+                              <ImSad
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">별로예요</span>
+                            </div>
+                          )}
+                        </button>
+                        <button
+                          onClick={() => {
+                            onRealtySmile();
+                          }}
+                        >
+                          {rsmileToggle == true ? (
+                            <div
+                              className="flex flex-col items-center "
+                              style={{
+                                color: "#fc9d39",
+                              }}
+                            >
+                              <ImSmile2
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">좋아요!</span>
+                            </div>
+                          ) : (
+                            <div className="flex flex-col items-center ">
+                              <ImSmile
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">좋아요!</span>
+                            </div>
+                          )}
+                        </button>
+                        <button
+                          className="flex flex-col items-center gap-1"
+                          onClick={() => {
+                            onRealtyHappy();
+                          }}
+                        >
+                          {rhappyToggle == true ? (
+                            <div
+                              className="flex flex-col items-center gap-1"
+                              style={{
+                                color: "#fc9d39",
+                              }}
+                            >
+                              <ImHappy2
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">최고예요!</span>
+                            </div>
+                          ) : (
+                            <div className="flex flex-col items-center gap-1">
+                              <ImHappy
+                                style={{
+                                  fontSize: "3.2rem",
+                                }}
+                              />
+                              <span className="text-base">최고예요!</span>
+                            </div>
+                          )}
+                        </button>
+                      </div>
+
+                      <div
+                        className=" flex justify-center m-2"
+                        style={{
+                          backgroundColor: "#fc9d39",
+                          color: "white",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        <button
+                          className="font-bold p-2"
+                          style={{
+                            width: "100%",
+                          }}
+                          onClick={() => {
+                            onRealtyReview(rnum);
+                            onRealtyDealToggle(false);
+                          }}
+                        >
+                          거래 후기 작성 완료
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {/* 거래완료 구매자일때 여기까지 */}
+              </div>
+            )
+          ) : realty.realtyUserid == sessionStorage.getItem("userid") ? (
+            //거래완료 판매자일땐 이미 후기작성 완료 팝업창
+            <div
+              style={{
+                position: "absolute",
+                top: "250px",
+                left: "900px",
+                width: "160px",
+                textAlign: "center",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faHandshakeSimple}
+                style={{
+                  fontSize: "3rem",
+                  color: "#ffa445",
+                  paddingTop: "5px",
+                  paddingLeft: "47px",
+                  display: "block",
+                }}
+              />
+              <span>이미 후기를 작성하셨습니다.</span>
+            </div>
+          ) : (
+            //거래 당사자가 아니면 아무것도 안뜨게 빈칸.
+            ""
+            //부동산 거래완료 여기까지
+          )
+        ) : realty.realtyUserid == sessionStorage.getItem("userid") ? (
+          //부동산 판매중일때 판매자는 후기버튼 누르면 바로 이동
           <div
             style={{
               position: "absolute",
-              top: "200px",
-              left: "1000px",
-              border: "1px red solid",
+              top: "250px",
+              left: "900px",
+              width: "160px",
+              textAlign: "center",
             }}
           >
-            <span>판매중</span>
+            <button
+              style={{
+                display: "block",
+                paddingTop: "5px",
+                paddingLeft: "47px",
+              }}
+              onClick={() => {
+                onRealtyDealToggle();
+                setRnum(realty.realtyId);
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faHandshakeSimple}
+                style={{
+                  fontSize: "3rem",
+                  color: "#ffa445",
+
+                  display: "block",
+                }}
+              />
+            </button>
+            <span>거래가 끝났나요?</span>
+            <br />
+            <span>후기를 작성해주세요!</span>
+            {realtyDealToggle && realty.realtyId == rnum ? (
+              <div
+                style={{
+                  border: "1px #cccccc solid",
+                  backgroundColor: "white",
+                  position: "absolute",
+                  zIndex: "9",
+                  marginLeft: "-70px",
+                }}
+              >
+                <div className="font-bold flex gap-2 m-2">
+                  <span className="flex items-center">
+                    <FiArrowRight />
+                  </span>
+                  거래 후기 남기기
+                </div>
+                <div
+                  className="flex gap-2 p-2"
+                  style={{
+                    backgroundColor: "#eeeeee",
+                  }}
+                >
+                  {realty.profileImage != null ? (
+                    <img
+                      src={realty.profileImage}
+                      alt=""
+                      style={{
+                        borderRadius: "15px",
+                        width: "60px",
+                        height: "60px",
+                        objectFit: "fill",
+                        display: "block",
+                      }}
+                    />
+                  ) : (
+                    <FaCarrot
+                      style={{
+                        color: "#fc9d39",
+                        fontSize: "10rem",
+                        width: "70px",
+                        height: "70px",
+                        transform: "translate(-5% ,-5%)",
+                        border: "0.1px #fc9d39 solid",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  )}
+                  <div className="flex flex-col justify-center">
+                    <span
+                      style={{
+                        color: "gray",
+                      }}
+                    >
+                      거래한 상품
+                    </span>
+                    <div>{realty.realtyAddress}</div>
+                  </div>
+                </div>
+
+                <div className="flex justify-center font-bold p-4">
+                  "{sessionStorage.getItem("yourName")}"님과 거래가 어떠셨나요?
+                </div>
+
+                <div>
+                  {/* 내가 구매자면 판매자에 대한 후기 남기기 */}
+
+                  <div
+                    className=" flex justify-center m-2"
+                    style={{
+                      backgroundColor: "#fc9d39",
+                      color: "white",
+                      borderRadius: "5px",
+                      width: "300px",
+                    }}
+                  >
+                    <button
+                      className="font-bold p-2"
+                      style={{
+                        width: "100%",
+                      }}
+                      onClick={() => {
+                        sessionStorage.setItem(
+                          "realtyBuyer",
+                          sessionStorage.getItem("yourName")
+                        );
+                        sessionStorage.setItem("realtyId", rnum);
+                        sessionStorage.setItem("realtyToggle", true);
+                        moveReview();
+                      }}
+                    >
+                      거래 후기 작성 하기
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+            {/* 거래완료 구매자일때 여기까지 */}
           </div>
         ) : (
-          //부동산거래 거래완료일때
-          <div>
-            <span>거래완료</span>
-          </div>
+          //부동산 판매중일때 판매자제외 아무것도 안뜸.
+          ""
         )}
         <div
           style={{

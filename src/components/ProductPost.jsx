@@ -16,6 +16,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaCarrot } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
+import Temp from "../routes/Temp";
 import uuid from "react-uuid";
 const ProductPost = ({
   logined,
@@ -472,9 +473,9 @@ const ProductPost = ({
               <div className="font-bold ">
                 {articleWriter.nickname == "닉네임 없음"
                   ? articleWriter.username
-                  : user.nickname}
+                  : articleWriter.nickname}
               </div>
-              <div className="text-sm">{user.address}</div>
+              <div className="text-sm">{articleWriter.address}</div>
             </div>
 
             <div
@@ -482,33 +483,14 @@ const ProductPost = ({
                 width: "200px",
               }}
             >
-              <div className="flex gap-2">
-                <div>
-                  <div
-                    className="font-bold flex justify-end p-1 "
-                    style={{
-                      color: "green",
-                    }}
-                  >
-                    {user.temp}
-                  </div>
-                  <progress
-                    className="flex progress progress-success w-32"
-                    value="40"
-                    max="100"
-                  ></progress>
-                </div>
-                <div
-                  className="flex"
-                  style={{
-                    color: "green",
-                    fontSize: "1.75rem",
-                  }}
-                >
-                  <BsFillEmojiSmileFill />
-                </div>
+              <div
+                className="flex gap-2"
+                style={{
+                  marginLeft: "-10px",
+                }}
+              >
+                <Temp temp={articleWriter.temp} page="" />
               </div>
-
               <div
                 className="text-sm flex justify-end"
                 style={{

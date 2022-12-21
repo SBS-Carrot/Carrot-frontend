@@ -21,6 +21,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaCarrot } from "react-icons/fa";
 import ReadMap from "./ReadMap";
+import Temp from "../routes/Temp";
 import uuid from "react-uuid";
 const Realtypost = ({
   logined,
@@ -356,7 +357,7 @@ const Realtypost = ({
               <div
                 className="flex justify-center flex-col"
                 style={{
-                  width: "470px",
+                  width: "300px",
                 }}
               >
                 <div className="font-bold ">
@@ -372,32 +373,15 @@ const Realtypost = ({
                 width: "200px",
               }}
             >
-              <div className="flex gap-2">
-                <div>
-                  <div
-                    className="font-bold flex justify-end p-1 "
-                    style={{
-                      color: "green",
-                    }}
-                  >
-                    {articleWriter.temp}
-                  </div>
-                  <progress
-                    className="flex progress progress-success w-32"
-                    value="40"
-                    max="100"
-                  ></progress>
-                </div>
-                <div
-                  className="flex"
-                  style={{
-                    color: "green",
-                    fontSize: "1.75rem",
-                  }}
-                >
-                  <BsFillEmojiSmileFill />
-                </div>
+              <div
+                className="flex gap-2"
+                style={{
+                  marginLeft: "-10px",
+                }}
+              >
+                <Temp temp={articleWriter.temp} page="" />
               </div>
+
               <div
                 className="text-sm flex justify-end"
                 style={{
@@ -811,7 +795,7 @@ const Realtypost = ({
             <div
               className="py-2 flex gap-5 justify-end"
               style={{
-                width: "800px",
+                width: "700px",
               }}
             >
               <button
@@ -1095,32 +1079,15 @@ const Realtypost = ({
                 width: "200px",
               }}
             >
-              <div className="flex gap-2">
-                <div>
-                  <div
-                    className="font-bold flex justify-end p-1 "
-                    style={{
-                      color: "green",
-                    }}
-                  >
-                    {articleWriter.temp}
-                  </div>
-                  <progress
-                    className="flex progress progress-success w-32"
-                    value="40"
-                    max="100"
-                  ></progress>
-                </div>
-                <div
-                  className="flex"
-                  style={{
-                    color: "green",
-                    fontSize: "1.75rem",
-                  }}
-                >
-                  <BsFillEmojiSmileFill />
-                </div>
+              <div
+                className="flex gap-2"
+                style={{
+                  marginLeft: "-10px",
+                }}
+              >
+                <Temp temp={articleWriter.temp} page="" />
               </div>
+
               <div
                 className="text-sm flex justify-end"
                 style={{
@@ -1322,7 +1289,7 @@ const Realtypost = ({
             <div>{article.realtyAddress}</div>
           </div>
           <section>
-            <div className="py-2 flex gap-5 justify-end" style={{}}>
+            <div className="py-2 flex gap-5 justify-end">
               <button
                 style={{
                   fontSize: "1.5rem",

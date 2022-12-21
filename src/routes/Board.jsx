@@ -15,7 +15,7 @@ import {
   MdOutlineHome,
 } from "react-icons/md";
 import { SlEmotsmile } from "react-icons/sl";
-import { AiFillLike } from "react-icons/ai";
+import { AiFillLike, AiOutlineCaretRight } from "react-icons/ai";
 import { FiMessageCircle, FiCheckCircle } from "react-icons/fi";
 
 const Board = ({ logined, setLogined }) => {
@@ -702,7 +702,13 @@ const Board = ({ logined, setLogined }) => {
                       handlePageChange={BQhandlePageChange}
                     />
                   )}
-                  <div>동네 카페</div>
+                  <div className="font-bold mb-2 flex">
+                    {" "}
+                    <span>
+                      <AiOutlineCaretRight />
+                    </span>
+                    동네 카페
+                  </div>
                   <ul className="grid grid-cols-2">
                     {currentlife.map((life, index) => (
                       <li className="mb-3" key={index}>

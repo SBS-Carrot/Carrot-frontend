@@ -41,6 +41,7 @@ const JobsEdit = ({ logined, setLogined }) => {
   const [id, setId] = useState("");
   // https://velog.io/@kingth/react-input-%EA%B0%80%EA%B2%A9%ED%91%9C%EC%8B%9C-3%EC%9E%90%EB%A6%AC-%EB%A7%88%EB%8B%A4-%EC%BD%A4%EB%A7%88
   // 가격에 , 찍기
+
   const onPriceChange = (str) => {
     const comma = (str) => {
       str = String(str);
@@ -55,6 +56,7 @@ const JobsEdit = ({ logined, setLogined }) => {
   const onCategoryChange = (e) => {
     setCategory(e.target.value);
   };
+  console.log("c", category);
   const onContentChange = (e) => {
     setContentValue(e.target.value);
     if (e.target.value.length > 1000) {
@@ -65,6 +67,28 @@ const JobsEdit = ({ logined, setLogined }) => {
     setSubjectValue(e.target.value);
   };
 
+  const onDay = (e) => {
+    setDay(e);
+
+    for (let i = 0; i < e.length; i++) {
+      let char = e.charAt(i);
+      if (char == "월") {
+        setMon(true);
+      } else if (char == "화") {
+        setTue(true);
+      } else if (char == "수") {
+        setWed(true);
+      } else if (char == "목") {
+        setThu(true);
+      } else if (char == "금") {
+        setFri(true);
+      } else if (char == "토") {
+        setSat(true);
+      } else if (char == "일") {
+        setSun(true);
+      }
+    }
+  };
   const onNameChange = (e) => {
     setName(e.target.value);
   };
@@ -281,7 +305,7 @@ const JobsEdit = ({ logined, setLogined }) => {
         setSubjectValue(data.data.jobSubject);
         setCategory(data.data.jobCategory);
         setPriceValue(data.data.jobPrice);
-        setDay(data.data.jobDay);
+        onDay(data.data.jobDay);
         setStartTimeValue(data.data.jobStartTime);
         setEndTimeValue(data.data.jobEndTime);
         setName(data.data.jobName);
@@ -974,7 +998,6 @@ const JobsEdit = ({ logined, setLogined }) => {
                     placeValue,
                     contentValue
                   );
-                  onCompleteChange();
                 } else {
                   onEdits(
                     subjectValue,
@@ -988,7 +1011,6 @@ const JobsEdit = ({ logined, setLogined }) => {
                     contentValue,
                     uploadedImg
                   );
-                  onCompleteChange();
                 }
               }}
               style={{

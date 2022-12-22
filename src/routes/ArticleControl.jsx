@@ -205,7 +205,6 @@ const ArticleControl = ({ logined, setLogined }) => {
       url: `http://localhost:8083/getRoomByProductId/${pnum}`,
       method: "get",
     });
-    console.log(data.data);
     setPChatList(data.data);
   };
   useEffect(() => {
@@ -270,6 +269,7 @@ const ArticleControl = ({ logined, setLogined }) => {
       console.log(e);
     }
   };
+
   const onProductReview = async (articleid) => {
     try {
       if (reviewCheck == "") {
@@ -399,7 +399,6 @@ const ArticleControl = ({ logined, setLogined }) => {
     };
     getData();
   }, []);
-
   return (
     <div>
       <LoginedHeader setLogined={setLogined} />
@@ -770,7 +769,6 @@ const ArticleControl = ({ logined, setLogined }) => {
                                               onPCheck();
                                               onPChatNum(index);
                                               setBuyUserId(chat.myName);
-                                              setPUrl(chat.roomId);
                                               sessionStorage.setItem(
                                                 "buyer",
                                                 chat.myName
@@ -797,7 +795,6 @@ const ArticleControl = ({ logined, setLogined }) => {
                                               onPCheck();
                                               onPChatNum(index);
                                               setBuyUserId(chat.myName);
-                                              setPUrl(chat.roomId);
                                               sessionStorage.setItem(
                                                 "buyer",
                                                 chat.myName
@@ -983,7 +980,6 @@ const ArticleControl = ({ logined, setLogined }) => {
                                 onDealToggleOff();
                                 sessionStorage.removeItem("productToggle");
                                 onProductReview(pnum);
-                                onProductNotification();
                               }}
                             >
                               거래 후기 작성 완료

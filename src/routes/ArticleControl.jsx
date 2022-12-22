@@ -980,6 +980,7 @@ const ArticleControl = ({ logined, setLogined }) => {
                                 onDealToggleOff();
                                 sessionStorage.removeItem("productToggle");
                                 onProductReview(pnum);
+                                onProductNotification();
                               }}
                             >
                               거래 후기 작성 완료

@@ -191,7 +191,7 @@ const ArticleControl = ({ logined, setLogined }) => {
   const [buyUserId, setBuyUserId] = useState(
     sessionStorage.getItem("buyer") || ""
   );
-
+  const [pUrl, setPUrl] = useState("");
   const onPChatNum = (index) => {
     setPChatNum(index);
   };
@@ -239,6 +239,28 @@ const ArticleControl = ({ logined, setLogined }) => {
   };
 
   //productReview
+  const onProductNotification = async () => {
+    try {
+      const notificationRequestDto = {
+        content: "",
+        url: `chat/${pUrl}`,
+        notificationType: "REVIEW",
+        userid: buyUserId,
+        sender: sessionStorage.getItem("userid"),
+      };
+      console.log(pUrl);
+      console.log(buyUserId);
+      console.log(sessionStorage.getItem("userid"));
+      const data = axios({
+        url: `http://localhost:8083/addReviewNotification`,
+        method: "POST",
+        data: notificationRequestDto,
+      });
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const onProductReview = async (articleid) => {
     try {
@@ -269,7 +291,6 @@ const ArticleControl = ({ logined, setLogined }) => {
       sessionStorage.removeItem("productId");
       sessionStorage.removeItem("productToggle");
       setBuyUserId("");
-      window.location.reload();
     } catch (e) {
       console.log(e);
     }

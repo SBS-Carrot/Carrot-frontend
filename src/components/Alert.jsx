@@ -311,6 +311,19 @@ const Alert = ({}) => {
                                 ) : (
                                   ""
                                 )}
+                                {notice.type == "REVIEW" ? (
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <span>후기를 작성하셨어요</span>
+                                    <br />
+                                    <span>후기를 작성해주세요!</span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
                               </button>
                               <button
                                 style={{
@@ -390,6 +403,19 @@ const Alert = ({}) => {
                                     }}
                                   >
                                     <span> 알바를 지원하셨어요</span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+                                {notice.type == "REVIEW" ? (
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <span>후기를 작성하셨어요</span>
+                                    <br />
+                                    <span>후기를 작성해주세요!</span>
                                   </div>
                                 ) : (
                                   ""

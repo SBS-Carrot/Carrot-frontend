@@ -162,6 +162,16 @@ const Jobspost = ({
       } catch (e) {
         console.log(e);
       }
+
+      // try{
+      //   const data = await axios({
+      //     url: `http://localhost:8083/addressJob`,
+      //     method: "GET",
+      //   })
+      //   console.log(data.data);
+      // }catch(e){
+      //   console.log(e);
+      // }
     };
     onSubmit(num);
   }, []);

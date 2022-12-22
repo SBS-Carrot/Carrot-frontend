@@ -192,8 +192,8 @@ const Temp = ({ temp, page }) => {
   } else {
     return (
       <div>
-        <div className="mt-5 w-96">
-          <div className="flex font-bold items-center justify-between">
+        <div className="mt-5 w-52">
+          <div className="flex font-bold items-center justify-end">
             {temp <= "20" ? (
               <div
                 className="flex items-center"

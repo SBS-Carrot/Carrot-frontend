@@ -191,10 +191,11 @@ const ArticleControl = ({ logined, setLogined }) => {
   const [buyUserId, setBuyUserId] = useState(
     sessionStorage.getItem("buyer") || ""
   );
-  const [pUrl, setPUrl] = useState("");
+  const [pUrl, setPUrl] = useState(`${sessionStorage.getItem("pUrl")}` || "");
   const onPChatNum = (index) => {
     setPChatNum(index);
   };
+
   const onPCheck = () => {
     setIsPChecked(true);
   };
@@ -239,32 +240,38 @@ const ArticleControl = ({ logined, setLogined }) => {
     setChoicePBuyer(false);
   };
 
+  const onDealToggleOff = () => {
+    setDealToggle(false);
+  };
   //productReview
-  const onProductNotification = async () => {
+  const onProductNotification = () => {
     try {
+      if (pUrl == "") {
+        alert("에러가 발생했습니다. 다시 시도해주세요.");
+        return;
+      }
       const notificationRequestDto = {
-        content: "",
+        content: "후기 작성",
         url: `chat/${pUrl}`,
         notificationType: "REVIEW",
         userid: buyUserId,
         sender: sessionStorage.getItem("userid"),
       };
-      console.log(pUrl);
-      console.log(buyUserId);
-      console.log(sessionStorage.getItem("userid"));
-      const data = axios({
-        url: `http://localhost:8083/addReviewNotification`,
+
+      axios({
+        url: "http://localhost:8083/addReviewNotification",
         method: "POST",
         data: notificationRequestDto,
       });
+
       window.location.reload();
+      onDealToggleOff();
     } catch (e) {
       console.log(e);
     }
   };
   const onProductReview = async (articleid) => {
     try {
-      // buyUserId: sessionStorage.getItem("buyUserId"),
       if (reviewCheck == "") {
         alert("후기를 선택해주세요");
         return;
@@ -276,7 +283,6 @@ const ArticleControl = ({ logined, setLogined }) => {
         alert("구매자를 선택해 주세요");
         return;
       }
-
       const data = await axios({
         url: `http://localhost:8083/productReview`,
         method: "POST",
@@ -289,7 +295,8 @@ const ArticleControl = ({ logined, setLogined }) => {
       });
       sessionStorage.removeItem("buyer");
       sessionStorage.removeItem("productId");
-      sessionStorage.removeItem("productToggle");
+
+      // sessionStorage.setItem("productToggle", false);
       setBuyUserId("");
     } catch (e) {
       console.log(e);
@@ -973,7 +980,8 @@ const ArticleControl = ({ logined, setLogined }) => {
                                 width: "100%",
                               }}
                               onClick={() => {
-                                onDealToggle(false);
+                                onDealToggleOff();
+                                sessionStorage.removeItem("productToggle");
                                 onProductReview(pnum);
                                 onProductNotification();
                               }}

@@ -30,7 +30,7 @@ const HotArticles = ({ logined, setLogined }) => {
     const onSubmit = async () => {
       try {
         const data = await axios({
-          url: "http://localhost:8083/",
+          url: `http://localhost:8083/hotProduct`,
           method: "GET",
         });
         onProduct(data.data);

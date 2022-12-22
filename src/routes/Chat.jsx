@@ -227,6 +227,7 @@ const Chat = ({ logined, setLogined }) => {
           console.log(e);
         }
       }
+      sessionStorage.setItem("pUrl", roomId);
     } catch (e) {
       console.log(e);
     }

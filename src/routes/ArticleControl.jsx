@@ -191,7 +191,7 @@ const ArticleControl = ({ logined, setLogined }) => {
   const [buyUserId, setBuyUserId] = useState(
     sessionStorage.getItem("buyer") || ""
   );
-  const [pUrl, setPUrl] = useState("");
+
   const onPChatNum = (index) => {
     setPChatNum(index);
   };
@@ -204,7 +204,6 @@ const ArticleControl = ({ logined, setLogined }) => {
       url: `http://localhost:8083/getRoomByProductId/${pnum}`,
       method: "get",
     });
-    console.log(data.data);
     setPChatList(data.data);
   };
   useEffect(() => {
@@ -240,28 +239,7 @@ const ArticleControl = ({ logined, setLogined }) => {
   };
 
   //productReview
-  const onProductNotification = async () => {
-    try {
-      const notificationRequestDto = {
-        content: "",
-        url: `chat/${pUrl}`,
-        notificationType: "REVIEW",
-        userid: buyUserId,
-        sender: sessionStorage.getItem("userid"),
-      };
-      console.log(pUrl);
-      console.log(buyUserId);
-      console.log(sessionStorage.getItem("userid"));
-      const data = axios({
-        url: `http://localhost:8083/addReviewNotification`,
-        method: "POST",
-        data: notificationRequestDto,
-      });
-      window.location.reload();
-    } catch (e) {
-      console.log(e);
-    }
-  };
+
   const onProductReview = async (articleid) => {
     try {
       // buyUserId: sessionStorage.getItem("buyUserId"),
@@ -291,6 +269,7 @@ const ArticleControl = ({ logined, setLogined }) => {
       sessionStorage.removeItem("productId");
       sessionStorage.removeItem("productToggle");
       setBuyUserId("");
+      window.location.reload();
     } catch (e) {
       console.log(e);
     }
@@ -392,7 +371,6 @@ const ArticleControl = ({ logined, setLogined }) => {
     };
     getData();
   }, []);
-
   return (
     <div>
       <LoginedHeader setLogined={setLogined} />
@@ -763,7 +741,6 @@ const ArticleControl = ({ logined, setLogined }) => {
                                               onPCheck();
                                               onPChatNum(index);
                                               setBuyUserId(chat.myName);
-                                              setPUrl(chat.roomId);
                                               sessionStorage.setItem(
                                                 "buyer",
                                                 chat.myName
@@ -790,7 +767,6 @@ const ArticleControl = ({ logined, setLogined }) => {
                                               onPCheck();
                                               onPChatNum(index);
                                               setBuyUserId(chat.myName);
-                                              setPUrl(chat.roomId);
                                               sessionStorage.setItem(
                                                 "buyer",
                                                 chat.myName
@@ -975,7 +951,6 @@ const ArticleControl = ({ logined, setLogined }) => {
                               onClick={() => {
                                 onDealToggle(false);
                                 onProductReview(pnum);
-                                onProductNotification();
                               }}
                             >
                               거래 후기 작성 완료

@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 import WriteMap from "./WriteMap";
 import { BiMap } from "react-icons/bi";
+import { upload } from "@testing-library/user-event/dist/upload";
 
 const BoardEdit = ({ logined, setLogined }) => {
   const { num } = useParams();
@@ -174,12 +175,15 @@ const BoardEdit = ({ logined, setLogined }) => {
   ) => {
     try {
       const formData = new FormData();
+      console.log(uploadedImg);
       const boardDto = {
+        boardId: num,
         boardCategory: category,
         boardContent: contentValue,
         boardAddress: addressDetail,
         boardUserid: sessionStorage.getItem("userid"),
       };
+      console.log(boardDto);
       // https://velog.io/@hhhminme/Axios%EC%97%90%EC%84%9C-Post-%EC%8B%9C-Contenttypeapplicationoctet-streamnotsupported-%ED%95%B8%EB%93%A4%EB%A7%81415-%EC%97%90%EB%9F%AC
       const json = JSON.stringify(boardDto);
       const blob = new Blob([json], { type: "application/json" });
@@ -192,7 +196,7 @@ const BoardEdit = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/createBoardImages`,
+        url: `http://localhost:8083/boardEditImages`,
         method: "POST",
         data: formData,
       });

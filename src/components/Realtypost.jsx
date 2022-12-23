@@ -273,10 +273,22 @@ const Realtypost = ({
         });
         abcd = data.data.realtyUserid;
         onArticle(data.data);
+        console.log("아아", data.data);
       } catch {
         console.log("에러");
         window.alert("존재하지 않는 게시글입니다.");
         moveBack();
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/realtyDong`,
+          method: "GET",
+        });
+        console.log(data.data);
+        onRealty(data.data);
+        onRealtyDong(data.data);
+      } catch (e) {
+        console.log(e);
       }
       try {
         const data = await axios({
@@ -325,6 +337,18 @@ const Realtypost = ({
     onSubmit(num);
     let testnum = uuid();
   }, []);
+
+  const [realtyDong, setRealtyDong] = useState([]);
+  const [realtypost, setRealtyPost] = useState([]);
+
+  const onRealtyDong = (data) => {
+    setRealtyDong(data.filter((realty) => realty.realtyId != num).slice(0, 2));
+  };
+
+  const onRealty = (data) => {
+    const datas = data.reverse();
+    setRealtyPost((prev) => datas);
+  };
 
   useEffect(() => {
     const onLikeRe = async (num) => {
@@ -979,84 +1003,606 @@ const Realtypost = ({
           </div>
           <div className="gap-2">
             <div>
-              <ul className="grid grid-cols-2">
-                <li
-                  className="flex  items-center gap-4"
-                  style={{
-                    height: "120px",
-                  }}
-                >
-                  <a href="#" className="flex-col flex justify-center">
-                    <div className="img1">
-                      <img
-                        src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                  <a href="">
-                    <div
+              <ul className="grid grid-cols-2 gap-5">
+                {realtyDong.map((realty, index) => (
+                  <li
+                    key={index}
+                    style={{
+                      width: "360px",
+                      height: "120px",
+                    }}
+                  >
+                    <button
+                      onClick={() => {
+                        // moveRealty(realty.realtyId);
+                      }}
                       style={{
-                        height: "120px",
+                        width: "100%",
+                        height: "100%",
                       }}
                     >
-                      <div style={{}}>
-                        <span>주방이모 파트타임 오전 6시~오전 10시(4시간)</span>
-                      </div>
                       <div
-                        className="text-sm"
+                        className="flex"
                         style={{
-                          color: "#73777B",
-                          paddingTop: "5px",
+                          height: "120px",
                         }}
                       >
-                        <span>밥을짓는홍여사 . 부평동</span>
+                        <div
+                          style={{
+                            minWidth: "120px",
+                            maxWidth: "120px",
+                            height: "120px",
+
+                            borderRadius: "10px",
+                          }}
+                        >
+                          {realty.profileImage != null ? (
+                            <img
+                              src={realty.profileImage}
+                              alt=""
+                              style={{
+                                borderRadius: "15px",
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "fill",
+                                display: "block",
+                              }}
+                            />
+                          ) : (
+                            <FaCarrot
+                              style={{
+                                color: "#fc9d39",
+                                fontSize: "7rem",
+                                transform: "translate(1.5%,1.5%)",
+                                border: "0.1px #fc9d39 solid",
+                                borderRadius: "50%",
+                              }}
+                            />
+                          )}
+                        </div>
+                        <div
+                          className="gap-2"
+                          style={{
+                            textAlign: "left",
+                            marginLeft: "10px",
+                          }}
+                        >
+                          <div>
+                            <span>{realty.realtyCategory}</span>
+                            <span
+                              style={{
+                                paddingRight: "3px",
+                              }}
+                            >
+                              {realty.realtyDealing === "전세" &&
+                              realty.realtySalePrice.length >= 7 ? (
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <span
+                                      style={{
+                                        width: "25px",
+                                        whiteSpace: "nowrap",
+                                        display: "inline-flex",
+                                        overflow: "hidden",
+                                        justifyContent: "end",
+                                        marginLeft: "3px",
+                                      }}
+                                    >
+                                      {realty.realtySalePrice.charAt(0)}
+                                      {realty.realtySalePrice.charAt(1)}
+                                      {realty.realtySalePrice.charAt(2)}
+                                    </span>
+                                    <span>억</span>
+                                    {realty.realtySalePrice.substring(3) !=
+                                    0 ? (
+                                      <span
+                                        style={{
+                                          width: "55px",
+                                          whiteSpace: "nowrap",
+                                          display: "inline-flex",
+                                          overflow: "hidden",
+                                          textAlign: "end",
+                                          marginLeft: "10px",
+                                        }}
+                                      >
+                                        {realty.realtySalePrice.substring(2)}만
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {realty.realtyDealing === "전세" &&
+                              realty.realtySalePrice.length == 6 ? (
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <span
+                                      style={{
+                                        width: "30px",
+                                        whiteSpace: "nowrap",
+                                        marginLeft: "5px",
+                                      }}
+                                    >
+                                      {realty.realtySalePrice.charAt(0)}
+                                      {realty.realtySalePrice.charAt(1)}
+                                    </span>
+                                    <span>억</span>
+                                    {realty.realtySalePrice.substring(2) !=
+                                    0 ? (
+                                      <span
+                                        style={{
+                                          width: "55px",
+                                          whiteSpace: "nowrap",
+
+                                          textAlign: "end",
+                                          marginLeft: "10px",
+                                        }}
+                                      >
+                                        {realty.realtySalePrice.substring(2)}만
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {realty.realtyDealing === "전세" &&
+                              realty.realtySalePrice.length == 5 ? (
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <span
+                                      style={{
+                                        width: "20px",
+                                        whiteSpace: "nowrap",
+                                        display: "inline-flex",
+                                        overflow: "hidden",
+                                        justifyContent: "end",
+                                      }}
+                                    >
+                                      {realty.realtySalePrice.charAt(0)}
+                                    </span>
+                                    <span>억</span>
+                                    {realty.realtySalePrice.substring(1) !=
+                                    0 ? (
+                                      <span
+                                        style={{
+                                          width: "55px",
+                                          whiteSpace: "nowrap",
+                                          display: "inline-flex",
+                                          overflow: "hidden",
+                                          textAlign: "end",
+                                          marginLeft: "10px",
+                                        }}
+                                      >
+                                        {realty.realtySalePrice.substring(1)}만
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {realty.realtyDealing === "매매" &&
+                              realty.realtySalePrice.length == 6 ? (
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <span
+                                      style={{
+                                        width: "30px",
+                                        whiteSpace: "nowrap",
+                                        marginLeft: "5px",
+                                      }}
+                                    >
+                                      {realty.realtySalePrice.charAt(0)}
+                                      {realty.realtySalePrice.charAt(1)}
+                                    </span>
+                                    <span>억</span>
+                                    {realty.realtySalePrice.substring(2) !=
+                                    0 ? (
+                                      <span
+                                        style={{
+                                          width: "55px",
+                                          whiteSpace: "nowrap",
+
+                                          textAlign: "end",
+                                          marginLeft: "10px",
+                                        }}
+                                      >
+                                        {realty.realtySalePrice.substring(2)}만
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {realty.realtyDealing === "매매" &&
+                              realty.realtySalePrice.length == 5 ? (
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <span
+                                      style={{
+                                        width: "15px",
+                                        whiteSpace: "nowrap",
+                                        display: "inline-flex",
+                                        overflow: "hidden",
+                                        justifyContent: "end",
+                                      }}
+                                    >
+                                      {realty.realtySalePrice.charAt(0)}
+                                    </span>
+                                    <span>억</span>
+                                    {realty.realtySalePrice.substring(1) !=
+                                    0 ? (
+                                      <span
+                                        style={{
+                                          width: "55px",
+                                          whiteSpace: "nowrap",
+                                          display: "inline-flex",
+                                          overflow: "hidden",
+                                          textAlign: "end",
+                                          marginLeft: "10px",
+                                        }}
+                                      >
+                                        {realty.realtySalePrice.substring(1)}만
+                                      </span>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                              {realty.realtyDealing === "월세" ? (
+                                <span>
+                                  {realty.realtyDeposit}만원/
+                                  {realty.realtyMonthly}만원 -
+                                </span>
+                              ) : (
+                                ""
+                              )}{" "}
+                              {realty.realtyDealing === "단기" ? (
+                                <span>
+                                  {realty.realtyDeposit}만원/
+                                  {realty.realtyMonthly}만원 -
+                                </span>
+                              ) : (
+                                ""
+                              )}
+                            </span>
+
+                            <span
+                              style={{
+                                textAlign: "left",
+                              }}
+                            >
+                              {realty.realtyIntroduce}
+                            </span>
+                          </div>
+                          <div
+                            className="text-sm"
+                            style={{
+                              color: "#73777B",
+                              textAlign: "left",
+                            }}
+                          >
+                            <div>{realty.realtyAddressDong}</div>
+                          </div>
+
+                          <div
+                            className="font-bold pt-1"
+                            style={{
+                              textAlign: "left",
+                            }}
+                          >
+                            {realty.realtyDealing === "전세" &&
+                            realty.realtySalePrice.length == 6 ? (
+                              <div
+                                style={{
+                                  display: "inline",
+                                }}
+                              >
+                                {realty.realtyDealing} &nbsp;
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      width: "20px",
+                                      whiteSpace: "nowrap",
+                                      display: "inline-flex",
+                                      overflow: "hidden",
+                                      justifyContent: "end",
+                                    }}
+                                  >
+                                    {realty.realtySalePrice.charAt(0)}
+                                    {realty.realtySalePrice.charAt(1)}
+                                  </span>
+                                  <span>억</span>
+                                  {realty.realtySalePrice.substring(2) != 0 ? (
+                                    <span
+                                      style={{
+                                        width: "55px",
+                                        whiteSpace: "nowrap",
+                                        display: "inline-flex",
+                                        overflow: "hidden",
+                                        textAlign: "end",
+                                        marginLeft: "10px",
+                                      }}
+                                    >
+                                      {realty.realtySalePrice.substring(2)}만
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                            {realty.realtyDealing === "전세" &&
+                            realty.realtySalePrice.length == 5 ? (
+                              <div
+                                style={{
+                                  display: "inline",
+                                }}
+                              >
+                                {realty.realtyDealing}
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      width: "20px",
+                                      whiteSpace: "nowrap",
+                                      display: "inline-flex",
+                                      overflow: "hidden",
+                                      justifyContent: "end",
+                                    }}
+                                  >
+                                    {realty.realtySalePrice.charAt(0)}
+                                  </span>
+                                  <span>억</span>
+                                  {realty.realtySalePrice.substring(1) != 0 ? (
+                                    <span
+                                      style={{
+                                        width: "55px",
+                                        whiteSpace: "nowrap",
+                                        display: "inline-flex",
+                                        overflow: "hidden",
+                                        textAlign: "end",
+                                        marginLeft: "10px",
+                                      }}
+                                    >
+                                      {realty.realtySalePrice.substring(1)}만
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                            {realty.realtyDealing === "매매" &&
+                            realty.realtySalePrice.length == 6 ? (
+                              <div
+                                style={{
+                                  display: "inline",
+                                }}
+                              >
+                                {realty.realtyDealing} &nbsp;
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      width: "20px",
+                                      whiteSpace: "nowrap",
+                                      display: "inline-flex",
+                                      overflow: "hidden",
+                                      justifyContent: "end",
+                                    }}
+                                  >
+                                    {realty.realtySalePrice.charAt(0)}
+                                    {realty.realtySalePrice.charAt(1)}
+                                  </span>
+                                  <span>억</span>
+                                  {realty.realtySalePrice.substring(2) != 0 ? (
+                                    <span
+                                      style={{
+                                        width: "55px",
+                                        whiteSpace: "nowrap",
+                                        display: "inline-flex",
+                                        overflow: "hidden",
+                                        textAlign: "end",
+                                        marginLeft: "10px",
+                                      }}
+                                    >
+                                      {realty.realtySalePrice.substring(2)}만
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                            {realty.realtyDealing === "전세" &&
+                            realty.realtySalePrice.length >= 7 ? (
+                              <div
+                                style={{
+                                  display: "inline",
+                                }}
+                              >
+                                {realty.realtyDealing} &nbsp;
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      width: "25px",
+                                      whiteSpace: "nowrap",
+                                      display: "inline-flex",
+                                      overflow: "hidden",
+                                      justifyContent: "end",
+                                    }}
+                                  >
+                                    {realty.realtySalePrice.charAt(0)}
+                                    {realty.realtySalePrice.charAt(1)}
+                                    {realty.realtySalePrice.charAt(2)}
+                                  </span>
+                                  <span>억</span>
+                                  {realty.realtySalePrice.substring(3) != 0 ? (
+                                    <span
+                                      style={{
+                                        width: "55px",
+                                        whiteSpace: "nowrap",
+                                        display: "inline-flex",
+                                        overflow: "hidden",
+                                        textAlign: "end",
+                                        marginLeft: "10px",
+                                      }}
+                                    >
+                                      {realty.realtySalePrice.substring(2)}만
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                            {realty.realtyDealing === "매매" &&
+                            realty.realtySalePrice.length == 5 ? (
+                              <div
+                                style={{
+                                  display: "inline",
+                                }}
+                              >
+                                {realty.realtyDealing}
+                                <div
+                                  style={{
+                                    display: "inline",
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      width: "20px",
+                                      whiteSpace: "nowrap",
+                                      display: "inline-flex",
+                                      overflow: "hidden",
+                                      justifyContent: "end",
+                                    }}
+                                  >
+                                    {realty.realtySalePrice.charAt(0)}
+                                  </span>
+                                  <span>억</span>
+                                  {realty.realtySalePrice.substring(1) != 0 ? (
+                                    <span
+                                      style={{
+                                        width: "55px",
+                                        whiteSpace: "nowrap",
+                                        display: "inline-flex",
+                                        overflow: "hidden",
+                                        textAlign: "end",
+                                        marginLeft: "10px",
+                                      }}
+                                    >
+                                      {realty.realtySalePrice.substring(1)}만
+                                    </span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                            {realty.realtyDealing === "월세" ? (
+                              <div>
+                                {realty.realtyDealing} {realty.realtyDeposit}/
+                                {realty.realtyMonthly}
+                              </div>
+                            ) : (
+                              ""
+                            )}{" "}
+                            {realty.realtyDealing === "단기" ? (
+                              <div>
+                                {realty.realtyDealing} {realty.realtyDeposit}/
+                                {realty.realtyMonthly}
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                            <div></div>
+                            <div></div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="font-bold pt-1">
-                        <span>시급 10,100</span>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li
-                  className="flex  items-center gap-4"
-                  style={{
-                    height: "120px",
-                  }}
-                >
-                  <a href="#" className="flex-col flex justify-center">
-                    <div className="img1">
-                      <img
-                        src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                  <a href="">
-                    <div
-                      style={{
-                        height: "120px",
-                        marginTop: "25px",
-                      }}
-                    >
-                      <div style={{}}>
-                        <span>주방이모 파트타임 오전 6시~오전 10시(4시간)</span>
-                      </div>
-                      <div
-                        className="text-sm"
-                        style={{
-                          color: "#73777B",
-                          paddingTop: "5px",
-                        }}
-                      >
-                        <span>밥을짓는홍여사 . 부평동</span>
-                      </div>
-                      <div className="font-bold pt-1">
-                        <span>시급 10,100</span>
-                      </div>
-                    </div>
-                  </a>
-                </li>
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

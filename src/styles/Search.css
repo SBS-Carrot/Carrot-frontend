@@ -1,0 +1,22 @@
+.productButton {
+}
+.productButton:hover {
+  color: white;
+  background-color: #ffa445;
+  padding: 5px 10px;
+}
+.jobsButton:hover {
+  color: white;
+  background-color: #ffa445;
+  padding: 5px 10px;
+}
+.realtyButton:hover {
+  color: white;
+  background-color: #ffa445;
+  padding: 5px 10px;
+}
+.boardToggleButton:hover {
+  color: white;
+  background-color: #ffa445;
+  padding: 5px 10px;
+}

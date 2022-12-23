@@ -117,79 +117,22 @@ const AllProduct = ({ logined, setLogined }) => {
                 textAlign: "center",
                 margin: "0 auto",
                 display: "inline",
-                paddingLeft: "9rem",
+                paddingLeft: "14rem",
                 position: "relative",
               }}
             >
               중고거래 모든 매물보기
             </h1>
 
-            <div
-              style={{
-                position: "relative",
-                display: "inline",
-                width: "350px",
-                left: "10%",
-              }}
-            >
-              <div className="dropdown dropdown-hover">
-                <label tabIndex={0} className="btn m-1">
-                  대전광역시
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <a href="#">대전광역시</a>
-                  </li>
-                </ul>
-              </div>
-              <div className="dropdown dropdown-hover">
-                <label tabIndex={0} className="btn m-1">
-                  동네를 선택하세요
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                  style={{}}
-                >
-                  <li>
-                    <a href="http://localhost:3000/region/대덕구">대덕구</a>
-                  </li>
-                  <li>
-                    <a href="http://localhost:3000/region/동구">동구</a>
-                  </li>
-                  <li>
-                    <a href="http://localhost:3000/region/서구">서구</a>
-                  </li>
-                  <li>
-                    <a href="http://localhost:3000/region/유성구">유성구</a>
-                  </li>
-                  <li>
-                    <a href="http://localhost:3000/region/중구">중구</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
             <h2
               style={{
                 textAlign: "center",
                 fontWeight: "bolder",
                 fontSize: "1.3rem",
-                transform: "translateX(-8%)",
+                transform: "translateX(%)",
               }}
             >
               <a href="/hot_articles">＞ 인기매물 보러가기</a>
-            </h2>
-            <h2
-              style={{
-                textAlign: "end",
-                paddingRight: "0px",
-                fontSize: "0.9rem",
-              }}
-            >
-              지역 카테고리 기능은 대전광역시로 제한했습니다. (검색은 전국 가능)
             </h2>
           </div>
           <div
@@ -282,7 +225,6 @@ const AllProduct = ({ logined, setLogined }) => {
                       <div
                         className="flex"
                         style={{
-                          paddingBottom: "3rem",
                           fontSize: "0.8rem",
                           color: "gray",
                         }}
@@ -291,6 +233,18 @@ const AllProduct = ({ logined, setLogined }) => {
                         &nbsp; ·&nbsp;
                         <span>채팅 {product.productChatting}</span>
                       </div>
+                      {product.productDeal == "거래 완료" ? (
+                        <div
+                          style={{
+                            border: "1px gray solid",
+                            margin: "10px 0px",
+                          }}
+                        >
+                          <span>거래 완료</span>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </button>
                 </li>
@@ -427,66 +381,19 @@ const AllProduct = ({ logined, setLogined }) => {
                 textAlign: "center",
                 margin: "0 auto",
                 display: "inline",
-                paddingLeft: "9rem",
+                paddingLeft: "14rem",
                 position: "relative",
               }}
             >
               중고거래 모든 매물보기
             </h1>
-            <div
-              style={{
-                position: "relative",
-                display: "inline",
-                width: "350px",
-                left: "10%",
-              }}
-            >
-              <div className="dropdown dropdown-hover">
-                <label tabIndex={0} className="btn m-1">
-                  대전광역시
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <a href="#">대전광역시</a>
-                  </li>
-                </ul>
-              </div>
-              <div className="dropdown dropdown-hover">
-                <label tabIndex={0} className="btn m-1">
-                  동네를 선택하세요
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                  style={{}}
-                >
-                  <li>
-                    <a href="http://localhost:3000/region/대덕구">대덕구</a>
-                  </li>
-                  <li>
-                    <a href="http://localhost:3000/region/동구">동구</a>
-                  </li>
-                  <li>
-                    <a href="http://localhost:3000/region/서구">서구</a>
-                  </li>
-                  <li>
-                    <a href="http://localhost:3000/region/유성구">유성구</a>
-                  </li>
-                  <li>
-                    <a href="http://localhost:3000/region/중구">중구</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+
             <h2
               style={{
                 textAlign: "center",
                 fontWeight: "bolder",
                 fontSize: "1.3rem",
-                transform: "translateX(-8%)",
+                transform: "translateX(%)",
               }}
             >
               <a href="/hot_articles">＞ 인기매물 보러가기</a>
@@ -582,7 +489,6 @@ const AllProduct = ({ logined, setLogined }) => {
                       <div
                         className="flex"
                         style={{
-                          paddingBottom: "3rem",
                           fontSize: "0.8rem",
                           color: "gray",
                         }}
@@ -591,6 +497,18 @@ const AllProduct = ({ logined, setLogined }) => {
                         &nbsp; ·&nbsp;
                         <span>채팅 {product.productChatting}</span>
                       </div>
+                      {product.productDeal == "거래 완료" ? (
+                        <div
+                          style={{
+                            border: "1px gray solid",
+                            margin: "10px 0px",
+                          }}
+                        >
+                          <span>거래 완료</span>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </button>
                 </li>

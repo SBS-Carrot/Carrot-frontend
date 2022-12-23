@@ -32,6 +32,7 @@ const ChatList = ({ logined, setLogined }) => {
     };
     getData();
   }, []);
+
   return (
     <div>
       <LoginedHeader setLogined={setLogined} />
@@ -85,7 +86,7 @@ const ChatList = ({ logined, setLogined }) => {
             style={{
               width: "100%",
               border: "1px #bcbcbc solid",
-              height: "100%",
+
               marginTop: "10px",
               borderRadius: "10px",
               paddingLeft: "10px",
@@ -100,6 +101,7 @@ const ChatList = ({ logined, setLogined }) => {
                   border: "1px #bcbcbc solid",
                   borderRadius: "10px",
                   marginBottom: "5px",
+                  position: "relative",
                 }}
               >
                 <button

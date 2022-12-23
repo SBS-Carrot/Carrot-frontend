@@ -4,9 +4,7 @@ import Trust from "./routes/Trust";
 import Jobs from "./routes/Jobs";
 import Realty from "./routes/Realty";
 import HotArticles from "./routes/HotArticles";
-import Region from "./routes/Region";
 import Login from "./routes/Login";
-import RegionTwo from "./routes/RegionTwo";
 import Join from "./routes/Join";
 import Jobspost from "./components/Jobspost";
 import JobsWrite from "./components/JobsWrite";
@@ -40,12 +38,9 @@ import JobsApplyView from "./components/JobsApplyView";
 import ChatList from "./routes/ChatList";
 import JobsEdit from "./components/JobsEdit";
 import BoardEdit from "./components/BoardEdit";
-// 병훈
-// 통합 검색창 만들기
-// 인기 검색어
-// 후기 작성(채팅방에서 product 및 realty id가져옴
-// 판매자는 마이페이지에서, 구매자는 채팅방에서.)
-// 내 채팅창 목록 만들기
+import Search from "./routes/Search";
+import SearchEmpty from "./routes/SearchEmpty";
+
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [liked, setLiked] = useState(false);
@@ -201,14 +196,7 @@ function App() {
           path="/hot_articles"
           element={<HotArticles logined={logined} setLogined={setLogined} />}
         />
-        <Route
-          path="/region/:address"
-          element={<Region logined={logined} setLogined={setLogined} />}
-        />
-        <Route
-          path="/region/:address/:addressTwo"
-          element={<RegionTwo logined={logined} setLogined={setLogined} />}
-        />
+
         <Route
           path="/realty"
           element={<Realty logined={logined} setLogined={setLogined} />}
@@ -393,6 +381,14 @@ function App() {
         <Route
           path="/JobsApply/:num"
           element={<JobsApply logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/search/:search"
+          element={<Search logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/search"
+          element={<SearchEmpty logined={logined} setLogined={setLogined} />}
         />
       </Routes>
       <Alert />

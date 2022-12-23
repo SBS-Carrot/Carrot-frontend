@@ -14,6 +14,13 @@ const LoginedJobsHeader = ({ setLogined }) => {
   const onMyPage = () => {
     navigate("/mypage");
   };
+  const [search, setSearch] = useState("");
+  const onSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+  const onSearch = (searchKeyword) => {
+    navigate(`/search/${searchKeyword}`);
+  };
   return (
     <div
       style={{
@@ -127,11 +134,18 @@ const LoginedJobsHeader = ({ setLogined }) => {
           <input
             type="text"
             placeholder="물품이나 동네를 검색해 보세요"
+            value={search}
+            onChange={onSearchChange}
             style={{
               width: "300px",
               backgroundColor: "#f3f6f4",
               padding: "5px 10px",
               borderRadius: "10px",
+            }}
+            onKeyUp={(e) => {
+              if (e.key == "Enter") {
+                onSearch(search);
+              }
             }}
           />
         </div>

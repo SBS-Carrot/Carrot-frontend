@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import LoginedHeader from "../layouts/LoginedHeader";
 import Footer from "../layouts/Footer";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +7,15 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const SearchEmpty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
-  const move = (e) => {
-    navigate(`/search/${e}`);
+  const [search, setSearch] = useState("");
+  const onSearch = (e) => {
+    if (e.target.value.length > 10) {
+      return;
+    }
+    setSearch(e.target.value);
+  };
+  const onMove = () => {
+    navigate(`/search/${search}`);
   };
   return (
     <div>
@@ -34,19 +41,19 @@ const SearchEmpty = ({ logined, setLogined }) => {
             <input
               type="text"
               placeholder="물품이나 동네를 검색해 보세요"
-              // value={searchValue}
-              onChange={move}
+              value={search}
+              onChange={onSearch}
               style={{
                 width: "300px",
                 backgroundColor: "#f3f6f4",
                 padding: "5px 10px",
                 borderRadius: "10px",
               }}
+              autoFocus
               onKeyUp={(e) => {
-                //   if (e.key == "Enter") {
-                //     setType("product");
-                //     onSearch("product");
-                //   }
+                if (e.key == "Enter") {
+                  onMove();
+                }
               }}
             />
             <div>"" 검색 결과입니다.</div>

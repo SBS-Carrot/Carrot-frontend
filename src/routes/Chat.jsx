@@ -174,18 +174,13 @@ const Chat = ({ logined, setLogined }) => {
       } else if (myName === data1.data.yourName) {
         sessionStorage.removeItem("yourName");
         sessionStorage.setItem("yourName", data1.data.myName);
+      } else if (
+        data1.data.myName == undefined ||
+        data1.data.yourName == undefined
+      ) {
+        window.alert("에러가 Chat에서 발생했습니다. 다시 시도해주세요");
+        onCreateRoom();
       } else if (myName != data1.data.myName && myName != data1.data.yourName) {
-        if (
-          data1.data.myName == undefined ||
-          data1.data.yourName == undefined
-        ) {
-          window.alert("에러가 Chat에서 발생했습니다. 다시 시도해주세요");
-          navigate(-1);
-          return;
-        }
-        console.log(myName);
-        console.log(data1.data.myName);
-        console.log(data1.data.yourName);
         notChattingUser();
       }
 

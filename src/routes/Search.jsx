@@ -7,12 +7,12 @@ import LoginedRealtyHeader from "../layouts/LoginedRealtyHeader";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaCarrot } from "react-icons/fa";
 import ProductPaging from "../components/ProductPaging";
 import RealtyPaging from "../components/RealtyPaging";
 import JobsPaging from "../components/JobsPaging";
 import "../styles/Search.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AiFillLike, AiOutlineCaretRight } from "react-icons/ai";
 import { FiMessageCircle, FiCheckCircle } from "react-icons/fi";
 const Search = ({ logined, setLogined }) => {
@@ -24,6 +24,7 @@ const Search = ({ logined, setLogined }) => {
     if (e.target.value.length > 10) {
       return;
     }
+
     setSearchValue(e.target.value);
   }; //검색어 수정
   const move = (e) => {
@@ -327,7 +328,7 @@ const Search = ({ logined, setLogined }) => {
                   }
                 }}
               />
-              <div>"{search2}" 검색 결과입니다.</div>
+              <div>"{search2}" 중고거래 검색 결과입니다.</div>
             </div>
             <div>
               <button
@@ -546,7 +547,7 @@ const Search = ({ logined, setLogined }) => {
                   }
                 }}
               />
-              <div>"{search2}" 검색 결과입니다.</div>
+              <div>"{search2}" 알바 검색 결과입니다.</div>
             </div>
             <div>
               <button
@@ -775,7 +776,7 @@ const Search = ({ logined, setLogined }) => {
                   }
                 }}
               />
-              <div>"{search2}" 검색 결과입니다.</div>
+              <div>"{search2}" 부동산 검색 결과입니다.</div>
             </div>
             <div>
               <button
@@ -1512,7 +1513,7 @@ const Search = ({ logined, setLogined }) => {
                   }
                 }}
               />
-              <div>"{search2}" 검색 결과입니다.</div>
+              <div>"{search2}" 게시판 검색 결과입니다.</div>
             </div>
             <div>
               <button

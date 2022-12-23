@@ -4,9 +4,7 @@ import Trust from "./routes/Trust";
 import Jobs from "./routes/Jobs";
 import Realty from "./routes/Realty";
 import HotArticles from "./routes/HotArticles";
-import Region from "./routes/Region";
 import Login from "./routes/Login";
-import RegionTwo from "./routes/RegionTwo";
 import Join from "./routes/Join";
 import Jobspost from "./components/Jobspost";
 import JobsWrite from "./components/JobsWrite";
@@ -198,14 +196,7 @@ function App() {
           path="/hot_articles"
           element={<HotArticles logined={logined} setLogined={setLogined} />}
         />
-        <Route
-          path="/region/:address"
-          element={<Region logined={logined} setLogined={setLogined} />}
-        />
-        <Route
-          path="/region/:address/:addressTwo"
-          element={<RegionTwo logined={logined} setLogined={setLogined} />}
-        />
+
         <Route
           path="/realty"
           element={<Realty logined={logined} setLogined={setLogined} />}

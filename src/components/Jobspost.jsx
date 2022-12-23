@@ -901,8 +901,13 @@ const Jobspost = ({
             </div>
           </div>
 
-          {/* <section>
-            <div className="py-2 flex gap-5 justify-end" style={{}}>
+          <section>
+            <div
+              className="py-2 flex gap-5 justify-end"
+              style={{
+                width: "700px",
+              }}
+            >
               <button
                 style={{
                   fontSize: "1.5rem",
@@ -928,164 +933,7 @@ const Jobspost = ({
                 지원하기
               </button>
             </div>
-          </section> */}
-          <section>
-            <span style={{}}>{jobArticle.jobPlace}</span>
-            <div
-              className="py-2 flex gap-5 justify-end"
-              style={{
-                width: "700px",
-              }}
-            >
-              <button
-                style={{
-                  fontSize: "1.5rem",
-                }}
-                onClick={() => {
-                  onJobsLike(num, sessionStorage.getItem("userid"));
-                }}
-              >
-                {jobsLiked ? (
-                  <FiHeart
-                    style={{
-                      color: "pink",
-                    }}
-                  />
-                ) : (
-                  <FiHeart />
-                )}
-              </button>
-              {sessionStorage.getItem("userid") == jobArticle.jobUserid ? (
-                <a
-                  href={/jobsApplyView/ + num}
-                  className="rounded p-2 font-bold flex justify-center"
-                  style={{
-                    width: "300px",
-                    color: "white",
-                    backgroundColor: "#fc9d39",
-                  }}
-                >
-                  지원자 보러가기
-                </a>
-              ) : (
-                <a
-                  href={/JobsApplyWrite/ + num}
-                  className="rounded p-2 font-bold flex justify-center"
-                  style={{
-                    width: "300px",
-                    color: "white",
-                    backgroundColor: "#fc9d39",
-                  }}
-                >
-                  지원하기
-                </a>
-              )}
-            </div>
           </section>
-
-          <div>
-            <div
-              style={{
-                height: "60px",
-              }}
-            >
-              <div className="py-7 flex items-start">
-                <div
-                  className="font-bold"
-                  style={{
-                    fontSize: "1.1rem",
-                  }}
-                >
-                  사는 곳 근처 알바
-                </div>
-              </div>
-            </div>
-
-            <br />
-          </div>
-          <div className="gap-2">
-            <div>
-              <ul className="grid grid-cols-2">
-                <li
-                  className="flex  items-center gap-4"
-                  style={{
-                    height: "120px",
-                  }}
-                >
-                  <a href="#" className="flex-col flex justify-center">
-                    <div className="img1">
-                      <img
-                        src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                  <a href="">
-                    <div
-                      style={{
-                        height: "120px",
-                      }}
-                    >
-                      <div style={{}}>
-                        <span>주방이모 파트타임 오전 6시~오전 10시(4시간)</span>
-                      </div>
-                      <div
-                        className="text-sm"
-                        style={{
-                          color: "#73777B",
-                          paddingTop: "5px",
-                        }}
-                      >
-                        <span>밥을짓는홍여사 . 부평동</span>
-                      </div>
-                      <div className="font-bold pt-1">
-                        <span>시급 10,100</span>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li
-                  className="flex  items-center gap-4"
-                  style={{
-                    height: "120px",
-                  }}
-                >
-                  <a href="#" className="flex-col flex justify-center">
-                    <div className="img1">
-                      <img
-                        src="https://dnvefa72aowie.cloudfront.net/jobs/article/14115542/1665623315426/job-post-2115755419.jpeg?q=95&s=1440x1440&t=inside"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                  <a href="">
-                    <div
-                      style={{
-                        height: "120px",
-                        marginTop: "25px",
-                      }}
-                    >
-                      <div style={{}}>
-                        <span>주방이모 파트타임 오전 6시~오전 10시(4시간)</span>
-                      </div>
-                      <div
-                        className="text-sm"
-                        style={{
-                          color: "#73777B",
-                          paddingTop: "5px",
-                        }}
-                      >
-                        <span>밥을짓는홍여사 . 부평동</span>
-                      </div>
-                      <div className="font-bold pt-1">
-                        <span>시급 10,100</span>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
 
         <Footer />

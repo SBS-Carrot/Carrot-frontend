@@ -15,6 +15,7 @@ import "../styles/Search.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AiFillLike, AiOutlineCaretRight } from "react-icons/ai";
 import { FiMessageCircle, FiCheckCircle } from "react-icons/fi";
+import Header from "../layouts/Header";
 const Search = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const { search } = useParams(); //초기검색어
@@ -288,10 +289,16 @@ const Search = ({ logined, setLogined }) => {
   };
 
   //return
+
   if (type == "product") {
     return (
       <div>
-        <LoginedHeader logined={logined} setLogined={setLogined} />
+        {logined == true ? (
+          <LoginedHeader logined={logined} setLogined={setLogined} />
+        ) : (
+          <Header logined={logined} setLogined={setLogined} />
+        )}
+
         <div
           style={{
             width: "1000px",

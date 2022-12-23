@@ -826,6 +826,331 @@ const Board = ({ logined, setLogined }) => {
     return (
       <div>
         <BoardHeader />
+        <div
+          className="flex"
+          style={{
+            width: "800px",
+            margin: "0 auto",
+
+            position: "relative",
+          }}
+        >
+          <div
+            style={{
+              width: "150px",
+              position: "absolute",
+              left: "-170px",
+            }}
+          >
+            <button
+              className="flex  items-start"
+              style={{
+                width: "100%",
+              }}
+              onClick={() => {
+                onSpreadQue();
+              }}
+            >
+              <span className="mt-1 mr-1">
+                <MdOutlineQuestionAnswer />
+              </span>
+              {spreadQue == false ? (
+                "우리동네질문"
+              ) : (
+                <div className="font-bold">우리동네질문</div>
+              )}
+            </button>
+            <button
+              className="flex items-start"
+              style={{
+                width: "100%",
+              }}
+              onClick={() => {
+                onSpreadCafe();
+              }}
+            >
+              <span className="mt-1 mr-1">
+                <MdOutlineLocalCafe />
+              </span>
+              {spreadCafe == false ? (
+                "동네 카페"
+              ) : (
+                <div className="font-bold">동네 카페</div>
+              )}
+            </button>
+            <button
+              className="flex items-start"
+              style={{
+                width: "100%",
+              }}
+              onClick={() => {
+                alert("로그인 후 이용해주세요!");
+                navigate(`/login`);
+              }}
+            >
+              <span className="mt-1 mr-1">
+                <MdOutlineHome />
+              </span>
+              {spreadLife == false ? (
+                "나의 동네생활"
+              ) : (
+                <div className="font-bold">나의 동네생활</div>
+              )}
+            </button>
+            <button
+              className="flex items-start"
+              onClick={() => {
+                moveWrite();
+              }}
+              style={{
+                width: "100%",
+              }}
+            >
+              <span className="mt-1 mr-1">
+                <MdOutlineModeEditOutline />
+              </span>
+              게시판 글쓰기
+            </button>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              display: "inline",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+              }}
+            >
+              {spreadQue && (
+                <div className="pt-2">
+                  <div
+                    style={{
+                      margin: "0 auto",
+                      width: "700px",
+                    }}
+                  >
+                    <ul>
+                      {getQue.map((que, index) => (
+                        <li key={index}>
+                          <div
+                            className=" pt-2 mb-2"
+                            style={{
+                              border: "1px rgb(209, 209, 209) solid",
+                            }}
+                          >
+                            <div className="p-3">
+                              <div className="pb-3">
+                                <span
+                                  className="rounded-lg p-1"
+                                  style={{
+                                    backgroundColor: "rgb(209, 209, 209)",
+                                  }}
+                                >
+                                  {que.boardCategory}
+                                </span>
+                              </div>
+
+                              <div
+                                className="flex gap-1"
+                                onClick={() => {
+                                  movePost(que.boardId);
+                                }}
+                                style={{
+                                  minHeight: "40px",
+                                  cursor: "pointer",
+                                }}
+                              >
+                                {" "}
+                                <span
+                                  className="font-bold"
+                                  style={{
+                                    color: "orange",
+                                  }}
+                                >
+                                  Q
+                                </span>
+                                <div>{que.boardContent}</div>
+                              </div>
+
+                              <div
+                                className="mt-1 flex justify-between"
+                                style={{
+                                  color: "gray",
+                                }}
+                              >
+                                <span>{que.boardUserid}</span>
+                                <span>{que.createDate}</span>
+                              </div>
+                            </div>
+                            <hr />
+                            <div className="flex p-2 justify-between">
+                              <div className="flex gap-2">
+                                <button className="flex items-center gap-1">
+                                  <span>
+                                    <FiCheckCircle />
+                                  </span>
+                                  <span>궁금해요</span>
+                                </button>
+                                <button
+                                  className="flex items-center gap-1"
+                                  onClick={() => {
+                                    movePost(que.boardId);
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      fontSize: "1.2rem",
+                                    }}
+                                  >
+                                    <FiMessageCircle />
+                                  </span>
+                                  {que.boardChattingNum > 0 ? (
+                                    <div>
+                                      <span>댓글</span>
+                                      <span> {que.boardChattingNum}</span>
+                                    </div>
+                                  ) : (
+                                    <span> 댓글쓰기</span>
+                                  )}
+                                </button>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <span
+                                  className="rounded-full"
+                                  style={{
+                                    color: "white",
+                                    padding: "2px",
+                                    backgroundColor: "orange",
+                                  }}
+                                >
+                                  <AiFillLike />
+                                </span>
+                                {que.boardAgree}
+                              </div>
+                            </div>
+                            <div ref={setQTarget} />
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {/* 동네 카페 */}
+              {spreadCafe && (
+                <div>
+                  <div className="pt-2">
+                    <div
+                      style={{
+                        margin: "0 auto",
+                        width: "700px",
+                      }}
+                    >
+                      <ul>
+                        {getCafe.map((cafe, index) => (
+                          <li key={index}>
+                            <div
+                              className=" pt-2 mb-2"
+                              style={{
+                                border: "1px rgb(209, 209, 209) solid",
+                              }}
+                            >
+                              <div className="p-3">
+                                <div className="pb-3">
+                                  <span
+                                    className="rounded-lg p-1"
+                                    style={{
+                                      backgroundColor: "rgb(209, 209, 209)",
+                                    }}
+                                  >
+                                    {cafe.boardCategory}
+                                  </span>
+                                </div>
+
+                                <div
+                                  onClick={() => {
+                                    movePost(cafe.boardId, cafe.boardUserid);
+                                  }}
+                                  style={{
+                                    minHeight: "40px",
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  {" "}
+                                  <div>{cafe.boardContent}</div>
+                                </div>
+
+                                <div
+                                  className="mt-1 flex justify-between"
+                                  style={{
+                                    color: "gray",
+                                  }}
+                                >
+                                  <span>{cafe.boardUserid}</span>
+                                  <span>{cafe.createDate}</span>
+                                </div>
+                              </div>
+                              <hr />
+                              <div className="flex p-2 justify-between">
+                                <div className="flex gap-2">
+                                  <button className="flex items-center gap-1">
+                                    <span>
+                                      <SlEmotsmile />
+                                    </span>
+                                    <span>공감하기</span>
+                                  </button>
+                                  <button
+                                    className="flex items-center gap-1"
+                                    onClick={() => {
+                                      movePost(cafe.boardId, cafe.boardUserid);
+                                    }}
+                                  >
+                                    <span
+                                      style={{
+                                        fontSize: "1.2rem",
+                                      }}
+                                    >
+                                      <FiMessageCircle />
+                                    </span>
+                                    {cafe.boardChattingNum > 0 ? (
+                                      <div>
+                                        <span>댓글</span>
+                                        <span> {cafe.boardChattingNum}</span>
+                                      </div>
+                                    ) : (
+                                      <span> 댓글쓰기</span>
+                                    )}
+                                  </button>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <span
+                                    className="rounded-full"
+                                    style={{
+                                      color: "white",
+                                      padding: "2px",
+                                      backgroundColor: "orange",
+                                    }}
+                                  >
+                                    <AiFillLike />
+                                  </span>
+                                  {cafe.boardAgree}
+                                </div>
+                              </div>
+                              <div ref={setTarget}></div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

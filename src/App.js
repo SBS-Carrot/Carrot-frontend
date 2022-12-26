@@ -46,7 +46,9 @@ function App() {
   const [liked, setLiked] = useState(false);
   const [jobsLiked, setJobsLiked] = useState(false);
   const [realtyLiked, setRealtyLiked] = useState(false);
+  const [boardLiked, setBoardLiked] = useState(false);
   const [menuToggle, setMenuToggle] = useState(false);
+
   const onMenuToggle = () => {
     setMenuToggle(!menuToggle);
   };
@@ -120,6 +122,22 @@ function App() {
         },
       });
       setRealtyLiked(data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onBoardLike = async (articleid, userid) => {
+    try {
+      const data = await axios({
+        url: `http://localhost:8083/likeBoard/${articleid}`,
+        method: "GET",
+        params: {
+          boardId: articleid,
+          userid,
+        },
+      });
+      setBoardLiked(data.data);
     } catch (e) {
       console.log(e);
     }
@@ -362,6 +380,9 @@ function App() {
               onRemoveBoard={onRemoveBoard}
               editToggle={editToggle}
               onEditToggle={onEditToggle}
+              boardLiked={boardLiked}
+              onBoardLike={onBoardLike}
+              setBoardLiked={setBoardLiked}
             />
           }
         />

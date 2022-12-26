@@ -23,9 +23,6 @@ import { CardText } from "reactstrap";
 const BoardPost = ({
   logined,
   setLogined,
-  onLike,
-  liked,
-  setLiked,
   onRemoveBoard,
   deleteToggle,
   replyDelete,
@@ -40,6 +37,9 @@ const BoardPost = ({
   setMenuToggle,
   editToggle,
   onEditToggle,
+  boardLiked,
+  setBoardLiked,
+  onBoardLike,
 }) => {
   const { num } = useParams();
   const [userid, setUserid] = useState(sessionStorage.getItem("userid"));
@@ -63,9 +63,10 @@ const BoardPost = ({
 
   const [board, setBoard] = useState("");
   const [images, setImages] = useState([]);
-  const onLikes = (data) => {
-    setLiked(data);
+  const onBoardLikes = (data) => {
+    setBoardLiked(data);
   };
+
   const [imgs, setImgs] = useState([
     {
       url: images[0],
@@ -161,20 +162,6 @@ const BoardPost = ({
         console.log(e);
       }
 
-      //   try {
-      //     const data = await axios({
-      //       url: `http://localhost:8083/likeRealtyCheck/${num}`,
-      //       method: "GET",
-      //       params: {
-      //         realtyId: num,
-      //         userid: sessionStorage.getItem("userid"),
-      //       },
-      //     });
-      //     onLikes(data.data);
-      //   } catch (e) {
-      //     console.log(e);
-      //   }
-
       try {
         const data = await axios({
           url: `http://localhost:8083/getUser/${userid}`,
@@ -191,6 +178,19 @@ const BoardPost = ({
         });
         setReplis(data.data);
         console.log(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        const data = await axios({
+          url: `http://localhost:8083/likeBoardCheck/${num}`,
+          method: "GET",
+          params: {
+            boardId: num,
+            userid: sessionStorage.getItem("userid"),
+          },
+        });
+        onBoardLikes(data.data);
       } catch (e) {
         console.log(e);
       }
@@ -212,7 +212,7 @@ const BoardPost = ({
       }
     };
     onLikeRe(num);
-  }, [liked]);
+  }, [boardLiked]);
 
   var settings = {
     dots: true,
@@ -509,15 +509,30 @@ const BoardPost = ({
             <div className="flex p-2 justify-between">
               <div className="flex gap-2">
                 <button
-                  className="flex items-center gap-1"
-                  // style={{
-                  //   color: "#ff8200",
-                  // }}
+                  onClick={() => {
+                    onBoardLike(num, sessionStorage.getItem("userid"));
+                  }}
                 >
-                  <span>
-                    <SlEmotsmile />
-                  </span>
-                  <span>공감하기</span>
+                  {boardLiked ? (
+                    <span
+                      className="flex"
+                      style={{
+                        color: "#ff8200",
+                      }}
+                    >
+                      <span className="flex items-center pr-1">
+                        <SlEmotsmile />
+                      </span>
+                      공감하기
+                    </span>
+                  ) : (
+                    <span className="flex">
+                      <span className="flex items-center pr-1">
+                        <SlEmotsmile />
+                      </span>
+                      공감하기
+                    </span>
+                  )}
                 </button>
                 <button className="flex items-center gap-1">
                   <span
@@ -756,26 +771,6 @@ const BoardPost = ({
                 </button>
               </div>
             </div>
-            {/* <div className="py-2 flex gap-5 justify-end" style={{}}>
-              <button
-                style={{
-                  fontSize: "1.5rem",
-                }}
-                onClick={() => {
-                  onLike(num, sessionStorage.getItem("userid"));
-                }}
-              >
-                {liked ? (
-                  <FiHeart
-                    style={{
-                      color: "pink",
-                    }}
-                  />
-                ) : (
-                  <FiHeart />
-                )}
-              </button>
-            </div> */}
           </section>
         </div>
       </div>

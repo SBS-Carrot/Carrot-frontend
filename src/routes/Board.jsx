@@ -987,7 +987,12 @@ const Board = ({ logined, setLogined }) => {
                             <hr />
                             <div className="flex p-2 justify-between">
                               <div className="flex gap-2">
-                                <button className="flex items-center gap-1">
+                                <button
+                                  className="flex items-center gap-1"
+                                  onClick={() => {
+                                    alert("로그인 후 이용해주세요.");
+                                  }}
+                                >
                                   <span>
                                     <FiCheckCircle />
                                   </span>
@@ -1096,7 +1101,12 @@ const Board = ({ logined, setLogined }) => {
                               <hr />
                               <div className="flex p-2 justify-between">
                                 <div className="flex gap-2">
-                                  <button className="flex items-center gap-1">
+                                  <button
+                                    className="flex items-center gap-1"
+                                    onClick={() => {
+                                      alert("로그인 후 이용해주세요.");
+                                    }}
+                                  >
                                     <span>
                                       <SlEmotsmile />
                                     </span>

@@ -44,7 +44,7 @@ const Jobs = ({ logined, setLogined }) => {
     const onSubmit = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/jobs`,
+          url: `http://localhost:8083/hotJobs`,
           method: "GET",
         });
         onJobs(data.data);

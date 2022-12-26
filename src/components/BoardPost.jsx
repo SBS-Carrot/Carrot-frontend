@@ -791,83 +791,7 @@ const BoardPost = ({
             margin: "0 auto",
           }}
         >
-          <div className="mt-5 relative">
-            <div>
-              <Slider {...settings}>
-                {imgs[0] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[0]} alt="" />
-                  </div>
-                )}
-                {imgs[1] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[1]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[2] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[2]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[3] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[3]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[4] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[4]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[5] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[5]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[6] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[6]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[7] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[7]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[8] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[8]} alt="" />
-                  </div>
-                )}{" "}
-                {imgs[9] == undefined ? (
-                  ""
-                ) : (
-                  <div>
-                    <img src={imgs[9]} alt="" />
-                  </div>
-                )}
-              </Slider>
-            </div>
-          </div>
-          <section className="mt-6 flex justify-end gap-3">
+          <section className="mt-3 flex justify-end gap-3">
             <div
               className="avatar flex justify-center items-center"
               style={{
@@ -890,6 +814,7 @@ const BoardPost = ({
                 )}
               </div>
             </div>
+
             <div
               className="flex justify-center flex-col"
               style={{
@@ -908,42 +833,7 @@ const BoardPost = ({
               style={{
                 width: "200px",
               }}
-            >
-              <div className="flex gap-2">
-                <div>
-                  <div
-                    className="font-bold flex justify-end p-1 "
-                    style={{
-                      color: "green",
-                    }}
-                  >
-                    {boardWriter.temp}
-                  </div>
-                  <progress
-                    className="flex progress progress-success w-32"
-                    value="40"
-                    max="100"
-                  ></progress>
-                </div>
-                <div
-                  className="flex"
-                  style={{
-                    color: "green",
-                    fontSize: "1.75rem",
-                  }}
-                >
-                  <BsFillEmojiSmileFill />
-                </div>
-              </div>
-              <div
-                className="text-sm flex justify-end"
-                style={{
-                  color: "gray",
-                }}
-              >
-                매너온도
-              </div>
-            </div>
+            ></div>
           </section>
           <br />
           <div
@@ -953,409 +843,323 @@ const BoardPost = ({
             }}
           ></div>
           <section>
-            <div className="mt-6">
-              <div className="flex gap-2">
+            <div className="mt-3">
+              <div className="flex mb-1">
                 <div
-                  className="text-sm"
+                  className="flex"
                   style={{
-                    color: "gray",
+                    justifyContent: "space-between",
+                    width: "700px",
                   }}
                 >
-                  {board.productCategory}
-                </div>
-                <div
-                  className="text-sm"
-                  style={{
-                    color: "gray",
-                  }}
-                >
-                  {board.productCreateTime}
+                  <div
+                    className="rounded"
+                    style={{
+                      padding: "2px",
+                      backgroundColor: "rgb(209, 209, 209)",
+                    }}
+                  >
+                    {board.boardCategory}
+                  </div>
                 </div>
               </div>
               <div
-                className="font-bold"
+                className="text-sm"
                 style={{
-                  fontSize: "1.25rem",
+                  color: "gray",
                 }}
               >
-                {board.productPrice}원
+                {board.createDate}
               </div>
             </div>
             <br />
             <div>
-              <div>{board.productContent}</div>
-              <div
-                className="flex text-sm gap-2 my-5"
-                style={{
-                  color: "gray",
-                }}
-              >
-                <span>관심</span>
-                <div>{board.productLike}</div>
-                <span>채팅</span>
-                <div>{board.productChatting}</div>
-                <span>조회</span>
-                <div>{board.productView}</div>
+              <div>{board.boardContent}</div>
+            </div>
+            <div className="mt-5 relative">
+              <div>
+                {imgs[0] != undefined ? (
+                  <div>
+                    <Slider {...settings}>
+                      {imgs[0] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[0]} alt="" />
+                        </div>
+                      )}
+                      {imgs[1] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[1]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[2] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[2]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[3] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[3]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[4] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[4]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[5] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[5]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[6] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[6]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[7] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[7]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[8] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[8]} alt="" />
+                        </div>
+                      )}{" "}
+                      {imgs[9] == undefined ? (
+                        ""
+                      ) : (
+                        <div>
+                          <img src={imgs[9]} alt="" />
+                        </div>
+                      )}
+                    </Slider>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
+            {board.boardAddress == "" ? (
+              ""
+            ) : (
+              <div> 장소: {board.boardAddress}</div>
+            )}
+
+            <div
+              className="flex text-sm gap-2 my-5"
+              style={{
+                color: "gray",
+              }}
+            >
+              <span>조회</span>
+              <div>{board.boardView}</div>
+            </div>
           </section>
-          <br />
-          <div
-            style={{
-              width: "700px",
-              borderBottom: "1px #e4e4e4 solid",
-            }}
-          ></div>
+          <hr />
           <section>
+            <div className="flex p-2 justify-between">
+              <div className="flex gap-2">
+                <button
+                  className="flex items-center gap-1"
+                  onClick={() => {
+                    alert("로그인 후 이용해주세요.");
+                  }}
+                >
+                  <span>
+                    <SlEmotsmile />
+                  </span>
+                  <span>공감하기</span>
+                </button>
+                <button className="flex items-center gap-1">
+                  <span
+                    style={{
+                      fontSize: "1.2rem",
+                    }}
+                  >
+                    <FiMessageCircle />
+                  </span>
+                  {board.boardChattingNum > 0 ? (
+                    <div>
+                      <span>댓글</span>
+                      <span> {board.boardChattingNum}</span>
+                    </div>
+                  ) : (
+                    <span> 댓글쓰기</span>
+                  )}
+                </button>
+              </div>
+              <div className="flex items-center gap-1">
+                <span
+                  className="rounded-full"
+                  style={{
+                    color: "white",
+                    padding: "2px",
+                    backgroundColor: "orange",
+                  }}
+                >
+                  <AiFillLike />
+                </span>
+                {board.boardAgree}
+              </div>
+            </div>
+            <hr />
             <div>
-              <div className="py-9 flex justify-between">
+              {board.boardChattingNum > 0 ? (
+                <ul>
+                  {replies.map((reply, index) => (
+                    <li key={index}>
+                      <div className="flex mt-2">
+                        <div
+                          className="avatar items-start"
+                          style={{
+                            width: "3.5rem",
+                          }}
+                        >
+                          <div className="w-12 rounded-full">
+                            {reply.profileImage != null ? (
+                              <img src={reply.profileImage} />
+                            ) : (
+                              <FaCarrot
+                                style={{
+                                  color: "#fc9d39",
+                                  fontSize: "3rem",
+                                  transform: "translate(0%,0%)",
+                                  border: "0.1px #fc9d39 solid",
+                                  borderRadius: "50%",
+                                }}
+                              />
+                            )}
+                          </div>
+                        </div>
+                        <div
+                          className="flex justify-center flex-col"
+                          style={{
+                            width: "100%",
+                          }}
+                        >
+                          <div className="flex gap-1 justify-between">
+                            <div className="flex">
+                              <div className="font-bold ">
+                                {reply.nickname == "닉네임 없음"
+                                  ? user.userid
+                                  : reply.replyNickname}
+                              </div>
+                              {board.boardUserid == reply.replyUserid && (
+                                <div className="flex items-center">
+                                  <div
+                                    className="flex justify-center"
+                                    style={{
+                                      border: "1px gray solid",
+                                      width: "44px",
+                                      height: "17px",
+                                      color: "gray",
+                                      fontSize: "0.72rem",
+                                    }}
+                                  >
+                                    작성자
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          <div
+                            style={{
+                              fontSize: "0.7rem",
+                              color: "gray",
+                            }}
+                          >
+                            {reply.replyUserAddress}
+                          </div>
+                          <div>{reply.boardReply}</div>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
                 <div
-                  className="font-bold"
+                  style={{
+                    textAlign: "center",
+                    padding: "30px",
+                    color: "gray",
+                  }}
+                >
+                  <div>아직 댓글이 없어요.</div>
+                  <div>가장 먼저 댓글을 남겨보세요.</div>
+                </div>
+              )}
+              <div className="flex mb-8">
+                <input
+                  className="rounded-full"
+                  type="text"
+                  value={replyValue}
+                  onChange={onReplyChange}
+                  placeholder="댓글을 입력해주세요."
+                  style={{
+                    backgroundColor: "#e5e5e5",
+                    width: "700px",
+                    padding: "4px",
+                  }}
+                  onKeyUp={(e) => {
+                    if (e.key == "Enter") {
+                      submitReply(replyValue);
+                      alert("로그인 후 댓글을 작성해주세요.");
+                    }
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    submitReply(replyValue);
+                  }}
+                  className="flex items-center"
                   style={{
                     fontSize: "1.1rem",
                   }}
                 >
-                  당근마켓 인기중고
-                </div>
-                <div
-                  className=""
-                  style={{
-                    color: "#FF7F3F",
-                  }}
-                >
-                  <a href="#">더 구경하기</a>
-                </div>
+                  <AiOutlineEnter />
+                </button>
               </div>
-              <div>
-                <div>
-                  <ul
-                    className="grid grid-cols-3"
-                    style={{
-                      maxWidth: "1000px",
-                      margin: "0 auto",
-                    }}
-                  >
-                    <li
-                      style={{
-                        paddingBottom: "30px",
-                      }}
-                    >
-                      <a href="http://localhost:3000/articles/1">
-                        <div
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "200px",
-                              height: "200px",
-                              borderRadius: "15px",
-                              outline: "gray 1px solid",
-                            }}
-                          >
-                            <img
-                              className="object-fill"
-                              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/83cbd5362a585918a9b4a7354984ecbfb20208da27522d9b39579099b2cfe1f9.webp?q=95&s=1440x1440&t=inside"
-                              alt=""
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                display: "block",
-                                borderRadius: "15px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "200px",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflowX: "hidden",
-                            }}
-                          >
-                            <span>
-                              롯데 자이언츠 이대호 은퇴경기 티켓 팔아요
-                            </span>
-                          </div>
-                          <div
-                            style={{
-                              fontWeight: "bolder",
-                              padding: "5px 0",
-                            }}
-                          >
-                            <span>33,000원</span>
-                          </div>
-                          <div
-                            style={{
-                              fontSize: "0.8rem",
-                            }}
-                          >
-                            <span>부산 진구 부전동</span>
-                          </div>
-                          <div
-                            style={{
-                              fontSize: "0.8rem",
-                              color: "gray",
-                            }}
-                          >
-                            <span>관심 5</span>
-                            <span> º </span>
-                            <span>채팅 42</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="http://localhost:3000/articles/2">
-                        <div
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "200px",
-                              height: "200px",
-                              borderRadius: "15px",
-                              outline: "gray 1px solid",
-                            }}
-                          >
-                            <img
-                              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-                              alt=""
-                              style={{
-                                borderRadius: "15px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "200px",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflowX: "hidden",
-                            }}
-                          >
-                            <span>
-                              롯데 자이언츠 이대호 은퇴경기 티켓 팔아요
-                            </span>
-                          </div>
-                          <div>
-                            <span>33,000원</span>
-                          </div>
-                          <div>
-                            <span>부산 진구 부전동</span>
-                          </div>
-                          <div>
-                            <span>관심 5</span>
-                            <span> º </span>
-                            <span>채팅 42</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>{" "}
-                    <li>
-                      <a href="http://localhost:3000/articles/3">
-                        <div
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "200px",
-                              height: "200px",
-                              borderRadius: "15px",
-                              outline: "gray 1px solid",
-                            }}
-                          >
-                            <img
-                              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-                              alt=""
-                              style={{
-                                borderRadius: "15px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "200px",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflowX: "hidden",
-                            }}
-                          >
-                            <span>
-                              롯데 자이언츠 이대호 은퇴경기 티켓 팔아요
-                            </span>
-                          </div>
-                          <div>
-                            <span>33,000원</span>
-                          </div>
-                          <div>
-                            <span>부산 진구 부전동</span>
-                          </div>
-                          <div>
-                            <span>관심 5</span>
-                            <span> º </span>
-                            <span>채팅 42</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>{" "}
-                    <li>
-                      <a href="#">
-                        <div
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "200px",
-                              height: "200px",
-                              borderRadius: "15px",
-                              outline: "gray 1px solid",
-                            }}
-                          >
-                            <img
-                              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-                              alt=""
-                              style={{
-                                borderRadius: "15px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "200px",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflowX: "hidden",
-                            }}
-                          >
-                            <span>
-                              롯데 자이언츠 이대호 은퇴경기 티켓 팔아요
-                            </span>
-                          </div>
-                          <div>
-                            <span>33,000원</span>
-                          </div>
-                          <div>
-                            <span>부산 진구 부전동</span>
-                          </div>
-                          <div>
-                            <span>관심 5</span>
-                            <span> º </span>
-                            <span>채팅 42</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>{" "}
-                    <li>
-                      <a href="#">
-                        <div
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "200px",
-                              height: "200px",
-                              borderRadius: "15px",
-                              outline: "gray 1px solid",
-                            }}
-                          >
-                            <img
-                              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-                              alt=""
-                              style={{
-                                borderRadius: "15px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "200px",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflowX: "hidden",
-                            }}
-                          >
-                            <span>
-                              롯데 자이언츠 이대호 은퇴경기 티켓 팔아요
-                            </span>
-                          </div>
-                          <div>
-                            <span>33,000원</span>
-                          </div>
-                          <div>
-                            <span>부산 진구 부전동</span>
-                          </div>
-                          <div>
-                            <span>관심 5</span>
-                            <span> º </span>
-                            <span>채팅 42</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>{" "}
-                    <li>
-                      <a href="#">
-                        <div
-                          style={{
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "200px",
-                              height: "200px",
-                              borderRadius: "15px",
-                              outline: "gray 1px solid",
-                            }}
-                          >
-                            <img
-                              src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop"
-                              alt=""
-                              style={{
-                                borderRadius: "15px",
-                              }}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              width: "200px",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflowX: "hidden",
-                            }}
-                          >
-                            <span>
-                              롯데 자이언츠 이대호 은퇴경기 티켓 팔아요
-                            </span>
-                          </div>
-                          <div>
-                            <span>33,000원</span>
-                          </div>
-                          <div>
-                            <span>부산 진구 부전동</span>
-                          </div>
-                          <div>
-                            <span>관심 5</span>
-                            <span> º </span>
-                            <span>채팅 42</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <br />
             </div>
+            {/* <div className="py-2 flex gap-5 justify-end" style={{}}>
+              <button
+                style={{
+                  fontSize: "1.5rem",
+                }}
+                onClick={() => {
+                  onLike(num, sessionStorage.getItem("userid"));
+                }}
+              >
+                {liked ? (
+                  <FiHeart
+                    style={{
+                      color: "pink",
+                    }}
+                  />
+                ) : (
+                  <FiHeart />
+                )}
+              </button>
+            </div> */}
           </section>
         </div>
 

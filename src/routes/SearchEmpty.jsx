@@ -4,6 +4,7 @@ import Footer from "../layouts/Footer";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import Header from "../layouts/Header";
 
 const SearchEmpty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -19,7 +20,12 @@ const SearchEmpty = ({ logined, setLogined }) => {
   };
   return (
     <div>
-      <LoginedHeader logined={logined} setLogined={setLogined} />
+      {logined == "true" ? (
+        <LoginedHeader logined={logined} setLogined={setLogined} />
+      ) : (
+        <Header logined={logined} setLogined={setLogined} />
+      )}
+
       <div
         style={{
           width: "1000px",

@@ -16,6 +16,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AiFillLike, AiOutlineCaretRight } from "react-icons/ai";
 import { FiMessageCircle, FiCheckCircle } from "react-icons/fi";
 import Header from "../layouts/Header";
+import JobsHeader from "../layouts/JobsHeader";
+import RealtyHeader from "../layouts/RealtyHeader";
+import BoardHeader from "../layouts/BoardHeader";
 const Search = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const { search } = useParams(); //초기검색어
@@ -33,7 +36,21 @@ const Search = ({ logined, setLogined }) => {
   };
   useEffect(() => {
     move(searchValue);
+    if (type == "product") {
+      onSearch("product");
+    } else if (type == "jobs") {
+      onSearch("jobs");
+    } else if (type == "realty") {
+      onSearch("realty");
+    } else if (type == "board") {
+      onSearch("board");
+    }
   }, [searchValue]);
+
+  useEffect(() => {
+    setSearchValue((prev) => search);
+  }, [search]);
+
   //최초 데이터 불러오기
   useEffect(() => {
     const getData = async () => {
@@ -43,10 +60,8 @@ const Search = ({ logined, setLogined }) => {
           method: "POST",
           data: {
             searchWord: search,
-            userid: sessionStorage.getItem("userid"),
           },
         });
-        console.log(data.data);
         onSearchChange(data.data);
         setCurrentPosts(data.data.slice(0, 8));
       } catch (e) {
@@ -239,7 +254,6 @@ const Search = ({ logined, setLogined }) => {
           method: "POST",
           data: {
             searchWord: searchValue,
-            userid: sessionStorage.getItem("userid"),
           },
         });
 
@@ -251,7 +265,6 @@ const Search = ({ logined, setLogined }) => {
           method: "POST",
           data: {
             searchWord: searchValue,
-            userid: sessionStorage.getItem("userid"),
           },
         });
 
@@ -263,7 +276,6 @@ const Search = ({ logined, setLogined }) => {
           method: "POST",
           data: {
             searchWord: searchValue,
-            userid: sessionStorage.getItem("userid"),
           },
         });
 
@@ -275,10 +287,9 @@ const Search = ({ logined, setLogined }) => {
           method: "POST",
           data: {
             searchWord: searchValue,
-            userid: sessionStorage.getItem("userid"),
           },
         });
-        console.log(data.data);
+
         onBSearchChange(data.data);
         onBoard(data.data);
       }
@@ -293,7 +304,7 @@ const Search = ({ logined, setLogined }) => {
   if (type == "product") {
     return (
       <div>
-        {logined == true ? (
+        {logined == "true" ? (
           <LoginedHeader logined={logined} setLogined={setLogined} />
         ) : (
           <Header logined={logined} setLogined={setLogined} />
@@ -334,6 +345,7 @@ const Search = ({ logined, setLogined }) => {
                     onSearch("product");
                   }
                 }}
+                autoFocus
               />
               <div>"{search2}" 중고거래 검색 결과입니다.</div>
             </div>
@@ -518,7 +530,12 @@ const Search = ({ logined, setLogined }) => {
   } else if (type == "jobs") {
     return (
       <div>
-        <LoginedJobsHeader logined={logined} setLogined={setLogined} />
+        {logined == "true" ? (
+          <LoginedJobsHeader logined={logined} setLogined={setLogined} />
+        ) : (
+          <JobsHeader logined={logined} setLogined={setLogined} />
+        )}
+
         <div
           style={{
             width: "1000px",
@@ -623,8 +640,6 @@ const Search = ({ logined, setLogined }) => {
               <ul
                 style={{
                   paddingTop: "1rem",
-                  paddingLeft: "5rem",
-
                   height: "580px",
                 }}
                 className="grid grid-cols-2 jobBox"
@@ -747,7 +762,11 @@ const Search = ({ logined, setLogined }) => {
   } else if (type == "realty") {
     return (
       <div>
-        <LoginedRealtyHeader logined={logined} setLogined={setLogined} />
+        {logined == "true" ? (
+          <LoginedRealtyHeader logined={logined} setLogined={setLogined} />
+        ) : (
+          <RealtyHeader logined={logined} setLogined={setLogined} />
+        )}
         <div
           style={{
             width: "1000px",
@@ -1484,7 +1503,11 @@ const Search = ({ logined, setLogined }) => {
   } else {
     return (
       <div>
-        <LoginedBoardHeader logined={logined} setLogined={setLogined} />
+        {logined == "true" ? (
+          <LoginedBoardHeader logined={logined} setLogined={setLogined} />
+        ) : (
+          <BoardHeader logined={logined} setLogined={setLogined} />
+        )}
         <div
           style={{
             width: "1000px",

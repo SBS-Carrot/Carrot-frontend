@@ -87,7 +87,12 @@ const RealtySearch = ({ logined, setLogined }) => {
 
   return (
     <div>
-      <RealtyHeader logined={logined} setLogined={setLogined} />
+      {logined == "true" ? (
+        <LoginedRealtyHeader logined={logined} setLogined={setLogined} />
+      ) : (
+        <RealtyHeader logined={logined} setLogined={setLogined} />
+      )}
+
       <div
         style={{
           width: "800px",

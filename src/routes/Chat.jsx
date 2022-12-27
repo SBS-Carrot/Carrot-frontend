@@ -781,7 +781,7 @@ const Chat = ({ logined, setLogined }) => {
         ) : //중고거래 판매중일때 여기까지
         //지금부터 부동산 거래일때
 
-        realty.isRealtyDeal == "거래 완료" ? (
+        realty.realtyDeal == "거래 완료" ? (
           //부동산 거래완료일때
           realty.realtyBuyUserid == sessionStorage.getItem("userid") ? (
             //거래완료 구매자일때만 후기 창 팝업등장

@@ -261,6 +261,22 @@ const AllRealty = ({ logined, setLogined }) => {
                             }}
                           >
                             <div>
+                              {realty.realtyDeal == "판매중" ? (
+                                ""
+                              ) : (
+                                <span
+                                  className="mr-1"
+                                  style={{
+                                    padding: "2px 4px",
+                                    border: "1px gray solid",
+                                    fontSize: "0.85rem",
+                                    color: "gray",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  거래 완료
+                                </span>
+                              )}
                               <span>{realty.realtyCategory}</span>
                               <span
                                 style={{
@@ -798,21 +814,7 @@ const AllRealty = ({ logined, setLogined }) => {
                               ) : (
                                 ""
                               )}
-                              <div>
-                                {realty.realtyDeal == "판매중" ? (
-                                  ""
-                                ) : (
-                                  <div
-                                    style={{
-                                      padding: "2px 5px",
-                                      border: "1px black solid",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    거래 완료
-                                  </div>
-                                )}
-                              </div>
+                              <div></div>
                             </div>
                           </div>
                         </div>
@@ -1026,6 +1028,19 @@ const AllRealty = ({ logined, setLogined }) => {
                             }}
                           >
                             <div>
+                              {realty.realtyDeal == "판매중" ? (
+                                ""
+                              ) : (
+                                <div
+                                  style={{
+                                    padding: "2px 5px",
+                                    border: "1px black solid",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  거래 완료
+                                </div>
+                              )}
                               <span>{realty.realtyCategory}</span>
                               <span
                                 style={{
@@ -1563,21 +1578,7 @@ const AllRealty = ({ logined, setLogined }) => {
                               ) : (
                                 ""
                               )}
-                              <div>
-                                {realty.realtyDeal == "판매중" ? (
-                                  ""
-                                ) : (
-                                  <div
-                                    style={{
-                                      padding: "2px 5px",
-                                      border: "1px black solid",
-                                      textAlign: "center",
-                                    }}
-                                  >
-                                    거래 완료
-                                  </div>
-                                )}
-                              </div>
+                              <div></div>
                             </div>
                           </div>
                         </div>

@@ -798,8 +798,21 @@ const AllRealty = ({ logined, setLogined }) => {
                               ) : (
                                 ""
                               )}
-                              <div></div>
-                              <div></div>
+                              <div>
+                                {realty.realtyDeal == "판매중" ? (
+                                  ""
+                                ) : (
+                                  <div
+                                    style={{
+                                      padding: "2px 5px",
+                                      border: "1px black solid",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    거래 완료
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1550,8 +1563,21 @@ const AllRealty = ({ logined, setLogined }) => {
                               ) : (
                                 ""
                               )}
-                              <div></div>
-                              <div></div>
+                              <div>
+                                {realty.realtyDeal == "판매중" ? (
+                                  ""
+                                ) : (
+                                  <div
+                                    style={{
+                                      padding: "2px 5px",
+                                      border: "1px black solid",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    거래 완료
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>

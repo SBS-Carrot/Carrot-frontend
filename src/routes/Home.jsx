@@ -13,9 +13,7 @@ import axios from "axios";
 
 const Home = ({ logined, setLogined }) => {
   const [user, setUser] = useState(sessionStorage.getItem("user") || "");
-  //https://velog.io/@green9930/%EC%8B%A4%EC%A0%84-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-React%EC%99%80-SSE
-  //https://velog.io/@max9106/Spring-SSE-Server-Sent-Events%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EC%95%8C%EB%A6%BC
-
+  const [hotSearch, setHotSearch] = useState([]);
   const [hotProduct, setHotProduct] = useState([]);
   const [post, setPost] = useState([]);
 
@@ -64,6 +62,20 @@ const Home = ({ logined, setLogined }) => {
       }
     };
     getData();
+
+    const getHotSearch = async () => {
+      try {
+        const data1 = await axios({
+          url: "http://localhost:8083/getHotSearch",
+          method: "GET",
+        });
+
+        setHotSearch(data1.data.slice(0, 10));
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getHotSearch();
   }, []);
 
   const moveProduct = async (id) => {
@@ -452,33 +464,11 @@ const Home = ({ logined, setLogined }) => {
             <a href="#">중고거래 인기검색어</a>
           </div>
           <ul className="flex flex-raw gap-10 align-center justify-center mt-8 hotissueBox">
-            <li>
-              <a href="#">자전거</a>
-            </li>
-            <li>
-              <a href="#">포켓몬빵</a>
-            </li>
-            <li>
-              <a href="#">캠핑</a>
-            </li>
-            <li>
-              <a href="#">아이폰</a>
-            </li>
-            <li>
-              <a href="#">당근알바</a>
-            </li>
-            <li>
-              <a href="#">의자</a>
-            </li>
-            <li>
-              <a href="#">냉장고</a>
-            </li>
-            <li>
-              <a href="#">텐트</a>
-            </li>
-            <li>
-              <a href="#">노트북</a>
-            </li>
+            {hotSearch.map((search, index) => (
+              <li key={index}>
+                <a href={`search/${search.searchWord}`}>{search.searchWord}</a>
+              </li>
+            ))}
           </ul>
         </div>
         <Footer />
@@ -859,33 +849,11 @@ const Home = ({ logined, setLogined }) => {
             <a href="#">중고거래 인기검색어</a>
           </div>
           <ul className="flex flex-raw gap-10 align-center justify-center mt-8 hotissueBox">
-            <li>
-              <a href="#">자전거</a>
-            </li>
-            <li>
-              <a href="#">포켓몬빵</a>
-            </li>
-            <li>
-              <a href="#">캠핑</a>
-            </li>
-            <li>
-              <a href="#">아이폰</a>
-            </li>
-            <li>
-              <a href="#">당근알바</a>
-            </li>
-            <li>
-              <a href="#">의자</a>
-            </li>
-            <li>
-              <a href="#">냉장고</a>
-            </li>
-            <li>
-              <a href="#">텐트</a>
-            </li>
-            <li>
-              <a href="#">노트북</a>
-            </li>
+            {hotSearch.map((search, index) => (
+              <li key={index}>
+                <a href={`search/${search.searchWord}`}>{search.searchWord}</a>
+              </li>
+            ))}
           </ul>
         </div>
         <Footer />
@@ -895,12 +863,3 @@ const Home = ({ logined, setLogined }) => {
 };
 
 export default Home;
-
-//https://goddaehee.tistory.com/274 Branch 기초생성 및 이동
-//https://goddaehee.tistory.com/275?category=381481 Branch 병합
-
-//branch - master, test 두종류.
-//master에서 작업 후 git add, commit ,push.
-//git switch test해서 test branch로 이동 후 git pull origin master
-//test branch에서 작업 후 git add, commit, git push origin test
-//git switch master해서 master로 이동, git pull origin test.

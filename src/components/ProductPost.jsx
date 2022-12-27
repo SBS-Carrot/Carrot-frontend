@@ -699,7 +699,7 @@ const ProductPost = ({
           </section>
           <br />
           <section>
-            <div className="py-2 flex gap-5 justify-end" style={{}}>
+            <div className="py-2 flex gap-5 justify-end">
               <button
                 style={{
                   fontSize: "1.5rem",

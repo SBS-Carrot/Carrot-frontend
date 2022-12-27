@@ -17,7 +17,11 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaCarrot, FaRegPaperPlane } from "react-icons/fa";
 import { SlEmotsmile } from "react-icons/sl";
 import { AiFillLike, AiOutlineEnter } from "react-icons/ai";
-import { FiMessageCircle, FiMoreHorizontal } from "react-icons/fi";
+import {
+  FiMessageCircle,
+  FiMoreHorizontal,
+  FiCheckCircle,
+} from "react-icons/fi";
 import { CardText } from "reactstrap";
 
 const BoardPost = ({
@@ -508,32 +512,62 @@ const BoardPost = ({
           <section>
             <div className="flex p-2 justify-between">
               <div className="flex gap-2">
-                <button
-                  onClick={() => {
-                    onBoardLike(num, sessionStorage.getItem("userid"));
-                  }}
-                >
-                  {boardLiked ? (
-                    <span
-                      className="flex"
-                      style={{
-                        color: "#ff8200",
-                      }}
-                    >
-                      <span className="flex items-center pr-1">
-                        <SlEmotsmile />
+                {board.boardCategory == "동네 질문" ? (
+                  <button
+                    onClick={() => {
+                      onBoardLike(num, sessionStorage.getItem("userid"));
+                    }}
+                  >
+                    {boardLiked ? (
+                      <span
+                        className="flex"
+                        style={{
+                          color: "#ff8200",
+                        }}
+                      >
+                        <span className="flex items-center pr-1">
+                          <FiCheckCircle />
+                        </span>
+                        궁금해요
                       </span>
-                      공감하기
-                    </span>
-                  ) : (
-                    <span className="flex">
-                      <span className="flex items-center pr-1">
-                        <SlEmotsmile />
+                    ) : (
+                      <span className="flex">
+                        <span className="flex items-center pr-1">
+                          <FiCheckCircle />
+                        </span>
+                        궁금해요
                       </span>
-                      공감하기
-                    </span>
-                  )}
-                </button>
+                    )}
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      onBoardLike(num, sessionStorage.getItem("userid"));
+                    }}
+                  >
+                    {boardLiked ? (
+                      <span
+                        className="flex"
+                        style={{
+                          color: "#ff8200",
+                        }}
+                      >
+                        <span className="flex items-center pr-1">
+                          <SlEmotsmile />
+                        </span>
+                        공감하기
+                      </span>
+                    ) : (
+                      <span className="flex">
+                        <span className="flex items-center pr-1">
+                          <SlEmotsmile />
+                        </span>
+                        공감하기
+                      </span>
+                    )}
+                  </button>
+                )}
+
                 <button className="flex items-center gap-1">
                   <span
                     style={{

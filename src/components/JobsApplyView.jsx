@@ -99,11 +99,13 @@ const JobsApplyView = ({ logined, setLogined }) => {
               }}
             >
               <div
+                className="pl-2 pr-2"
                 style={{
                   display: "flex",
                 }}
               >
                 <div
+                  className=""
                   style={{
                     width: "150px",
                     height: "130px",

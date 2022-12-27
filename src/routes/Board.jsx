@@ -442,7 +442,7 @@ const Board = ({ logined, setLogined }) => {
                                   <span>
                                     <FiCheckCircle />
                                   </span>
-                                  <span>궁금해요</span>
+                                  <span> 궁금해요</span>
                                 </button>
                                 <button
                                   className="flex items-center gap-1"

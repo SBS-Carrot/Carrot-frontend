@@ -81,56 +81,6 @@ const HotArticles = ({ logined, setLogined }) => {
             중고거래 인기매물
           </h1>
           <div
-            style={{
-              position: "relative",
-              marginTop: "1rem",
-              display: "inline",
-              width: "350px",
-
-              left: "70%",
-            }}
-          >
-            <div className="dropdown dropdown-hover">
-              <label tabIndex={0} className="btn m-1">
-                대전광역시
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <a href="#">대전광역시</a>
-                </li>
-              </ul>
-            </div>
-            <div className="dropdown dropdown-hover">
-              <label tabIndex={0} className="btn m-1">
-                동네를 선택하세요
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                style={{}}
-              >
-                <li>
-                  <a href="http://localhost:3000/region/대덕구">대덕구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/동구">동구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/서구">서구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/유성구">유성구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/중구">중구</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div
             className="container"
             style={{
               width: "800px",
@@ -363,56 +313,6 @@ const HotArticles = ({ logined, setLogined }) => {
           >
             중고거래 모든 매물보기
           </h1>
-          <div
-            style={{
-              position: "relative",
-              marginTop: "1rem",
-              display: "inline",
-              width: "350px",
-
-              left: "10%",
-            }}
-          >
-            <div className="dropdown dropdown-hover">
-              <label tabIndex={0} className="btn m-1">
-                대전광역시
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <a href="#">대전광역시</a>
-                </li>
-              </ul>
-            </div>
-            <div className="dropdown dropdown-hover">
-              <label tabIndex={0} className="btn m-1">
-                동네를 선택하세요
-              </label>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                style={{}}
-              >
-                <li>
-                  <a href="http://localhost:3000/region/대덕구">대덕구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/동구">동구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/서구">서구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/유성구">유성구</a>
-                </li>
-                <li>
-                  <a href="http://localhost:3000/region/중구">중구</a>
-                </li>
-              </ul>
-            </div>
-          </div>
           <div className="container">
             <ul className="grid grid-cols-4">
               {currentPosts.map((product, index) => (

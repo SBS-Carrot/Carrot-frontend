@@ -317,9 +317,20 @@ const Alert = ({}) => {
                                       display: "inline",
                                     }}
                                   >
-                                    <span>후기를 작성하셨어요</span>
+                                    <span> 후기를 작성하셨어요</span>
                                     <br />
-                                    <span>후기를 작성해주세요!</span>
+                                    <span> 후기를 작성해주세요!</span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+                                {notice.type == "REPLY" ? (
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <span>답글을 작성하셨어요</span>
                                   </div>
                                 ) : (
                                   ""
@@ -413,9 +424,20 @@ const Alert = ({}) => {
                                       display: "inline",
                                     }}
                                   >
-                                    <span>후기를 작성하셨어요</span>
+                                    <span> 후기를 작성하셨어요</span>
                                     <br />
-                                    <span>후기를 작성해주세요!</span>
+                                    <span> 후기를 작성해주세요!</span>
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+                                {notice.type == "REPLY" ? (
+                                  <div
+                                    style={{
+                                      display: "inline",
+                                    }}
+                                  >
+                                    <span> 답글을 작성하셨어요</span>
                                   </div>
                                 ) : (
                                   ""

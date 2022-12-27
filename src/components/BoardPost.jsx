@@ -121,7 +121,7 @@ const BoardPost = ({
           replyUserid: userid,
         },
       });
-      console.log(data.data);
+
       if (data.data) {
         window.location.reload(); //새로고침
       }
@@ -218,6 +218,19 @@ const BoardPost = ({
     onLikeRe(num);
   }, [boardLiked]);
 
+  const addReplyNotification = async () => {
+    axios({
+      url: `http://localhost:8083/addReplyNotification`,
+      method: "post",
+      data: {
+        content: replyValue,
+        url: `boardpost/${num}`,
+        notificationType: "REPLY",
+        userid: boardWriter.userid,
+        sender: userid,
+      },
+    });
+  };
   var settings = {
     dots: true,
     infinite: true,
@@ -638,8 +651,8 @@ const BoardPost = ({
                           <div className="flex gap-1 justify-between">
                             <div className="flex">
                               <div className="font-bold ">
-                                {reply.nickname == "닉네임 없음"
-                                  ? user.userid
+                                {reply.replyNickname == "닉네임 없음"
+                                  ? reply.replyUserid
                                   : reply.replyNickname}
                               </div>
                               {board.boardUserid == reply.replyUserid && (
@@ -789,6 +802,7 @@ const BoardPost = ({
                   onKeyUp={(e) => {
                     if (e.key == "Enter") {
                       submitReply(replyValue);
+                      addReplyNotification();
                     }
                   }}
                 />
@@ -1088,8 +1102,8 @@ const BoardPost = ({
                           <div className="flex gap-1 justify-between">
                             <div className="flex">
                               <div className="font-bold ">
-                                {reply.nickname == "닉네임 없음"
-                                  ? user.userid
+                                {reply.replyNickname == "닉네임 없음"
+                                  ? reply.replyUserid
                                   : reply.replyNickname}
                               </div>
                               {board.boardUserid == reply.replyUserid && (

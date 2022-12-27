@@ -70,7 +70,7 @@ const Home = ({ logined, setLogined }) => {
           method: "GET",
         });
 
-        setHotSearch(data1.data.slice(0, 10));
+        setHotSearch(data1.data.reverse().slice(0, 10));
       } catch (e) {
         console.log(e);
       }

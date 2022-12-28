@@ -591,13 +591,7 @@ const Realtypost = ({
                               left: "-22px",
                             }}
                           >
-                            <button
-                            // onClick={() => {
-                            //   onEditToggle();
-                            // }}
-                            >
-                              수정
-                            </button>
+                            <a href={`/realtyEdit/${num}`}>수정</a>
                             <button
                               onClick={() => {
                                 onDeleteToggle();
@@ -896,7 +890,12 @@ const Realtypost = ({
             >
               소개
             </div>
-            <div className="mb-10">
+            <div
+              className="mb-10"
+              style={{
+                whiteSpace: "pre-wrap",
+              }}
+            >
               {article.realtyContent}
               {article.realtyDepositChange == "" ? (
                 ""
@@ -2130,7 +2129,12 @@ const Realtypost = ({
             >
               소개
             </div>
-            <div className="mb-10">
+            <div
+              className="mb-10"
+              style={{
+                whiteSpace: "pre-wrap",
+              }}
+            >
               {article.realtyContent}
               {article.realtyDepositChange == "" ? (
                 ""

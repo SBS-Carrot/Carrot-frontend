@@ -681,7 +681,13 @@ const ProductPost = ({
             </div>
             <br />
             <div>
-              <div>{article.productContent}</div>
+              <div
+                style={{
+                  whiteSpace: "pre-wrap",
+                }}
+              >
+                {article.productContent}
+              </div>
               <div
                 className="flex text-sm gap-2 my-5"
                 style={{
@@ -1082,7 +1088,13 @@ const ProductPost = ({
             </div>
             <br />
             <div>
-              <div>{article.productContent}</div>
+              <div
+                style={{
+                  whiteSpace: "pre-wrap",
+                }}
+              >
+                {article.productContent}
+              </div>
               <div
                 className="flex text-sm gap-2 my-5"
                 style={{

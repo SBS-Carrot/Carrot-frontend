@@ -40,6 +40,7 @@ import JobsEdit from "./components/JobsEdit";
 import BoardEdit from "./components/BoardEdit";
 import Search from "./routes/Search";
 import SearchEmpty from "./routes/SearchEmpty";
+import RealtyEdit from "./components/RealtyEdit";
 
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
@@ -339,6 +340,10 @@ function App() {
         <Route
           path="/realtysearch/:search"
           element={<RealtySearch logined={logined} setLogined={setLogined} />}
+        />
+        <Route
+          path="/realtyEdit/:num"
+          element={<RealtyEdit logined={logined} setLogined={setLogined} />}
         />
         <Route
           path="/changepassword"

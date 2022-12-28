@@ -62,7 +62,7 @@ const AllJobs = ({ logined, setLogined }) => {
           method: "GET",
         });
         onJobs(data.data);
-        setCurrentPosts(data.data.slice(0, 6));
+        setCurrentPosts(data.data.slice(0, 8));
       } catch (e) {
         console.log(e);
       }

@@ -273,9 +273,7 @@ const Realtypost = ({
         });
         abcd = data.data.realtyUserid;
         onArticle(data.data);
-        console.log("아아", data.data);
       } catch {
-        console.log("에러");
         window.alert("존재하지 않는 게시글입니다.");
         moveBack();
       }
@@ -284,7 +282,7 @@ const Realtypost = ({
           url: `http://localhost:8083/realtyDong`,
           method: "GET",
         });
-        console.log(data.data);
+
         onRealty(data.data);
         onRealtyDong(data.data);
       } catch (e) {
@@ -896,7 +894,12 @@ const Realtypost = ({
             >
               소개
             </div>
-            <div className="mb-10">
+            <div
+              className="mb-10"
+              style={{
+                whiteSpace: "pre-wrap",
+              }}
+            >
               {article.realtyContent}
               {article.realtyDepositChange == "" ? (
                 ""
@@ -2130,7 +2133,12 @@ const Realtypost = ({
             >
               소개
             </div>
-            <div className="mb-10">
+            <div
+              className="mb-10"
+              style={{
+                whiteSpace: "pre-wrap",
+              }}
+            >
               {article.realtyContent}
               {article.realtyDepositChange == "" ? (
                 ""

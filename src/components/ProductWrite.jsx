@@ -289,6 +289,7 @@ const ProductWrite = ({ logined, setLogined }) => {
                   height: "120px",
                   paddingLeft: "5px",
                   maxHeight: "200px",
+                  whiteSpace: "pre-wrap",
                 }}
               />
             </div>

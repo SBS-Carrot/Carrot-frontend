@@ -36,15 +36,6 @@ const Search = ({ logined, setLogined }) => {
   };
   useEffect(() => {
     move(searchValue);
-    if (type == "product") {
-      onSearch("product");
-    } else if (type == "jobs") {
-      onSearch("jobs");
-    } else if (type == "realty") {
-      onSearch("realty");
-    } else if (type == "board") {
-      onSearch("board");
-    }
   }, [searchValue]);
 
   useEffect(() => {
@@ -53,24 +44,9 @@ const Search = ({ logined, setLogined }) => {
 
   //최초 데이터 불러오기
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await axios({
-          url: `http://localhost:8083/searchProduct`,
-          method: "POST",
-          data: {
-            searchWord: search,
-          },
-        });
-        onSearchChange(data.data);
-        setCurrentPosts(data.data.slice(0, 8));
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getData();
+    onSearch(type);
   }, []);
-  const [type, setType] = useState("product");
+  const [type, setType] = useState(sessionStorage.getItem("type") || "product");
   //타입 변경
 
   //여기부터 Product
@@ -360,6 +336,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("product");
                   setType("product");
+                  sessionStorage.setItem("type", "product");
                 }}
               >
                 중고거래
@@ -374,6 +351,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("jobs");
                   setType("jobs");
+                  sessionStorage.setItem("type", "jobs");
                 }}
               >
                 알바
@@ -387,6 +365,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("realty");
                   setType("realty");
+                  sessionStorage.setItem("type", "realty");
                 }}
               >
                 부동산
@@ -402,6 +381,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("board");
                   setType("board");
+                  sessionStorage.setItem("type", "board");
                 }}
               >
                 게시판
@@ -1555,6 +1535,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("product");
                   setType("product");
+                  sessionStorage.setItem("type", "product");
                 }}
               >
                 중고거래
@@ -1569,6 +1550,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("jobs");
                   setType("jobs");
+                  sessionStorage.setItem("type", "product");
                 }}
               >
                 알바
@@ -1582,6 +1564,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("realty");
                   setType("realty");
+                  sessionStorage.setItem("type", "product");
                 }}
               >
                 부동산
@@ -1596,6 +1579,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("board");
                   setType("board");
+                  sessionStorage.setItem("type", "product");
                 }}
               >
                 게시판

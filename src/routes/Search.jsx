@@ -210,6 +210,7 @@ const Search = ({ logined, setLogined }) => {
 
   const getMoreItem = () => {
     // 데이터를 받아오도록 true 로 변경
+
     setIsLoaded(true);
   };
 

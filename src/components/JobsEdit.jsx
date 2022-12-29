@@ -986,7 +986,7 @@ const JobsEdit = ({ logined, setLogined }) => {
           <div>
             <button
               onClick={() => {
-                if (showImages.length == 0) {
+                if (uploadedImg.length == 0) {
                   onEdit(
                     subjectValue,
                     category,

@@ -33,7 +33,7 @@ const AllJobs = ({ logined, setLogined }) => {
   const handlePageChange = (page) => {
     setPage(page);
   };
-  const [postPerPage] = useState(6);
+  const [postPerPage] = useState(8);
   const indexOfLastPost = page * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
 

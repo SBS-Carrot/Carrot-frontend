@@ -24,6 +24,25 @@ const Search = ({ logined, setLogined }) => {
   const { search } = useParams(); //초기검색어
   const [searchValue, setSearchValue] = useState(search); //검색어
   const [search2, setSearch2] = useState(search);
+
+  //검색어 수정
+  const onSearchChange1 = (data) => {
+    if (data.length > 10) {
+      return;
+    }
+    setSearchValue((prev) => data);
+    setSearch2(data);
+  };
+
+  useEffect(() => {
+    move(searchValue);
+  }, [searchValue]);
+
+  useEffect(() => {
+    onSearchChange1(search);
+    onSearch(type);
+  }, [search]);
+
   const onSearchValueChange = (e) => {
     if (e.target.value.length > 10) {
       return;
@@ -232,7 +251,7 @@ const Search = ({ logined, setLogined }) => {
           url: `http://localhost:8083/searchProduct`,
           method: "POST",
           data: {
-            searchWord: searchValue,
+            searchWord: search,
           },
         });
 
@@ -243,7 +262,7 @@ const Search = ({ logined, setLogined }) => {
           url: `http://localhost:8083/searchRealty`,
           method: "POST",
           data: {
-            searchWord: searchValue,
+            searchWord: search,
           },
         });
 
@@ -254,7 +273,7 @@ const Search = ({ logined, setLogined }) => {
           url: `http://localhost:8083/searchJobs`,
           method: "POST",
           data: {
-            searchWord: searchValue,
+            searchWord: search,
           },
         });
 
@@ -265,13 +284,12 @@ const Search = ({ logined, setLogined }) => {
           url: `http://localhost:8083/searchBoard`,
           method: "POST",
           data: {
-            searchWord: searchValue,
+            searchWord: search,
           },
         });
         onBSearchChange(data.data);
         onBoard(data.data);
       }
-      setSearch2(searchValue);
     } catch (e) {
       console.log(e);
     }

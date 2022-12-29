@@ -420,7 +420,11 @@ const BoardPost = ({
               </div>
             </div>
             <br />
-            <div>
+            <div
+              style={{
+                whiteSpace: "pre-wrap",
+              }}
+            >
               <div>{board.boardContent}</div>
             </div>
             <div className="mt-5 relative">

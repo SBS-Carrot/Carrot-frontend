@@ -61,7 +61,6 @@ const AllRealty = ({ logined, setLogined }) => {
         });
         onRealty(data.data);
         setCurrentPosts(data.data.slice(0, 10));
-        console.log(data.data);
       } catch (e) {
         console.log(e);
       }

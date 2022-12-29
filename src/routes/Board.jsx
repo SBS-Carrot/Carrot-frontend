@@ -422,7 +422,14 @@ const Board = ({ logined, setLogined }) => {
                                 >
                                   Q
                                 </span>
-                                <div>{que.boardContent}</div>
+                                <div
+                                  className="ellipsis_3"
+                                  style={{
+                                    whiteSpace: "pre-wrap",
+                                  }}
+                                >
+                                  {que.boardContent}
+                                </div>
                               </div>
 
                               <div

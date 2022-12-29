@@ -563,6 +563,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("product");
                   setType("product");
+                  sessionStorage.setItem("type", "product");
                 }}
               >
                 중고거래
@@ -579,6 +580,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("jobs");
                   setType("jobs");
+                  sessionStorage.setItem("type", "jobs");
                 }}
               >
                 알바
@@ -592,6 +594,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("realty");
                   setType("realty");
+                  sessionStorage.setItem("type", "realty");
                 }}
               >
                 부동산
@@ -607,6 +610,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("board");
                   setType("board");
+                  sessionStorage.setItem("type", "board");
                 }}
               >
                 게시판
@@ -794,6 +798,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("product");
                   setType("product");
+                  sessionStorage.setItem("type", "product");
                 }}
               >
                 중고거래
@@ -808,6 +813,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("jobs");
                   setType("jobs");
+                  sessionStorage.setItem("type", "jobs");
                 }}
               >
                 알바
@@ -823,6 +829,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("realty");
                   setType("realty");
+                  sessionStorage.setItem("type", "realty");
                 }}
               >
                 부동산
@@ -838,6 +845,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("board");
                   setType("board");
+                  sessionStorage.setItem("type", "board");
                 }}
               >
                 게시판
@@ -1550,7 +1558,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("jobs");
                   setType("jobs");
-                  sessionStorage.setItem("type", "product");
+                  sessionStorage.setItem("type", "jobs");
                 }}
               >
                 알바
@@ -1564,7 +1572,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("realty");
                   setType("realty");
-                  sessionStorage.setItem("type", "product");
+                  sessionStorage.setItem("type", "realty");
                 }}
               >
                 부동산
@@ -1579,7 +1587,7 @@ const Search = ({ logined, setLogined }) => {
                 onClick={() => {
                   onSearch("board");
                   setType("board");
-                  sessionStorage.setItem("type", "product");
+                  sessionStorage.setItem("type", "board");
                 }}
               >
                 게시판

@@ -3,6 +3,8 @@
 ## 시연 동영상 링크
 [유튜브](https://www.youtube.com/watch?v=tEu6WCS2XUY)
 
+[백엔드 주소](https://github.com/SBS-Carrot/Carrot-backend)
+
 ## 프로젝트 설명
 
 ### 기간

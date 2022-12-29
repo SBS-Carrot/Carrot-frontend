@@ -267,7 +267,6 @@ const Search = ({ logined, setLogined }) => {
             searchWord: searchValue,
           },
         });
-
         onBSearchChange(data.data);
         onBoard(data.data);
       }
@@ -276,7 +275,6 @@ const Search = ({ logined, setLogined }) => {
       console.log(e);
     }
   };
-
   if (type == "product") {
     return (
       <div>

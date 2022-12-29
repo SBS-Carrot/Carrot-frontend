@@ -28,24 +28,28 @@ const Search = ({ logined, setLogined }) => {
     if (e.target.value.length > 10) {
       return;
     }
-
     setSearchValue(e.target.value);
   }; //검색어 수정
+  const onSearchChange1 = (data) => {
+    if (data.length > 10) {
+      return;
+    }
+    setSearchValue((prev) => data);
+    setSearch2(data);
+  };
   const move = (e) => {
     navigate(`/search/${e}`);
   };
+
   useEffect(() => {
     move(searchValue);
   }, [searchValue]);
 
   useEffect(() => {
-    setSearchValue((prev) => search);
+    onSearchChange1(search);
+    onSearch(type);
   }, [search]);
 
-  //최초 데이터 불러오기
-  useEffect(() => {
-    onSearch(type);
-  }, []);
   const [type, setType] = useState(sessionStorage.getItem("type") || "product");
   //타입 변경
 
@@ -64,7 +68,7 @@ const Search = ({ logined, setLogined }) => {
   const indexOfFirstPost = indexOfLastPost - postPerPage;
   useEffect(() => {
     setCurrentPosts(searchList.slice(indexOfFirstPost, indexOfLastPost));
-  }, [indexOfFirstPost, indexOfLastPost, page]);
+  }, [indexOfFirstPost, indexOfLastPost, page, searchList]);
 
   const moveProduct = async (id) => {
     try {
@@ -93,7 +97,7 @@ const Search = ({ logined, setLogined }) => {
   const jindexOfFirstPost = jindexOfLastPost - jpostPerPage;
   useEffect(() => {
     setJCurrentPosts(jsearchList.slice(jindexOfFirstPost, jindexOfLastPost));
-  }, [jindexOfFirstPost, jindexOfLastPost, jpage]);
+  }, [jindexOfFirstPost, jindexOfLastPost, jpage, jsearchList]);
 
   const moveJobs = async (id) => {
     try {
@@ -122,7 +126,7 @@ const Search = ({ logined, setLogined }) => {
   const rindexOfFirstPost = rindexOfLastPost - rpostPerPage;
   useEffect(() => {
     setRCurrentPosts(rsearchList.slice(rindexOfFirstPost, rindexOfLastPost));
-  }, [rindexOfFirstPost, rindexOfLastPost, rpage]);
+  }, [rindexOfFirstPost, rindexOfLastPost, rpage, rsearchList]);
 
   const moveRealty = async (id) => {
     try {
@@ -229,7 +233,7 @@ const Search = ({ logined, setLogined }) => {
           url: `http://localhost:8083/searchProduct`,
           method: "POST",
           data: {
-            searchWord: searchValue,
+            searchWord: search,
           },
         });
 
@@ -240,7 +244,7 @@ const Search = ({ logined, setLogined }) => {
           url: `http://localhost:8083/searchRealty`,
           method: "POST",
           data: {
-            searchWord: searchValue,
+            searchWord: search,
           },
         });
 
@@ -251,7 +255,7 @@ const Search = ({ logined, setLogined }) => {
           url: `http://localhost:8083/searchJobs`,
           method: "POST",
           data: {
-            searchWord: searchValue,
+            searchWord: search,
           },
         });
 
@@ -262,20 +266,17 @@ const Search = ({ logined, setLogined }) => {
           url: `http://localhost:8083/searchBoard`,
           method: "POST",
           data: {
-            searchWord: searchValue,
+            searchWord: search,
           },
         });
 
         onBSearchChange(data.data);
         onBoard(data.data);
       }
-      setSearch2(searchValue);
     } catch (e) {
       console.log(e);
     }
   };
-
-  //return
 
   if (type == "product") {
     return (

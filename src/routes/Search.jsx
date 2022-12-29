@@ -164,8 +164,10 @@ const Search = ({ logined, setLogined }) => {
   //게시판 스크롤
   const [target, setTarget] = useState(null); // 관찰대상 target
   const [isLoaded, setIsLoaded] = useState(false); // Load 중인가를 판별하는 boolean
+
   // 요청이 여러번 가는 것을 방지하기 위해서
   const [stop, setStop] = useState(false); // 마지막 데이터까지 다 불러온 경우 더이상 요청을 보내지 않기 위해서
+
   // 마지막 부분까지 가버릴 때 계속 요청을 보내는 것 방지
   const [num, setNum] = useState(1);
   let observer;

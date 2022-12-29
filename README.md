@@ -1,7 +1,7 @@
 # 당근마켓 클론코딩
 
 ## 시연 동영상 링크
-[시연 동영상 링크](https://www.youtube.com/watch?v=tEu6WCS2XUY)
+[유튜브](https://www.youtube.com/watch?v=tEu6WCS2XUY)
 
 ## 프로젝트 설명
 

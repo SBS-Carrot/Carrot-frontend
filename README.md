@@ -20,7 +20,9 @@
 - 프론트와 백을 구분짓지 않고 둘이서 모든 작업을 협력함.
 
 ### 사용 기술
-<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black" style="max-width:100%"/>
+<div style="width: 100px">
+<img src="https://img.shields.io/badge/REACT-61DAFB?style=flat&logo=react&logoColor=black" style="max-width:100%"/>
+</div>
 
 ## 기능
 

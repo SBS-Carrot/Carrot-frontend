@@ -48,25 +48,75 @@
 </div>
 
 4. 중고거래 페이지
+
    - 페이징(리액트 페이지네이션을 통한 페이징)
      <img src="https://user-images.githubusercontent.com/109117590/209932150-590341f5-efb6-45d4-aab6-37c20d2231fc.PNG">
    - 중고거래 글쓰기 (사진은 AWS S3에 저장)
      <img src="https://user-images.githubusercontent.com/109117590/209933066-0ede0960-c72b-40be-8234-3c3b7b1fb634.PNG">
    - 중고거래 상세페이지 (리액트 슬릭을 통한 이미지 슬라이드)
      <img src="https://user-images.githubusercontent.com/109117590/209933069-4ab109a7-5f33-4a16-837a-5434f6809eef.PNG">
-   - 채팅기능 (STOMP를 활용한 실시간 채팅기능)
+   - 채팅기능 (STOMP를 활용한 실시간 1:1채팅기능)
      <img src="https://i.postimg.cc/25PVcM2r/1.png">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
+   - 후기 작성기능 (채팅방에서 바로, 혹은 채팅리스트에서 유저를 선택해 상대에 대한 후기 작성)
+     <img src="https://i.postimg.cc/NFbXzbKD/2.png">
+   - 후기작성 후 상대에 대한 매너온도 조정과 거래완료로 변경
+     <img src="https://i.postimg.cc/dVhC52wR/3.png">
+   - 알림기능 (SSE를 활용해 메세지, 후기작성 등에 대한 알림을 받음)
+     <img src="https://i.postimg.cc/wT73z9Zg/44.png">
+
+5. 알바
+
+6. 부동산 직거래
+
+   - 부동산 직거래 페이지
+     <img src="https://i.postimg.cc/J0R6X6w5/11.png">
+   - 부동산 게시글 작성
+     <img src="https://i.postimg.cc/FKcDB5Nx/22.png">
+   - 부동산 상세페이지
+     <img src="https://i.postimg.cc/FsRGQJhz/33.png">
+     <img src="https://i.postimg.cc/qR4XDNmk/44.png">
+   - 부동산 채팅 (후기도 중고거래와 마찬가지로 가능)
+     <img src="https://i.postimg.cc/nL0Y5HNB/11.png">
+   - 부동산 검색기능
+     <img src="https://i.postimg.cc/qRBL1tR8/22.png">
+     <img src="https://i.postimg.cc/RZrLjphC/33.png">
+
+7. 동네 게시판
+
+8. 마이 페이지
+
+- 받은 후기와 매너온도, 프로필 등 나의 정보를 한눈에 확인
+  <img src="https://i.postimg.cc/jj2QpDPK/11.png">
+- 프로필사진과 닉네임도 변경 가능(AWS의 기존 사진을 삭제 후 새로 저장)
+  <img src="https://i.postimg.cc/W13k3Q3w/22.png">
+- 정보 수정을 위해서는 보안을 위해 비밀번호 확인
+- 상태값을 세션스토리지에 저장하여, 초기1회만 비밀번호 입력
+  <img src="https://i.postimg.cc/hP4JyH9R/1.png">
+  - 비밀번호 변경 기능
+    <img src="https://i.postimg.cc/tCmgr7qF/2.png">
+  - 내가 쓴 게시글 관리 (클릭으로 펼치고 접을 수 있음)
+    <img src="https://i.postimg.cc/DZykkd50/33.png">
+    <img src="https://i.postimg.cc/HxZGpcP2/44.png">
+  - 채팅리스트
+    <img src="https://i.postimg.cc/J0HBxXfY/11.png">
+
+9. 통합 검색기능
+
+- 홈 우측 상단 화면에서 통합검색 가능
+  <img src="https://i.postimg.cc/D07wJX2b/22.png">
+- 검색 사이트로 이동되며 해당 검색어에 대한 결과가 나열
+  <img src="https://i.postimg.cc/y6nVpW1v/33.png">
+  - 모든 항목에 대해 검색 가능(QueryDSL을 이용한 동적쿼리작성)
+    <img src="https://i.postimg.cc/bwSpvTQB/44.png">
+
+10. 당근마켓 선택 이유
+
+- 비교적 간단해 입문하기에 좋아보여 선택.
+- 당근마켓은 핸드폰 앱으로 주 기능들이 이루어지기 때문에 웹을 제작할 때 무겁지 않게 제작할 수 있을거란 생각.
+
+하지만 생성,삭제,수정 등 욕심을 내 기능을 하나씩 추가할때마다 클론코딩이아니라 만들어내야 했기때문에 이 과정에서 많은 것들을 배울 수 있었다. 11. 아쉬운 점
+
+- JWT 토큰을 사용하지 못한것. (시간부족)
+- 이미지 수정이 원활하지 못한것. (스프링에서 리액트로부터 이미지 파일을 받을때 List<"MultiPartFile">의 형태로 받게되는데 AWS에 저장하려면 받은 MultiPartFile을 File의 형태로 전환해야한다. 수정을 눌렀을때 해당 게시글의 id를 통해 사진파일을 불러와 default값으로 그 사진들을 배치시켜두고 싶었으나 AWS에 저장된 File을 역순으로 전환하여 파일을 리턴하는 것에서 기술적으로 어려움을 느낌. 다른 방법을 찾아보면 가능할것 같으나 시간부족으로, 사진 추가와 삭제만 가능)
+- 채팅이나 알림과같은 많은 입출력이 일어나는 사항들에 대해 NoSQL을 사용해보고 싶었으나 익숙한 MySQL을 사용한 것.
+- 알림이 새로고침을 하거나 페이지를 이동할 때 도착하는것.

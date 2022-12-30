@@ -24,21 +24,14 @@ const Search = ({ logined, setLogined }) => {
   const { search } = useParams(); //초기검색어
   const [searchValue, setSearchValue] = useState(search); //검색어
   const [search2, setSearch2] = useState(search);
-  const onSearchValueChange = (e) => {
-    if (e.target.value.length > 10) {
-      return;
-    }
-    setSearchValue(e.target.value);
-  }; //검색어 수정
+
+  //검색어 수정
   const onSearchChange1 = (data) => {
     if (data.length > 10) {
       return;
     }
     setSearchValue((prev) => data);
     setSearch2(data);
-  };
-  const move = (e) => {
-    navigate(`/search/${e}`);
   };
 
   useEffect(() => {
@@ -50,6 +43,28 @@ const Search = ({ logined, setLogined }) => {
     onSearch(type);
   }, [search]);
 
+  const onSearchValueChange = (e) => {
+    if (e.target.value.length > 10) {
+      return;
+    }
+
+    setSearchValue(e.target.value);
+  }; //검색어 수정
+  const move = (e) => {
+    navigate(`/search/${e}`);
+  };
+  useEffect(() => {
+    move(searchValue);
+  }, [searchValue]);
+
+  useEffect(() => {
+    setSearchValue((prev) => search);
+  }, [search]);
+
+  //최초 데이터 불러오기
+  useEffect(() => {
+    onSearch(type);
+  }, []);
   const [type, setType] = useState(sessionStorage.getItem("type") || "product");
   //타입 변경
 
@@ -68,7 +83,7 @@ const Search = ({ logined, setLogined }) => {
   const indexOfFirstPost = indexOfLastPost - postPerPage;
   useEffect(() => {
     setCurrentPosts(searchList.slice(indexOfFirstPost, indexOfLastPost));
-  }, [indexOfFirstPost, indexOfLastPost, page, searchList]);
+  }, [indexOfFirstPost, indexOfLastPost, page]);
 
   const moveProduct = async (id) => {
     try {
@@ -97,7 +112,7 @@ const Search = ({ logined, setLogined }) => {
   const jindexOfFirstPost = jindexOfLastPost - jpostPerPage;
   useEffect(() => {
     setJCurrentPosts(jsearchList.slice(jindexOfFirstPost, jindexOfLastPost));
-  }, [jindexOfFirstPost, jindexOfLastPost, jpage, jsearchList]);
+  }, [jindexOfFirstPost, jindexOfLastPost, jpage]);
 
   const moveJobs = async (id) => {
     try {
@@ -126,7 +141,7 @@ const Search = ({ logined, setLogined }) => {
   const rindexOfFirstPost = rindexOfLastPost - rpostPerPage;
   useEffect(() => {
     setRCurrentPosts(rsearchList.slice(rindexOfFirstPost, rindexOfLastPost));
-  }, [rindexOfFirstPost, rindexOfLastPost, rpage, rsearchList]);
+  }, [rindexOfFirstPost, rindexOfLastPost, rpage]);
 
   const moveRealty = async (id) => {
     try {
@@ -269,7 +284,6 @@ const Search = ({ logined, setLogined }) => {
             searchWord: search,
           },
         });
-
         onBSearchChange(data.data);
         onBoard(data.data);
       }
@@ -277,7 +291,6 @@ const Search = ({ logined, setLogined }) => {
       console.log(e);
     }
   };
-
   if (type == "product") {
     return (
       <div>

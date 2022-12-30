@@ -27,6 +27,7 @@
 <div>
 3. 회원가입
 
+-
 - 회원가입 창
   <img src="https://user-images.githubusercontent.com/109117590/209931478-4bbae3af-1a75-436b-b893-92a3389511b8.PNG">
 

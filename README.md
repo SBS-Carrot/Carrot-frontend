@@ -54,14 +54,17 @@
 4. 중고거래 페이지
 
    - 페이징(리액트 페이지네이션을 통한 페이징)
+     <br />
      <img src="https://user-images.githubusercontent.com/109117590/209932150-590341f5-efb6-45d4-aab6-37c20d2231fc.PNG">
-     <br /> <br />
+     <br />
    - 중고거래 글쓰기 (사진은 AWS S3에 저장)
+     <br />
      <img src="https://user-images.githubusercontent.com/109117590/209933066-0ede0960-c72b-40be-8234-3c3b7b1fb634.PNG">
-     <br /> <br />
+     <br />
    - 중고거래 상세페이지 (리액트 슬릭을 통한 이미지 슬라이드)
+     <br />
      <img src="https://user-images.githubusercontent.com/109117590/209933069-4ab109a7-5f33-4a16-837a-5434f6809eef.PNG">
-     <br /> <br />
+     <br />
    - 채팅기능 (STOMP를 활용한 실시간 1:1채팅기능)
      <br />
      <img src="https://i.postimg.cc/25PVcM2r/1.png">
@@ -69,11 +72,13 @@
    - 후기 작성기능 (채팅방에서 바로, 혹은 채팅리스트에서 유저를 선택해 상대에 대한 후기 작성)
 
      <img src="https://i.postimg.cc/NFbXzbKD/2.png">
-       <br />  <br />
+       <br />  
+       <br />
 
    - 후기작성 후 상대에 대한 매너온도 조정과 거래완료로 변경
      <img src="https://i.postimg.cc/dVhC52wR/3.png">
-     <br /> <br />
+     <br />
+     <br />
    - 알림기능 (SSE를 활용해 메세지, 후기작성 등에 대한 알림을 받음)
      <img src="https://i.postimg.cc/wT73z9Zg/44.png">
 
@@ -90,7 +95,7 @@
    - 부동산 상세페이지
      <img src="https://i.postimg.cc/FsRGQJhz/33.png">
      <img src="https://i.postimg.cc/qR4XDNmk/44.png">
-       <br />
+     <br />
    - 부동산 채팅 (후기도 중고거래와 마찬가지로 가능)
      <img src="https://i.postimg.cc/nL0Y5HNB/11.png">
      <br />
@@ -104,7 +109,8 @@
 8. 마이 페이지
 
 - 받은 후기와 매너온도, 프로필 등 나의 정보를 한눈에 확인
-  <img src="https://i.postimg.cc/jj2QpDPK/11.png"> <br />
+  <img src="https://i.postimg.cc/jj2QpDPK/11.png">
+  <br />
 - 프로필사진과 닉네임도 변경 가능(AWS의 기존 사진을 삭제 후 새로 저장)
   <img src="https://i.postimg.cc/W13k3Q3w/22.png">
   <br />
@@ -124,11 +130,14 @@
 9. 통합 검색기능
 
 - 홈 우측 상단 화면에서 통합검색 가능
-  <img src="https://i.postimg.cc/D07wJX2b/22.png"> <br />
+  <img src="https://i.postimg.cc/D07wJX2b/22.png">
+  <br />
 - 검색 사이트로 이동되며 해당 검색어에 대한 결과가 나열
-  <img src="https://i.postimg.cc/y6nVpW1v/33.png"> <br />
+  <img src="https://i.postimg.cc/y6nVpW1v/33.png">
+  <br />
   - 모든 항목에 대해 검색 가능(QueryDSL을 이용한 동적쿼리작성)
-    <img src="https://i.postimg.cc/bwSpvTQB/44.png"> <br />
+    <img src="https://i.postimg.cc/bwSpvTQB/44.png">
+    <br />
 
 10. 당근마켓 선택 이유
 

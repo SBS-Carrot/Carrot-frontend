@@ -19,6 +19,9 @@
 - 4인 1조였으나, 2명 중도 하차.
 - 프론트와 백을 구분짓지 않고 둘이서 모든 작업을 협력함.
 
+### 사용 기술
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black" style="max-width:100%"/>
+
 ## 기능
 
 1. 메인페이지
@@ -150,6 +153,4 @@
 - 이미지 수정이 원활하지 못한것. (스프링에서 리액트로부터 이미지 파일을 받을때 MultiPartFile의 형태로 받게되는데 AWS에 저장하려면 받은 MultiPartFile을 File의 형태로 전환해야한다. 수정을 눌렀을때 해당 게시글의 id를 통해 사진파일을 불러와 default값으로 그 사진들을 배치시켜두고 싶었으나 AWS에 저장된 File을 역순으로 전환하여 파일을 리턴하는 것에서 기술적으로 어려움을 느낌. 다른 방법을 찾아보면 가능할것 같으나 시간부족으로, 사진 추가와 삭제만 가능)
 - 채팅이나 알림과같은 많은 입출력이 일어나는 사항들에 대해 NoSQL을 사용해보고 싶었으나 익숙한 MySQL을 사용한 것.
 - 알림이 새로고침을 하거나 페이지를 이동할 때 도착하는것.
-
-	<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black"/>
 

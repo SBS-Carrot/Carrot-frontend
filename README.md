@@ -1,6 +1,7 @@
 # 당근마켓 클론코딩
 
 ## 시연 동영상 링크
+
 [유튜브](https://www.youtube.com/watch?v=tEu6WCS2XUY)
 
 [백엔드 주소](https://github.com/SBS-Carrot/Carrot_Backend)
@@ -22,10 +23,10 @@
 ![당근 로그인](https://user-images.githubusercontent.com/109117590/209928624-b46eb3a0-6edf-4452-89da-57c3d666e4fe.PNG)
 <div>
 3. 회원가입
-   ![회원가입](https://user-images.githubusercontent.com/109117590/209931478-4bbae3af-1a75-436b-b893-92a3389511b8.PNG)
+   <img src="https://user-images.githubusercontent.com/109117590/209931478-4bbae3af-1a75-436b-b893-92a3389511b8.PNG">
 
 - 아이디 확인
-  ![아이디 확인](https://user-images.githubusercontent.com/109117590/209931496-165617aa-c15e-485c-b688-7330f96a1b77.PNG)
+  <img src="https://user-images.githubusercontent.com/109117590/209931496-165617aa-c15e-485c-b688-7330f96a1b77.PNG">
 
 - 비밀번호 유효성 검사
 ![비밀번호 유효성1](https://user-images.githubusercontent.com/109117590/209931511-13f82f57-0c31-4e0e-9049-b38263954d08.PNG)

@@ -128,9 +128,11 @@ Backend <br/>
      <img src="https://i.postimg.cc/J0R6X6w5/11.png">
      <br />
    - 부동산 게시글 작성
+     <br />
      <img src="https://i.postimg.cc/FKcDB5Nx/22.png">
      <br />
    - 부동산 상세페이지
+     <br />
      <img src="https://i.postimg.cc/FsRGQJhz/33.png">
      <img src="https://i.postimg.cc/qR4XDNmk/44.png">
      <br />

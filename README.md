@@ -123,4 +123,4 @@
 - 알림이 새로고침을 하거나 페이지를 이동할 때 도착하는것.
 
 
-<img src="https://img.shields.io/badge/아이콘내용-#61DAFB?style=flat&logo=react&logoColor=black"/>
+<img src="https://img.shields.io/badge/React-#61DAFB?style=flat&logo=react&logoColor=black"/>

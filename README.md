@@ -20,7 +20,11 @@
 - 프론트와 백을 구분짓지 않고 둘이서 모든 작업을 협력함.
 
 ### 사용 기술
+Frontend
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+
+Backend
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
 
 ## 기능
 

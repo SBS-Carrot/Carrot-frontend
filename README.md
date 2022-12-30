@@ -122,5 +122,5 @@
 - 채팅이나 알림과같은 많은 입출력이 일어나는 사항들에 대해 NoSQL을 사용해보고 싶었으나 익숙한 MySQL을 사용한 것.
 - 알림이 새로고침을 하거나 페이지를 이동할 때 도착하는것.
 
-	<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
+	<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black"/>
 

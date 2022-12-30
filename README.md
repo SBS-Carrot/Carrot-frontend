@@ -18,9 +18,12 @@
    ![당근1](https://user-images.githubusercontent.com/109117590/209925829-ca165849-4080-460d-8f47-453ab30d6c22.PNG)
 
 - 당근마켓 사이트에 없는 로그인 버튼, 로그인 후 마이페이지 버튼을 추가했습니다.
+<div>
 
 2. 로그인
-![당근 로그인](https://user-images.githubusercontent.com/109117590/209928624-b46eb3a0-6edf-4452-89da-57c3d666e4fe.PNG)
+   <img src="https://user-images.githubusercontent.com/109117590/209928624-b46eb3a0-6edf-4452-89da-57c3d666e4fe.PNG">
+
+</div>
 <div>
 3. 회원가입
    <img src="https://user-images.githubusercontent.com/109117590/209931478-4bbae3af-1a75-436b-b893-92a3389511b8.PNG">

@@ -24,7 +24,7 @@
 1. 메인페이지
    ![당근1](https://user-images.githubusercontent.com/109117590/209925829-ca165849-4080-460d-8f47-453ab30d6c22.PNG)
 
-- 당근마켓 사이트에 없는 로그인 버튼, 로그인 후 마이페이지 버튼을 추가했습니다.
+- 당근마켓 사이트에 없는 로그인 버튼, 마이페이지 버튼 추가.
 <div>
 
 2. 로그인
@@ -48,10 +48,25 @@
 </div>
 
 4. 중고거래 페이지
-   <img src="https://user-images.githubusercontent.com/109117590/209932150-590341f5-efb6-45d4-aab6-37c20d2231fc.PNG">
-   - 중고거래 글쓰기
+   - 페이징(리액트 페이지네이션을 통한 페이징)
+     <img src="https://user-images.githubusercontent.com/109117590/209932150-590341f5-efb6-45d4-aab6-37c20d2231fc.PNG">
+   - 중고거래 글쓰기 (사진은 AWS S3에 저장)
      <img src="https://user-images.githubusercontent.com/109117590/209933066-0ede0960-c72b-40be-8234-3c3b7b1fb634.PNG">
-   - 중고거래 상세페이지
+   - 중고거래 상세페이지 (리액트 슬릭을 통한 이미지 슬라이드)
      <img src="https://user-images.githubusercontent.com/109117590/209933069-4ab109a7-5f33-4a16-837a-5434f6809eef.PNG">
-
-<img src="">
+   - 채팅기능 (STOMP를 활용한 실시간 채팅기능)
+     <img src="https://i.postimg.cc/25PVcM2r/1.png">
+     <img src="">
+     <img src="">
+     <img src="">
+     <img src="">
+     <img src="">
+     <img src="">
+     <img src="">
+     <img src="">
+     <img src="">
+     <img src="">
+     <img src="">
+     <img src="">
+     <img src="">
+     <img src="">

@@ -87,8 +87,9 @@ Backend <br/>
    - 채팅기능 (STOMP를 활용한 실시간 1:1채팅기능)
      <br />
      <img src="https://i.postimg.cc/25PVcM2r/1.png">
-     <<<<<<< HEAD
+
      <br />
+
    - 후기 작성기능 (채팅방에서 바로, 혹은 채팅리스트에서 유저를 선택해 상대에 대한 후기 작성)
 
      <img src="https://i.postimg.cc/NFbXzbKD/2.png">
@@ -112,6 +113,7 @@ Backend <br/>
    - 알바 지원하기
      <img src="https://i.postimg.cc/VkmpxWKt/image.png">
    - 지원 알림
+     <br/>
      <img src="https://i.postimg.cc/nzyw04sC/image.png">
    - 지원자 보기
      <img src="https://i.postimg.cc/yxhnjw4b/image.png">
@@ -143,7 +145,7 @@ Backend <br/>
 7. 동네 게시판
 
 - 동네 질문
-  <img src="https://i.postimg.cc/ZR8Ds96H/image.png">
+  <img src="https://i.postimg.cc/BvYzTR9g/image.png">
 - 동네 카페  
   <img src="https://i.postimg.cc/dVhNPN8L/image.png">
 - 나의 동네생활
@@ -187,7 +189,9 @@ Backend <br/>
 - 비교적 간단해 입문하기에 좋아보여 선택.
 - 당근마켓은 핸드폰 앱으로 주 기능들이 이루어지기 때문에 웹을 제작할 때 무겁지 않게 제작할 수 있을거란 생각.
 
-하지만 생성,삭제,수정 등 욕심을 내 기능을 하나씩 추가할때마다 클론코딩이아니라 만들어내야 했기때문에 이 과정에서 많은 것들을 배울 수 있었다. 11. 아쉬운 점
+하지만 생성,삭제,수정 등 욕심을 내 기능을 하나씩 추가할때마다 클론코딩이아니라 만들어내야 했기때문에 이 과정에서 많은 것들을 배울 수 있었다.
+
+11. 아쉬운 점
 
 - JWT 토큰을 사용하지 못한것. (시간부족)
 - 이미지 수정이 원활하지 못한것. (스프링에서 리액트로부터 이미지 파일을 받을때 MultiPartFile의 형태로 받게되는데 AWS에 저장하려면 받은 MultiPartFile을 File의 형태로 전환해야한다. 수정을 눌렀을때 해당 게시글의 id를 통해 사진파일을 불러와 default값으로 그 사진들을 배치시켜두고 싶었으나 AWS에 저장된 File을 역순으로 전환하여 파일을 리턴하는 것에서 기술적으로 어려움을 느낌. 다른 방법을 찾아보면 가능할것 같으나 시간부족으로, 사진 추가와 삭제만 가능)

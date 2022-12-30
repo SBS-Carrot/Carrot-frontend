@@ -24,7 +24,7 @@
 1. 메인페이지
 
 - 당근마켓 사이트에 없는 로그인 버튼, 마이페이지 버튼 추가.
-  <img src="https://user-images.githubusercontent.com/109117590/209925829-ca165849-4080-460d-8f47-453ab30d6c22.PNG")
+  <img src="https://user-images.githubusercontent.com/109117590/209925829-ca165849-4080-460d-8f47-453ab30d6c22.PNG">
 
 <div>
 

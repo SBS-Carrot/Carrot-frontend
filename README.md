@@ -48,6 +48,7 @@
 </div>
 
 4. 중고거래 페이지
+
    - 페이징(리액트 페이지네이션을 통한 페이징)
      <img src="https://user-images.githubusercontent.com/109117590/209932150-590341f5-efb6-45d4-aab6-37c20d2231fc.PNG">
    - 중고거래 글쓰기 (사진은 AWS S3에 저장)
@@ -56,17 +57,30 @@
      <img src="https://user-images.githubusercontent.com/109117590/209933069-4ab109a7-5f33-4a16-837a-5434f6809eef.PNG">
    - 채팅기능 (STOMP를 활용한 실시간 채팅기능)
      <img src="https://i.postimg.cc/25PVcM2r/1.png">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
-     <img src="">
+
+5. 알바 페이지
+
+   - 메인 페이지  
+     <img src="https://i.postimg.cc/FFf4pp6s/image.png">
+   - 알바 상세 페이지
+     <img src="https://i.postimg.cc/pLKVZCpn/1.png">
+     <img src="https://i.postimg.cc/ZR5TJhjr/2.png">
+   - 알바 지원하기
+     <img src="https://i.postimg.cc/VkmpxWKt/image.png">
+   - 지원 알림
+     <img src="https://i.postimg.cc/nzyw04sC/image.png">
+   - 지원자 보기
+     <img src="https://i.postimg.cc/yxhnjw4b/image.png">
+   - 알바 공고 쓰기
+     <img src="https://i.postimg.cc/yYvyNhVc/image.png">
+   - 알바 검색
+     <img src="https://i.postimg.cc/9fJh8nVz/image.png">
+
+6. 동네게시판
+
+- 동네 질문
+  <img src="https://i.postimg.cc/ZR8Ds96H/image.png">
+- 동네 카페  
+  <img src="https://i.postimg.cc/dVhNPN8L/image.png">
+- 나의 동네생활
+  <img src="https://i.postimg.cc/XJkQcR0D/image.png">

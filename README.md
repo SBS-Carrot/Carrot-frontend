@@ -4,7 +4,7 @@
 
 [유튜브](https://www.youtube.com/watch?v=tEu6WCS2XUY)
 
-[백엔드 주소](https://github.com/SBS-Carrot/Carrot_Backend)
+[백엔드 주소](https://github.com/SBS-Carrot/Carrot-Backend)
 
 ## 프로젝트 설명
 
@@ -26,7 +26,9 @@
 </div>
 <div>
 3. 회원가입
-   <img src="https://user-images.githubusercontent.com/109117590/209931478-4bbae3af-1a75-436b-b893-92a3389511b8.PNG">
+
+- 회원가입 창
+  <img src="https://user-images.githubusercontent.com/109117590/209931478-4bbae3af-1a75-436b-b893-92a3389511b8.PNG">
 
 - 아이디 확인
   <img src="https://user-images.githubusercontent.com/109117590/209931496-165617aa-c15e-485c-b688-7330f96a1b77.PNG">

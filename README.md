@@ -22,7 +22,7 @@
 
 2. 로그인
 <img src="https://user-images.githubusercontent.com/109117590/209928624-b46eb3a0-6edf-4452-89da-57c3d666e4fe.PNG">
-이왜
+</br>
 </div>
 <div>
 3. 회원가입

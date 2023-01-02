@@ -6,6 +6,7 @@ import JobsPaging from "./JobsPaging";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { BACKEND_URL } from "../config/config";
 import { useState, useEffect } from "react";
 
 const JobsSearch = ({ logined, setLogined }) => {
@@ -32,7 +33,7 @@ const JobsSearch = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/jobssearch/${search}`,
+          url: `${BACKEND_URL}:8083/jobssearch/${search}`,
           method: "GET",
         });
         onJobsSearch(data.data);
@@ -48,7 +49,7 @@ const JobsSearch = ({ logined, setLogined }) => {
   const Search = async (job) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/jobssearch/${job}`,
+        url: `${BACKEND_URL}:8083/jobssearch/${job}`,
         method: "GET",
       });
       setSearch2(job);
@@ -71,7 +72,7 @@ const JobsSearch = ({ logined, setLogined }) => {
   const moveJobs = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/jobsCheck/${id}`,
+        url: `${BACKEND_URL}:8083/jobsCheck/${id}`,
         method: "POST",
       });
     } catch (e) {

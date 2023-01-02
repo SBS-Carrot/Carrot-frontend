@@ -4,7 +4,7 @@ import { MdAddAPhoto, MdPeopleOutline } from "react-icons/md";
 import { FaCarrot } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { BACKEND_URL } from "../config/config";
 import Temp from "./Temp";
 
 const MyPage = ({ logined, setLogined }) => {
@@ -53,7 +53,7 @@ const MyPage = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/userProfileImageReset`,
+        url: `${BACKEND_URL}:8083/userProfileImageReset`,
         method: "POST",
         data: formData,
       });
@@ -76,7 +76,7 @@ const MyPage = ({ logined, setLogined }) => {
     const onSubmit = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/getUser/${sessionStorage.getItem(
+          url: `${BACKEND_URL}:8083/getUser/${sessionStorage.getItem(
             "userid"
           )}`,
           method: "GET",
@@ -109,7 +109,7 @@ const MyPage = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/userProfileImageChange`,
+        url: `${BACKEND_URL}:8083/userProfileImageChange`,
         method: "POST",
         data: formData,
       });
@@ -137,7 +137,7 @@ const MyPage = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/userProfileChange`,
+        url: `${BACKEND_URL}:8083/userProfileChange`,
         method: "POST",
         data: formData,
       });
@@ -163,7 +163,7 @@ const MyPage = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/userProfileImageAndNicknameReset`,
+        url: `${BACKEND_URL}:8083/userProfileImageAndNicknameReset`,
         method: "POST",
         data: formData,
       });

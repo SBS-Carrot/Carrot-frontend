@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import JobsApplyPaging from "./JobsApplyPaging";
+import { BACKEND_URL } from "../config/config";
 
 const JobsApplyView = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const JobsApplyView = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/Jobs/${num}`,
+          url: `${BACKEND_URL}:8083/Jobs/${num}`,
           method: "get",
         });
         if (data.data.jobUserid != sessionStorage.getItem("userid")) {
@@ -43,7 +44,7 @@ const JobsApplyView = ({ logined, setLogined }) => {
       }
       try {
         const data = await axios({
-          url: `http://localhost:8083/getJobApply`,
+          url: `${BACKEND_URL}:8083/getJobApply`,
           method: "Get",
           params: { num },
         });

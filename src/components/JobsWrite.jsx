@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { MdAddAPhoto } from "react-icons/md";
 import DaumPostcode from "react-daum-postcode";
 import WriteMap from "./WriteMap";
+import { BACKEND_URL } from "../config/config";
 
 const JobsWrite = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -201,7 +202,7 @@ const JobsWrite = ({ logined, setLogined }) => {
     try {
       const userid = sessionStorage.getItem("userid");
       const data = await axios({
-        url: `http://localhost:8083/createJobs`,
+        url: `${BACKEND_URL}:8083/createJobs`,
         method: "POST",
         data: {
           jobSubject: subjectValue,
@@ -262,7 +263,7 @@ const JobsWrite = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/createJobsImages`,
+        url: `${BACKEND_URL}:8083/createJobsImages`,
         method: "POST",
         data: formData,
       });

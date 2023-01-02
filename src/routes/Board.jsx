@@ -8,6 +8,7 @@ import { useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import BoardPaging from "../components/BoardPaging";
 import BoardQPaging from "../components/BoardQPaging";
+import { BACKEND_URL } from "../config/config";
 import {
   MdOutlineLocalCafe,
   MdOutlineQuestionAnswer,
@@ -30,7 +31,7 @@ const Board = ({ logined, setLogined }) => {
         navigate(`/boardpost/${id}`);
       } else {
         await axios({
-          url: `http://localhost:8083/boardView/${id}`,
+          url: `${BACKEND_URL}:8083/boardView/${id}`,
           method: "POST",
         });
         navigate(`/boardpost/${id}`);
@@ -90,7 +91,7 @@ const Board = ({ logined, setLogined }) => {
   // isLoaded가 변할 때 실행
   useEffect(() => {
     if (QisLoaded && !Qstop) {
-      axios.get(`http://localhost:8083/qboards?qnum=${qnum}`).then((res) => {
+      axios.get(`${BACKEND_URL}:8083/qboards?qnum=${qnum}`).then((res) => {
         setGetQue((getQue) => getQue.concat(res.data));
         setQNum(qnum + 1);
         setQIsLoaded(false);
@@ -144,7 +145,7 @@ const Board = ({ logined, setLogined }) => {
     if (isLoaded && !stop) {
       //api 카페만 몇개 불러오는지에 대한 주소 새로 만들어야함.
       //초기값 7개 , 스크롤 내릴 때마다 그 다음 7개에 대한 인덱스만 가져와야함
-      axios.get(`http://localhost:8083/boards?num=${num}`).then((res) => {
+      axios.get(`${BACKEND_URL}:8083/boards?num=${num}`).then((res) => {
         // 받아온 데이터를 보여줄 전체 리스트에 concat으로 넣어준다
         setGetCafe((getCafe) => getCafe.concat(res.data));
         setNum(num + 1);
@@ -232,7 +233,7 @@ const Board = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/getBoard/${userid}`,
+          url: `${BACKEND_URL}:8083/getBoard/${userid}`,
           method: "POST",
         });
         onLife(data.data);
@@ -248,7 +249,7 @@ const Board = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data1 = await axios({
-          url: `http://localhost:8083/board`,
+          url: `${BACKEND_URL}:8083/board`,
           method: "GET",
         });
 

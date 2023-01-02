@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { FaCarrot } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BACKEND_URL } from "../config/config";
 
 const Home = ({ logined, setLogined }) => {
   const [user, setUser] = useState(sessionStorage.getItem("user") || "");
@@ -27,7 +28,7 @@ const Home = ({ logined, setLogined }) => {
       const getData = async () => {
         try {
           const data = await axios.get(
-            `http://localhost:8083/getUser/${sessionStorage.getItem("userid")}`
+            `${BACKEND_URL}:8083/getUser/${sessionStorage.getItem("userid")}`
           );
 
           setUser(data.data);
@@ -37,7 +38,7 @@ const Home = ({ logined, setLogined }) => {
         }
         try {
           const data = await axios({
-            url: `http://localhost:8083/hotProduct`,
+            url: `${BACKEND_URL}:8083/hotProduct`,
             method: "GET",
           });
           onProduct(data.data);
@@ -52,7 +53,7 @@ const Home = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/hotProduct`,
+          url: `${BACKEND_URL}:8083/hotProduct`,
           method: "GET",
         });
         onProduct(data.data);
@@ -66,7 +67,7 @@ const Home = ({ logined, setLogined }) => {
     const getHotSearch = async () => {
       try {
         const data1 = await axios({
-          url: "http://localhost:8083/getHotSearch",
+          url: `${BACKEND_URL}:8083/getHotSearch`,
           method: "GET",
         });
 
@@ -81,7 +82,7 @@ const Home = ({ logined, setLogined }) => {
   const moveProduct = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/productView/${id}`,
+        url: `${BACKEND_URL}:8083/productView/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -177,7 +178,7 @@ const Home = ({ logined, setLogined }) => {
                   }}
                 >
                   <a
-                    href="http://localhost:3000/hot_articles"
+                    href={`${BACKEND_URL}:3000/hot_articles`}
                     style={{
                       padding: "10px 20px",
 
@@ -193,17 +194,19 @@ const Home = ({ logined, setLogined }) => {
                     borderRadius: "10px",
                   }}
                 >
-                  <a
-                    href="http://localhost:3000/trust"
-                    style={{
-                      padding: "10px 20px",
+                  <div>
+                    <a
+                      href={`${BACKEND_URL}:3000/trust`}
+                      style={{
+                        padding: "10px 20px",
 
-                      borderRadius: "10px",
-                    }}
-                    className="mr-8 bg-gray-200"
-                  >
-                    믿을 수 있는 중고거래
-                  </a>
+                        borderRadius: "10px",
+                      }}
+                      className="mr-8 bg-gray-200"
+                    >
+                      믿을 수 있는 중고거래
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -448,7 +451,7 @@ const Home = ({ logined, setLogined }) => {
               marginTop: "20px",
             }}
           >
-            <a href="http://localhost:3000/hot_articles">인기매물 더 보기</a>
+            <a href={`${BACKEND_URL}:3000/hot_articles`}>인기매물 더 보기</a>
           </div>
         </div>
 
@@ -562,7 +565,7 @@ const Home = ({ logined, setLogined }) => {
                   }}
                 >
                   <a
-                    href="http://localhost:3000/hot_articles"
+                    href={`${BACKEND_URL}:3000/hot_articles`}
                     style={{
                       padding: "10px 20px",
 
@@ -579,7 +582,7 @@ const Home = ({ logined, setLogined }) => {
                   }}
                 >
                   <a
-                    href="http://localhost:3000/trust"
+                    href={`${BACKEND_URL}:3000/trust`}
                     style={{
                       padding: "10px 20px",
 
@@ -833,7 +836,7 @@ const Home = ({ logined, setLogined }) => {
               marginTop: "20px",
             }}
           >
-            <a href="http://localhost:3000/hot_articles">인기매물 더 보기</a>
+            <a href={`${BACKEND_URL}:3000/hot_articles`}>인기매물 더 보기</a>
           </div>
         </div>
 

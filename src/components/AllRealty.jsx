@@ -12,6 +12,7 @@ import { FaCarrot } from "react-icons/fa";
 import "../styles/Jobs.css";
 import RealtyPaging from "./RealtyPaging";
 import { AiOutlineSearch } from "react-icons/ai";
+import { BACKEND_URL } from "../config/config";
 
 const AllRealty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const AllRealty = ({ logined, setLogined }) => {
   const moveRealty = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/realtyCheck/${id}`,
+        url: `${BACKEND_URL}:8083/realtyCheck/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -56,7 +57,7 @@ const AllRealty = ({ logined, setLogined }) => {
     const onSubmit = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/realty`,
+          url: `${BACKEND_URL}:8083/realty`,
           method: "GET",
         });
         onRealty(data.data);

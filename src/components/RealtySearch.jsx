@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { FaCarrot } from "react-icons/fa";
 import RealtyPaging from "./RealtyPaging";
 import { AiOutlineSearch } from "react-icons/ai";
+import { BACKEND_URL } from "../config/config";
 
 const RealtySearch = ({ logined, setLogined }) => {
   const { search } = useParams();
@@ -32,7 +33,7 @@ const RealtySearch = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/realtysearch/${search}`,
+          url: `${BACKEND_URL}:8083/realtysearch/${search}`,
           method: "GET",
         });
         onRealtySearch(data.data);
@@ -47,7 +48,7 @@ const RealtySearch = ({ logined, setLogined }) => {
   const Search = async (s) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/realtysearch/${s}`,
+        url: `${BACKEND_URL}:8083/realtysearch/${s}`,
         method: "GET",
       });
       setSearch2(s);
@@ -72,7 +73,7 @@ const RealtySearch = ({ logined, setLogined }) => {
   const moveRealty = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/realtyCheck/${id}`,
+        url: `${BACKEND_URL}:8083/realtyCheck/${id}`,
         method: "POST",
       });
     } catch (e) {

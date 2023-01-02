@@ -8,6 +8,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { MdAddAPhoto } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
+import { BACKEND_URL } from "../config/config";
 import { data } from "autoprefixer";
 const ProductEdit = ({ logined, setLogined }) => {
   const { num } = useParams();
@@ -112,7 +113,7 @@ const ProductEdit = ({ logined, setLogined }) => {
   ) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/productEdit/${num}`,
+        url: `${BACKEND_URL}:8083/productEdit/${num}`,
         method: "POST",
         data: {
           productCategory: category,
@@ -133,7 +134,7 @@ const ProductEdit = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/product/${num}`,
+          url: `${BACKEND_URL}:8083/product/${num}`,
           method: "GET",
         });
         //console.log(data.data);
@@ -147,7 +148,7 @@ const ProductEdit = ({ logined, setLogined }) => {
       }
       try {
         const data1 = await axios({
-          url: `http://localhost:8083/getProductWithImage/${num}`,
+          url: `${BACKEND_URL}:8083/getProductWithImage/${num}`,
           method: "GET",
         });
         console.log("data1 :", data1.data);
@@ -189,7 +190,7 @@ const ProductEdit = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/productImageEdit/${num}`,
+        url: `${BACKEND_URL}:8083/productImageEdit/${num}`,
         method: "POST",
         data: formData,
       });

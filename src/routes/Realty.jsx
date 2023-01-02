@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { FaCarrot } from "react-icons/fa";
 import "../styles/Jobs.css";
 import RealtyPaging from "../components/RealtyPaging";
+import { BACKEND_URL } from "../config/config";
 const Realty = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const [Realty, setRealty] = useState([]);
@@ -32,7 +33,7 @@ const Realty = ({ logined, setLogined }) => {
   const moveRealty = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/realtyCheck/${id}`,
+        url: `${BACKEND_URL}:8083/realtyCheck/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -50,7 +51,7 @@ const Realty = ({ logined, setLogined }) => {
     const onSubmit = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/hotRealty`,
+          url: `${BACKEND_URL}:8083/hotRealty`,
           method: "GET",
         });
         onRealty(data.data);

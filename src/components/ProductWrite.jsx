@@ -8,6 +8,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { MdAddAPhoto } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config/config";
 const ProductWrite = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const moveBack = () => {
@@ -108,7 +109,7 @@ const ProductWrite = ({ logined, setLogined }) => {
   ) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/createProduct`,
+        url: `${BACKEND_URL}:8083/createProduct`,
         method: "POST",
         data: {
           productCategory: category,
@@ -156,7 +157,7 @@ const ProductWrite = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/createProductImages`,
+        url: `${BACKEND_URL}:8083/createProductImages`,
         method: "POST",
         data: formData,
       });

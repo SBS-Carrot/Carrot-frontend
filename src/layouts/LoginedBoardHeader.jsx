@@ -5,6 +5,7 @@ import { authenticatedState } from "../recoil/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
+import { BACKEND_URL } from "../config/config";
 import { useNavigate } from "react-router-dom";
 const LoginedBoardHeader = ({ setLogined }) => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const LoginedBoardHeader = ({ setLogined }) => {
               fontSize: "1.4rem",
             }}
           >
-            <a href="http://localhost:3000/" className="fontt">
+            <a href={`${BACKEND_URL}:3000/`} className="fontt">
               <FontAwesomeIcon
                 icon={faCarrot}
                 style={{
@@ -69,23 +70,26 @@ const LoginedBoardHeader = ({ setLogined }) => {
             </a>
           </div>
           <div>
-            <a href="http://localhost:3000/allproduct">중고거래</a>
+            <a href={`${BACKEND_URL}:3000/allproduct`}>중고거래</a>
           </div>
           <div>
-            <a href="http://localhost:3000/alljobs">알바</a>
+            <a href={`${BACKEND_URL}:3000/alljobs`}>알바</a>
           </div>
           <div>
-            <a href="http://localhost:3000/allrealty">부동산 직거래</a>
+            <a href={`${BACKEND_URL}:3000/allrealty`}>부동산 직거래</a>
           </div>
           <div
             style={{
               color: "#ffa445",
             }}
           >
-            <a href="http://localhost:3000/board">동네게시판</a>
+            <a href={`${BACKEND_URL}:3000/board`}>동네게시판</a>
           </div>
         </div>
-        <div className="flex-grow justify-center items-center flex gap-7">
+        <div
+          className="flex-grow justify-center items-center flex gap-7"
+          style={{}}
+        >
           <button
             style={{
               outline: "1px #bcbcbc solid",
@@ -93,8 +97,8 @@ const LoginedBoardHeader = ({ setLogined }) => {
               borderRadius: "5px",
             }}
             onClick={() => {
-              sessionStorage.clear();
               setLogined(false);
+              sessionStorage.clear();
             }}
           >
             로그아웃

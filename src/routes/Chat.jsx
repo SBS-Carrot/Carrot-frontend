@@ -10,6 +10,7 @@ import { faCarrot, faHandshakeSimple } from "@fortawesome/free-solid-svg-icons";
 import { FaCarrot } from "react-icons/fa";
 import { FiArrowRight } from "react-icons/fi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { BACKEND_URL } from "../config/config";
 import {
   ImSad,
   ImSad2,
@@ -127,7 +128,7 @@ const Chat = ({ logined, setLogined }) => {
     const yourid = sessionStorage.getItem("yourName");
     try {
       axios({
-        url: "http://localhost:8083/addChatNotification",
+        url: `${BACKEND_URL}:8083/addChatNotification`,
         method: "POST",
         data: {
           content: chat,
@@ -160,7 +161,7 @@ const Chat = ({ logined, setLogined }) => {
     try {
       //params로 받은 이미 존재하는 or 새로 생성된 채팅방 조회
       const data1 = await axios({
-        url: `http://localhost:8083/room/` + roomId,
+        url: `${BACKEND_URL}:8083/room/` + roomId,
         method: "GET",
       });
       setType(data1.data.type);
@@ -188,7 +189,7 @@ const Chat = ({ logined, setLogined }) => {
       // 있다면 채팅목록 GET
       if (data1.data != "") {
         const data = await axios({
-          url: `http://localhost:8083/getMessage`,
+          url: `${BACKEND_URL}:8083/getMessage`,
           method: "GET",
           params: { roomId },
         });
@@ -196,7 +197,7 @@ const Chat = ({ logined, setLogined }) => {
         onChatList(data.data);
       }
       const chatUser = await axios({
-        url: `http://localhost:8083/getUser/${yourName}`,
+        url: `${BACKEND_URL}:8083/getUser/${yourName}`,
         method: "GET",
       });
       onUser2(chatUser.data);
@@ -204,7 +205,7 @@ const Chat = ({ logined, setLogined }) => {
       if (data1.data.type == "product") {
         try {
           const data = await axios({
-            url: `http://localhost:8083/product/${data1.data.articleId}`,
+            url: `${BACKEND_URL}:8083/product/${data1.data.articleId}`,
             method: "get",
           });
           setProduct(data.data);
@@ -214,7 +215,7 @@ const Chat = ({ logined, setLogined }) => {
       } else if (data1.data.type == "realty") {
         try {
           const data = await axios({
-            url: `http://localhost:8083/realty/${data1.data.articleId}`,
+            url: `${BACKEND_URL}:8083/realty/${data1.data.articleId}`,
             method: "get",
           });
           setRealty(data.data);
@@ -267,7 +268,7 @@ const Chat = ({ logined, setLogined }) => {
   const onProductReview = async (articleid) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/productBuyReview`,
+        url: `${BACKEND_URL}:8083/productBuyReview`,
         method: "POST",
         data: {
           productId: articleid,
@@ -299,7 +300,7 @@ const Chat = ({ logined, setLogined }) => {
   const onRealtyReview = async (articleid) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/realtyBuyReview`,
+        url: `${BACKEND_URL}:8083/realtyBuyReview`,
         method: "POST",
         data: {
           realtyId: articleid,

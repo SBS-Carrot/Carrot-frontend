@@ -7,10 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { authenticatedState } from "../recoil/auth";
+import { BACKEND_URL } from "../config/config";
 const Login = () => {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [idValue, setIdValue] = useState("");
   const [pwValue, setPwValue] = useState("");
+
   const navigate = useNavigate();
   const onHomepage = () => {
     navigate("/");
@@ -37,7 +39,7 @@ const Login = () => {
   const onLogin = async (idValue, pwValue) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/loginUser`,
+        url: `${BACKEND_URL}:8083/loginUser`,
         method: "POST",
         data: {
           userid: idValue,
@@ -84,7 +86,7 @@ const Login = () => {
               fontSize: "1.4rem",
             }}
           >
-            <a href="http://localhost:3000/" className="fontt">
+            <a href={`${BACKEND_URL}:3000/`} className="fontt">
               <FontAwesomeIcon
                 icon={faCarrot}
                 style={{

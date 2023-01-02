@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { BsDot } from "react-icons/bs";
 import { FaCarrot } from "react-icons/fa";
 import JobsPaging from "../components/JobsPaging";
+import { BACKEND_URL } from "../config/config";
 const Jobs = ({ logined, setLogined }) => {
   const [page, setPage] = useState(1);
   const [currentPosts, setCurrentPosts] = useState([]);
@@ -26,7 +27,7 @@ const Jobs = ({ logined, setLogined }) => {
   const moveJobs = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/jobsCheck/${id}`,
+        url: `${BACKEND_URL}:8083/jobsCheck/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -44,7 +45,7 @@ const Jobs = ({ logined, setLogined }) => {
     const onSubmit = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/hotJobs`,
+          url: `${BACKEND_URL}:8083/hotJobs`,
           method: "GET",
         });
         onJobs(data.data);

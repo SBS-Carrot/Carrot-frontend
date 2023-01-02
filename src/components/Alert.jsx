@@ -5,6 +5,7 @@ import { authenticatedState } from "../recoil/auth";
 import { NativeEventSource, EventSourcePolyfill } from "event-source-polyfill";
 import { AiOutlineBell } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config/config";
 
 const Alert = ({}) => {
   const userid = sessionStorage.getItem("userid");
@@ -27,19 +28,16 @@ const Alert = ({}) => {
   //알림예시 항해99 백 https://github.com/HangHae99-FinalProject/FinalProject-Spring/blob/master/src/main/java/com/hanghae99/finalproject/sse/service/NotificationService.java
   useEffect(() => {
     if (logined) {
-      const eventSource = new EventSource(
-        `http://localhost:8083/sse/${userid}`,
-        {
-          // headers: {
-          //   "Content-Type": "text/event-stream",
-          //   "Cache-Control": "no-cache",
-          //   Connection: "keep-alive",
-          //   // "X-Accel-Buffering": "no",
-          // },
-          // heartbeatTimeout: 120000,
-          withCredentials: true,
-        }
-      );
+      const eventSource = new EventSource(`${BACKEND_URL}:8083/sse/${userid}`, {
+        // headers: {
+        //   "Content-Type": "text/event-stream",
+        //   "Cache-Control": "no-cache",
+        //   Connection: "keep-alive",
+        //   // "X-Accel-Buffering": "no",
+        // },
+        // heartbeatTimeout: 120000,
+        withCredentials: true,
+      });
       if (!listening) {
         eventSource.onopen = (event) => {
           console.log("connection opened");
@@ -88,7 +86,7 @@ const Alert = ({}) => {
       const getData = async () => {
         try {
           const data = await axios({
-            url: "http://localhost:8083/notifications/count",
+            url: `${BACKEND_URL}:8083/notifications/count`,
             METHOD: "GET",
             params: { userid },
           });
@@ -105,7 +103,7 @@ const Alert = ({}) => {
   const readNotification = (notificationId) => {
     try {
       axios({
-        url: `http://localhost:8083/notification/read/${notificationId}`,
+        url: `${BACKEND_URL}:8083/notification/read/${notificationId}`,
         METHOD: "Get",
       });
     } catch (e) {
@@ -116,7 +114,7 @@ const Alert = ({}) => {
   const handleDeleteNotification = async (notificationId) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/notifications/delete/${notificationId}`,
+        url: `${BACKEND_URL}:8083/notifications/delete/${notificationId}`,
         method: "delete",
         data: userid,
       });
@@ -131,7 +129,7 @@ const Alert = ({}) => {
     if (window.confirm("모든 알림을 삭제하시겠습니까?")) {
       try {
         const data = await axios({
-          url: `http://localhost:8083/notification/delete`,
+          url: `${BACKEND_URL}:8083/notification/delete`,
           method: "Delete",
           params: { userid },
         });

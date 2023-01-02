@@ -7,6 +7,7 @@ import { getValue } from "@testing-library/user-event/dist/utils";
 import { useNavigate } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 import WriteMap from "./WriteMap";
+import { BACKEND_URL } from "../config/config";
 
 const RealtyWrite = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -317,7 +318,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
       const userid = sessionStorage.getItem("userid");
 
       const data = await axios({
-        url: `http://localhost:8083/createRealty`,
+        url: `${BACKEND_URL}:8083/createRealty`,
         method: "POST",
         data: {
           realtyWho: who,
@@ -437,7 +438,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/createRealtyImages`,
+        url: `${BACKEND_URL}:8083/createRealtyImages`,
         method: "POST",
         data: formData,
       });

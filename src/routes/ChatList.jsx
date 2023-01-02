@@ -3,6 +3,7 @@ import LoginedHeader from "../layouts/LoginedHeader";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaCarrot } from "react-icons/fa";
+import { BACKEND_URL } from "../config/config";
 const ChatList = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const moveHome = () => {
@@ -21,7 +22,7 @@ const ChatList = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: "http://localhost:8083/getChatList",
+          url: `${BACKEND_URL}:8083/getChatList`,
           method: "get",
           params: { userid },
         });

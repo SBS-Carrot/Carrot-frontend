@@ -23,6 +23,8 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import ReadMap from "./ReadMap";
 import Temp from "../routes/Temp";
 import { data } from "autoprefixer";
+import { BACKEND_URL } from "../config/config";
+
 const Jobspost = ({
   logined,
   setLogined,
@@ -108,7 +110,7 @@ const Jobspost = ({
       let abcd = "";
       try {
         const data = await axios({
-          url: `http://localhost:8083/Jobs/${num}`,
+          url: `${BACKEND_URL}:8083/Jobs/${num}`,
           method: "GET",
         });
 
@@ -121,7 +123,7 @@ const Jobspost = ({
       }
       try {
         const data = await axios({
-          url: `http://localhost:8083/getUser/${abcd}`,
+          url: `${BACKEND_URL}:8083/getUser/${abcd}`,
           method: "GET",
         });
         setArticleWriter(data.data);
@@ -130,7 +132,7 @@ const Jobspost = ({
       }
       try {
         const data = await axios({
-          url: `http://localhost:8083/getJobsWithImage/${num}`,
+          url: `${BACKEND_URL}:8083/getJobsWithImage/${num}`,
           method: "GET",
         });
 
@@ -141,7 +143,7 @@ const Jobspost = ({
 
       try {
         const data = await axios({
-          url: `http://localhost:8083/likeJobsCheck/${num}`,
+          url: `${BACKEND_URL}:8083/likeJobsCheck/${num}`,
           method: "GET",
           params: {
             jobsId: num,
@@ -155,7 +157,7 @@ const Jobspost = ({
 
       try {
         const data = await axios({
-          url: `http://localhost:8083/getUser/${userid}`,
+          url: `${BACKEND_URL}:8083/getUser/${userid}`,
           method: "GET",
         });
         setUser(data.data);
@@ -170,7 +172,7 @@ const Jobspost = ({
     const onLikeRe = async (num) => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/Jobs/${num}`,
+          url: `${BACKEND_URL}:8083/Jobs/${num}`,
           method: "GET",
         });
         onArticle(data.data);

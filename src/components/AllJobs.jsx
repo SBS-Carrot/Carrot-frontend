@@ -10,6 +10,7 @@ import { BsDot } from "react-icons/bs";
 import { FaCarrot } from "react-icons/fa";
 import JobsPaging from "./JobsPaging";
 import { AiOutlineSearch } from "react-icons/ai";
+import { BACKEND_URL } from "../config/config";
 
 const AllJobs = ({ logined, setLogined }) => {
   const [page, setPage] = useState(1);
@@ -40,7 +41,7 @@ const AllJobs = ({ logined, setLogined }) => {
   const moveJobs = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/jobsCheck/${id}`,
+        url: `${BACKEND_URL}:8083/jobsCheck/${id}`,
         method: "POST",
       });
     } catch (e) {

@@ -3,6 +3,7 @@ import axios from "axios";
 import LoginedHeader from "../layouts/LoginedHeader";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCheckCircle } from "react-icons/ai";
+import { BACKEND_URL } from "../config/config";
 const ChangePassword = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
@@ -103,7 +104,7 @@ const ChangePassword = ({ logined, setLogined }) => {
     };
     try {
       const data = await axios({
-        url: "http://localhost:8083/changePw",
+        url: `${BACKEND_URL}:8083/changePw`,
         method: "post",
         data: userDto,
       });

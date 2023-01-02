@@ -538,7 +538,14 @@ const Board = ({ logined, setLogined }) => {
                                   }}
                                 >
                                   {" "}
-                                  <div>{cafe.boardContent}</div>
+                                  <div
+                                    className="ellipsis_3"
+                                    style={{
+                                      whiteSpace: "pre-wrap",
+                                    }}
+                                  >
+                                    {cafe.boardContent}
+                                  </div>
                                 </div>
 
                                 <div
@@ -1092,7 +1099,9 @@ const Board = ({ logined, setLogined }) => {
                                   }}
                                 >
                                   {" "}
-                                  <div>{cafe.boardContent}</div>
+                                  <div className="ellipsis_3">
+                                    {cafe.boardContent}
+                                  </div>
                                 </div>
 
                                 <div

@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 import WriteMap from "./WriteMap";
 import { BiMap } from "react-icons/bi";
+import { BACKEND_URL } from "../config/config";
 
 const BoardWrite = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -123,7 +124,7 @@ const BoardWrite = ({ logined, setLogined }) => {
   const onSubmit = async (contentValue, category, addressDetail) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/createBoard`,
+        url: `${BACKEND_URL}:8083/createBoard`,
         method: "POST",
         data: {
           boardCategory: category,
@@ -166,7 +167,7 @@ const BoardWrite = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/createBoardImages`,
+        url: `${BACKEND_URL}:8083/createBoardImages`,
         method: "POST",
         data: formData,
       });

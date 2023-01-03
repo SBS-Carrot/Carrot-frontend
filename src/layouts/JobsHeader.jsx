@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config/config";
 const JobsHeader = () => {
   const navigate = useNavigate();
   const onHomepage = () => {
@@ -61,7 +62,7 @@ const JobsHeader = () => {
               fontSize: "1.4rem",
             }}
           >
-            <a href="http://localhost:3000/" className="fontt">
+            <a href={`${BACKEND_URL}:3000/`} className="fontt">
               <FontAwesomeIcon
                 icon={faCarrot}
                 style={{
@@ -72,25 +73,25 @@ const JobsHeader = () => {
             </a>
           </div>
           <div>
-            <a href="http://localhost:3000/allproduct">중고거래</a>
+            <a href={`${BACKEND_URL}:3000/allproduct`}>중고거래</a>
           </div>
           <div
             style={{
               color: "#ffa445",
             }}
           >
-            <a href="http://localhost:3000/alljobs">알바</a>
+            <a href={`${BACKEND_URL}:3000/alljobs`}>알바</a>
           </div>
           <div>
-            <a href="http://localhost:3000/allrealty">부동산 직거래</a>
+            <a href={`${BACKEND_URL}:3000/allrealty`}>부동산 직거래</a>
           </div>
           <div>
-            <a href="http://localhost:3000/board">동네게시판</a>
+            <a href={`${BACKEND_URL}:3000/board`}>동네게시판</a>
           </div>
         </div>
         <div className="flex-grow justify-center items-center flex" style={{}}>
           <a
-            href="http://localhost:3000/login"
+            href={`${BACKEND_URL}:3000/login`}
             style={{
               outline: "1px #bcbcbc solid",
               padding: "5px 10px",

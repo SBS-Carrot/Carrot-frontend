@@ -4,6 +4,7 @@ import Header from "../layouts/Header";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
+import { BACKEND_URL } from "../config/config";
 
 const Join = () => {
   const [idValue, setIdValue] = useState("");
@@ -34,7 +35,7 @@ const Join = () => {
 
   const IdCheck = async (idValue) => {
     try {
-      const data = await axios.get(`http://localhost:8083/checkId/${idValue}`);
+      const data = await axios.get(`${BACKEND_URL}:8083/checkId/${idValue}`);
       setIdCheck(data.data);
     } catch (e) {
       console.log(e);
@@ -181,7 +182,7 @@ const Join = () => {
     try {
       let birth = JSON.stringify(birthValue);
       const data = await axios({
-        url: `http://localhost:8083/createUser`,
+        url: `${BACKEND_URL}:8083/createUser`,
         method: "POST",
         data: {
           userid: idValue,

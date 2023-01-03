@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LoginedHeader from "../layouts/LoginedHeader";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config/config";
 const Security = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
@@ -34,7 +35,7 @@ const Security = ({ logined, setLogined }) => {
       let abcd = sessionStorage.getItem("userid");
       try {
         const data = await axios({
-          url: `http://localhost:8083/getUser/${abcd}`,
+          url: `${BACKEND_URL}:8083/getUser/${abcd}`,
           method: "GET",
         });
         setUser(data.data);
@@ -48,7 +49,7 @@ const Security = ({ logined, setLogined }) => {
   const pwCheck = async (password) => {
     const userDto = { userid: sessionStorage.getItem("userid"), password };
     const data = await axios({
-      url: `http://localhost:8083/checkPw`,
+      url: `${BACKEND_URL}:8083/checkPw`,
       method: "POST",
       data: userDto,
     });

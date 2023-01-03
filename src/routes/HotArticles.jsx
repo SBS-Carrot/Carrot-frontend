@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { FaCarrot } from "react-icons/fa";
 import "../styles/Jobs.css";
 import ProductPaging from "../components/ProductPaging";
+import { BACKEND_URL } from "../config/config";
 import "../styles/Pagination.css";
 const HotArticles = ({ logined, setLogined }) => {
   const [posts, setPosts] = useState([]);
@@ -30,7 +31,7 @@ const HotArticles = ({ logined, setLogined }) => {
     const onSubmit = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/hotProduct`,
+          url: `${BACKEND_URL}:8083/hotProduct`,
           method: "GET",
         });
         onProduct(data.data);
@@ -49,7 +50,7 @@ const HotArticles = ({ logined, setLogined }) => {
   const moveProduct = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/productView/${id}`,
+        url: `${BACKEND_URL}:8083/productView/${id}`,
         method: "POST",
       });
     } catch (e) {

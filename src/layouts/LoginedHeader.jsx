@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCarrot, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Header.css";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config/config";
 const LoginedHeader = ({ setLogined }) => {
   const navigate = useNavigate();
   const onHomepage = () => {
@@ -57,11 +58,11 @@ const LoginedHeader = ({ setLogined }) => {
         >
           <div
             style={{
-              color: "#fc9d39",
+              color: "#ffa445",
               fontSize: "1.4rem",
             }}
           >
-            <a href="http://localhost:3000/" className="fontt">
+            <a href={`${BACKEND_URL}:3000/`} className="fontt">
               <FontAwesomeIcon
                 icon={faCarrot}
                 style={{
@@ -76,19 +77,22 @@ const LoginedHeader = ({ setLogined }) => {
               color: "#ffa445",
             }}
           >
-            <a href="http://localhost:3000/allproduct">중고거래</a>
+            <a href={`${BACKEND_URL}:3000/allproduct`}>중고거래</a>
           </div>
           <div>
-            <a href="http://localhost:3000/alljobs">알바</a>
+            <a href={`${BACKEND_URL}:3000/alljobs`}>알바</a>
           </div>
           <div>
-            <a href="http://localhost:3000/allrealty">부동산 직거래</a>
+            <a href={`${BACKEND_URL}:3000/allrealty`}>부동산 직거래</a>
           </div>
           <div>
-            <a href="http://localhost:3000/board">동네게시판</a>
+            <a href={`${BACKEND_URL}:3000/board`}>동네게시판</a>
           </div>
         </div>
-        <div className="flex-grow justify-center items-center flex gap-7">
+        <div
+          className="flex-grow justify-center items-center flex gap-7"
+          style={{}}
+        >
           <button
             style={{
               outline: "1px #bcbcbc solid",
@@ -96,8 +100,8 @@ const LoginedHeader = ({ setLogined }) => {
               borderRadius: "5px",
             }}
             onClick={() => {
-              sessionStorage.clear();
               setLogined(false);
+              sessionStorage.clear();
             }}
           >
             로그아웃
@@ -115,7 +119,6 @@ const LoginedHeader = ({ setLogined }) => {
             마이 페이지
           </button>
         </div>
-
         <div
           style={{
             display: "flex",

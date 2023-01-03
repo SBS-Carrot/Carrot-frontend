@@ -10,6 +10,7 @@ import { FaCarrot } from "react-icons/fa";
 import ProductPaging from "./ProductPaging";
 import "../styles/Pagination.css";
 import Board from "../routes/Board";
+import { BACKEND_URL } from "../config/config";
 
 const AllProduct = ({ logined, setLogined }) => {
   const [posts, setPosts] = useState([]);
@@ -31,7 +32,7 @@ const AllProduct = ({ logined, setLogined }) => {
     const onSubmit = async () => {
       try {
         const data = await axios({
-          url: "http://localhost:8083/",
+          url: `${BACKEND_URL}:8083/`,
           method: "GET",
         });
         onProduct(data.data);
@@ -51,7 +52,7 @@ const AllProduct = ({ logined, setLogined }) => {
   const moveProduct = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/productView/${id}`,
+        url: `${BACKEND_URL}:8083/productView/${id}`,
         method: "POST",
       });
     } catch (e) {

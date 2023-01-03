@@ -19,6 +19,7 @@ import Header from "../layouts/Header";
 import JobsHeader from "../layouts/JobsHeader";
 import RealtyHeader from "../layouts/RealtyHeader";
 import BoardHeader from "../layouts/BoardHeader";
+import { BACKEND_URL } from "../config/config";
 const Search = ({ logined, setLogined }) => {
   const navigate = useNavigate();
   const { search } = useParams(); //초기검색어
@@ -88,7 +89,7 @@ const Search = ({ logined, setLogined }) => {
   const moveProduct = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/productView/${id}`,
+        url: `${BACKEND_URL}:8083/productView/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -117,7 +118,7 @@ const Search = ({ logined, setLogined }) => {
   const moveJobs = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/jobsCheck/${id}`,
+        url: `${BACKEND_URL}:8083/jobsCheck/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -146,7 +147,7 @@ const Search = ({ logined, setLogined }) => {
   const moveRealty = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/realtyCheck/${id}`,
+        url: `${BACKEND_URL}:8083/realtyCheck/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -167,7 +168,7 @@ const Search = ({ logined, setLogined }) => {
         navigate(`/boardpost/${id}`);
       } else {
         await axios({
-          url: `http://localhost:8083/boardView/${id}`,
+          url: `${BACKEND_URL}:8083/boardView/${id}`,
           method: "POST",
         });
         navigate(`/boardpost/${id}`);
@@ -206,7 +207,7 @@ const Search = ({ logined, setLogined }) => {
     if (isLoaded && !stop) {
       //api 카페만 몇개 불러오는지에 대한 주소 새로 만들어야함.
       //초기값 7개 , 스크롤 내릴 때마다 그 다음 7개에 대한 인덱스만 가져와야함
-      axios.get(`http://localhost:8083/boards?num=${num}`).then((res) => {
+      axios.get(`${BACKEND_URL}:8083/boards?num=${num}`).then((res) => {
         // 받아온 데이터를 보여줄 전체 리스트에 concat으로 넣어준다
         setBoard((board) => board.concat(res.data));
         setNum(num + 1);
@@ -245,7 +246,7 @@ const Search = ({ logined, setLogined }) => {
     try {
       if (type == "product") {
         const data = await axios({
-          url: `http://localhost:8083/searchProduct`,
+          url: `${BACKEND_URL}:8083/searchProduct`,
           method: "POST",
           data: {
             searchWord: search,
@@ -256,7 +257,7 @@ const Search = ({ logined, setLogined }) => {
         setCurrentPosts(data.data.slice(0, 8));
       } else if (type == "realty") {
         const data = await axios({
-          url: `http://localhost:8083/searchRealty`,
+          url: `${BACKEND_URL}:8083/searchRealty`,
           method: "POST",
           data: {
             searchWord: search,
@@ -267,7 +268,7 @@ const Search = ({ logined, setLogined }) => {
         setRCurrentPosts(data.data.slice(0, 6));
       } else if (type == "jobs") {
         const data = await axios({
-          url: `http://localhost:8083/searchJobs`,
+          url: `${BACKEND_URL}:8083/searchJobs`,
           method: "POST",
           data: {
             searchWord: search,
@@ -278,7 +279,7 @@ const Search = ({ logined, setLogined }) => {
         setJCurrentPosts(data.data.slice(0, 6));
       } else if (type == "board") {
         const data = await axios({
-          url: `http://localhost:8083/searchBoard`,
+          url: `${BACKEND_URL}:8083/searchBoard`,
           method: "POST",
           data: {
             searchWord: search,

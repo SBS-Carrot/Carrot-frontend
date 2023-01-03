@@ -41,6 +41,7 @@ import BoardEdit from "./components/BoardEdit";
 import Search from "./routes/Search";
 import SearchEmpty from "./routes/SearchEmpty";
 import RealtyEdit from "./components/RealtyEdit";
+import { BACKEND_URL } from "./config/config";
 
 function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
@@ -83,7 +84,7 @@ function App() {
   const onLike = async (articleid, userid) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/likeProduct/${articleid}`,
+        url: `${BACKEND_URL}:8083/likeProduct/${articleid}`,
         method: "GET",
         params: {
           productId: articleid,
@@ -99,7 +100,7 @@ function App() {
   const onJobsLike = async (articleid, userid) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/likeJob/${articleid}`,
+        url: `${BACKEND_URL}:8083/likeJob/${articleid}`,
         method: "GET",
         params: {
           jobId: articleid,
@@ -115,7 +116,7 @@ function App() {
   const onRealtyLike = async (articleid, userid) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/likeRealty/${articleid}`,
+        url: `${BACKEND_URL}:8083/likeRealty/${articleid}`,
         method: "GET",
         params: {
           realtyId: articleid,
@@ -131,7 +132,7 @@ function App() {
   const onBoardLike = async (articleid, userid) => {
     try {
       const data = await axios({
-        url: `http://localhost:8083/likeBoard/${articleid}`,
+        url: `${BACKEND_URL}:8083/likeBoard/${articleid}`,
         method: "GET",
         params: {
           boardId: articleid,

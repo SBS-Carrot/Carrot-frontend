@@ -7,8 +7,10 @@ COPY package.json ./
 RUN npm install
 COPY ./ ./
 
+EXPOSE 80
 # 컨테이너 실행시 실행할 명령어
 CMD ["npm","run","start"]
+
 
 # 이미지 생성 명령어 (현파일과 같은 디렉토리에서)
 # docker build -t (이미지명)

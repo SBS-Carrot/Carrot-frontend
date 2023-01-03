@@ -178,7 +178,7 @@ const Home = ({ logined, setLogined }) => {
                   }}
                 >
                   <a
-                    href={`${BACKEND_URL}:3000/hot_articles`}
+                    href={`/hot_articles`}
                     style={{
                       padding: "10px 20px",
 
@@ -196,7 +196,7 @@ const Home = ({ logined, setLogined }) => {
                 >
                   <div>
                     <a
-                      href={`${BACKEND_URL}:3000/trust`}
+                      href={`/trust`}
                       style={{
                         padding: "10px 20px",
 
@@ -451,7 +451,7 @@ const Home = ({ logined, setLogined }) => {
               marginTop: "20px",
             }}
           >
-            <a href={`${BACKEND_URL}:3000/hot_articles`}>인기매물 더 보기</a>
+            <a href={`/hot_articles`}>인기매물 더 보기</a>
           </div>
         </div>
 
@@ -565,7 +565,7 @@ const Home = ({ logined, setLogined }) => {
                   }}
                 >
                   <a
-                    href={`${BACKEND_URL}:3000/hot_articles`}
+                    href={`/hot_articles`}
                     style={{
                       padding: "10px 20px",
 
@@ -582,7 +582,7 @@ const Home = ({ logined, setLogined }) => {
                   }}
                 >
                   <a
-                    href={`${BACKEND_URL}:3000/trust`}
+                    href={`/trust`}
                     style={{
                       padding: "10px 20px",
 
@@ -836,7 +836,7 @@ const Home = ({ logined, setLogined }) => {
               marginTop: "20px",
             }}
           >
-            <a href={`${BACKEND_URL}:3000/hot_articles`}>인기매물 더 보기</a>
+            <a href={`/hot_articles`}>인기매물 더 보기</a>
           </div>
         </div>
 

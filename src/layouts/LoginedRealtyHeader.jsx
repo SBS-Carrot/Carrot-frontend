@@ -61,7 +61,7 @@ const LoginedRealtyHeader = ({ setLogined }) => {
               fontSize: "1.4rem",
             }}
           >
-            <a href={`${BACKEND_URL}:3000/`} className="fontt">
+            <a href={`/`} className="fontt">
               <FontAwesomeIcon
                 icon={faCarrot}
                 style={{
@@ -72,20 +72,20 @@ const LoginedRealtyHeader = ({ setLogined }) => {
             </a>
           </div>
           <div>
-            <a href={`${BACKEND_URL}:3000/allproduct`}>중고거래</a>
+            <a href={`/allproduct`}>중고거래</a>
           </div>
           <div>
-            <a href={`${BACKEND_URL}:3000/alljobs`}>알바</a>
+            <a href={`/alljobs`}>알바</a>
           </div>
           <div
             style={{
               color: "#ffa445",
             }}
           >
-            <a href={`${BACKEND_URL}:3000/allrealty`}>부동산 직거래</a>
+            <a href={`/allrealty`}>부동산 직거래</a>
           </div>
           <div>
-            <a href={`${BACKEND_URL}:3000/board`}>동네게시판</a>
+            <a href={`/board`}>동네게시판</a>
           </div>
         </div>
         <div

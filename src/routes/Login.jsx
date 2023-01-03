@@ -86,7 +86,7 @@ const Login = () => {
               fontSize: "1.4rem",
             }}
           >
-            <a href={`${BACKEND_URL}:3000/`} className="fontt">
+            <a href={`/`} className="fontt">
               <FontAwesomeIcon
                 icon={faCarrot}
                 style={{

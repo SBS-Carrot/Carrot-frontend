@@ -1,4 +1,4 @@
-FROM node:16.16.0
+
 FROM node
 # 이미지 내에서 명령어를 실행할( 현 위치로 잡을) 디렉토리 설정
 WORKDIR /app

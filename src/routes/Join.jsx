@@ -13,8 +13,8 @@ const Join = () => {
   const [nameValue, setNameValue] = useState("");
   const [birthValue, setBirthValue] = useState({
     yy: "",
-    mm: "",
-    dd: "",
+    mm: "01",
+    dd: "01",
   });
 
   const [addressValue, setAddressValue] = useState("");

@@ -318,7 +318,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
       const userid = sessionStorage.getItem("userid");
 
       const data = await axios({
-        url: `${BACKEND_URL}:8083/createRealty`,
+        url: `http://${BACKEND_URL}:8083/createRealty`,
         method: "POST",
         data: {
           realtyWho: who,
@@ -438,7 +438,7 @@ const RealtyWrite = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `${BACKEND_URL}:8083/createRealtyImages`,
+        url: `http://${BACKEND_URL}:8083/createRealtyImages`,
         method: "POST",
         data: formData,
       });

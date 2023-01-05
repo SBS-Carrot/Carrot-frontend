@@ -110,7 +110,7 @@ const Jobspost = ({
       let abcd = "";
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/Jobs/${num}`,
+          url: `http://${BACKEND_URL}:8083/Jobs/${num}`,
           method: "GET",
         });
 
@@ -123,7 +123,7 @@ const Jobspost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${abcd}`,
+          url: `http://${BACKEND_URL}:8083/getUser/${abcd}`,
           method: "GET",
         });
         setArticleWriter(data.data);
@@ -132,7 +132,7 @@ const Jobspost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getJobsWithImage/${num}`,
+          url: `http://${BACKEND_URL}:8083/getJobsWithImage/${num}`,
           method: "GET",
         });
 
@@ -143,7 +143,7 @@ const Jobspost = ({
 
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/likeJobsCheck/${num}`,
+          url: `http://${BACKEND_URL}:8083/likeJobsCheck/${num}`,
           method: "GET",
           params: {
             jobsId: num,
@@ -157,7 +157,7 @@ const Jobspost = ({
 
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${userid}`,
+          url: `http://${BACKEND_URL}:8083/getUser/${userid}`,
           method: "GET",
         });
         setUser(data.data);
@@ -172,7 +172,7 @@ const Jobspost = ({
     const onLikeRe = async (num) => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/Jobs/${num}`,
+          url: `http://${BACKEND_URL}:8083/Jobs/${num}`,
           method: "GET",
         });
         onArticle(data.data);

@@ -27,7 +27,7 @@ const Jobs = ({ logined, setLogined }) => {
   const moveJobs = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}:8083/jobsCheck/${id}`,
+        url: `http://${BACKEND_URL}:8083/jobsCheck/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -45,7 +45,7 @@ const Jobs = ({ logined, setLogined }) => {
     const onSubmit = async () => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/hotJobs`,
+          url: `http://${BACKEND_URL}:8083/hotJobs`,
           method: "GET",
         });
         onJobs(data.data);

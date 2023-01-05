@@ -53,7 +53,7 @@ const MyPage = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `${BACKEND_URL}:8083/userProfileImageReset`,
+        url: `http://${BACKEND_URL}:8083/userProfileImageReset`,
         method: "POST",
         data: formData,
       });
@@ -76,7 +76,7 @@ const MyPage = ({ logined, setLogined }) => {
     const onSubmit = async () => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${sessionStorage.getItem(
+          url: `http://${BACKEND_URL}:8083/getUser/${sessionStorage.getItem(
             "userid"
           )}`,
           method: "GET",
@@ -109,7 +109,7 @@ const MyPage = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `${BACKEND_URL}:8083/userProfileImageChange`,
+        url: `http://${BACKEND_URL}:8083/userProfileImageChange`,
         method: "POST",
         data: formData,
       });
@@ -137,7 +137,7 @@ const MyPage = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `${BACKEND_URL}:8083/userProfileChange`,
+        url: `http://${BACKEND_URL}:8083/userProfileChange`,
         method: "POST",
         data: formData,
       });
@@ -163,7 +163,7 @@ const MyPage = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `${BACKEND_URL}:8083/userProfileImageAndNicknameReset`,
+        url: `http://${BACKEND_URL}:8083/userProfileImageAndNicknameReset`,
         method: "POST",
         data: formData,
       });

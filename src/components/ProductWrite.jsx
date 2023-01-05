@@ -109,7 +109,7 @@ const ProductWrite = ({ logined, setLogined }) => {
   ) => {
     try {
       const data = await axios({
-        url: `${BACKEND_URL}:8083/createProduct`,
+        url: `http://${BACKEND_URL}:8083/createProduct`,
         method: "POST",
         data: {
           productCategory: category,
@@ -157,7 +157,7 @@ const ProductWrite = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `${BACKEND_URL}:8083/createProductImages`,
+        url: `http://${BACKEND_URL}:8083/createProductImages`,
         method: "POST",
         data: formData,
       });

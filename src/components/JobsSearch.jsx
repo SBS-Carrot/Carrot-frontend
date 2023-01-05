@@ -33,7 +33,7 @@ const JobsSearch = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/jobssearch/${search}`,
+          url: `http://${BACKEND_URL}:8083/jobssearch/${search}`,
           method: "GET",
         });
         onJobsSearch(data.data);
@@ -49,7 +49,7 @@ const JobsSearch = ({ logined, setLogined }) => {
   const Search = async (job) => {
     try {
       const data = await axios({
-        url: `${BACKEND_URL}:8083/jobssearch/${job}`,
+        url: `http://${BACKEND_URL}:8083/jobssearch/${job}`,
         method: "GET",
       });
       setSearch2(job);
@@ -72,7 +72,7 @@ const JobsSearch = ({ logined, setLogined }) => {
   const moveJobs = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}:8083/jobsCheck/${id}`,
+        url: `http://${BACKEND_URL}:8083/jobsCheck/${id}`,
         method: "POST",
       });
     } catch (e) {

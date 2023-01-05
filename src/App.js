@@ -84,7 +84,7 @@ function App() {
   const onLike = async (articleid, userid) => {
     try {
       const data = await axios({
-        url: `${BACKEND_URL}:8083/likeProduct/${articleid}`,
+        url: `http://${BACKEND_URL}:8083/likeProduct/${articleid}`,
         method: "GET",
         params: {
           productId: articleid,
@@ -100,7 +100,7 @@ function App() {
   const onJobsLike = async (articleid, userid) => {
     try {
       const data = await axios({
-        url: `${BACKEND_URL}:8083/likeJob/${articleid}`,
+        url: `http://${BACKEND_URL}:8083/likeJob/${articleid}`,
         method: "GET",
         params: {
           jobId: articleid,
@@ -116,7 +116,7 @@ function App() {
   const onRealtyLike = async (articleid, userid) => {
     try {
       const data = await axios({
-        url: `${BACKEND_URL}:8083/likeRealty/${articleid}`,
+        url: `http://${BACKEND_URL}:8083/likeRealty/${articleid}`,
         method: "GET",
         params: {
           realtyId: articleid,
@@ -132,7 +132,7 @@ function App() {
   const onBoardLike = async (articleid, userid) => {
     try {
       const data = await axios({
-        url: `${BACKEND_URL}:8083/likeBoard/${articleid}`,
+        url: `http://${BACKEND_URL}:8083/likeBoard/${articleid}`,
         method: "GET",
         params: {
           boardId: articleid,
@@ -148,7 +148,7 @@ function App() {
   const onRemove = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/productDelete/${id}`,
+        url: `http://${BACKEND_URL}:8083/productDelete/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -158,7 +158,7 @@ function App() {
   const onRemoveJobs = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/jobsDelete/${id}`,
+        url: `http://${BACKEND_URL}:8083/jobsDelete/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -168,7 +168,7 @@ function App() {
   const onRemoveRealty = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/realtyDelete/${id}`,
+        url: `http://${BACKEND_URL}:8083/realtyDelete/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -179,7 +179,7 @@ function App() {
   const onRemoveBoard = async (id) => {
     try {
       await axios({
-        url: `http://localhost:8083/boardDelete/${id}`,
+        url: `http://${BACKEND_URL}:8083/boardDelete/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -190,7 +190,7 @@ function App() {
   const onRemoveReply = async (replyId) => {
     try {
       await axios({
-        url: `http://localhost:8083/replyDelete/${replyId}`,
+        url: `http://${BACKEND_URL}:8083/replyDelete/${replyId}`,
         method: "POST",
       });
     } catch (e) {

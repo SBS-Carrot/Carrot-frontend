@@ -115,7 +115,7 @@ const BoardPost = ({
       const userid = sessionStorage.getItem("userid");
 
       const data = await axios({
-        url: `${BACKEND_URL}:8083/boardCreateReply/${num}`,
+        url: `http://${BACKEND_URL}:8083/boardCreateReply/${num}`,
         method: "POST",
         data: {
           boardReply: replyValue,
@@ -136,7 +136,7 @@ const BoardPost = ({
       let abcd = "";
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/board/${num}`,
+          url: `http://${BACKEND_URL}:8083/board/${num}`,
           method: "GET",
         });
         abcd = data.data.boardUserid;
@@ -148,7 +148,7 @@ const BoardPost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${abcd}`,
+          url: `http://${BACKEND_URL}:8083/getUser/${abcd}`,
           method: "GET",
         });
         setBoardWriter(data.data);
@@ -157,7 +157,7 @@ const BoardPost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getBoardWithImage/${num}`,
+          url: `http://${BACKEND_URL}:8083/getBoardWithImage/${num}`,
           method: "GET",
         });
 
@@ -169,7 +169,7 @@ const BoardPost = ({
 
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${userid}`,
+          url: `http://${BACKEND_URL}:8083/getUser/${userid}`,
           method: "GET",
         });
         setUser(data.data);
@@ -178,7 +178,7 @@ const BoardPost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getBoardReply/${num}`,
+          url: `http://${BACKEND_URL}:8083/getBoardReply/${num}`,
           method: "GET",
         });
         setReplis(data.data);
@@ -188,7 +188,7 @@ const BoardPost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/likeBoardCheck/${num}`,
+          url: `http://${BACKEND_URL}:8083/likeBoardCheck/${num}`,
           method: "GET",
           params: {
             boardId: num,
@@ -207,7 +207,7 @@ const BoardPost = ({
     const onLikeRe = async (num) => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/board/${num}`,
+          url: `http://${BACKEND_URL}:8083/board/${num}`,
           method: "GET",
         });
         onBoard(data.data);
@@ -221,7 +221,7 @@ const BoardPost = ({
 
   const addReplyNotification = async () => {
     axios({
-      url: `${BACKEND_URL}:8083/addReplyNotification`,
+      url: `http://${BACKEND_URL}:8083/addReplyNotification`,
       method: "post",
       data: {
         content: replyValue,

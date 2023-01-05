@@ -202,7 +202,7 @@ const JobsWrite = ({ logined, setLogined }) => {
     try {
       const userid = sessionStorage.getItem("userid");
       const data = await axios({
-        url: `${BACKEND_URL}:8083/createJobs`,
+        url: `http://${BACKEND_URL}:8083/createJobs`,
         method: "POST",
         data: {
           jobSubject: subjectValue,
@@ -263,7 +263,7 @@ const JobsWrite = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `${BACKEND_URL}:8083/createJobsImages`,
+        url: `http://${BACKEND_URL}:8083/createJobsImages`,
         method: "POST",
         data: formData,
       });

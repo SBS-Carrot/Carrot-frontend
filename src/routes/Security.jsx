@@ -35,7 +35,7 @@ const Security = ({ logined, setLogined }) => {
       let abcd = sessionStorage.getItem("userid");
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${abcd}`,
+          url: `http://${BACKEND_URL}:8083/getUser/${abcd}`,
           method: "GET",
         });
         setUser(data.data);
@@ -49,7 +49,7 @@ const Security = ({ logined, setLogined }) => {
   const pwCheck = async (password) => {
     const userDto = { userid: sessionStorage.getItem("userid"), password };
     const data = await axios({
-      url: `${BACKEND_URL}:8083/checkPw`,
+      url: `http://${BACKEND_URL}:8083/checkPw`,
       method: "POST",
       data: userDto,
     });

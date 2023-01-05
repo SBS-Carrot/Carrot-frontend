@@ -33,7 +33,7 @@ const RealtySearch = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/realtysearch/${search}`,
+          url: `http://${BACKEND_URL}:8083/realtysearch/${search}`,
           method: "GET",
         });
         onRealtySearch(data.data);
@@ -48,7 +48,7 @@ const RealtySearch = ({ logined, setLogined }) => {
   const Search = async (s) => {
     try {
       const data = await axios({
-        url: `${BACKEND_URL}:8083/realtysearch/${s}`,
+        url: `http://${BACKEND_URL}:8083/realtysearch/${s}`,
         method: "GET",
       });
       setSearch2(s);
@@ -73,7 +73,7 @@ const RealtySearch = ({ logined, setLogined }) => {
   const moveRealty = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}:8083/realtyCheck/${id}`,
+        url: `http://${BACKEND_URL}:8083/realtyCheck/${id}`,
         method: "POST",
       });
     } catch (e) {

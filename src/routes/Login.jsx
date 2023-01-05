@@ -39,7 +39,7 @@ const Login = () => {
   const onLogin = async (idValue, pwValue) => {
     try {
       const data = await axios({
-        url: `${BACKEND_URL}:8083/loginUser`,
+        url: `http://${BACKEND_URL}:8083/loginUser`,
         method: "POST",
         data: {
           userid: idValue,

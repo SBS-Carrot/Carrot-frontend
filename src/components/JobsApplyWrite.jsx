@@ -40,7 +40,7 @@ const JobsApply = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${userid}`,
+          url: `http://${BACKEND_URL}:8083/getUser/${userid}`,
           method: "GET",
         });
         onUser(data.data);
@@ -89,7 +89,7 @@ const JobsApply = ({ logined, setLogined }) => {
   const onSubmit = async (name, phoneValue, gender, year, introduce) => {
     try {
       const applyCheck = await axios({
-        url: `${BACKEND_URL}:8083/checkApply/${num}`,
+        url: `http://${BACKEND_URL}:8083/checkApply/${num}`,
         method: "GET",
         params: { userid },
       });
@@ -106,7 +106,7 @@ const JobsApply = ({ logined, setLogined }) => {
         userid,
       };
       const data = await axios({
-        url: `${BACKEND_URL}:8083/applyJobs/${num}`,
+        url: `http://${BACKEND_URL}:8083/applyJobs/${num}`,
         method: "POST",
         data: applyJobsDto,
       });
@@ -114,7 +114,7 @@ const JobsApply = ({ logined, setLogined }) => {
       //알림
       const url = "/jobsApplyView/" + num;
       const data1 = await axios({
-        url: `${BACKEND_URL}:8083/Jobs/${num}`,
+        url: `http://${BACKEND_URL}:8083/Jobs/${num}`,
         method: "get",
       });
       const yourid = data1.data.jobUserid;
@@ -126,7 +126,7 @@ const JobsApply = ({ logined, setLogined }) => {
         sender: userid,
       };
       const data2 = axios({
-        url: `${BACKEND_URL}:8083/addApplyNotification`,
+        url: `http://${BACKEND_URL}:8083/addApplyNotification`,
         method: "POST",
         data: notificationRequestDto,
       });

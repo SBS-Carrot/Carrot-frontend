@@ -22,7 +22,7 @@ const ChatList = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getChatList`,
+          url: `http://${BACKEND_URL}:8083/getChatList`,
           method: "get",
           params: { userid },
         });

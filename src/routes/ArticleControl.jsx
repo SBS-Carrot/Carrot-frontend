@@ -76,7 +76,7 @@ const ArticleControl = ({ logined, setLogined }) => {
   const onChoiceRBuyer = async () => {
     setChoiceRBuyer(!choiceRBuyer);
     const data = await axios({
-      url: `${BACKEND_URL}:8083/getRoomByRealtyId/${rnum}`,
+      url: `http://${BACKEND_URL}:8083/getRoomByRealtyId/${rnum}`,
       method: "get",
     });
     setRChatList(data.data);
@@ -88,7 +88,7 @@ const ArticleControl = ({ logined, setLogined }) => {
   const moveRealty = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}:8083/realtyCheck/${id}`,
+        url: `http://${BACKEND_URL}:8083/realtyCheck/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -130,7 +130,7 @@ const ArticleControl = ({ logined, setLogined }) => {
         return;
       }
       const data = await axios({
-        url: `${BACKEND_URL}:8083/realtyReview`,
+        url: `http://${BACKEND_URL}:8083/realtyReview`,
         method: "POST",
         data: {
           realtyId: articleid,
@@ -202,7 +202,7 @@ const ArticleControl = ({ logined, setLogined }) => {
   const onChoicePBuyer = async () => {
     setChoicePBuyer(!choicePBuyer);
     const data = await axios({
-      url: `${BACKEND_URL}:8083/getRoomByProductId/${pnum}`,
+      url: `http://${BACKEND_URL}:8083/getRoomByProductId/${pnum}`,
       method: "get",
     });
     setPChatList(data.data);
@@ -218,7 +218,7 @@ const ArticleControl = ({ logined, setLogined }) => {
   const moveProduct = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}:8083/productView/${id}`,
+        url: `http://${BACKEND_URL}:8083/productView/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -258,7 +258,7 @@ const ArticleControl = ({ logined, setLogined }) => {
       };
 
       axios({
-        url: `${BACKEND_URL}:8083/addReviewNotification`,
+        url: `http://${BACKEND_URL}:8083/addReviewNotification`,
         method: "POST",
         data: notificationRequestDto,
       });
@@ -284,7 +284,7 @@ const ArticleControl = ({ logined, setLogined }) => {
         return;
       }
       const data = await axios({
-        url: `${BACKEND_URL}:8083/productReview`,
+        url: `http://${BACKEND_URL}:8083/productReview`,
         method: "POST",
         data: {
           productId: articleid,
@@ -346,7 +346,7 @@ const ArticleControl = ({ logined, setLogined }) => {
   const moveJobs = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}:8083/jobsCheck/${id}`,
+        url: `http://${BACKEND_URL}:8083/jobsCheck/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -366,7 +366,7 @@ const ArticleControl = ({ logined, setLogined }) => {
       const userid = sessionStorage.getItem("userid");
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getRealtys/${userid}`,
+          url: `http://${BACKEND_URL}:8083/getRealtys/${userid}`,
           method: "post",
         });
         onRealty(data.data);
@@ -376,7 +376,7 @@ const ArticleControl = ({ logined, setLogined }) => {
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getProducts/${userid}`,
+          url: `http://${BACKEND_URL}:8083/getProducts/${userid}`,
           method: "post",
         });
 
@@ -388,7 +388,7 @@ const ArticleControl = ({ logined, setLogined }) => {
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getJobs/${userid}`,
+          url: `http://${BACKEND_URL}:8083/getJobs/${userid}`,
           method: "post",
         });
         onJobs(data.data);

@@ -41,7 +41,7 @@ const AllJobs = ({ logined, setLogined }) => {
   const moveJobs = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}:8083/jobsCheck/${id}`,
+        url: `http://${BACKEND_URL}:8083/jobsCheck/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -59,7 +59,7 @@ const AllJobs = ({ logined, setLogined }) => {
     const onSubmit = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/jobs`,
+          url: `http://${BACKEND_URL}:8083/jobs`,
           method: "GET",
         });
         onJobs(data.data);
@@ -111,7 +111,7 @@ const AllJobs = ({ logined, setLogined }) => {
                 우리 동네에서 찾는 당근알바
               </h1>
               <img
-                src="https://www.daangn.com/_next/static/media/jobs_hero_daangn_3x.8b217530.png"
+                src="https://i.postimg.cc/jjV77Bs1/image.png"
                 alt=""
                 style={{
                   marginTop: "-58px",
@@ -399,7 +399,7 @@ const AllJobs = ({ logined, setLogined }) => {
                 우리 동네에서 찾는 당근알바
               </h1>
               <img
-                src="https://www.daangn.com/_next/static/media/jobs_hero_daangn_3x.8b217530.png"
+                src="https://i.postimg.cc/jjV77Bs1/image.png"
                 alt=""
                 style={{
                   marginTop: "-58px",

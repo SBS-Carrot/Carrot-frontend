@@ -104,7 +104,7 @@ const ChangePassword = ({ logined, setLogined }) => {
     };
     try {
       const data = await axios({
-        url: `${BACKEND_URL}:8083/changePw`,
+        url: `http://${BACKEND_URL}:8083/changePw`,
         method: "post",
         data: userDto,
       });

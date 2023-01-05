@@ -226,7 +226,7 @@ const JobsEdit = ({ logined, setLogined }) => {
   ) => {
     try {
       const data = await axios({
-        url: `${BACKEND_URL}:8083/jobsEdit/${num}`,
+        url: `http://${BACKEND_URL}:8083/jobsEdit/${num}`,
         method: "POST",
         data: {
           jobSubject: subjectValue,
@@ -283,7 +283,7 @@ const JobsEdit = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `${BACKEND_URL}:8083/jobsImageEdit/${num}`,
+        url: `http://${BACKEND_URL}:8083/jobsImageEdit/${num}`,
         method: "POST",
         data: formData,
       });
@@ -299,7 +299,7 @@ const JobsEdit = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/Jobs/${num}`,
+          url: `http://${BACKEND_URL}:8083/Jobs/${num}`,
           method: "GET",
         });
         console.log(data.data);
@@ -317,7 +317,7 @@ const JobsEdit = ({ logined, setLogined }) => {
       }
       try {
         const data1 = await axios({
-          url: `${BACKEND_URL}:8083/getJobsWithImage/${num}`,
+          url: `http://${BACKEND_URL}:8083/getJobsWithImage/${num}`,
           method: "GET",
         });
         console.log("data1 :", data1.data);

@@ -33,7 +33,7 @@ const JobsApplyView = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/Jobs/${num}`,
+          url: `http://${BACKEND_URL}:8083/Jobs/${num}`,
           method: "get",
         });
         if (data.data.jobUserid != sessionStorage.getItem("userid")) {
@@ -44,7 +44,7 @@ const JobsApplyView = ({ logined, setLogined }) => {
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getJobApply`,
+          url: `http://${BACKEND_URL}:8083/getJobApply`,
           method: "Get",
           params: { num },
         });

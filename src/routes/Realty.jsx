@@ -33,7 +33,7 @@ const Realty = ({ logined, setLogined }) => {
   const moveRealty = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}:8083/realtyCheck/${id}`,
+        url: `http://${BACKEND_URL}:8083/realtyCheck/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -51,7 +51,7 @@ const Realty = ({ logined, setLogined }) => {
     const onSubmit = async () => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/hotRealty`,
+          url: `http://${BACKEND_URL}:8083/hotRealty`,
           method: "GET",
         });
         onRealty(data.data);

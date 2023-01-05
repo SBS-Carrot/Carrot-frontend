@@ -25,22 +25,12 @@ const Search = ({ logined, setLogined }) => {
   const { search } = useParams(); //초기검색어
   const [searchValue, setSearchValue] = useState(search); //검색어
   const [search2, setSearch2] = useState(search);
-
+  const [type, setType] = useState(sessionStorage.getItem("type") || "product");
   //검색어 수정
-  const onSearchChange1 = (data) => {
-    if (data.length > 10) {
-      return;
-    }
-    setSearchValue((prev) => data);
-    setSearch2(data);
-  };
 
   useEffect(() => {
-    move(searchValue);
-  }, [searchValue]);
-
-  useEffect(() => {
-    onSearchChange1(search);
+    setSearch2(search);
+    setSearchValue(search);
     onSearch(type);
   }, [search]);
 
@@ -50,24 +40,10 @@ const Search = ({ logined, setLogined }) => {
     }
 
     setSearchValue(e.target.value);
-  }; //검색어 수정
+  };
   const move = (e) => {
     navigate(`/search/${e}`);
   };
-  useEffect(() => {
-    move(searchValue);
-  }, [searchValue]);
-
-  useEffect(() => {
-    setSearchValue((prev) => search);
-  }, [search]);
-
-  //최초 데이터 불러오기
-  useEffect(() => {
-    onSearch(type);
-  }, []);
-  const [type, setType] = useState(sessionStorage.getItem("type") || "product");
-  //타입 변경
 
   //여기부터 Product
   const [searchList, setSearchList] = useState([]);
@@ -89,7 +65,7 @@ const Search = ({ logined, setLogined }) => {
   const moveProduct = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}:8083/productView/${id}`,
+        url: `http://${BACKEND_URL}:8083/productView/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -118,7 +94,7 @@ const Search = ({ logined, setLogined }) => {
   const moveJobs = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}:8083/jobsCheck/${id}`,
+        url: `http://${BACKEND_URL}:8083/jobsCheck/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -147,7 +123,7 @@ const Search = ({ logined, setLogined }) => {
   const moveRealty = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}:8083/realtyCheck/${id}`,
+        url: `http://${BACKEND_URL}:8083/realtyCheck/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -168,7 +144,7 @@ const Search = ({ logined, setLogined }) => {
         navigate(`/boardpost/${id}`);
       } else {
         await axios({
-          url: `${BACKEND_URL}:8083/boardView/${id}`,
+          url: `http://${BACKEND_URL}:8083/boardView/${id}`,
           method: "POST",
         });
         navigate(`/boardpost/${id}`);
@@ -207,7 +183,7 @@ const Search = ({ logined, setLogined }) => {
     if (isLoaded && !stop) {
       //api 카페만 몇개 불러오는지에 대한 주소 새로 만들어야함.
       //초기값 7개 , 스크롤 내릴 때마다 그 다음 7개에 대한 인덱스만 가져와야함
-      axios.get(`${BACKEND_URL}:8083/boards?num=${num}`).then((res) => {
+      axios.get(`http://${BACKEND_URL}:8083/boards?num=${num}`).then((res) => {
         // 받아온 데이터를 보여줄 전체 리스트에 concat으로 넣어준다
         setBoard((board) => board.concat(res.data));
         setNum(num + 1);
@@ -243,51 +219,49 @@ const Search = ({ logined, setLogined }) => {
 
   //타입에 따른 검색결과 요청하기
   const onSearch = async (type) => {
+    // navigate(`/search/${searchValue}`);
     try {
-      if (type == "product") {
-        const data = await axios({
-          url: `${BACKEND_URL}:8083/searchProduct`,
-          method: "POST",
-          data: {
-            searchWord: search,
-          },
-        });
-
-        onSearchChange(data.data);
-        setCurrentPosts(data.data.slice(0, 8));
-      } else if (type == "realty") {
-        const data = await axios({
-          url: `${BACKEND_URL}:8083/searchRealty`,
-          method: "POST",
-          data: {
-            searchWord: search,
-          },
-        });
-
-        onRSearchChange(data.data);
-        setRCurrentPosts(data.data.slice(0, 6));
-      } else if (type == "jobs") {
-        const data = await axios({
-          url: `${BACKEND_URL}:8083/searchJobs`,
-          method: "POST",
-          data: {
-            searchWord: search,
-          },
-        });
-
-        onJSearchChange(data.data);
-        setJCurrentPosts(data.data.slice(0, 6));
-      } else if (type == "board") {
-        const data = await axios({
-          url: `${BACKEND_URL}:8083/searchBoard`,
-          method: "POST",
-          data: {
-            searchWord: search,
-          },
-        });
-        onBSearchChange(data.data);
-        onBoard(data.data);
-      }
+      // if (type == "product") {
+      //   const data = await axios({
+      //     url: `http://${BACKEND_URL}:8083/searchProduct`,
+      //     method: "POST",
+      //     data: {
+      //       searchWord: search,
+      //     },
+      //   });
+      //   onSearchChange(data.data);
+      //   setCurrentPosts(data.data.slice(0, 8));
+      // } else if (type == "realty") {
+      //   const data = await axios({
+      //     url: `http://${BACKEND_URL}:8083/searchRealty`,
+      //     method: "POST",
+      //     data: {
+      //       searchWord: search,
+      //     },
+      //   });
+      //   onRSearchChange(data.data);
+      //   setRCurrentPosts(data.data.slice(0, 6));
+      // } else if (type == "jobs") {
+      //   const data = await axios({
+      //     url: `http://${BACKEND_URL}:8083/searchJobs`,
+      //     method: "POST",
+      //     data: {
+      //       searchWord: search,
+      //     },
+      //   });
+      //   onJSearchChange(data.data);
+      //   setJCurrentPosts(data.data.slice(0, 6));
+      // } else if (type == "board") {
+      //   const data = await axios({
+      //     url: `http://${BACKEND_URL}:8083/searchBoard`,
+      //     method: "POST",
+      //     data: {
+      //       searchWord: search,
+      //     },
+      //   });
+      //   onBSearchChange(data.data);
+      //   onBoard(data.data);
+      // }
     } catch (e) {
       console.log(e);
     }
@@ -333,7 +307,7 @@ const Search = ({ logined, setLogined }) => {
                 onKeyUp={(e) => {
                   if (e.key == "Enter") {
                     setType("product");
-                    onSearch("product");
+                    move(searchValue);
                   }
                 }}
                 autoFocus
@@ -349,9 +323,9 @@ const Search = ({ logined, setLogined }) => {
                   color: "white",
                 }}
                 onClick={() => {
-                  onSearch("product");
                   setType("product");
                   sessionStorage.setItem("type", "product");
+                  move(searchValue);
                 }}
               >
                 중고거래
@@ -364,9 +338,9 @@ const Search = ({ logined, setLogined }) => {
                   padding: "5px 10px",
                 }}
                 onClick={() => {
-                  onSearch("jobs");
                   setType("jobs");
                   sessionStorage.setItem("type", "jobs");
+                  move(searchValue);
                 }}
               >
                 알바
@@ -378,9 +352,9 @@ const Search = ({ logined, setLogined }) => {
                   padding: "5px 10px",
                 }}
                 onClick={() => {
-                  onSearch("realty");
                   setType("realty");
                   sessionStorage.setItem("type", "realty");
+                  move(searchValue);
                 }}
               >
                 부동산
@@ -394,9 +368,9 @@ const Search = ({ logined, setLogined }) => {
                   padding: "5px 10px",
                 }}
                 onClick={() => {
-                  onSearch("board");
                   setType("board");
                   sessionStorage.setItem("type", "board");
+                  move(searchValue);
                 }}
               >
                 게시판

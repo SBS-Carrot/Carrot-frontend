@@ -124,7 +124,7 @@ const BoardWrite = ({ logined, setLogined }) => {
   const onSubmit = async (contentValue, category, addressDetail) => {
     try {
       const data = await axios({
-        url: `${BACKEND_URL}:8083/createBoard`,
+        url: `http://${BACKEND_URL}:8083/createBoard`,
         method: "POST",
         data: {
           boardCategory: category,
@@ -167,7 +167,7 @@ const BoardWrite = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `${BACKEND_URL}:8083/createBoardImages`,
+        url: `http://${BACKEND_URL}:8083/createBoardImages`,
         method: "POST",
         data: formData,
       });

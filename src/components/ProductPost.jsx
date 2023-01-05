@@ -50,13 +50,13 @@ const ProductPost = ({
     }
     //나와 상대방 사이의 채팅방 존재 유무 확인
     const data = await axios({
-      url: `${BACKEND_URL}:8083/getChattingRoom`,
+      url: `http://${BACKEND_URL}:8083/getChattingRoom`,
       method: "GET",
       params: { myName, yourName },
     });
     // 채팅방이 여러개라 오류남.
     const data1 = await axios({
-      url: `${BACKEND_URL}:8083/getChattingRoom`,
+      url: `http://${BACKEND_URL}:8083/getChattingRoom`,
       method: "GET",
       params: { myName: yourName, yourName: myName },
     });
@@ -67,7 +67,7 @@ const ProductPost = ({
       // 채팅방이 없다면 (메시지를 처음주고 받는다면)
       // uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
       const data1 = await axios({
-        url: `${BACKEND_URL}:8083/getUser/${userid}`,
+        url: `http://${BACKEND_URL}:8083/getUser/${userid}`,
         method: "Get",
       });
       const myURL = data1.data.profileImage;
@@ -83,7 +83,7 @@ const ProductPost = ({
         articleId: num,
       };
       axios({
-        url: `${BACKEND_URL}:8083/chat`,
+        url: `http://${BACKEND_URL}:8083/chat`,
         method: "POST",
         data: chattingRoom,
       });
@@ -99,7 +99,7 @@ const ProductPost = ({
         // 채팅방이 없다면 (메시지를 처음주고 받는다면)
         // uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
         const data1 = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${userid}`,
+          url: `http://${BACKEND_URL}:8083/getUser/${userid}`,
           method: "Get",
         });
         const myURL = data1.data.profileImage;
@@ -115,7 +115,7 @@ const ProductPost = ({
           articleId: num,
         };
         axios({
-          url: `${BACKEND_URL}:8083/chat`,
+          url: `http://${BACKEND_URL}:8083/chat`,
           method: "POST",
           data: chattingRoom,
         });
@@ -127,7 +127,8 @@ const ProductPost = ({
       // 상품이 같다면 그방으로, 다르면 다른채팅방으로 보내야함.
       else if (data.data[i].roomId != "") {
         const data2 = await axios({
-          url: `${BACKEND_URL}:8083/getRoomByType/` + data.data[i].roomId,
+          url:
+            `http://${BACKEND_URL}:8083/getRoomByType/` + data.data[i].roomId,
           method: "POST",
           data: {
             myName,
@@ -140,7 +141,7 @@ const ProductPost = ({
           //type과 id 비교시 없으므로 새로운 채팅방 개설.
 
           const data1 = await axios({
-            url: `${BACKEND_URL}:8083/getUser/${userid}`,
+            url: `http://${BACKEND_URL}:8083/getUser/${userid}`,
             method: "Get",
           });
           const myURL = data1.data.profileImage;
@@ -156,7 +157,7 @@ const ProductPost = ({
             articleId: num,
           };
           axios({
-            url: `${BACKEND_URL}:8083/chat`,
+            url: `http://${BACKEND_URL}:8083/chat`,
             method: "POST",
             data: chattingRoom,
           });
@@ -174,7 +175,8 @@ const ProductPost = ({
         }
       } else if (data1.data[i].roomId != "") {
         const data3 = await axios({
-          url: `${BACKEND_URL}:8083/getRoomByType/` + data1.data[i].roomId,
+          url:
+            `http://${BACKEND_URL}:8083/getRoomByType/` + data1.data[i].roomId,
           method: "POST",
           data: {
             myName,
@@ -186,7 +188,7 @@ const ProductPost = ({
         if (data3.data == "") {
           //type과 id 비교시 없으므로 새로운 채팅방 개설.
           const data1 = await axios({
-            url: `${BACKEND_URL}:8083/getUser/${userid}`,
+            url: `http://${BACKEND_URL}:8083/getUser/${userid}`,
             method: "Get",
           });
           const myURL = data1.data.profileImage;
@@ -202,7 +204,7 @@ const ProductPost = ({
             articleId: num,
           };
           axios({
-            url: `${BACKEND_URL}:8083/chat`,
+            url: `http://${BACKEND_URL}:8083/chat`,
             method: "POST",
             data: chattingRoom,
           });
@@ -269,7 +271,7 @@ const ProductPost = ({
       let abcd = "";
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/product/${num}`,
+          url: `http://${BACKEND_URL}:8083/product/${num}`,
           method: "GET",
         });
         abcd = data.data.productUserid;
@@ -282,7 +284,7 @@ const ProductPost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${abcd}`,
+          url: `http://${BACKEND_URL}:8083/getUser/${abcd}`,
           method: "GET",
         });
         setArticleWriter(data.data);
@@ -292,7 +294,7 @@ const ProductPost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getProductWithImage/${num}`,
+          url: `http://${BACKEND_URL}:8083/getProductWithImage/${num}`,
           method: "GET",
         });
 
@@ -302,7 +304,7 @@ const ProductPost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/likeProductCheck/${num}`,
+          url: `http://${BACKEND_URL}:8083/likeProductCheck/${num}`,
           method: "GET",
           params: {
             productId: num,
@@ -315,7 +317,7 @@ const ProductPost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${sessionStorage.getItem(
+          url: `http://${BACKEND_URL}:8083/getUser/${sessionStorage.getItem(
             "userid"
           )}`,
           method: "GET",
@@ -326,7 +328,7 @@ const ProductPost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/hotProduct`,
+          url: `http://${BACKEND_URL}:8083/hotProduct`,
           method: "GET",
         });
         onProduct(data.data);
@@ -354,7 +356,7 @@ const ProductPost = ({
   const moveProduct = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}lhost:8083/productView/${id}`,
+        url: `http://${BACKEND_URL}lhost:8083/productView/${id}`,
         method: "POST",
       });
     } catch (e) {
@@ -370,7 +372,7 @@ const ProductPost = ({
     const onLikeRe = async (num) => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/product/${num}`,
+          url: `http://${BACKEND_URL}:8083/product/${num}`,
           method: "GET",
         });
         onArticle(data.data);

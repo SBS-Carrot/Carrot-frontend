@@ -35,7 +35,9 @@ const Join = () => {
 
   const IdCheck = async (idValue) => {
     try {
-      const data = await axios.get(`${BACKEND_URL}:8083/checkId/${idValue}`);
+      const data = await axios.get(
+        `http://${BACKEND_URL}:8083/checkId/${idValue}`
+      );
       setIdCheck(data.data);
     } catch (e) {
       console.log(e);
@@ -182,7 +184,7 @@ const Join = () => {
     try {
       let birth = JSON.stringify(birthValue);
       const data = await axios({
-        url: `${BACKEND_URL}:8083/createUser`,
+        url: `http://${BACKEND_URL}:8083/createUser`,
         method: "POST",
         data: {
           userid: idValue,

@@ -113,7 +113,7 @@ const ProductEdit = ({ logined, setLogined }) => {
   ) => {
     try {
       const data = await axios({
-        url: `${BACKEND_URL}:8083/productEdit/${num}`,
+        url: `http://${BACKEND_URL}:8083/productEdit/${num}`,
         method: "POST",
         data: {
           productCategory: category,
@@ -134,7 +134,7 @@ const ProductEdit = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/product/${num}`,
+          url: `http://${BACKEND_URL}:8083/product/${num}`,
           method: "GET",
         });
         //console.log(data.data);
@@ -148,7 +148,7 @@ const ProductEdit = ({ logined, setLogined }) => {
       }
       try {
         const data1 = await axios({
-          url: `${BACKEND_URL}:8083/getProductWithImage/${num}`,
+          url: `http://${BACKEND_URL}:8083/getProductWithImage/${num}`,
           method: "GET",
         });
         console.log("data1 :", data1.data);
@@ -190,7 +190,7 @@ const ProductEdit = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `${BACKEND_URL}:8083/productImageEdit/${num}`,
+        url: `http://${BACKEND_URL}:8083/productImageEdit/${num}`,
         method: "POST",
         data: formData,
       });

@@ -28,7 +28,9 @@ const Home = ({ logined, setLogined }) => {
       const getData = async () => {
         try {
           const data = await axios.get(
-            `${BACKEND_URL}:8083/getUser/${sessionStorage.getItem("userid")}`
+            `http://${BACKEND_URL}:8083/getUser/${sessionStorage.getItem(
+              "userid"
+            )}`
           );
 
           setUser(data.data);
@@ -38,7 +40,7 @@ const Home = ({ logined, setLogined }) => {
         }
         try {
           const data = await axios({
-            url: `${BACKEND_URL}:8083/hotProduct`,
+            url: `http://${BACKEND_URL}:8083/hotProduct`,
             method: "GET",
           });
           onProduct(data.data);
@@ -53,7 +55,7 @@ const Home = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/hotProduct`,
+          url: `http://${BACKEND_URL}:8083/hotProduct`,
           method: "GET",
         });
         onProduct(data.data);
@@ -67,7 +69,7 @@ const Home = ({ logined, setLogined }) => {
     const getHotSearch = async () => {
       try {
         const data1 = await axios({
-          url: `${BACKEND_URL}:8083/getHotSearch`,
+          url: `http://${BACKEND_URL}:8083/getHotSearch`,
           method: "GET",
         });
 
@@ -82,7 +84,7 @@ const Home = ({ logined, setLogined }) => {
   const moveProduct = async (id) => {
     try {
       await axios({
-        url: `${BACKEND_URL}:8083/productView/${id}`,
+        url: `http://${BACKEND_URL}:8083/productView/${id}`,
         method: "POST",
       });
     } catch (e) {

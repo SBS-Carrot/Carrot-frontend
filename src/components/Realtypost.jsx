@@ -59,13 +59,13 @@ const Realtypost = ({
     }
     //나와 상대방 사이의 채팅방 존재 유무 확인
     const data = await axios({
-      url: `${BACKEND_URL}:8083/getChattingRoom`,
+      url: `http://${BACKEND_URL}:8083/getChattingRoom`,
       method: "GET",
       params: { myName, yourName },
     });
     // 채팅방이 여러개라 오류남.
     const data1 = await axios({
-      url: `${BACKEND_URL}:8083/getChattingRoom`,
+      url: `http://${BACKEND_URL}:8083/getChattingRoom`,
       method: "GET",
       params: { myName: yourName, yourName: myName },
     });
@@ -75,7 +75,7 @@ const Realtypost = ({
       // 채팅방이 없다면 (메시지를 처음주고 받는다면)
       // uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
       const data1 = await axios({
-        url: `${BACKEND_URL}:8083/getUser/${userid}`,
+        url: `http://${BACKEND_URL}:8083/getUser/${userid}`,
         method: "Get",
       });
       const myURL = data1.data.profileImage;
@@ -91,7 +91,7 @@ const Realtypost = ({
         articleId: num,
       };
       axios({
-        url: `${BACKEND_URL}:8083/chat`,
+        url: `http://${BACKEND_URL}:8083/chat`,
         method: "POST",
         data: chattingRoom,
       });
@@ -111,7 +111,7 @@ const Realtypost = ({
         // 채팅방이 없다면 (메시지를 처음주고 받는다면)
         // uuid로 랜덤한 문자 생성 후 그 URL로 채팅방 생성 후 이동
         const data1 = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${userid}`,
+          url: `http://${BACKEND_URL}:8083/getUser/${userid}`,
           method: "Get",
         });
         const myURL = data1.data.profileImage;
@@ -127,7 +127,7 @@ const Realtypost = ({
           articleId: num,
         };
         axios({
-          url: `${BACKEND_URL}:8083/chat`,
+          url: `http://${BACKEND_URL}:8083/chat`,
           method: "POST",
           data: chattingRoom,
         });
@@ -139,7 +139,8 @@ const Realtypost = ({
       // 상품이 같다면 그방으로, 다르면 다른채팅방으로 보내야함.
       else if (data.data[i].roomId != "") {
         const data2 = await axios({
-          url: `${BACKEND_URL}:8083/getRoomByType/` + data.data[i].roomId,
+          url:
+            `http://${BACKEND_URL}:8083/getRoomByType/` + data.data[i].roomId,
           method: "POST",
           data: {
             myName,
@@ -152,7 +153,7 @@ const Realtypost = ({
           //type과 id 비교시 없으므로 새로운 채팅방 개설.
 
           const data1 = await axios({
-            url: `${BACKEND_URL}:8083/getUser/${userid}`,
+            url: `http://${BACKEND_URL}:8083/getUser/${userid}`,
             method: "Get",
           });
           const myURL = data1.data.profileImage;
@@ -168,7 +169,7 @@ const Realtypost = ({
             articleId: num,
           };
           axios({
-            url: `${BACKEND_URL}:8083/chat`,
+            url: `http://${BACKEND_URL}:8083/chat`,
             method: "POST",
             data: chattingRoom,
           });
@@ -182,7 +183,8 @@ const Realtypost = ({
         }
       } else if (data1.data[i].roomId != "") {
         const data3 = await axios({
-          url: `${BACKEND_URL}:8083/getRoomByType/` + data1.data[i].roomId,
+          url:
+            `http://${BACKEND_URL}:8083/getRoomByType/` + data1.data[i].roomId,
           method: "POST",
           data: {
             myName,
@@ -194,7 +196,7 @@ const Realtypost = ({
         if (data3.data == "") {
           //type과 id 비교시 없으므로 새로운 채팅방 개설.
           const data1 = await axios({
-            url: `${BACKEND_URL}:8083/getUser/${userid}`,
+            url: `http://${BACKEND_URL}:8083/getUser/${userid}`,
             method: "Get",
           });
           const myURL = data1.data.profileImage;
@@ -210,7 +212,7 @@ const Realtypost = ({
             articleId: num,
           };
           axios({
-            url: `${BACKEND_URL}:8083/chat`,
+            url: `http://${BACKEND_URL}:8083/chat`,
             method: "POST",
             data: chattingRoom,
           });
@@ -269,7 +271,7 @@ const Realtypost = ({
       let abcd = "";
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/realty/${num}`,
+          url: `http://${BACKEND_URL}:8083/realty/${num}`,
           method: "GET",
         });
         abcd = data.data.realtyUserid;
@@ -280,7 +282,7 @@ const Realtypost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/realtyDong`,
+          url: `http://${BACKEND_URL}:8083/realtyDong`,
           method: "GET",
         });
 
@@ -291,7 +293,7 @@ const Realtypost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${abcd}`,
+          url: `http://${BACKEND_URL}:8083/getUser/${abcd}`,
           method: "GET",
         });
         setArticleWriter(data.data);
@@ -300,7 +302,7 @@ const Realtypost = ({
       }
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getRealtyWithImage/${num}`,
+          url: `http://${BACKEND_URL}:8083/getRealtyWithImage/${num}`,
           method: "GET",
         });
 
@@ -311,7 +313,7 @@ const Realtypost = ({
 
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/likeRealtyCheck/${num}`,
+          url: `http://${BACKEND_URL}:8083/likeRealtyCheck/${num}`,
           method: "GET",
           params: {
             realtyId: num,
@@ -325,7 +327,7 @@ const Realtypost = ({
 
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/getUser/${userid}`,
+          url: `http://${BACKEND_URL}:8083/getUser/${userid}`,
           method: "GET",
         });
         setUser(data.data);
@@ -353,7 +355,7 @@ const Realtypost = ({
     const onLikeRe = async (num) => {
       try {
         const data = await axios({
-          url: `${BACKEND_URL}:8083/realty/${num}`,
+          url: `http://${BACKEND_URL}:8083/realty/${num}`,
           method: "GET",
         });
         onArticle(data.data);

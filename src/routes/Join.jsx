@@ -836,7 +836,7 @@ const Join = () => {
                   window.alert("주소양식을 확인해 주세요.");
                   return;
                 } else if (phoneValue.length != 13) {
-                  window.alert("연락처 입력 양식을 확인해 주세요");
+                  window.alert("연락처는 010 - **** - **** 로 입력해주세요. ");
                   return;
                 } else {
                   if (phoneValue.length == 13) {

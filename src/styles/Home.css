@@ -19,7 +19,6 @@
 .section-Box {
   width: 1200px;
   height: 800px;
-
   margin: 0 auto;
 }
 .section-Box1 {
@@ -37,18 +36,17 @@
 }
 .background1 {
   background-color: lightyellow;
-  width: 100%;
-  height: 650px;
+  min-width: 1090px;
+  height: 700px;
 }
 .firstimg {
-  margin-top: 150px;
-  width: 700px;
+  width: 800px;
   height: 700px;
 }
 
 .secondimg {
-  width: 700px;
-  height: 700px;
+  width: 800px;
+  height: 800px;
 }
 
 .thirdimg {
@@ -57,5 +55,6 @@
 
 .background2 {
   background-color: #d4ecdd;
+  min-width: 1050px;
   height: 800px;
 }

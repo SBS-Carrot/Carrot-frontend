@@ -397,7 +397,8 @@ const Home = ({ logined, setLogined }) => {
                       <div
                         className="ellipsis_1"
                         style={{
-                          width: "200px",
+                          width: "170px",
+
                           height: "25px",
                           textAlign: "start",
                         }}
@@ -783,8 +784,9 @@ const Home = ({ logined, setLogined }) => {
                         <div
                           className="ellipsis_1"
                           style={{
-                            width: "200px",
+                            width: "170px",
                             height: "25px",
+
                             textAlign: "start",
                           }}
                         >

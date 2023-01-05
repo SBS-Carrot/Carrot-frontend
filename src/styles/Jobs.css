@@ -30,7 +30,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
 }
 .ellipsis_3 {
   display: -webkit-box;

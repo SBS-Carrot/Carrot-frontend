@@ -40,7 +40,7 @@
     "ws": "^8.11.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env NODE_OPTIONS=--max-old-space-size=8192 webpack-dev-server --mode development",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

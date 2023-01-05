@@ -483,59 +483,61 @@ const Home = ({ logined, setLogined }) => {
     return (
       <div>
         <Header />
-        <div className="background1 flex items-center">
-          <div
-            className="flex"
-            style={{
-              width: "1000px",
-              margin: "0 auto",
-            }}
-          >
-            <div className="flex justify-center flex-col">
-              <div
-                className="font-bold"
-                style={{
-                  fontSize: "2.5rem",
-                }}
-              >
+        <div className="background1">
+          <div className=" flex items-center">
+            <div
+              className="flex gap-2"
+              style={{
+                width: "1000px",
+                margin: "0 auto",
+              }}
+            >
+              <div className="flex justify-center flex-col">
                 <div
+                  className="font-bold"
                   style={{
-                    width: "300px",
+                    fontSize: "2.5rem",
                   }}
                 >
-                  당신 근처의
+                  <div
+                    style={{
+                      width: "300px",
+                    }}
+                  >
+                    당신 근처의
+                  </div>
+                  <div>당근마켓</div>
                 </div>
-                <div>당근마켓</div>
+                <div
+                  className="mt-8"
+                  style={{
+                    width: "330px",
+                  }}
+                >
+                  <div>중고 거래부터 동네 정보까지, 이웃과 함께해</div>
+                  <div>가깝고 따듯한 당신의 근처를 만들어요.</div>
+                </div>
               </div>
-              <div
-                className="mt-8"
-                style={{
-                  width: "330px",
-                }}
-              >
-                <div>중고 거래부터 동네 정보까지, 이웃과 함께해</div>
-                <div>가깝고 따듯한 당신의 근처를 만들어요.</div>
-              </div>
-            </div>
-            <div>
-              <div className="firstimg">
-                <img
-                  src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-top-d6869a79bc4cb58ea59aa5a408decfdf4a4ba60ac639837081da12861083cdbb.webp"
-                  alt=""
-                />
+              <div>
+                <div className="firstimg flex items-center">
+                  <img
+                    src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-top-d6869a79bc4cb58ea59aa5a408decfdf4a4ba60ac639837081da12861083cdbb.webp"
+                    alt=""
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
         <section className="flex items-center">
           <div
-            className="flex"
+            className="flex gap-6"
             style={{
               width: "1000px",
               margin: "0 auto",
             }}
           >
-            <div className="secondimg">
+            <div className="secondimg mt-2 flex items-center">
               <img
                 src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-1-cc678e9a217b96f5cb459f7f0684f5ba67706f9889801618b8cf879fbc2c0ea7.webp"
                 alt=""
@@ -570,7 +572,6 @@ const Home = ({ logined, setLogined }) => {
                     href={`/hot_articles`}
                     style={{
                       padding: "10px 20px",
-
                       borderRadius: "10px",
                     }}
                     className="mr-8 bg-gray-200"
@@ -599,7 +600,7 @@ const Home = ({ logined, setLogined }) => {
             </div>
           </div>
         </section>
-        <section className="background2 flex  ">
+        <section className="background2 flex">
           <div
             className="flex "
             style={{
@@ -673,7 +674,7 @@ const Home = ({ logined, setLogined }) => {
                 style={{
                   width: "100%",
                   position: "absolute",
-                  top: "10%",
+                  top: "5%",
                   left: "10%",
                 }}
               >
@@ -686,7 +687,7 @@ const Home = ({ logined, setLogined }) => {
           </div>
         </section>
 
-        <div className="section-Box bg-gray-50 flex flex-row">
+        <div className="section-Box flex flex-row">
           <div className="imgBox-1">
             <img
               src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-3-5fd6fb61d603ab919a45566b2ea6b505c83a93ec218f34ddcd5cb482543e2317.webp"
@@ -719,129 +720,129 @@ const Home = ({ logined, setLogined }) => {
             </div>
           </div>
         </div>
-
-        <div className="section-Box1 bg-gray-100">
-          <div
-            style={{
-              fontWeight: "bolder",
-              fontSize: "2.5rem",
-              display: "flex",
-              justifyContent: "center",
-              padding: "4rem 0",
-            }}
-          >
-            <h1>중고거래 인기매물</h1>
-          </div>
-          <div>
-            <ul className="grid grid-cols-4">
-              {hotProduct.map((product, index) => (
-                <li key={index}>
-                  <button
-                    onClick={() => {
-                      moveProduct(product.productId);
-                    }}
-                  >
-                    <div
-                      style={{
-                        paddingTop: "3rem",
-                        paddingLeft: "10px",
+        <div style={{ backgroundColor: "#efefef", minWidth: "1090px" }}>
+          <div className="section-Box1 ">
+            <div
+              style={{
+                fontWeight: "bolder",
+                fontSize: "2.5rem",
+                display: "flex",
+                justifyContent: "center",
+                padding: "4rem 0",
+              }}
+            >
+              <h1>중고거래 인기매물</h1>
+            </div>
+            <div>
+              <ul className="grid grid-cols-4">
+                {hotProduct.map((product, index) => (
+                  <li key={index}>
+                    <button
+                      onClick={() => {
+                        moveProduct(product.productId);
                       }}
                     >
                       <div
                         style={{
-                          width: "150px",
-                          height: "150px",
-                          borderRadius: "15px",
-                          marginBottom: "10px",
+                          paddingTop: "3rem",
+                          paddingLeft: "10px",
                         }}
                       >
-                        {product.profileImage != null ? (
-                          <img
-                            src={product.profileImage}
-                            alt=""
-                            style={{
-                              borderRadius: "15px",
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "fill",
-                              display: "block",
-                            }}
-                          />
-                        ) : (
-                          <FaCarrot
-                            style={{
-                              color: "#fc9d39",
-                              fontSize: "10rem",
-                              transform: "translate(-5%, -5%)",
-                              border: "0.1px #fc9d39 solid",
-                              borderRadius: "50%",
-                            }}
-                          />
-                        )}
-                      </div>
-                      <div
-                        className="ellipsis_1"
-                        style={{
-                          width: "200px",
-                          height: "25px",
-                          textAlign: "start",
-                        }}
-                      >
-                        <span>{product.productSubject}</span>
-                      </div>
-                      <div className="flex ">
-                        <span
+                        <div
+                          style={{
+                            width: "150px",
+                            height: "150px",
+                            borderRadius: "15px",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          {product.profileImage != null ? (
+                            <img
+                              src={product.profileImage}
+                              alt=""
+                              style={{
+                                borderRadius: "15px",
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "fill",
+                                display: "block",
+                              }}
+                            />
+                          ) : (
+                            <FaCarrot
+                              style={{
+                                color: "#fc9d39",
+                                fontSize: "10rem",
+                                transform: "translate(-5%, -5%)",
+                                border: "0.1px #fc9d39 solid",
+                                borderRadius: "50%",
+                              }}
+                            />
+                          )}
+                        </div>
+                        <div
                           className="ellipsis_1"
                           style={{
-                            fontWeight: "bold",
-                            width: "100px",
-                            height: "20px",
+                            width: "200px",
+                            height: "25px",
                             textAlign: "start",
                           }}
                         >
-                          {product.productPrice}원
-                        </span>
+                          <span>{product.productSubject}</span>
+                        </div>
+                        <div className="flex ">
+                          <span
+                            className="ellipsis_1"
+                            style={{
+                              fontWeight: "bold",
+                              width: "100px",
+                              height: "20px",
+                              textAlign: "start",
+                            }}
+                          >
+                            {product.productPrice}원
+                          </span>
+                        </div>
+                        <div
+                          className="flex mt-1"
+                          style={{
+                            fontSize: "0.8rem",
+                          }}
+                        >
+                          <span>{product.productDealAddress}</span>
+                        </div>
+                        <div
+                          className="flex"
+                          style={{
+                            paddingBottom: "3rem",
+                            fontSize: "0.8rem",
+                            color: "gray",
+                          }}
+                        >
+                          <span>관심 {product.productLike}</span>
+                          &nbsp; ·&nbsp;
+                          <span>채팅 {product.productChatting}</span>
+                        </div>
                       </div>
-                      <div
-                        className="flex mt-1"
-                        style={{
-                          fontSize: "0.8rem",
-                        }}
-                      >
-                        <span>{product.productDealAddress}</span>
-                      </div>
-                      <div
-                        className="flex"
-                        style={{
-                          paddingBottom: "3rem",
-                          fontSize: "0.8rem",
-                          color: "gray",
-                        }}
-                      >
-                        <span>관심 {product.productLike}</span>
-                        &nbsp; ·&nbsp;
-                        <span>채팅 {product.productChatting}</span>
-                      </div>
-                    </div>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div
-            style={{
-              textDecoration: "underline",
-              fontSize: "1.1rem",
-              fontWeight: "bold",
-              textAlign: "center",
-              margin: "0 auto",
-              marginTop: "20px",
-            }}
-          >
-            <a href={`/hot_articles`}>인기매물 더 보기</a>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div
+              style={{
+                textDecoration: "underline",
+                fontSize: "1.1rem",
+                fontWeight: "bold",
+                textAlign: "center",
+                margin: "0 auto",
+                marginTop: "20px",
+              }}
+            >
+              <a href={`${BACKEND_URL}:3000/hot_articles`}>인기매물 더 보기</a>
+            </div>
           </div>
         </div>
-
         <div className="searchWordBox">
           <div
             className="mt-8"

@@ -2,7 +2,7 @@
 
 ## 시연 동영상 링크
 
-[프로젝트 배포 주소] (http://qudgns.site:3000)
+[프로젝트 배포 주소](http://qudgns.site:3000)
 
 [유튜브](https://www.youtube.com/watch?v=tEu6WCS2XUY)
 

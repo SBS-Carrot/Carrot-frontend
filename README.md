@@ -2,6 +2,8 @@
 
 ## 시연 동영상 링크
 
+[프로젝트 사이트로 이동하기](http://qudgns.site:3000)
+
 [유튜브](https://www.youtube.com/watch?v=tEu6WCS2XUY)
 
 [백엔드 주소](https://github.com/SBS-Carrot/Carrot_Backend)

@@ -1,1 +1,1 @@
-export const BACKEND_URL = "localhost";
+export const BACKEND_URL = "qudgns.site";

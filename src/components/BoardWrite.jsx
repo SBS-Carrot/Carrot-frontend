@@ -376,10 +376,19 @@ const BoardWrite = ({ logined, setLogined }) => {
           <div>
             <button
               onClick={() => {
-                if (uploadedImg.length == 0) {
-                  onSubmit(contentValue, category, addressDetail);
+                if (category != "") {
+                  if (uploadedImg.length == 0) {
+                    onSubmit(contentValue, category, addressDetail);
+                  } else {
+                    onSubmits(
+                      contentValue,
+                      category,
+                      uploadedImg,
+                      addressDetail
+                    );
+                  }
                 } else {
-                  onSubmits(contentValue, category, uploadedImg, addressDetail);
+                  alert("게시글의 주제를 선택해 주세요");
                 }
               }}
               style={{

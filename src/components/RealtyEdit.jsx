@@ -7,6 +7,7 @@ import { getValue } from "@testing-library/user-event/dist/utils";
 import { useNavigate, useParams } from "react-router-dom";
 import DaumPostcode from "react-daum-postcode";
 import WriteMap from "./WriteMap";
+import { BACKEND_URL } from "../config/config";
 
 const RealtyEdit = ({ logined, setLogined }) => {
   const navigate = useNavigate();
@@ -310,7 +311,7 @@ const RealtyEdit = ({ logined, setLogined }) => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:8083/realty/${num}`,
+          url: `http://${BACKEND_URL}:8083/realty/${num}`,
           method: "GET",
         });
         setWho(data.data.realtyWho);
@@ -346,7 +347,7 @@ const RealtyEdit = ({ logined, setLogined }) => {
       }
       try {
         const data = await axios({
-          url: `http://localhost:8083/getRealtyWithImage/${num}`,
+          url: `http://${BACKEND_URL}:8083/getRealtyWithImage/${num}`,
           method: "GET",
         });
         setShowImages(data.data.images);
@@ -403,7 +404,7 @@ const RealtyEdit = ({ logined, setLogined }) => {
       const userid = sessionStorage.getItem("userid");
 
       const data = await axios({
-        url: `http://localhost:8083/realtyEdit/${num}`,
+        url: `http://${BACKEND_URL}:8083/realtyEdit/${num}`,
         method: "POST",
         data: {
           realtyWho: who,
@@ -522,7 +523,7 @@ const RealtyEdit = ({ logined, setLogined }) => {
         headers: {
           "Content-Type": `application/json`,
         },
-        url: `http://localhost:8083/RealtyImagesEdit/${num}`,
+        url: `http://${BACKEND_URL}:8083/RealtyImagesEdit/${num}`,
         method: "POST",
         data: formData,
       });
